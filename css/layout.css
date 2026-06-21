@@ -46,6 +46,7 @@ h3+p {margin-top: -.5rem;margin-bottom: 1rem;}
 .board-list li {display: flex; gap: var(--gap-xs);}
 .board-list li+li {margin-top: 0.5rem;}
 .board-list li:before {content: "\f26e"; font-family: bootstrap-icons; font-size: 1.125rem;}
+.bottom-ad {margin-top:2rem}
 
 /* FOOTER */
 #footer {grid-area: footer;font-size: 90%; background-color: var(--gray80); padding-top: 2rem; padding-bottom: 2rem; text-align: center;}
