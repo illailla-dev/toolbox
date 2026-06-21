@@ -41,7 +41,7 @@
     --radius-xlg: 2rem;
     --shadow-sm: 0 .062rem .125rem rgba(0, 0, 0, 0.05);
     --shadow: 2px 2px 5px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 .5rem 1.5rem rgba(0, 0, 0, 0.15);
+    --shadow-lg: 4px 4px 10px rgba(0, 0, 0, 0.1);
 
     /* speed */
     --transition-fast: 0.2s ease;
@@ -225,6 +225,7 @@ textarea {resize: none;}
 
 /* 버튼 */
 .btn {border-radius: var(--radius-xs); box-shadow: none; padding: .75rem 1rem}
+.btn:hover {box-shadow: var(--shadow-lg)}
 .btn:has(img) {display: flex; align-items: center; justify-content: center;}
 .btn:is(.disabled, [disabled]) {background-color: #F1F1F5 !important; color: #999 !important; opacity: 1;cursor: not-allowed}
 .btn:focus {outline: none;box-shadow: none}
@@ -250,6 +251,9 @@ textarea {resize: none;}
 .btn.dark-orange:not(.line) {background-color: var(--dark-orange); color: #fff;}
 .btn.yellow:not(.line) {background-color: #eda200; color: #fff !important;}
 .btn.purple:not(.line) {background-color: var(--purple); color: #fff !important;}
+.btn.red:not(.line) {background-color: var(--red); color: #fff !important;}
+.btn.blue:not(.line) {background-color: var(--blue); color: #fff !important;}
+.btn.green:not(.line) {background-color: var(--green); color: #fff !important;}
 .btn.line.gray {border-color: var(--gray50)}
 .btn.line.white {border-color: #fff; color: #fff;}
 .btn.link {padding: 0;}
