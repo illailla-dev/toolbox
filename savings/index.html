@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예적금 만기 이자 계산기 - 세후 실수령액 자동 계산 | 만능툴박스</title>
+    <meta name="description" content="단리, 복리, 일반과세(15.4%), 세금우대(1.4%)를 반영하여 만기 시 실제로 받는 세후 이자와 총 수령액을 정확하게 계산해 드립니다.">
+    <meta name="keywords" content="예적금 계산기, 이자 계산기, 만기 이자 계산, 세후 이자 계산기, 적금 이자 계산기, 예금 실수령액, 비과세 이자 계산">
+    <link rel="canonical" href="https://mytoolbox.com/savings/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/savings.js"></script>
+    <link rel="stylesheet" href="/css/savings.css">
+    <meta property="og:title" content="예적금 만기 이자 계산기">
+    <meta property="og:description" content="뜨개질 도안 바꿀 때 필수! 콧수와 단수를 오차 없이 계산해 보세요.">
+    <meta property="og:image" content="https://mytool.com">
+    <meta property="og:url" content="https://mytool.com">
+</head>
+<body>
+    <div id="wrap">
+        <div id="header" data-include="header.html"></div>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>💰 예적금 만기 이자 계산기</h2>
+                <p class="guide-text">예금(목돈 거치) 또는 적금(매월 적립)을 선택하고 금액과 금리를 입력해 주세요.</p>
+                <form id="savings-form" class="form" onsubmit="return false;">
+                    <!-- 1. 상품 유형 선택 -->
+                    <div class="input-group-box">
+                        <label>상품 종류</label>
+                        <div class="flex-radios">
+                            <span class="radio"><label><input type="radio" name="product-type" value="deposit" checked> 정기예금 (목돈 굴리기)</label></span>
+                            <span class="radio"><label><input type="radio" name="product-type" value="savings"> 정기적금 (매달 모으기)</label></span>
+                        </div>
+                    </div>
+                    <!-- 2. 금액 및 기간 입력 (실시간 한글 단위 노출 영역 포함) -->
+                    <div class="input-group-box">
+                        <div class="input-item">
+                            <label id="amount-label" for="input-amount">예치 금액 (원)</label>
+                            <input type="number" id="input-amount" placeholder="예: 10000000" required min="1">
+                            <!-- 실시간 한글 금액 단위 팝업 그릇 -->
+                            <p id="amount-korean"></p>
+                        </div>
+                        <div class="flex-inputs mt-4">
+                            <div class="input-item">
+                                <label for="input-rate">연 이자율 (%)</label>
+                                <input type="number" id="input-rate" placeholder="예: 4.5" required min="0.1" step="0.01">
+                            </div>
+                            <div class="input-item">
+                                <label for="input-months">저축 기간 (개월)</label>
+                                <input type="number" id="input-months" placeholder="예: 12" required min="1">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 3. 이자 계산 방식 및 과세 종류 -->
+                    <div class="input-group-box flex-inputs">
+                        <div class="input-item">
+                            <label for="select-method">이자 계산 방식</label>
+                            <select id="select-method">
+                                <option value="simple" selected>단리</option>
+                                <option value="compound">연복리</option>
+                            </select>
+                        </div>
+                        <div class="input-item">
+                            <label for="select-tax">과세 종류</label>
+                            <select id="select-tax">
+                                <option value="normal" selected>일반과세 (15.4%)</option>
+                                <option value="preferential">세금우대 (1.4%)</option>
+                                <option value="free">비과세 (0%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 4. 실시간 금융 결과 영역 -->
+                <div class="result-box financial-result">
+                    <h3>💡 예상 만기 수령액</h3>
+                    <div class="result-display">
+                        <p>원금 합계: <span id="res-principal">0</span> 원</p>
+                        <p>세전 이자: <span id="res-interest-before">0</span> 원</p>
+                        <p>이자소득세: <span id="res-tax">0</span> 원</p>
+                        <hr class="dash">
+                        <p class="final-amount" style="font-size: 1.2rem; color: #222;">최종 세후 수령액: <strong id="res-total" style="color: #ff4757;">0</strong> 원</p>
+                    </div>
+                </div>
+                <!-- 단가가 높은 금융 광고가 붙을 황금 자리 -->
+                <div class="ads-space" data-include="ads-main.html"></div>
+            </section>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <div id="footer" data-include="footer.html"></div>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>

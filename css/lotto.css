@@ -1,0 +1,19 @@
+@charset "utf-8";
+@import url('common.css');
+@import url('layout.css');
+
+.lotto-create .form {border: 1px solid var(--border); border-radius: 0 var(--radius-xs) var(--radius-xs); padding:2rem; box-shadow: var(--shadow)}
+.lotto-create .form label {font-size: 1.125rem}
+.lotto-create .form .d-flex {gap: var(--gap-sm); align-items: center;}
+.lotto-create .result i {width:2rem;height:2rem;display: inline-flex;align-items:center;justify-content:center; border-radius:50%; color:#fff; font-size: 1rem; font-style: normal;}
+.lotto-create .bi, .lotto-create u {color: var(--blue);}
+.lotto-create .result p:first-child {margin-top: 2rem;}
+.lotto-create .result i+i {margin-left: .25rem;}
+.lotto-create .result span {min-width: 4rem; display: inline-block}
+.lotto-create .result p+p {margin-top: .5rem;}
+.range-1-10 { background: #f4cf77; }
+.range-11-20 { background: #6aa7e8; }
+.range-21-30 { background: #ff7666; }
+.range-31-40 { background: #5a5e62; }
+.range-41-45 { background: #98e187; }
+.lotto-create b {color: var(--text)}

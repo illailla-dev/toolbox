@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://mytoolbox.com/lotto/">
+    <title>로또 번호 생성기 - 100% 무료 자동 번호 추출</title>
+    <meta name="description" content="매주 로또 번호 고민되시나요? 직관적이고 빠른 무료 로또 번호 생성기로 행운의 번호를 뽑아보세요.">
+    <meta name="keywords" content="로또 번호 생성기, 로또 자동 번호, 무료 로또 추출기, 로또 예측 번호, 중복없는 랜덤 번호, 행운의 로또 번호, LOTTO 생성기">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/lotto.js"></script>
+    <link rel="stylesheet" href="/css/lotto.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="무료 로또 번호 생성기">
+    <meta property="og:description" content="매주 로또 번호 고민되시나요? 무료로 번호를 생성해 보세요.">
+    <meta property="og:image" content="https://mytool.com">
+    <meta property="og:url" content="https://mytool.com">
+</head>
+<body>
+    <div id="wrap">
+        <div id="header" data-include="header.html"></div>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="lotto-create">
+                <h2>🍀 로또 번호 생성기</h2>
+                <p>무작위로 번호를 생성하거나 지난 회차를 참고하여 번호를 생성합니다.</p>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="random-tab" data-toggle="tab" href="#random" role="tab" aria-controls="random" aria-selected="true">무작위 번호 조합</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="exel-tab" data-toggle="tab" href="#exel" role="tab" aria-controls="exel" aria-selected="false">통계형 번호 조합</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="random" role="tabpanel" aria-labelledby="random-tab">
+                        <div class="form">
+                            <div>
+                                <label for="count">생성할 로또 번호 조합 수 </label>
+                                <input type="number" id="count" value="10" min="1" max="100">
+                                <button class="btn purple" id="generate">번호 생성</button>
+                            </div>
+                            <div class="guide-text mt-3">필요한 조합 수를 입력하고 생성 버튼을 눌러주세요.<br>당첨을 기원합니다! 😀</div>
+                            <div id="result" class="result"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="exel" role="tabpanel" aria-labelledby="exel-tab">
+                        <div class="form">
+                            <div>
+                                <p class="guide-text">회차별 당첨번호의 통계를 바탕으로 번호를 생성합니다. (이전 회차까지 업데이트 됨)<br>* <a href="/lotto/lotto.xlsx"><i class="bi bi-filetype-xlsx"></i> <u>샘플파일</u></a>을 다운받아 회차정보를 수정한 후 업로드 하세요.</p>
+                                <p class="mb-3"><input type="file" id="upload-exel" accept=".xlsx"></p>
+                                <label for="count-exel">생성할 로또 번호 조합 수</label>
+                                <input type="number" id="count-exel" value="10" min="1" max="100">
+                                <button class="btn purple" id="generate-exel">번호 생성</button>
+                            </div>
+                            <div class="guide-text mt-3">필요한 조합 수를 입력하고 생성 버튼을 눌러주세요.<br>당첨을 기원합니다! 😀</div>
+                            <div id="result-exel" class="result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <div id="footer" data-include="footer.html"></div>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>

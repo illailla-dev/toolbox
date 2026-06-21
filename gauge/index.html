@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코바늘 게이지 계산기 - 단수 콧수 자동 변환</title>
+    <meta name="description" content="뜨개질 편물의 게이지를 입력하면 원하는 사이즈에 필요한 콧수와 단수를 자동으로 계산해 주는 똑똑한 코바늘 계산기입니다.">
+    <meta name="keywords" content="코바늘 게이지 계산기, 뜨개질 게이지 계산기, 대바늘 게이지 계산, 콧수 계산기, 단수 계산기, 게이지 계산 공식, 뜨개질 도안 변환">
+    <link rel="canonical" href="https://mytoolbox.com/gauge/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/gauge.js"></script>
+    <link rel="stylesheet" href="/css/gauge.css">
+    <meta property="og:title" content="코바늘 게이지 계산기">
+    <meta property="og:description" content="뜨개질 도안 바꿀 때 필수! 콧수와 단수를 오차 없이 계산해 보세요.">
+    <meta property="og:image" content="https://mytool.com">
+    <meta property="og:url" content="https://mytool.com">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🧶 코바늘 게이지 계산기</h2>
+                <p>내 편물의 10cm 안의 콧수와 단수를 입력한 뒤, 만들고 싶은 옷/소품의 목표 사이즈를 적어주세요.</p>
+                <form id="gauge-form" class="form" onsubmit="return false;">
+                    <!-- 1. 현재 게이지 입력 (기준: 10cm x 10cm) -->
+                    <div class="input-group-box">
+                        <h3>1. 나의 게이지 (10cm 기준)</h3>
+                        <div class="input-item">
+                            <label for="sample-stitch">콧수 (st)</label>
+                            <input type="number" id="sample-stitch" placeholder="예: 20" required min="1" step="0.1">
+                            <label for="sample-row">단수 (row)</label>
+                            <input type="number" id="sample-row" placeholder="예: 24" required min="1" step="0.1">
+                        </div>
+                    </div>
+                    <!-- 2. 만들고 싶은 목표 사이즈 -->
+                    <div class="input-group-box">
+                        <h3>2. 만들고 싶은 목표 사이즈 (cm)</h3>
+                        <div class="input-item">
+                            <label for="target-width">가로 길이 (cm)</label>
+                            <input type="number" id="target-width" placeholder="예: 50" required min="1" step="0.1">
+                            <label for="target-height">세로 길이 (cm)</label>
+                            <input type="number" id="target-height" placeholder="예: 40" required min="1" step="0.1">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 예상 작업 가이드</h3>
+                    <div class="result-display">
+                        <p>필요한 시작 콧수: <strong id="result-stitch">0</strong> 코</p>
+                        <p>필요한 총 단수: <strong id="result-row">0</strong> 단</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 소수점 첫째 자리에서 반올림된 수치입니다.</p>
+                </div>
+                <div class="ads-space">
+                    <!-- 여기에 애드센스 디스플레이 광고 코드 삽입 -->
+                    <p style="color:#ccc; font-size:12px; text-align:center;">광고 영역</p>
+                </div>
+            </div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>
