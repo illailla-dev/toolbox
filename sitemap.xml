@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-  <loc>https://every-calc.co.kr/</loc>
-  <lastmod>2026-06-21T04:06:44+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://every-calc.co.kr/gauge/</loc>
-  <lastmod>2026-06-21T04:06:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://every-calc.co.kr/savings/</loc>
-  <lastmod>2026-06-21T04:06:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://every-calc.co.kr/lotto/</loc>
-  <lastmod>2026-06-21T04:06:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-
+  <url>
+    <loc>https://every-calc.co.kr/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/lotto/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/gauge/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/savings/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/stock-average/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/coupang-partners/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/customs-duty/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/font-subset/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://every-calc.co.kr/insta-splitter/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>에브리캘크 사이트맵 마스터 빌더 (관리자용)</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .builder-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 13px;
+            background: #282c34;
+            color: #abb2bf;
+            border-radius: 6px;
+            border: none;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .btn-build {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-copy {
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="builder-box">
+        <h2>🛠️ 에브리캘크 sitemap.xml 자동 추출 엔진</h2>
+        <p>새로운 계산기 폴더가 추가되더라도 아래 목록에 주소만 적어주면 구글 수집 로봇용 XML 규격 코드를 실시간으로 완성해 줍니다.</p>
+        <button type="button" class="btn-build" id="make-sitemap">⚡ 1초 만에 사이트맵 코드 생성하기</button>
+        <button type="button" class="btn-copy" id="copy-sitemap">📋 생성된 XML 코드 클립보드 복사하기</button>
+        <textarea id="xml-output" rows="18" placeholder="위 버튼을 누르면 여기에 구글 표준 XML 소스코드가 출력됩니다." readonly></textarea>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // 1. 지금까지 유저님이 빌드하신 에브리캘크의 전체 독립 폴더 목록 데이터 정의
+            const sitePaths = [
+                "", // 메인 루트 홈
+                "lotto/",
+                "gauge/",
+                "savings/",
+                "stock-average/",
+                "coupang-partners/",
+                "customs-duty/",
+                "font-subset/",
+                "diet-macros/",
+                "insta-splitter/"
+            ];
+
+            // 2. 버튼 클릭 시 구글 규격에 맞는 XML 문장 조립 엔진 가동
+            $('#make-sitemap').on('click', function () {
+                const domain = "https://every-calc.co.kr/";
+                // 2026년 오늘 날짜 표준 포맷 추출 (YYYY-MM-DD)
+                const today = new Date().toISOString().split('T')[0];
+
+                // XML 표준 헤더 선언
+                let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+                xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+                // 배열을 순회하며 구글 봇용 노드 데이터 동적 조립
+                sitePaths.forEach(path => {
+                    xml += `  <url>\n`;
+                    xml += `    <loc>${domain}${path}</loc>\n`;
+                    xml += `    <lastmod>${today}</lastmod>\n`;
+                    // 메인 홈은 가장 높은 우선순위(1.0), 서브 도구들은 상위 노출용 균등 우선순위(0.8) 부여
+                    xml += `    <priority>${path === "" ? "1.0" : "0.8"}</priority>\n`;
+                    xml += `  </url>\n`;
+                });
+
+                xml += `</urlset>`;
+
+                // 결과창 바인딩 및 복사 버튼 노출
+                $('#xml-output').val(xml);
+                $('#copy-sitemap').slideDown(200);
+                alert('✅ XML 사이트맵 데이터 빌드가 완료되었습니다! 아래 코드를 복사하세요.');
+            });
+
+            // 3. 클립보드 복사 핸들러
+            $('#copy-sitemap').on('click', function () {
+                const xmlCode = $('#xml-output').val();
+                navigator.clipboard.writeText(xmlCode).then(() => {
+                    alert('📋 클립보드에 완벽하게 복사되었습니다!\n최상위 루트폴더에 sitemap.xml 파일을 만들고 붙여넣기 하시면 끝납니다.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
