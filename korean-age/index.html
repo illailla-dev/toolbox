@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만 나이 계산기 - 법적 자격 요건 판별기 | 에브리캘크</title>
+    <meta name="description" content="생년월일을 입력하시면 현재 기준 정확한 만 나이와 연 나이를 계산하고 투표권, 운전면허 취득, 청소년 관람불가 시청 등 법적 자격 기준 충족 여부를 실시간 판별해 드립니다.">
+    <meta name="keywords" content="만나이 계산기, 만 나이 계산, 연나이, 투표권 나이, 운전면허 나이, 군대 입대 나이, 청불 나이 기준, 법적 나이 판별">
+    <link class="canonical" href="https://every-calc.co.kr/korean-age/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/korean-age.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="만 나이 및 법적 자격 판별기">
+    <meta property="og:description" content="헷갈리는 만 나이 통일법 완벽 반영! 생일 지났는지 여부에 따라 달라지는 나의 투표, 면허, 청불 영화 관람 자격을 1초 만에 확인해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/korean-age/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>⏳ 만 나이 및 법적 자격 판별기</h2>
+                <p>생년월일을 선택하시면 현재 시점 기준의 만 나이와 함께 일상 속 다양한 법적 제한 해제 여부를 신호등 램프로 보여드립니다.</p>
+                <form id="age-form" class="form" onsubmit="return false;">
+                    <!-- 1. 생년월일 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 나의 생년월일 선택</h3>
+                        <div class="input-item">
+                            <label for="birth-date">출생일 (생년월일)</label>
+                            <input type="date" id="birth-date" class="form-control" value="2000-01-01" required>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 신체 연령 및 자격 판별 결과</h3>
+                    <div class="result-display">
+                        <p>현재 기준 <strong>만 나이</strong>: <strong id="res-man-age" style="color: var(--blue);">0</strong> 세</p>
+                        <p>올해 기준 <strong>연 나이</strong>: <strong id="res-yeon-age" style="color: var(--orange);">0</strong> 세</p>
+                        <hr>
+                        <h4>📋 주요 법적 자격 해제 여부</h4>
+                        <div class="qualification-list guide-text" style="font-size: 1rem; line-height: 2;">
+                            <p>🗳️ <strong>선거권 (투표 가능)</strong>: <span id="auth-vote" style="font-weight:bold;">-</span> (만 18세 이상)</p>
+                            <p>🚗 <strong>운전면허 취득 (1·2종 보통)</strong>: <span id="auth-drive" style="font-weight:bold;">-</span> (만 18세 이상)</p>
+                            <p>🎬 <strong>청소년 관람불가 영화 시청</strong>: <span id="auth-movie" style="font-weight:bold;">-</span> (만 19세 미만 청소년 제외)</p>
+                            <p>🧩 <strong>병역 의무 편입 (군대 신검 등)</strong>: <span id="auth-military" style="font-weight:bold;">-</span> (연 나이 19세 가해진 해)</p>
+                        </div>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">최종 상태 판별: <strong id="result-age-status">출생일을 입력해 주세요.</strong></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 청소년 관람불가 영화의 경우, 만 19세가 되는 해의 1월 1일을 맞이한 사람은 청소년보호법상 시청이 허용됩니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        // js/korean-age.js
+        $(document).ready(function () {
+            // 최초 실행 및 입력 데이터 변동 실시간 트래킹
+            calculateAge();
+            $('#birth-date').on('input change', calculateAge);
+
+            function calculateAge() {
+                const birthVal = $('#birth-date').val();
+                if (!birthVal) return;
+
+                // 1. 2026년 현재 시점 기준 타임스탬프 세팅
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth() + 1;
+                const currentDate = now.getDate();
+
+                // 2. 입력받은 생년월일 스플릿 파싱
+                const birthParts = birthVal.split('-');
+                const birthYear = parseInt(birthParts[0], 10);
+                const birthMonth = parseInt(birthParts[1], 10);
+                const birthDay = parseInt(birthParts[2], 10);
+
+                // 3. 연 나이 계산 (올해 연도 - 출생 연도)
+                const yeonAge = currentYear - birthYear;
+
+                // 4. 만 나이 계산 (생일 경과 여부 조건 판별)
+                let manAge = currentYear - birthYear;
+                if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDate < birthDay)) {
+                    manAge--; // 아직 올해 생일이 지나지 않았다면 1살 차감
+                }
+                if (manAge < 0) manAge = 0;
+
+                // O / X 뱃지 스타일 상수 정의
+                const passBadge = '<span style="color:var(--green);">✅ 가능 (자격 충족)</span>';
+                const failBadge = '<span style="color:var(--red)">❌ 불가 (자격 미달)</span>';
+
+                // 5. 법적 요건 자격 판단 분기 처리
+                // 🗳️ 선거권 (만 18세 이상)
+                if (manAge >= 18) $('#auth-vote').html(passBadge);
+                else $('#auth-vote').html(failBadge);
+
+                // 🚗 운전면허 취득 (만 18세 이상)
+                if (manAge >= 18) $('#auth-drive').html(passBadge);
+                else $('#auth-drive').html(failBadge);
+
+                // 🎬 청소년 관람불가 영화 (만 19세 통과 연도 기준 - 연나이 19세 이상 개념)
+                if (yeonAge >= 19) $('#auth-movie').html(passBadge);
+                else $('#auth-movie').html(failBadge);
+
+                // 🪖 병역 신체검사 대상 (연 나이 19세가 되는 해의 1월 1일부터 적용)
+                if (yeonAge >= 19) $('#auth-military').html(passBadge);
+                else $('#auth-military').html(failBadge);
+
+                // 6. UI 결과 출력 렌더링
+                $('#res-man-age').text(manAge);
+                $('#res-yeon-age').text(yeonAge);
+
+                if (manAge >= 19) {
+                    $('#result-age-status').text('성인 (모든 법적 규제 해제)').css('color', 'var(--blue)');
+                } else {
+                    $('#result-age-status').text('미성년자 (일부 법적 제한 적용)').css('color', 'var(--orange)');
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

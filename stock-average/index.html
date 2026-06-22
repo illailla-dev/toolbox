@@ -6,17 +6,16 @@
     <title>주식 물타기 계산기 - 평단가 및 물타기 시뮬레이션 자동 계산 | 에브리캘크</title>
     <meta name="description" content="현재 보유 주식의 평단가와 수량, 추가 매수할 주가와 수량을 입력하여 물타기 후 최종 예상 평단가와 투자 총액을 실시간으로 정확하게 계산해 드립니다.">
     <meta name="keywords" content="주식 물타기 계산기, 평단가 계산기, 주식 평단 계산, 주식 물타기 수식, 평단가 낮추기, 주식 계산기, 추가매수 계산">
-    <link rel="canonical" href="https://every-calc.co.kr">
+    <link rel="canonical" href="https://every-calc.co.kr/stock-average/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/stock-average.js"></script>
+    <link rel="stylesheet" href="/css/stock-average.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="주식 물타기 계산기 - 평단가 시뮬레이션 자동 계산">
     <meta property="og:description" content="추가 매수 시 변하는 최종 평단가와 투자 총액을 실시간으로 확인하고, 똑똑한 자산 배분 물타기 시나리오를 설계해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr">
-    <meta property="og:url" content="https://every-calc.co.kr">
-    <link rel="stylesheet" href="/css/stock-average.css">
+    <meta property="og:url" content="https://every-calc.co.kr/stock-average/">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -76,5 +75,57 @@
         <footer id="footer" data-include="footer.html"></footer>
     </div>
     <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 입력 폼 변동 실시간 감지
+            $('#stock-form').on('input', calculateStock);
+
+            // [+ 매수 조건 추가] 버튼 동적 행 생성 로직
+            $('#btn-add-row').on('click', function () {
+                const newRow = $('<div class="input-item stock-row mb-2"></div>');
+                newRow.html(`
+                    <hr class="dash">
+                    <label class="pt-0">추가 매수가 (원)</label>
+                    <input type="number" class="add-price form-control" placeholder="예: 40000" required min="1" step="1">
+                    <label>추가 수량 (주)</label>
+                    <input type="number" class="add-quantity form-control" placeholder="예: 30" required min="1" step="1">
+                    <button type="button" class="btn-del-row btn lightgray mt-2 btn-block">X</button>
+                `);
+                $('#add-stock-list').append(newRow);
+
+                // 삭제 버튼 이벤트 바인딩
+                newRow.find('.btn-del-row').on('click', function () {
+                    newRow.remove();
+                    calculateStock();
+                });
+            });
+
+            // 실시간 평단가 연산 함수
+            function calculateStock() {
+                const curPrice = parseFloat($('#current-price').val()) || 0;
+                const curQty = parseFloat($('#current-quantity').val()) || 0;
+
+                let totalMoney = curPrice * curQty;
+                let totalQuantity = curQty;
+
+                // 추가된 물타기 리스트 배열 순회 처리
+                $('.stock-row').each(function () {
+                    const addPrice = parseFloat($(this).find('.add-price').val()) || 0;
+                    const addQty = parseFloat($(this).find('.add-quantity').val()) || 0;
+
+                    totalMoney += (addPrice * addQty);
+                    totalQuantity += addQty;
+                });
+
+                // 평단가 연산 (0 나누기 무한대 에러 방지)
+                const finalAverage = totalQuantity > 0 ? Math.round(totalMoney / totalQuantity) : 0;
+
+                // 세자리 콤마 포맷 바인딩 출력
+                $('#result-average').text(finalAverage.toLocaleString());
+                $('#result-total-quantity').text(totalQuantity.toLocaleString());
+                $('#result-total-money').text(totalMoney.toLocaleString());
+            }
+        });
+    </script>
 </body>
 </html>

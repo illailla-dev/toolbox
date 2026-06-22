@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아기 예방접종 일정 계산기 - 생후 개월수별 필수 백신 타임라인 | 에브리캘크</title>
+    <meta name="description" content="아기의 생년월일을 입력하시면 현재 정확한 개월수와 생후 일수를 계산하고, 대한민국 질병관리청 표준 지침에 따른 필수 예방접종 종류와 권장 접종일을 타임라인으로 한눈에 보여드립니다.">
+    <meta name="keywords" content="예방접종 계산기, 아기 예방접종 일정, 필수예방접종, 생후 개월수 계산, 아기 접종 시기, BCG 접종일, 영유아 예방접종, 맘카페 바이럴 툴">
+    <link class="canonical" href="https://every-calc.co.kr">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/baby-vaccine.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="아기 예방접종 일정 및 개월수별 발달 계산기">
+    <meta property="og:description" content="우리 아이 다음 예방접종은 언제일까? 생년월일만 넣으면 만 12세까지의 국가 필수 예방접종 스케줄과 권장 마감일을 1초 만에 달력으로 정산해 드립니다.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <!-- 공통 헤더 조립 -->
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>👶 아기 예방접종 일정 타임라인 계산기</h2>
+                <p>아기의 생년월일을 선택해 주세요. 현재 아이의 정확한 성장 일수와 함께 앞으로 시기별로 챙겨야 하는 국가 필수 예방접종 일정을 달력 날짜로 정산합니다.</p>
+                <form id="baby-form" class="form" onsubmit="return false;">
+                    <!-- 1. 아기 생년월일 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 아기 정보 입력</h3>
+                        <div class="input-item">
+                            <label for="baby-birth">아기 생년월일 선택</label>
+                            <input type="date" id="baby-birth" class="form-control" value="2026-01-01" required>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 우리 아기 성장 및 예방접종 스케줄</h3>
+                    <div class="result-display">
+                        <p>🌱 현재 성장 지표: <strong id="res-baby-age" style="color: var(--blue, #2196f3);">계산 중</strong></p>
+                        <div class="btn-print-box mt-2 mb-3">
+                            <button type="button" class="btn green" onclick="window.print();">🖨️ 예방접종 일정표 달력 종이로 인쇄하기</button>
+                        </div>
+                        <hr>
+                        <h4>📅 질병관리청 권장 필수 접종 타임라인</h4>
+                        <div id="vaccine-schedule" class="vaccine-timeline"></div>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue, #2196f3); font-weight: bold;">최종 가이드: <strong id="result-baby-status">가장 가까운 접종 일정을 확인하세요.</strong></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 스케줄은 질병관리청 어린이 국가예방접종 표준 일정을 기준으로 산출되었으며, 아기의 건강 상태나 소아과 병원 사정에 따라 의사와 상의 후 일정을 미세 조정할 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('input change', '#baby-birth', function () {
+                calculateVaccine();
+            });
+
+            const vaccineDatabase = [
+                { months: 0, title: "결핵(BCG 피내용/경피용), B형간염 1차", desc: "출생 직후 가장 먼저 맞추는 필수 백신입니다." },
+                { months: 1, title: "B형간염 2차", desc: "생후 1개월차 접종입니다." },
+                { months: 2, title: "디프테리아/파상풍/백일해(DTaP) 1차, 폴리오(소아마비) 1차, b형헤모필루스인플루엔자(Hib) 1차, 폐렴구균 1차", desc: "접종 종류가 많으므로 아기 컨디션을 잘 확인하세요." },
+                { months: 4, title: "DTaP 2차, 폴리오 2차, Hib 2차, 폐렴구균 2차", desc: "생후 4개월차 필수 연계 접종입니다." },
+                { months: 6, title: "DTaP 3차, 폴리오 3차, Hib 3차, 폐렴구균 3차, B형간염 3차", desc: "생후 6개월차 기본 접종의 마무리 단계입니다." },
+                { months: 12, title: "홍역/유행성이하선염/풍진(MMR) 1차, 수두 1차, 일본뇌염(생백신/사백신) 1차", desc: "돌이 지난 아기들이 맞이하는 필수 백신 레이스입니다." },
+                { months: 15, title: "폐렴구균 추가 4차, Hib 추가 4차, DTaP 추가 4차", desc: "생후 15개월 전후 추가 보강 접종입니다." }
+            ];
+
+            function calculateVaccine() {
+                const birthVal = $('#baby-birth').val();
+                if (!birthVal) return;
+
+                const birthDate = new Date(birthVal.replace(/-/g, '/'));
+                const today = new Date();
+
+                let diffTime = today.getTime() - birthDate.getTime();
+                let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays < 0) diffDays = 0;
+
+                const totalMonths = Math.floor(diffDays / 30.4375);
+                const displayMonths = totalMonths;
+                const displayDays = Math.floor(diffDays % 30.4375);
+
+                let ageText = "";
+                if (totalMonths === 0) {
+                    ageText = `생후 ${diffDays}일째 (신생아 구간)`;
+                } else {
+                    ageText = `생후 ${displayMonths}개월 ${displayDays}일째 (총 ${diffDays.toLocaleString()}일)`;
+                }
+                $('#res-baby-age').text(ageText);
+
+                const scheduleContainer = $('#vaccine-schedule');
+                scheduleContainer.empty();
+
+                vaccineDatabase.forEach((vac) => {
+                    const targetDate = new Date(birthDate);
+                    targetDate.setMonth(targetDate.getMonth() + vac.months);
+
+                    const dateString = formatDate(targetDate);
+                    const statusLabel = (totalMonths >= vac.months) ? "✅ 권장 시기 경과 (접종 확인)" : "⏳ 권장 접종 예정일";
+
+                    const itemMarkup = `
+                        <div class="timeline-item">
+                            <div class="timeline-age">${vac.months === 0 ? "출생 직후" : "생후 " + vac.months + "개월차"} <span style="font-size:11px; font-weight:normal; margin-left:5px; color:#999;">[${statusLabel}]</span></div>
+                            <div class="timeline-title">${vac.title}</div>
+                            <div class="timeline-date">🗓️ 권장일: <span style="color:var(--blue, #2196f3); font-weight:bold;">${dateString}</span>까지</div>
+                            <div style="font-size:12px; color:#777; margin-top:2px;">${vac.desc}</div>
+                        </div>
+                    `;
+                    scheduleContainer.append(itemMarkup);
+                });
+
+                $('#result-baby-status').text(`생후 ${totalMonths}개월 맞춤형 스케줄 조립 완료`).css('color', 'var(--blue, #2196f3)');
+            }
+
+            function formatDate(date) {
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+                return `${y}년 ${m}월 ${d}일`;
+            }
+
+            const safetyTrigger = setInterval(function () {
+                if ($('#baby-birth').length) {
+                    calculateVaccine();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

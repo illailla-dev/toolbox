@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사진 인화 및 인쇄 규격 픽셀 환산기 - DPI별 크기 계산 | 에브리캘크</title>
+    <meta name="description" content="A4, A3 등 문서 규격과 4x6, 5x7 등 사진 인화 사이즈를 원하는 해상도(DPI)에 맞춰 가로 세로 픽셀(Pixel) 크기로 실시간 변환 및 환산해 드립니다.">
+    <meta name="keywords" content="인쇄 픽셀 계산기, 사진 크기 픽셀, A4 픽셀 크기, 300dpi 픽셀, 인화 사이즈 px, 포토샵 대지 크기, 문서 규격 환산">
+    <link class="canonical" href="https://every-calc.co.kr/print-size/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/print-size.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="사진 인화 및 인쇄 규격 픽셀 환산기">
+    <meta property="og:description" content="인쇄물 작업할 때 픽셀 크기 헷갈리셨나요? 문서/사진 규격과 해상도(DPI)만 선택하면 포토샵 필수 픽셀 크기를 1초 만에 계산해 드립니다.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/print-size/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🔨 사진 인화 및 인쇄 규격 픽셀 환산기</h2>
+                <p>원하는 출력 크기(문서/사진)와 인쇄 목적에 맞는 해상도(DPI)를 설정하시면 작업에 필요한 정확한 픽셀(px) 규격을 역산합니다.</p>
+                <form id="print-form" class="form" onsubmit="return false;">
+                    <!-- 1. 출력 규격 유형 선택 -->
+                    <div class="input-group-box">
+                        <h3>1. 출력 규격 설정</h3>
+                        <div class="input-item">
+                            <label for="size-type">출력 규격 분류</label>
+                            <!-- 📌 부트스트랩 .form-control 규격 적용 -->
+                            <select id="size-type" class="form-control" style="margin-bottom:10px;">
+                                <option value="a4" selected>A4 용지 (210 x 297 mm) - 일반 문서/리플렛</option>
+                                <option value="a3">A3 용지 (297 x 420 mm) - 포스터/도면</option>
+                                <option value="b5">B5 용지 (182 x 257 mm) - 대학교재/노트</option>
+                                <option value="photo4x6">사진 인화 4x6 사이즈 (102 x 152 mm) - 일반 사진첩용</option>
+                                <option value="photo5x7">사진 인화 5x7 사이즈 (127 x 178 mm) - 액자용 대형사진</option>
+                                <option value="custom">직접 입력 (mm 기준)</option>
+                            </select>
+                            <!-- 직접 입력 선택 시 보일 폼 (기본 숨김) -->
+                            <div id="custom-size-inputs" style="display:none; margin-bottom:10px;">
+                                <div style="display:flex; gap:10px;">
+                                    <div style="flex:1;">
+                                        <label for="custom-width">가로 길이 (mm)</label>
+                                        <input type="number" id="custom-width" class="form-control" placeholder="예: 210" min="1">
+                                    </div>
+                                    <div style="flex:1;">
+                                        <label for="custom-height">세로 길이 (mm)</label>
+                                        <input type="number" id="custom-height" class="form-control" placeholder="예: 297" min="1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. 해상도(DPI) 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 인쇄 해상도(DPI) 설정</h3>
+                        <div class="input-item">
+                            <label for="dpi-select">작업 목적별 해상도</label>
+                            <select id="dpi-select" class="form-control">
+                                <option value="300" selected>300 DPI (고품질 인쇄/잡지/사진 인화 추천)</option>
+                                <option value="150">150 DPI (일반 현수막/대형 실사 출력용)</option>
+                                <option value="72">72 DPI (웹 화면 디스플레이/모니터 출력 전용)</option>
+                                <option value="custom-dpi">직접 입력 (DPI)</option>
+                            </select>
+                            <input type="number" id="custom-dpi" class="form-control mt-2" placeholder="원하는 DPI 입력 (예: 200)" min="1" style="display:none;">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 권장 해상도 픽셀 변환 결과</h3>
+                    <div class="result-display">
+                        <p>설정된 실무 출력 규격: <strong id="res-print-label" style="color: var(--orange);">A4 용지</strong></p>
+                        <p>선택된 인쇄 해상도: <strong id="res-dpi-label" style="color: var(--green);">300 DPI</strong></p>
+                        <hr>
+                        <p style="font-size: 115%; color: var(--blue); font-weight: bold;">추천 가로 픽셀 폭: <span id="res-pixel-w">0</span> px</p>
+                        <p style="font-size: 115%; color: var(--blue); font-weight: bold;">추천 세로 픽셀 높이: <span id="res-pixel-h">0</span> px</p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">권장 전체 이미지 해상도: <strong id="result-print-resolution">0 x 0 px</strong></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 1인치는 25.4mm입니다. 본 계산기는 `픽셀 = (밀리미터 / 25.4) * DPI` 공식에 기반해 소수점 이하를 올림 처리한 안전 수치입니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        // js/print-size.js
+        $(document).ready(function () {
+            // 규격 데이터베이스 정의 (가로, 세로 mm 단위 기준)
+            const sizeMap = {
+                'a4': { name: 'A4 용지', w: 210, h: 297 },
+                'a3': { name: 'A3 용지', w: 297, h: 420 },
+                'b5': { name: 'B5 용지', w: 182, h: 257 },
+                'photo4x6': { name: '사진 인화 4x6', w: 102, h: 152 },
+                'photo5x7': { name: '사진 인화 5x7', w: 127, h: 178 }
+            };
+
+            // UI 동적 변동 제어
+            $('#size-type').on('change', function () {
+                if ($(this).val() === 'custom') {
+                    $('#custom-size-inputs').show();
+                } else {
+                    $('#custom-size-inputs').hide();
+                }
+                calculatePixels();
+            });
+
+            $('#dpi-select').on('change', function () {
+                if ($(this).val() === 'custom-dpi') {
+                    $('#custom-dpi').show();
+                } else {
+                    $('#custom-dpi').hide();
+                }
+                calculatePixels();
+            });
+
+            $('#print-form').on('input change', calculatePixels);
+            calculatePixels(); // 최초 실행
+
+            function calculatePixels() {
+                const sizeType = $('#size-type').val();
+                let dpiSelect = $('#dpi-select').val();
+
+                let mmW = 0;
+                let mmH = 0;
+                let labelName = '';
+
+                // 1. 밀리미터(mm) 가로세로값 추출
+                if (sizeType === 'custom') {
+                    mmW = parseFloat($('#custom-width').val()) || 0;
+                    mmH = parseFloat($('#custom-height').val()) || 0;
+                    labelName = `사용자 지정 (${mmW}x${mmH} mm)`;
+                } else {
+                    mmW = sizeMap[sizeType].w;
+                    mmH = sizeMap[sizeType].h;
+                    labelName = sizeMap[sizeType].name;
+                }
+
+                // 2. DPI 값 추출
+                let dpi = 300;
+                if (dpiSelect === 'custom-dpi') {
+                    dpi = parseInt($('#custom-dpi').val(), 10) || 0;
+                } else {
+                    dpi = parseInt(dpiSelect, 10);
+                }
+
+                if (mmW === 0 || mmH === 0 || dpi === 0) return;
+
+                // 3. 픽셀 변환 공식 작동 (1인치 = 25.4mm)
+                // 공식: (mm / 25.4) * DPI -> 인쇄물 잘림 방지를 위해 소수점 올림(Math.ceil) 처리
+                const pixelW = Math.ceil((mmW / 25.4) * dpi);
+                const pixelH = Math.ceil((mmH / 25.4) * dpi);
+
+                // 4. UI 뷰포트 바인딩 출력
+                $('#res-print-label').text(labelName);
+                $('#res-dpi-label').text(`${dpi} DPI`);
+
+                $('#res-pixel-w').text(pixelW.toLocaleString());
+                $('#res-pixel-h').text(pixelH.toLocaleString());
+
+                // 최종 텍스트 스펙 업데이트
+                $('#result-print-resolution').text(`${pixelW.toLocaleString()} x ${pixelH.toLocaleString()} px`);
+            }
+        });
+
+    </script>
+</body>
+</html>

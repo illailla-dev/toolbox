@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연차 계산기 - 법정 연차 개수 및 미사용 연차수당 계산 | 에브리캘크</title>
+    <meta name="description" content="대한민국 근로기준법 제60조를 완벽 반영하여 입사일 기준 현재까지 발생한 총 법정 연차 휴가 개수와 미사용 연차에 따른 수당 실수령액을 실시간 정확하게 계산합니다.">
+    <meta name="keywords" content="연차 계산기, 연차수당 계산기, 근로기준법 연차, 1년미만 연차, 연차 발생기준, 미사용 연차수당, 입사일기준 연차, 통상임금 계산">
+    <link class="canonical" href="https://every-calc.co.kr/annual-leave/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/annual-leave.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="법정 연차 개수 및 미사용 연차수당 계산기">
+    <meta property="og:description" content="내 연차는 올해 몇 개나 생겼을까? 입사일만 입력하면 근로기준법 맞춤 연차 개수와 돈으로 돌려받을 미사용 연차 수당을 1초 만에 확인해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/annual-leave/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📅 법정 연차 개수 & 연차수당 계산기</h2>
+                <p>입사일과 기본 월급 정보, 남은 연차 개수를 입력하시면 대한민국 근로기준법에 따른 총 연차 일수와 미사용 수당을 실시간 정산합니다.</p>
+                <form id="leave-form" class="form" onsubmit="return false;">
+                    <!-- 1. 입사일 및 근무 조건 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 입사일 및 기본 조건 입력</h3>
+                        <div class="input-item">
+                            <label for="join-date">회사 입사일 선택</label>
+                            <input type="date" id="join-date" class="form-control" value="2025-01-01" required style="margin-bottom:10px;">
+                            <label for="work-hours-select">근무 형태 선택 (기본 주 40시간)</label>
+                            <select id="work-hours-select" class="form-control">
+                                <option value="8" selected>하루 8시간 근무 (일반 주 5일 전일제)</option>
+                                <option value="4">하루 4시간 근무 (파트타임 / 단시간 근로)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 2. 급여 및 남은 연차 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 급여 및 미사용 연차 설정</h3>
+                        <div class="input-item">
+                            <label for="monthly-pay">기본 월 기본급 (원)</label>
+                            <input type="number" id="monthly-pay" class="form-control" placeholder="세전 기본급 예: 2500000" min="0" step="1" style="margin-bottom:10px;">
+                            <label for="unused-count">돈으로 정산받을 미사용 연차 개수 (일)</label>
+                            <input type="number" id="unused-count" class="form-control" placeholder="남은 연차 일수 입력 예: 10" value="0" min="0" step="0.5">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 근로기준법 연차 정산 결과</h3>
+                    <div class="result-display">
+                        <p>개인 근속 기간: <strong id="res-working-period" style="color: var(--orange);">계산 중</strong></p>
+                        <p>올해 기준 기본 연차 발생수: <strong id="res-generated-leave" style="color: var(--green);">0 개</strong></p>
+                        <p>나의 1일 통상임금 (하루 일당): <strong id="res-daily-wage" style="color: var(--purple);">0</strong> 원</p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">최종 예상 연차 수당 실수령액: <strong id="result-annual-salary">0</strong> 원</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 입사일 기준 계산 방식이며, 상시 근로자 5인 이상 사업장에 한해 법적 효력이 발생합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        function calculateAnnualLeave() {
+            var joinVal = $('#join-date').val();
+            var workHours = parseFloat($('#work-hours-select').val()) || 8;
+            var monthlyPay = parseFloat($('#monthly-pay').val()) || 0;
+            var unusedCount = parseFloat($('#unused-count').val()) || 0;
+
+            if (!joinVal) return;
+
+            var joinDate = new Date(joinVal.replace(/-/g, '/')); // Safari 호환
+            var today = new Date();
+
+            var diffTime = today.getTime() - joinDate.getTime();
+            var diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays < 0) diffDays = 0;
+
+            var totalYears = Math.floor(diffDays / 365);
+            var remainDaysAfterYear = diffDays % 365;
+            const totalMonths = Math.floor(diffDays / 30);
+
+            var generatedLeave = 0;
+            if (totalYears < 1) {
+                generatedLeave = totalMonths;
+                if (generatedLeave > 11) generatedLeave = 11;
+            } else {
+                var addDays = Math.floor((totalYears - 1) / 2);
+                generatedLeave = 15 + addDays;
+                if (generatedLeave > 25) generatedLeave = 25;
+            }
+
+            // ✅ 월급 자동 비례 조정
+            var adjustedMonthlyPay = monthlyPay * (workHours / 8);
+
+            // 법정 소정근로시간 시수 비례 정산 규칙
+            var monthlyStandardHours = (workHours === 8) ? 209 : 104.5;
+            var hourlyWage = adjustedMonthlyPay / monthlyStandardHours;
+            var dailyWage = hourlyWage * workHours;
+
+            var totalAnnualSalary = Math.floor(dailyWage * unusedCount);
+
+            var periodText = "";
+            if (totalYears > 0) {
+                periodText = totalYears + "년 " + Math.floor(remainDaysAfterYear / 30) + "개월차 (" + diffDays.toLocaleString() + "일째)";
+            } else {
+                periodText = totalMonths + "개월차 (" + diffDays.toLocaleString() + "일째)";
+            }
+
+            // 화면단 실시간 바인딩 출력
+            $('#res-working-period').text(periodText);
+            $('#res-generated-leave').text(generatedLeave + " 개");
+            $('#res-daily-wage').text(Math.floor(dailyWage).toLocaleString());
+            $('#result-annual-salary').text(totalAnnualSalary.toLocaleString());
+        }
+        $(document).ready(function () {
+            $(document).on('input change', '#join-date, #work-hours-select, #monthly-pay, #unused-count', function () {
+                calculateAnnualLeave();
+            });
+
+            // 페이지 로드 시 초기 계산
+            calculateAnnualLeave();
+        });
+    </script>
+</body>
+</html>

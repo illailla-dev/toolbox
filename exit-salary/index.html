@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퇴직금 및 실업급여 계산기 - 퇴사 가치 실수령액 환산 | 에브리캘크</title>
+    <meta name="description" content="퇴사 직전 3개월 급여와 고용보험 가입 기간을 기반으로 예상 퇴직금 및 실업급여 수령액, 지급 기간을 2026년 최신 법정 기준에 맞춰 실시간으로 모의 계산합니다.">
+    <meta name="keywords" content="퇴직금 계산기, 실업급여 계산기, 퇴사 계산기, 실업급여 수령조건, 평균임금 계산, 실업급여 상한액, 실업급여 하한액, 퇴직금 세전">
+    <link class="canonical" href="https://every-calc.co.kr/exit-salary/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/exit-salary.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="퇴직금 및 실업급여 계산기 - 나의 퇴사 가치 환산">
+    <meta property="og:description" content="내가 퇴사하면 퇴직금은 얼마이고 실업급여는 몇 달 동안 총 얼마를 받을 수 있을까? 최신 고용노동부 기준법을 반영한 모의 정산 엔진을 만나보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/exit-salary/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>💼 퇴사 가치 환산기 (퇴직금 & 실업급여)</h2>
+                <p>근무 기간과 최근 급여 정보를 입력하시면 예상 법정 퇴직금과 실업급여(구직급여) 총 예상 수령액을 한눈에 계산해 드립니다.</p>
+                <form id="exit-form" class="form" onsubmit="return false;">
+                    <!-- 1. 재직 정보 -->
+                    <div class="input-group-box">
+                        <h3>1. 재직 및 급여 정보 입력</h3>
+                        <div class="input-item">
+                            <label for="work-days">총 재직 기간 (일수)</label>
+                            <input type="number" id="work-days" placeholder="예: 365" min="0" step="1" class="form-control">
+                            <p class="guide-text mt-1">* 퇴직금은 법정 기준 1년(365일) 이상 연속 근로 시 발생합니다.</p>
+                        </div>
+                        <div class="input-item mt-2">
+                            <label for="avg-salary">퇴사 직전 3개월 월 평균 급여 (원)</label>
+                            <input type="number" id="avg-salary" placeholder="예: 3500000" min="0" step="1" class="form-control">
+                        </div>
+                    </div>
+                    <!-- 2. 고용보험 정보 -->
+                    <div class="input-group-box">
+                        <h3>2. 고용보험 가입 및 연령 설정 (실업급여용)</h3>
+                        <div class="input-item">
+                            <label for="insurance-period">고용보험 총 가입 기간 (피보험기간)</label>
+                            <select id="insurance-period" class="form-control">
+                                <option value="1">1년 미만 (최소 180일 이상 충족 조건)</option>
+                                <option value="3">1년 이상 ~ 3년 미만</option>
+                                <option value="5">3년 이상 ~ 5년 미만</option>
+                                <option value="10">5년 이상 ~ 10년 미만</option>
+                                <option value="11">10년 이상</option>
+                            </select>
+                        </div>
+                        <div class="input-item mt-2">
+                            <label for="exit-age">퇴사 시점의 만 나이 (연령)</label>
+                            <select id="exit-age" class="form-control">
+                                <option value="under50" selected>만 50세 미만</option>
+                                <option value="over50">만 50세 이상 또는 장애인</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 나의 퇴사 가치 환산 결과</h3>
+                    <div class="result-display">
+                        <p>예상 법정 퇴직금 (세전): <strong id="res-severance" style="color: var(--orange);">0</strong> 원</p>
+                        <p>실업급여 1일 지급액: <strong id="res-unemploy-daily" style="color: var(--green);">0</strong> 원</p>
+                        <p>실업급여 총 소정급여일수: <strong id="res-unemploy-days" style="color: var(--purple);">0</strong> 일</p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">최종 실업급여 총 수령액: <strong id="result-exit-salary">0</strong> 원</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 실업급여는 근로의 의사와 능력이 있음에도 취업하지 못한 상태에서 재취업 활동을 하는 조건(자진퇴사 원칙적 제외) 하에 지급됩니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        // js/exit-salary.js
+        $(document).ready(function () {
+            $('#exit-form').on('input change', calculateExitValue);
+
+            function calculateExitValue() {
+                const workDays = parseInt($('#work-days').val(), 10) || 0;
+                const avgSalary = parseFloat($('#avg-salary').val()) || 0;
+                const insurancePeriod = parseInt($('#insurance-period').val(), 10) || 0;
+                const exitAge = $('#exit-age').val();
+
+                // 1. [버그 교정] 법정 퇴직금 정밀 연산 엔진
+                // 법정 기준 수식: 직전 4개월간 평균 일급(월급 / 30일) × 30일 × (총재직일수 / 365)
+                // 약산식으로 환산 시 최종 수식은 (월 평균급여 × 총재직일수) / 365 가 되어야 뻥튀기가 없습니다.
+                let severancePay = 0;
+                if (workDays >= 365) {
+                    severancePay = Math.floor((avgSalary * workDays) / 365); // 👈 30배 뻥튀기 오류 완벽 교정!
+                } else {
+                    severancePay = 0;
+                }
+
+                // 2. 실업급여 1일 지급액 산정 엔진 (평균 일급의 60%)
+                const dailyAvgWage = avgSalary / 30;
+                let unemployDailyRate = dailyAvgWage * 0.6;
+
+                // 2026년 고용노동부 최신 공식 상한액 및 하한액 캡 (하루 8시간 주 5일 전일제 기준)
+                const maxDaily = 68100;
+                const minDailyBase = 66048; // 하루 66,048원 보장
+
+                // 초저임금 예외 방어 근로시간 산정 로직
+                let workingHoursPerDay = 8;
+                if (avgSalary > 0 && avgSalary < 1500000) {
+                    const estimatedHourlyWage = 10320;
+                    const totalMonthlyHours = avgSalary / estimatedHourlyWage;
+                    workingHoursPerDay = (totalMonthlyHours / 4.345) / 5;
+                    if (workingHoursPerDay < 4) workingHoursPerDay = 4;
+                    if (workingHoursPerDay > 8) workingHoursPerDay = 8;
+                }
+
+                // 근로시간 비례 일일 하한액 최종 확정
+                const calculatedMinDaily = (minDailyBase / 8) * workingHoursPerDay;
+
+                if (unemployDailyRate > maxDaily) {
+                    unemployDailyRate = maxDaily;
+                } else if (unemployDailyRate < calculatedMinDaily && avgSalary > 0) {
+                    unemployDailyRate = calculatedMinDaily;
+                } else if (avgSalary === 0) {
+                    unemployDailyRate = 0;
+                }
+
+                // 3. 고용보험 가입 기간 및 소정급여일수 매칭
+                let benefitDays = 0;
+
+                if (avgSalary > 0) {
+                    let effectivePeriod = insurancePeriod;
+                    if (workDays >= 365 && effectivePeriod === 1) {
+                        effectivePeriod = 3;
+                    }
+
+                    if (exitAge === 'under50') {
+                        if (effectivePeriod === 1) benefitDays = 120;
+                        else if (effectivePeriod === 3) benefitDays = 150;
+                        else if (effectivePeriod === 5) benefitDays = 180;
+                        else if (effectivePeriod === 10) benefitDays = 210;
+                        else if (effectivePeriod === 11) benefitDays = 240;
+                    } else {
+                        if (effectivePeriod === 1) benefitDays = 120;
+                        else if (effectivePeriod === 3) benefitDays = 180;
+                        else if (effectivePeriod === 5) benefitDays = 210;
+                        else if (effectivePeriod === 10) benefitDays = 240;
+                        else if (effectivePeriod === 11) benefitDays = 270;
+                    }
+                }
+
+                // 최종 실업급여 수령 총액 계산
+                const totalUnemployPay = Math.floor(unemployDailyRate * benefitDays);
+
+                // 4. UI 출력 바인딩
+                $('#res-severance').text(Math.floor(severancePay).toLocaleString());
+                $('#res-unemploy-daily').text(Math.round(unemployDailyRate).toLocaleString());
+                $('#res-unemploy-days').text(benefitDays.toLocaleString());
+                $('#result-exit-salary').text(totalUnemployPay.toLocaleString());
+            }
+        });
+
+    </script>
+</body>
+</html>

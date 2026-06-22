@@ -1,0 +1,58 @@
+@charset "utf-8";
+@import url('common.css');
+@import url('layout.css');
+
+.vaccine-timeline {
+    margin-top: 1rem;
+    border-left: 2px solid var(--blue, #2196f3);
+    padding-left: 15px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.timeline-item::before {
+    content: '•';
+    position: absolute;
+    left: -22px;
+    top: -.35rem;
+    color: var(--blue, #2196f3);
+    font-size: 1.75rem;
+    font-weight: bold; line-height: 1;
+}
+
+.timeline-age {
+    font-weight: bold;
+    color: var(--orange, #ff9800);
+    font-size: .875rem;
+    margin-bottom: 3px;
+}
+
+.timeline-title {
+    font-weight: bold;
+    color: #333;
+    font-size: .875rem;
+}
+
+.timeline-date {
+    font-size: .8125rem;
+    color: #666;
+}
+
+@media print {
+    /* 1. 화면에 보이는 헤더, 사이드바, 광고창, 입력 폼 구역을 인쇄 종이에서 완벽 은폐 */
+    #wrap {display: block;}
+    #header, #gnb, #sidebar, #footer, .bottom-ad, #baby-form, .btn-print-box { display: none !important; }
+
+    /* 2. 여백 및 본문 박스 테두리 최적화로 깨끗한 백색 용지 연출 */
+    body, html { background: #fff !important; color: #000 !important; font-size: 14pt !important; }
+    #wrap, main, #content, .calculator-box, .result-box { width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+
+    /* 3. 인쇄 용지 내 제목 강제 추가 스타일 */
+    .calculator-box h2::after { content: " 예방접종 타임라인 달력"; font-size: 18pt; font-weight: bold; }
+    .vaccine-timeline { border-left: 3px solid #000 !important; }
+    .timeline-age { color: #000 !important; }
+    .timeline-date span { color: #000 !important; border-bottom: 1px dashed #000; }
+}

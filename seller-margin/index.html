@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트스토어 및 공동구매 마진율 계산기 - 셀러 순수익 계산 | 에브리캘크</title>
+    <meta name="description" content="스마트스토어, 쿠팡윙, 인스타 공동구매 진행 시 도매 원가, 판매가, 플랫폼 수수료 및 배송비를 반영하여 최종 마진 금액과 마진율을 실시간으로 정확하게 계산합니다.">
+    <meta name="keywords" content="스마트스토어 마진율, 마진 계산기, 쿠팡 수수료 계산, 공동구매 마진, 판매자 순수익, 오픈마켓 정산, 쇼핑몰 원가계산">
+    <link class="canonical" href="https://every-calc.co.kr/seller-margin/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/seller-margin.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="스마트스토어 및 공동구매 마진율 계산기">
+    <meta property="og:description" content="플랫폼 수수료 떼고 나면 진짜 얼마 남을까? 도매 원가와 수수료만 입력하면 판매 마진과 순수익을 1초 만에 모의 계산해 드립니다.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/seller-margin/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📈 스마트스토어 / 공동구매 마진율 계산기</h2>
+                <p>상품 판매 시 발생하는 도매가, 판매가, 택배비 및 플랫폼별 수수료를 정산하여 실제 내 통장에 남는 순마진을 추정합니다.</p>
+                <form id="margin-form" class="form" onsubmit="return false;">
+                    <!-- 1. 상품 가격 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 상품 가격 정보 입력</h3>
+                        <div class="input-item">
+                            <label for="wholesale-price">도매 매입 원가 (원)</label>
+                            <input type="number" id="wholesale-price" placeholder="예: 6000" min="0" step="1" class="form-control">
+                        </div>
+                        <div class="input-item mt-2">
+                            <label for="customer-price">소비자 판매가 (원)</label>
+                            <input type="number" id="customer-price" placeholder="예: 12000" min="0" step="1" class="form-control">
+                        </div>
+                    </div>
+                    <!-- 2. 수수료 및 물류비 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 플랫폼 수수료 및 배송비 설정</h3>
+                        <div class="input-item">
+                            <label for="platform-select">판매 플랫폼 (수수료 자동 반영)</label>
+                            <select id="platform-select" class="form-control">
+                                <option value="3.85" selected>네이버 스마트스토어 (평균 3.85%)</option>
+                                <option value="10.8">쿠팡 윙 마켓 (평균 10.8%)</option>
+                                <option value="5.0">인스타 공동구매 / 블로그 페이 (평균 5.0%)</option>
+                                <option value="12.0">종합 오픈마켓 (지마켓/11번가 평균 12.0%)</option>
+                                <option value="custom">직접 입력</option>
+                            </select>
+                            <input type="number" id="custom-fee" placeholder="직접 입력(%) 예: 8" min="0" step="0.1" class="form-control mt-2" style="display:none;">
+                        </div>
+                        <div class="input-item mt-2">
+                            <label for="shipping-cost">셀러 부담 배송비/포장비 (원)</label>
+                            <input type="number" id="shipping-cost" placeholder="무료배송 전환 시 낼 택배비 (없으면 0)" value="0" min="0" step="1" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 최종 판매 마진 정산 예측</h3>
+                    <div class="result-display">
+                        <p>예상 플랫폼 연동 수수료: <strong id="res-fee-cost" style="color: var(--orange);">0</strong> 원</p>
+                        <p>매출 대비 마진율 (%): <strong id="res-margin-rate" style="color: var(--green);">0.00</strong> %</p>
+                        <hr>
+                        <!-- 📌 내용에 맞춰 명확하고 겹치지 않는 고유 ID 적용 완료 -->
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">최종 개당 순마진 금액: <strong id="result-total-salary">0</strong> 원</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 플랫폼별 매출 연동 수수료는 연간 매출 규모나 연동 서비스(네이버 쇼핑 연동 등)에 따라 약간의 오차가 있을 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        // js/seller-margin.js
+        $(document).ready(function () {
+            // 폼 안의 선택 및 인풋 동작 트래킹
+            $('#platform-select').on('change', function () {
+                if ($(this).val() === 'custom') {
+                    $('#custom-fee').show();
+                } else {
+                    $('#custom-fee').hide();
+                }
+                calculateMargin();
+            });
+
+            $('#margin-form').on('input change', calculateMargin);
+
+            function calculateMargin() {
+                const wholesalePrice = parseFloat($('#wholesale-price').val()) || 0;
+                const customerPrice = parseFloat($('#customer-price').val()) || 0;
+                const shippingCost = parseFloat($('#shipping-cost').val()) || 0;
+
+                let feeRate = $('#platform-select').val();
+                if (feeRate === 'custom') {
+                    feeRate = parseFloat($('#custom-fee').val()) || 0;
+                } else {
+                    feeRate = parseFloat(feeRate) || 0;
+                }
+
+                if (customerPrice === 0) return;
+
+                // 1. 수수료 금액 연산 (판매가 기준)
+                const feeCost = Math.ceil(customerPrice * (feeRate / 100));
+
+                // 2. 최종 순수익 개당 마진 금액 계산
+                // 수식: 소비자 판매가 - 도매 원가 - 플랫폼 수수료 - 셀러 부담 물류비
+                const pureMargin = Math.floor(customerPrice - wholesalePrice - feeCost - shippingCost);
+
+                // 3. 순마진율 계산 (%) = (순마진 / 소비자 판매가) * 100
+                const marginRate = (pureMargin / customerPrice) * 100;
+
+                // 4. 독립 고유 ID 스펙에 맞춰 실시간 렌더링 출력 및 콤마 포맷팅
+                $('#res-fee-cost').text(feeCost.toLocaleString());
+                $('#res-margin-rate').text(marginRate.toFixed(2));
+                $('#result-total-salary').text(pureMargin.toLocaleString());
+
+                // 마진율 적자 시 시각적 분기 컬러 마킹 보완
+                if (pureMargin >= 0) {
+                    $('#result-total-salary').css('color', 'var(--blue)');
+                    $('#res-margin-rate').css('color', 'var(--green)');
+                } else {
+                    $('#result-total-salary').css('color', 'var(--red)');
+                    $('#res-margin-rate').css('color', 'var(--red)');
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

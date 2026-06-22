@@ -11,7 +11,7 @@
     --font-family: Pretendard, sans-serif;
 
     /* color */
-    --blue: #0089f2;
+    --blue: #0f89e7;
     --dark: #1b222d;
     --bg: #f5fbff;
     --border: #e5e5e5;
@@ -26,7 +26,7 @@
     --red: #ff4757;
     --orange: #e67e22;
     --dark-orange: #fb7638;
-    --green: #2ecc71;
+    --green: #17b13b;
     --purple: #7c46b2;
 
     /* effect */
@@ -209,8 +209,7 @@ textarea {resize: none;}
 .input-group-box, .result-box  {border: 1px solid var(--border); border-radius: var(--radius-xs); padding:2rem; box-shadow: var(--shadow); margin-bottom: 1rem;}
 .flex-radios {display: flex; gap: var(--gap);}
 .flex-radios .radio label {width: auto;}
-.result-box {border-color: var(--green);border-width: 2px; border-radius: var(--radius-sm);}
-.result-display {font-size: 1.25rem;}
+.result-box {border-color: var(--green);border-width: 2px; border-radius: var(--radius-sm);font-size: 1.125rem;}
 .item-box+.item-box {margin-top: .5rem;}
 
 @media (max-width: 1024px) {

@@ -10,7 +10,6 @@
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/coupang-partners.js"></script>
     <link rel="stylesheet" href="/css/coupang-partners.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="쿠팡 파트너스 정산 계산기 - 세후 실수령액 자동 계산">
@@ -26,7 +25,6 @@
 </head>
 <body>
     <div id="wrap">
-        <!-- 공통 헤더 조립 -->
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
@@ -34,7 +32,7 @@
                 <h2>📦 쿠팡 파트너스 / 마케팅 정산 계산기</h2>
                 <p>발생한 총 구매액(매출) 또는 세전 수익금을 기반으로 플랫폼 수수료와 세금을 제한 최종 세후 입금액을 모의 계산합니다.</p>
                 <form id="coupang-form" class="form" onsubmit="return false;">
-                    <!-- 1. 입력 방식 선택 (라디오 버튼으로 유저 편의성 증대) -->
+                    <!-- 1. 입력 방식 선택 -->
                     <div class="input-group-box">
                         <h3>1. 계산 방식 선택</h3>
                         <div class="flex-radios">
@@ -105,5 +103,65 @@
         <footer id="footer" data-include="footer.html"></footer>
     </div>
     <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 계산 방식 라디오 버튼 체인지 이벤트
+            $('input[name="calc-type"]').on('change', function () {
+                if ($(this).val() === 'sales') {
+                    $('#field-sales').show();
+                    $('#field-revenue').hide();
+                } else {
+                    $('#field-sales').hide();
+                    $('#field-revenue').show();
+                }
+                calculateCoupang();
+            });
+
+            // 수수료율 셀렉트 박스 직접입력 분기 처리
+            $('#commission-rate').on('change', function () {
+                if ($(this).val() === 'custom') {
+                    $('#custom-rate').show();
+                } else {
+                    $('#custom-rate').hide();
+                }
+                calculateCoupang();
+            });
+
+            // 입력 폼 내의 모든 값 변동 감지하여 실시간 계산 수행
+            $('#coupang-form').on('input change', calculateCoupang);
+
+            function calculateCoupang() {
+                const calcType = $('input[name="calc-type"]:checked').val();
+                const taxType = parseFloat($('#tax-type').val()) || 0;
+
+                let preTaxRevenue = 0;
+
+                // 1. 세전 수익금 결정 단계
+                if (calcType === 'sales') {
+                    const totalSales = parseFloat($('#total-sales').val()) || 0;
+                    let rate = $('#commission-rate').val();
+
+                    if (rate === 'custom') {
+                        rate = parseFloat($('#custom-rate').val()) || 0;
+                    } else {
+                        rate = parseFloat(rate) || 0;
+                    }
+
+                    preTaxRevenue = totalSales * (rate / 100);
+                } else {
+                    preTaxRevenue = parseFloat($('#pre-tax-revenue').val()) || 0;
+                }
+
+                // 2. 세금 및 실수령액 계산 단계
+                const taxAmount = preTaxRevenue * (taxType / 100);
+                const netSalary = preTaxRevenue - taxAmount;
+
+                // 3. UI 바인딩 및 원화 세자리 콤마 포맷팅
+                $('#result-pre-tax').text(Math.floor(preTaxRevenue).toLocaleString());
+                $('#result-tax').text(Math.floor(taxAmount).toLocaleString());
+                $('#result-net-salary').text(Math.floor(netSalary).toLocaleString());
+            }
+        });
+    </script>
 </body>
 </html>

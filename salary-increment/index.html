@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연봉 인상률 계산기 - 실수령액 및 월급 차액 자동 환산 | 에브리캘크</title>
+    <meta name="description" content="기존 연봉과 인상 후 연봉을 입력하시면 정확한 연봉 인상률(%)은 물론, 4대보험과 세금을 공제한 실제 월 세후 실수령액 차액을 실시간 정확하게 계산해 드립니다.">
+    <meta name="keywords" content="연봉 인상률 계산기, 연봉 계산기, 연봉 실수령액, 연봉 협상 계산, 월급 차액 계산, 세후 월급 인상액, 4대보험 공제, 이직 연봉 계산">
+    <link class="canonical" href="https://every-calc.co.kr/salary-increment/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/salary-increment.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="직장인 연봉 인상률 및 실수령 차액 계산기">
+    <meta property="og:description" content="연봉 협상이나 이직 시 제안받은 앞자리가 내 진짜 세후 월급을 얼마나 바꿔줄까? 인상률과 월 실수령 차액을 1초 만에 확인해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/salary-increment/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🔤 연봉 인상률 및 실수령 차액 계산기</h2>
+                <p>기존 연봉과 새롭게 제안받거나 인상된 연봉을 만원 단위로 적어주세요. 실수령 월급이 얼마나 늘어나는지 실시간으로 비교 분석합니다.</p>
+                <form id="increment-form" class="form" onsubmit="return false;">
+                    <!-- 1. 기존 연봉 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 기존 (현재) 연봉 입력</h3>
+                        <div class="input-item">
+                            <label for="before-salary">기존 연봉 (만원)</label>
+                            <input type="number" id="before-salary" class="form-control" placeholder="예: 4000" min="0" step="1">
+                        </div>
+                    </div>
+                    <!-- 2. 변경 연봉 입력단 -->
+                    <div class="input-group-box">
+                        <h3>2. 인상 후 (조정) 연봉 입력</h3>
+                        <div class="input-item">
+                            <label for="after-salary">인상 후 연봉 (만원)</label>
+                            <input type="number" id="after-salary" class="form-control" placeholder="예: 4500" min="0" step="1">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 연봉 협상 결과 시뮬레이션</h3>
+                    <div class="result-display">
+                        <p>📈 최종 연봉 인상률: <strong id="res-increment-rate" style="color: var(--orange);">0.00</strong> %</p>
+                        <p>💵 연간 세전 인상 총액: <strong id="res-year-pretax" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <p>◽ 기존 예상 월 실수령액: <span id="res-net-before">0</span> 원</p>
+                        <p>◽ 인상 후 예상 월 실수령액: <span id="res-net-after">0</span> 원</p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">매달 통장에 찍힐 세후 월급 차액: <strong id="result-increment-salary">0</strong> 원</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 퇴직금 별도 기준이며, 대한민국 소득세법 및 4대보험 요율 누진 구간을 간이 적용한 결과로 부양가족 수나 비과세 식대 항목에 따라 실제 명세서와 소량의 오차가 있을 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 내부 인풋 폼의 글자 변동을 가차 없이 최상위 위임 감지
+            $(document).on('input change', '#before-salary, #after-salary', function () {
+                calculateIncrement();
+            });
+
+            function calculateIncrement() {
+                // 만원 단위를 원화 단위로 환산 (* 10000)
+                const beforeSalary = (parseFloat($('#before-salary').val()) || 0) * 10000;
+                const afterSalary = (parseFloat($('#after-salary').val()) || 0) * 10000;
+
+                if (beforeSalary === 0 || afterSalary === 0) {
+                    $('#res-increment-rate').text('0.00');
+                    $('#res-year-pretax').text('0');
+                    $('#res-net-before').text('0');
+                    $('#res-net-after').text('0');
+                    $('#result-increment-salary').text('0');
+                    return;
+                }
+
+                // 1. 인상률(%) 계산 = ((인상후 - 기존) / 기존) * 100
+                const incrementRate = ((afterSalary - beforeSalary) / beforeSalary) * 100;
+
+                // 2. 연간 세전 인상 총액
+                const yearPretaxDiff = afterSalary - beforeSalary;
+
+                // 3. 대한민국 간이 세후 실수령액 역산 함수 가동 (4대보험 및 소득세 누진 구간 간이 모델)
+                const netBeforeMonthly = calculateNetMonthly(beforeSalary);
+                const netAfterMonthly = calculateNetMonthly(afterSalary);
+
+                // 4. 최종 매달 내 손에 쥐어지는 세후 월급 순수 차액
+                const monthlyNetDiff = netAfterMonthly - netBeforeMonthly;
+
+                // 5. UI 가시화 및 3자리 콤마 바인딩 포맷팅
+                // 인상률이 마이너스일 때와 플러스일 때 시각적 분기 컬러 마킹
+                if (monthlyNetDiff >= 0) {
+                    $('#res-increment-rate').text('+' + incrementRate.toFixed(2)).css('color', 'var(--orange)');
+                    $('#result-increment-salary').text('+' + monthlyNetDiff.toLocaleString()).css('color', 'var(--blue)');
+                } else {
+                    $('#res-increment-rate').text(incrementRate.toFixed(2)).css('color', 'var(--red)');
+                    $('#result-increment-salary').text(monthlyNetDiff.toLocaleString()).css('color', 'var(--red)');
+                }
+
+                $('#res-year-pretax').text(yearPretaxDiff.toLocaleString());
+                $('#res-net-before').text(netBeforeMonthly.toLocaleString());
+                $('#res-net-after').text(netAfterMonthly.toLocaleString());
+            }
+
+            // 고용노동부 및 국세청 간이세액 준용 실수령 변환기 내부 보조 수식 (연봉 기준)
+            function calculateNetMonthly(annualSalary) {
+                const monthlyPreTax = annualSalary / 12;
+
+                // 4대보험 및 근로소득세 간이 누진 공제율 시뮬레이션 구간 세팅
+                let deductionRate = 0.09; // 연봉 3천 미만 기본 9% 공제
+                if (annualSalary >= 70000000) deductionRate = 0.16;     // 7천 이상 고소득 구간 16% 공제
+                else if (annualSalary >= 50000000) deductionRate = 0.13; // 5천 이상 13% 공제
+                else if (annualSalary >= 30000000) deductionRate = 0.11; // 3천 이상 11% 공제
+
+                const totalDeduction = monthlyPreTax * deductionRate;
+                return Math.floor(monthlyPreTax - totalDeduction);
+            }
+
+            // 인클루드 조립 시점 타이밍 안전망 폴러 트리거
+            const runLoop = setInterval(function () {
+                if ($('#before-salary').length) {
+                    calculateIncrement();
+                    clearInterval(runLoop);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

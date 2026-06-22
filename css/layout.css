@@ -47,8 +47,10 @@ section h1+p {font-size: 1.125rem; margin-top: -1.5rem; margin-bottom: 2rem;}
 #content{grid-area: main;padding: var(--gap-lg);}
 h2 {font-size: clamp(22px, 0.74vw + 17.83px, 32px);margin-bottom: 2rem;}
 h2+p {font-size: 1.125rem; margin-top: -1.5rem; margin-bottom: 2rem;}
-h3 {font-size: 1.125rem; margin-bottom: 1rem;}
+h3 {font-size: 1.25rem; margin-bottom: 1rem;}
 h3+p {margin-top: -.5rem;margin-bottom: 1rem;}
+h4 {font-size: 1.25rem; margin-bottom: 1rem;}
+h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
 .board-section h3 {font-size: clamp(22px, 0.74vw + 17.83px, 32px);}
 .board-list {font-size: 1.125rem;}
 .board-list li {display: flex; gap: var(--gap-xs);}
@@ -60,7 +62,7 @@ h3+p {margin-top: -.5rem;margin-bottom: 1rem;}
 #footer {grid-area: footer;font-size: 90%; background-color: var(--gray80); padding-top: 2rem; padding-bottom: 2rem; text-align: center; margin-top: auto;}
 .footer-disclaimer {color: var(--gray);}
 
-.guide-text {color: var(--gray); margin-bottom: 1rem;}
+.guide-text {color: var(--gray); margin-bottom: 1rem; font-size: 1rem;}
 .guide-text:last-child {margin-bottom: 0;}
 
 @media (max-width: 1024px) {

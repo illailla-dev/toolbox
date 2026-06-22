@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중고거래 네고 계산기 - 당근 번개장터 택배비 포함 마진 산출 | 에브리캘크</title>
+    <meta name="description" content="중고거래 시 판매 희망가와 상대방의 가격 제안(네고 비율), 배송비 부담 여부를 종합하여 판매 후 내 손에 쥐어지는 진짜 세후 실수령액과 손실액을 실시간 계산합니다.">
+    <meta name="keywords" content="중고거래 계산기, 당근마켓 네고, 번개장터 수수료, 중고나라 택배비, 가격 제안 계산, 네고 마진율, 중고 판매 순수익">
+    <link class="canonical" href="https://every-calc.co.kr/used-trade/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/used-trade.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="중고거래 네고 및 택배비 마진 계산기">
+    <meta property="og:description" content="가격 깎아주고 배송비까지 내면 진짜 얼마 남을까? 당근, 번개장터 거래 전 내 손에 꽂히는 진짜 중고 정산금을 실시간 모의 계산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/used-trade/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>💰 중고거래 네고 & 택배비 마진 계산기</h2>
+                <p>희망하는 판매 가격과 허용할 네고(할인) 조건, 택배비 부담 여부를 조합하여 최종적으로 내 주머니에 들어오는 진짜 정산금액을 시뮬레이션합니다.</p>
+                <form id="trade-form" class="form" onsubmit="return false;">
+                    <!-- 1. 판매 희망가 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 최초 판매 희망 가격 입력</h3>
+                        <div class="input-item">
+                            <label for="desired-price">최초 등록/희망 판매가 (원)</label>
+                            <!-- 📌 부트스트랩 .form-control 규격 적용 -->
+                            <input type="number" id="desired-price" class="form-control" placeholder="예: 50000" min="0" step="1">
+                        </div>
+                    </div>
+                    <!-- 2. 네고율 및 배송비 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 가격 제안(네고) 및 배송비 설정</h3>
+                        <div class="input-item">
+                            <label for="nego-select">상대방 가격 제안 (네고 비율)</label>
+                            <select id="nego-select" class="form-control" style="margin-bottom:10px;">
+                                <option value="0" selected>네고 없음 (원가 그대로 판매)</option>
+                                <option value="5">5% 네고 (약간의 가격 절충)</option>
+                                <option value="10">10% 네고 (일반적인 중고 절충)</option>
+                                <option value="20">20% 네고 (과감한 급처가 판매)</option>
+                                <option value="custom">직접 할인율 입력 (%)</option>
+                            </select>
+                            <input type="number" id="custom-nego" class="form-control mb-2" placeholder="할인율 직접 입력(%) 예: 15" min="0" max="100" step="0.1" style="display:none;">
+                            <label for="shipping-bearer" class="mt-2">배송비(택배비) 부담 조건</label>
+                            <select id="shipping-bearer" class="form-control" style="margin-bottom:10px;">
+                                <option value="buyer" selected>구매자 부담 (착불 또는 배송비 별도)</option>
+                                <option value="seller">판매자 본인 부담 (무료 배송 서비스)</option>
+                            </select>
+                            <input type="number" id="shipping-cost" class="form-control" placeholder="예상 배송 비용 입력 (원) 예: 4000" value="4000" min="0" step="1" style="display:none;">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 최종 중고 판매 정산 결과</h3>
+                    <div class="result-display">
+                        <p>네고 적용 후 최종 판매가: <strong id="res-nego-price" style="color: var(--orange);">0</strong> 원</p>
+                        <p>차감된 총 가격 할인액: <strong id="res-discount-amount" style="color: var(--green);">0</strong> 원</p>
+                        <p id="res-shipping-text" class="guide-text mt-3">* 배송비는 구매자가 지불하므로 정산금에서 차감되지 않습니다.</p>
+                        <hr>
+                        <!-- 📌 내용에 딱 맞춘 고유 결과 타겟 ID 적용 -->
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">최종 내 주머니 실수령액: <strong id="result-trade-salary">0</strong> 원</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 번개장터의 번개페이나 중고나라 안전결제 이용 시 발생하는 결제 수수료(약 3.5%)는 판매 환경에 따라 추가 차감될 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        // js/used-trade.js
+        $(document).ready(function () {
+            // UI 분기 제어 및 이벤트 트래킹
+            $('#nego-select').on('change', function () {
+                if ($(this).val() === 'custom') {
+                    $('#custom-nego').show();
+                } else {
+                    $('#custom-nego').hide();
+                }
+                calculateTrade();
+            });
+
+            $('#shipping-bearer').on('change', function () {
+                if ($(this).val() === 'seller') {
+                    $('#shipping-cost').show();
+                    $('#res-shipping-text').text('* 판매자 부담 조건으로 배송비가 최종 정산금에서 차감됩니다.').css('color', '#d9534f');
+                } else {
+                    $('#shipping-cost').hide();
+                    $('#res-shipping-text').text('* 배송비는 구매자가 지불하므로 정산금에서 차감되지 않습니다.').css('color', '#666');
+                }
+                calculateTrade();
+            });
+
+            $('#trade-form').on('input change', calculateTrade);
+            calculateTrade(); // 초기화
+
+            function calculateTrade() {
+                const desiredPrice = parseFloat($('#desired-price').val()) || 0;
+                const shippingBearer = $('#shipping-bearer').val();
+                const shippingCost = (shippingBearer === 'seller') ? (parseFloat($('#shipping-cost').val()) || 0) : 0;
+
+                let negoRate = $('#nego-select').val();
+                if (negoRate === 'custom') {
+                    negoRate = parseFloat($('#custom-nego').val()) || 0;
+                } else {
+                    negoRate = parseFloat(negoRate) || 0;
+                }
+
+                if (desiredPrice === 0) return;
+
+                // 1. 가격 할인액(네고 금액) 계산 및 소수점 절사
+                const discountAmount = Math.floor(desiredPrice * (negoRate / 100));
+
+                // 2. 네고 적용 후 최종 판매가
+                const finalNegoPrice = desiredPrice - discountAmount;
+
+                // 3. 최종 판매자 내 주머니 실수령 정산금액 (최종 판매가 - 내가 부담할 택배비)
+                const pureNetProfit = Math.floor(finalNegoPrice - shippingCost);
+
+                // 4. UI 뷰포트 원화 포맷 바인딩 출력
+                $('#res-nego-price').text(finalNegoPrice.toLocaleString());
+                $('#res-discount-amount').text(discountAmount.toLocaleString());
+                $('#result-trade-salary').text(pureNetProfit.toLocaleString());
+
+                // 네고+배송비 폭탄으로 적자 매매 발생 시 시각적 경고 분기
+                if (pureNetProfit >= 0) {
+                    $('#result-trade-salary').css('color', 'var(--blue)');
+                } else {
+                    $('#result-trade-salary').css('color', 'var(--red)');
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
