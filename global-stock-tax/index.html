@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해외주식 양도소득세 절세 및 분할매도 계산기 | 에브리캘크</title>
+    <meta name="description" content="연간 250만 원 기본공제를 활용하여 해외주식 양도소득세를 내지 않기 위한 최적의 절세 가이드를 시뮬레이션합니다. 손실 중인 종목의 추가 매도 필요액을 실시간으로 계산해 드립니다.">
+    <meta name="keywords" content="해외주식양도소득세, 해외주식절세, 주식분할매도, 250만원공제, 손실확정, 해외주식세금, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/global-stock-tax/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/global-stock-tax.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="해외주식 양도소득세 절세 및 분할매도 계산기 - 에브리캘크">
+    <meta property="og:description" content="올해 해외주식 세금을 아끼기 위해 얼마치 손실을 확정해야 할까? 실시간으로 시뮬레이션하고 절세 가이드를 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/global-stock-tax/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📉 해외주식 양도세 절세 시뮬레이터</h2>
+                <p>해외주식은 연간(1월 1일 ~ 12월 31일 결제일 기준) 발생한 양도차익 총합 중 250만 원까지 비과세 공제됩니다. 올해 이미 실현한 수익과 현재 계좌에 물려있는 손실 종목을 활용하여 세금을 0원으로 만드는 분할매도 전략을 역산합니다.</p>
+                <form id="global-stock-tax-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 올해 실현 수익 및 미실현 손실 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="stock-profit">올해 이미 매도해서 확정된 수익 (원)</label>
+                            <input type="number" id="stock-profit" class="form-control" placeholder="예: 5000000" min="0" value="4000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 다른 계좌나 타 증권사에서 실현한 수익도 합산해야 합니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="stock-loss">올해 이미 매도해서 확정된 손실 (원)</label>
+                            <input type="number" id="stock-loss" class="form-control" placeholder="예: 500000" min="0" value="0">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="stock-unrealized-loss">현재 보유 중인 종목의 평가손실 총액 (원)</label>
+                            <input type="number" id="stock-unrealized-loss" class="form-control" placeholder="예: 3000000" min="0" value="2000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 절세를 위해 연말 전에 손실 확정(매도 후 재매수)할 수 있는 자금 규모입니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 양도소득세 및 절세 목표액 결과</h3>
+                    <div class="result-display">
+                        <p>현재 과세 대상 순수익 (수익-손실): <strong id="res-stock-net-profit" style="color: #6c757d;">0</strong> 원</p>
+                        <p>양도소득세 기본 공제액: <strong id="res-stock-deduction" style="color: var(--green);">2,500,000</strong> 원</p>
+                        <p>과세표준 금액: <strong id="res-stock-tax-base" style="color: var(--orange);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 납부 세액 필수 강조 규격 적용 (양도세 20% + 지방세 2% = 총 22%) -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            현재 기준 예상 양도소득세: <strong id="result-global-stock-tax-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <!-- 📌 약속해주신 마스터 가이드 박스 UI 규격 완벽 반영 -->
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 해외주식 세금 제로(0원) 절세 전략 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="stock-tax-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 해외주식 양도소득세는 매년 1월 1일부터 12월 31일까지 결제 완료된 건을 기준으로 이듬해 5월에 신고 및 납부합니다. 미국 주식의 경우 국내 시간 기준으로 체결일 기준 T+1일(또는 증권사별 결제일 기준)에 정산되므로, 절세를 위한 손실 확정 매도는 12월 마지막 영업일보다 2~3일 여유 있게 실행하셔야 안전합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#global-stock-tax-form', calculateGlobalStockTax);
+
+            function calculateGlobalStockTax() {
+                // 1. 값 추출 및 예외 제한 처리
+                var profit = parseFloat($('#stock-profit').val()) || 0;
+                var loss = parseFloat($('#stock-loss').val()) || 0;
+                var unrealizedLoss = parseFloat($('#stock-unrealized-loss').val()) || 0;
+
+                if (profit < 0) profit = 0;
+                if (loss < 0) loss = 0;
+                if (unrealizedLoss < 0) unrealizedLoss = 0;
+
+                // 2. 현재 순수익 및 과세표준 연산
+                var netProfit = profit - loss;
+                const DEFAULT_DEDUCTION = 2500000;
+                var deduction = DEFAULT_DEDUCTION;
+
+
+                var taxBase = netProfit - deduction;
+                if (taxBase < 0) taxBase = 0;
+
+                // 3. 예상 양도소득세 계산 (지방소득세 포함 총 22% 적용)
+                var estimatedTax = Math.floor(taxBase * 0.22);
+
+                // 4. 세금 0원을 만들기 위한 절세 가이드 매칭 역산 알고리즘
+                var guideText = "";
+                var targetLossNeed = netProfit - deduction; // 세금을 안 내기 위해 추가로 확정해야 하는 손실액
+
+                if (netProfit <= deduction) {
+                    guideText = "✨ 축하합니다! 현재 순수익이 기본 공제 범위(250만 원) 이하이므로 <span style='color: var(--blue); font-weight:bold;'>납부하실 양도소득세가 없습니다(0원).</span> 추가로 종목 매도를 통해 손실을 확정하실 필요가 없는 안전한 상태입니다.";
+                } else {
+                    // 추가 확정해야 할 손실이 내가 보유한 미실현 손실로 커버 가능한 경우와 부족한 경우 분기
+                    if (unrealizedLoss >= targetLossNeed) {
+                        guideText = "💡 절세 솔루션: 현재 마이너스인 보유 종목 중 총 <span style='color: var(--orange); font-weight:bold;'>" + targetLossNeed.toLocaleString('ko-KR') + " 원</span>어치의 손실을 매도하여 확정(손절 후 즉시 재매수 등)하시면, 과세표준이 250만 원 이하로 떨어져 <span style='color: var(--blue); font-weight:bold;'>예상 세금인 " + estimatedTax.toLocaleString('ko-KR') + "원을 전액 절세</span>할 수 있습니다.";
+                    } else {
+                        var shortFall = targetLossNeed - unrealizedLoss;
+                        // 최대한 손실을 털어냈을 때 줄어드는 세금 기여도 계산
+                        var savedTax = Math.floor(unrealizedLoss * 0.22);
+                        var remainingTax = estimatedTax - savedTax;
+
+                        guideText = "⚠️ 손실 물량 부족: 현재 계좌의 모든 미실현 손실을 확정하더라도 세금을 완전히 0원으로 만들 수는 없습니다. 보유 중인 평가손실 <span style='color: var(--orange); font-weight:bold;'>" + unrealizedLoss.toLocaleString('ko-KR') + " 원</span>을 전부 매도 확정하시면, 기존 세금 중 <span style='font-weight:bold; color: var(--blue);'>" + savedTax.toLocaleString('ko-KR') + " 원이 절감</span>되어 최종적으로 <span style='font-weight:bold;'>" + remainingTax.toLocaleString('ko-KR') + " 원</span>만 납부하시게 됩니다.";
+                    }
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-stock-net-profit').text(netProfit.toLocaleString('ko-KR'));
+                $('#res-stock-tax-base').text(taxBase.toLocaleString('ko-KR'));
+                $('#result-global-stock-tax-salary').text(estimatedTax.toLocaleString('ko-KR'));
+                $('#stock-tax-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#stock-profit').length) {
+                    calculateGlobalStockTax();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

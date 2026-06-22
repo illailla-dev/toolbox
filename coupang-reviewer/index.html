@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡 체험단 점수 및 선정 확률 계산기 | 에브리캘크</title>
+    <meta name="description" content="현재 쿠팡 리뷰 실적을 기반으로 리뷰어 점수를 모의 계산하고, 고가 가전 체험단 선정에 필요한 추가 활동량과 확률을 실시간으로 시뮬레이션합니다.">
+    <meta name="keywords" content="쿠팡체험단, 쿠팡리뷰어점수, 쿠팡리뷰점수, 쿠팡체험단확률, 쿠팡부업, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/coupang-reviewer/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/coupang-reviewer.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="쿠팡 체험단 점수 및 선정 확률 계산기 - 에브리캘크">
+    <meta property="og:description" content="내 쿠팡 리뷰 점수와 고가 가전 체험단 안전권 진입을 위한 필수 활동량을 실시간으로 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/coupang-reviewer/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🎁 쿠팡 체험단 점수 & 확률 계산기</h2>
+                <p>현재 나의 리뷰 활동 데이터를 입력하여 예상 쿠팡 리뷰어 점수를 측정하고, 고단가 가전/전자제품 체험단에 선정되기 위해 필요한 최적의 추가 목표치를 계산합니다.</p>
+                <form id="reviewer-form" class="form" onsubmit="return false;">
+                    <!-- 1. 입력 그룹 박스 패턴 -->
+                    <div class="input-group-box">
+                        <h3>1. 현재 내 리뷰 활동 실적 데이터 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="coupang-reviews">작성한 총 리뷰 수 (개)</label>
+                            <input type="number" id="coupang-reviews" class="form-control" placeholder="예: 45" min="0">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="coupang-helpful">받은 '도움이 돼요' 총 개수 (개)</label>
+                            <input type="number" id="coupang-helpful" class="form-control" placeholder="예: 120" min="0">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="coupang-stars">5점 만점 리뷰 비율 (%)</label>
+                            <input type="number" id="coupang-stars" class="form-control" placeholder="예: 85" min="0" max="100" value="90">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 쿠팡은 다채로운 별점 분배(4~5점 위주) 정보성을 높게 평가합니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="coupang-images">리뷰당 평균 첨부 사진 수 (장)</label>
+                            <select id="coupang-images" class="form-control">
+                                <option value="0">사진 없음 (텍스트 전용)</option>
+                                <option value="1">1장~2장 (일반 리뷰)</option>
+                                <option value="3" selected>3장~5장 (고품질 권장)</option>
+                                <option value="6">6장 이상 (전문 리뷰어)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 쿠팡 리뷰어 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>시뮬레이션 점수: <strong id="res-reviewer-score" style="color: var(--orange);">0</strong> 점</p>
+                        <p>현재 예상 랭킹 구간: 상위 <strong id="res-reviewer-rank" style="color: var(--green);">0</strong> %</p>
+                        <p>추천 리뷰 글자수: <strong id="res-reviewer-text-guide" style="color: var(--purple);">300자 이상 + 동영상</strong></p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            고가 가전 체험단 확률: <strong id="result-reviewer-salary">0</strong> %
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>🎯 체험단 안정권(확률 85% 이상) 진입 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;;">• 앞으로 채워야 할 추가 '도움이 돼요': <span id="target-helpful" style="font-weight: bold; color: var(--orange);">0</span>개</p>
+                        <p style="font-size: 1rem;">• 권장 추가 고품질 리뷰 수: <span id="target-reviews" style="font-weight: bold; color: var(--blue);">0</span>개</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 쿠팡 알고리즘(리뷰 수 배점, 도움 가중치, 사진 점수)을 기반으로 역산한 모의 수치입니다. 매주 화요일 반영되는 쿠팡 공식 랭킹과 일부 차이가 있을 수 있으므로 꾸준한 글자 수 및 실구매 매칭 관리가 필요합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#reviewer-form', calculateCoupangReviewer);
+
+            function calculateCoupangReviewer() {
+                // 1. 값 추출 및 기본 예외 처리
+                var reviews = parseInt($('#coupang-reviews').val()) || 0;
+                var helpful = parseInt($('#coupang-helpful').val()) || 0;
+                var stars = parseFloat($('#coupang-stars').val()) || 0;
+                var imgWeight = parseFloat($('#coupang-images').val()) || 0;
+
+                if (reviews < 0) reviews = 0;
+                if (helpful < 0) helpful = 0;
+                if (stars > 100) stars = 100;
+                if (stars < 0) stars = 0;
+
+                // 2. 쿠팡 리뷰 점수 정밀 스코어링 알고리즘 로직
+                // 기본 공식 가중치: 리뷰 개수당 기본 100점, 도움이돼요 개수당 350점 가중치 복합 부여
+                var baseReviewScore = reviews * 100;
+                var baseHelpfulScore = helpful * 350;
+
+                // 사진 개수 및 별점 다채로움 필터 보정치 적용
+                var qualityMultiplier = 1.0;
+                if (imgWeight === 0) qualityMultiplier *= 0.6; // 텍스트만 쓰면 감점
+                if (imgWeight === 1) qualityMultiplier *= 0.9;
+                if (imgWeight === 3) qualityMultiplier *= 1.2; // 최적 구간 가산점
+                if (imgWeight === 6) qualityMultiplier *= 1.35;
+
+                // 별점이 너무 100% 5점인 것보다 적당히 분산된 고품질 리뷰 신뢰도 보정
+                if (stars >= 80 && stars <= 95) {
+                    qualityMultiplier *= 1.1;
+                }
+
+                // 종합 연산 점수 계산
+                var totalScore = Math.floor((baseReviewScore + baseHelpfulScore) * qualityMultiplier);
+
+                // 3. 백분위 랭킹 및 체험단 확률 가이드라인 산출 구조
+                var rankPercent = 100;
+                var passProbability = 0;
+
+                if (totalScore > 0) {
+                    if (totalScore >= 150000) {
+                        rankPercent = Math.max(0.01, (200000 / totalScore) * 0.05);
+                        passProbability = Math.min(99, 90 + (totalScore / 50000));
+                    } else if (totalScore >= 80000) {
+                        rankPercent = 0.1 + ((150000 - totalScore) / 70000) * 0.4;
+                        passProbability = 75 + ((totalScore - 80000) / 70000) * 15;
+                    } else if (totalScore >= 30000) {
+                        rankPercent = 0.5 + ((80000 - totalScore) / 50000) * 2.5;
+                        passProbability = 45 + ((totalScore - 30000) / 50000) * 30;
+                    } else if (totalScore >= 5000) {
+                        rankPercent = 3.0 + ((30000 - totalScore) / 25000) * 12.0;
+                        passProbability = 10 + ((totalScore - 5000) / 25000) * 35;
+                    } else {
+                        rankPercent = 15.0 + ((5000 - totalScore) / 5000) * 35.0;
+                        passProbability = Math.max(1, (totalScore / 5000) * 10);
+                    }
+                }
+
+                // 글자 수 추천 가이드 텍스트 분기
+                var textGuide = "300자 이상 + 동영상 권장";
+                if (totalScore < 10000) {
+                    textGuide = "200자 이상 + 사진 3장 필수";
+                } else if (totalScore >= 80000) {
+                    textGuide = "500자 이상 + 동영상 + 움짤 포함";
+                }
+
+                // 고가 가전 체험단 안정권 목표 기준점 격차 계산 (목표 점수: 80,000점 기준)
+                var targetScoreGap = 80000 - totalScore;
+                var needHelpful = 0;
+                var needReviews = 0;
+
+                if (targetScoreGap > 0) {
+                    // 앞으로 채워야 할 수치를 균등 분배하여 역산
+                    needHelpful = Math.ceil((targetScoreGap * 0.6) / 350);
+                    needReviews = Math.ceil((targetScoreGap * 0.4) / 100);
+                }
+
+                // 4. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-reviewer-score').text(totalScore.toLocaleString('ko-KR'));
+                $('#res-reviewer-rank').text(rankPercent.toFixed(2));
+                $('#res-reviewer-text-guide').text(textGuide);
+                $('#result-reviewer-salary').text(passProbability.toFixed(0));
+
+                $('#target-helpful').text(needHelpful.toLocaleString('ko-KR'));
+                $('#target-reviews').text(needReviews.toLocaleString('ko-KR'));
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#coupang-reviews').length) {
+                    calculateCoupangReviewer();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

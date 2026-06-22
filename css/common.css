@@ -121,7 +121,7 @@ img[src$=".svg"] {
 
 b, strong {font-weight: 600;}
 
-hr {margin-top: 1.5rem; margin-bottom: 1.5rem; position: relative; border-color: var(--border); margin-left: -1.5rem;margin-right: -1.5rem;}
+hr {margin-top: 1.5rem; margin-bottom: 1.5rem; position: relative; border-color: var(--border);}
 hr.height {margin-top: 1.5rem;margin-bottom: 1.5rem;border-color: var(--border);border-width: .35rem;}
 hr.black {margin-top: 1.5rem;margin-bottom: 1.5rem; margin-left: 0;margin-right: 0;border-color: #000;border-width: 2px;}
 hr.dash {border-style: dashed;}

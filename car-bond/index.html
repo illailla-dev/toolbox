@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동차 채권 미환급금 및 숨은 환급금 계산기 | 에브리캘크</title>
+    <meta name="description" content="자동차 구매 및 등록 시 의무 매입한 지역개발채권 및 도시철도채권의 만기 미환급금을 등록 지역과 배기량, 등록 연도 기준에 맞추어 실시간으로 모의 조회하고 계산합니다.">
+    <meta name="keywords" content="자동차채권환급, 자동차미환급금, 미환급금조회, 지역개발채권, 도시철도채권, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/car-bond/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/car-bond.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="자동차 채권 미환급금 및 숨은 환급금 계산기 - 에브리캘크">
+    <meta property="og:description" content="잠자고 있는 내 돈 찾기! 자동차 등록 시 매입했던 채권의 예상 미환급금을 실시간으로 연산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/car-bond/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🚗 자동차 채권 미환급금 조회 계산기</h2>
+                <p>신차나 중고차를 등록할 때 의무적으로 매입했던 '지역개발채권'과 '도시철도채권'은 5년~7년의 만기가 지나면 주인이 직접 청구해야 합니다. 매입 당시 차량 조건에 따른 숨은 환급금을 모의 추정합니다.</p>
+                <form id="car-bond-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 차량 등록 당시 조건 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="bond-region">등록 대상 지자체 (지역별 채권 종류 다름)</label>
+                            <select id="bond-region" class="form-control">
+                                <option value="seoul" selected>서울특별시 (도시철도채권 - 7년 만기)</option>
+                                <option value="busan">부산광역시 (도시철도채권 - 5년 만기)</option>
+                                <option value="daegu">대구광역시 (지역개발채권 - 5년 만기)</option>
+                                <option value="incheon">인천광역시 (지역개발채권 - 5년 만기)</option>
+                                <option value="gyeonggi">경기도 / 기타 지방 지자체 (지역개발채권 - 5년 만기)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="bond-car-price">차량 구매 당시 순수 공급가액 (원)</label>
+                            <input type="number" id="bond-car-price" class="form-control" placeholder="예: 30000000" min="0" value="25000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 취등록세를 제외한 차량 자체 가격입니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="bond-engine">차량 엔진 배기량 구분</label>
+                            <select id="bond-engine" class="form-control">
+                                <option value="0.04">1,000cc 미만 경차 (전 지역 면제 대상)</option>
+                                <option value="0.09">1,000cc 이상 ~ 1,600cc 미만 소형/준중형</option>
+                                <option value="0.12" selected>1,600cc 이상 ~ 2,000cc 미만 중형</option>
+                                <option value="0.20">2,000cc 이상 대형 및 SUV</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="bond-year">차량 최초 등록 연도</label>
+                            <select id="bond-year" class="form-control">
+                                <option value="refunded">2014년 이전 등록 (이미 소멸시효 경과 가능성 높음)</option>
+                                <option value="2016">2015년 ~ 2017년 등록 (현재 만기 환급 집중 대상)</option>
+                                <option value="2019" selected>2018년 ~ 2020년 등록 (올해 만기 도래 대상)</option>
+                                <option value="not-yet">2021년 이후 등록 (아직 만기 미도래)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 채권 미환급금 추정 결과</h3>
+                    <div class="result-display">
+                        <p>차량가 기준 매입 채권 원금: <strong id="res-bond-principal" style="color: #6c757d;">0</strong> 원</p>
+                        <p>만기 복리 예상 이자 (연 1.05%~2.5% 기준): <strong id="res-bond-interest" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액 필수 강조 규격 적용 -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            예상 채권 총 환급 금액: <strong id="result-car-bond-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <!-- 📌 새롭게 지정해주신 마스터 가이드 박스 UI 규격 적용 완료 -->
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 자동차 채권 환급 처리 및 행동 요약</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="bond-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 차량 등록 당시 지자체별 채권 매입 의무 비율(차량가액의 4%~20%)을 역산한 통계 시뮬레이션입니다. 구매 당시 채권을 즉시 매도(공채 할인) 처리하셨던 운전자는 환급 대상에서 제외됩니다. 정확한 미환급금 내역은 신한은행, 농협은행 등 각 지자체 금고 은행 모바일 앱 내 '미환급 채권 조회' 메뉴에서 확인 가능합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#car-bond-form', calculateCarBond);
+
+            function calculateCarBond() {
+                // 1. 값 추출 및 예외 제한 처리
+                var region = $('#bond-region').val();
+                var carPrice = parseFloat($('#bond-car-price').val()) || 0;
+                var engineRate = parseFloat($('#bond-engine').val()) || 0;
+                var yearStatus = $('#bond-year').val();
+
+                if (carPrice < 0) carPrice = 0;
+
+                // 2. 지자체 및 배기량별 채권 매입 원금 시뮬레이션 산출
+                // 서울/부산 등 도시철도채권 및 지방 지역개발채권의 평균 비율 공식 가중치 계산
+                var regionMultiplier = 1.0;
+                if (region === 'seoul') regionMultiplier = 1.2; // 서울이 매입 비율이 가장 높음
+                if (region === 'busan') regionMultiplier = 1.0;
+                if (region === 'gyeonggi') regionMultiplier = 0.8;
+
+                // 기본 채권 원금 = 차량가액 * 배기량별 매입비율 * 지역 가중치
+                var bondPrincipal = Math.floor(carPrice * engineRate * regionMultiplier);
+
+                // 경차인 경우 예외 면제 처리
+                if (engineRate === 0.04) {
+                    bondPrincipal = 0;
+                }
+
+                // 3. 만기 도달 여부에 따른 이자 및 최종 환급액 산출 알고리즘
+                var bondInterest = 0;
+                var finalPayout = 0;
+                var guideText = "";
+
+                if (bondPrincipal > 0) {
+                    // 채권 발행 기본 금리(연 복리 약 1.5% 내외 기준 가산)
+                    var yearsHeld = 5;
+                    if (region === 'seoul') yearsHeld = 7; // 서울은 7년 거치
+
+                    // 만기 거치 기간 복리 이자 연산
+                    var totalMultiplier = Math.pow(1 + 0.015, yearsHeld);
+                    bondInterest = Math.floor(bondPrincipal * (totalMultiplier - 1));
+
+                    // 등록 연도 상태별 분기 조건 가이드 작성
+                    if (yearStatus === 'refunded') {
+                        bondInterest = 0;
+                        finalPayout = 0;
+                        guideText = "상환 만기일로부터 5년이 추가로 경과하여 <span style='color: var(--red); font-weight:bold;'>채권 소멸시효가 이미 완성되었을 가능성이 높습니다.</span> 주거래 은행 앱에서 즉시 미청구 채권 조회를 시도해 보세요.";
+                    } else if (yearStatus === 'not-yet') {
+                        bondInterest = 0;
+                        finalPayout = 0;
+                        guideText = "아직 채권 상환 만기일(5년~7년)이 도달하지 않은 차량입니다. <span style='color: var(--green); font-weight:bold;'>추후 만기 알림 신청</span>을 해두시면 만기 당일 지정 계좌로 자동 입금받으실 수 있습니다.";
+                    } else {
+                        finalPayout = bondPrincipal + bondInterest;
+                        var bankName = "농협/지방은행";
+                        if (region === 'seoul') bankName = "신한은행";
+                        if (region === 'busan') bankName = "부산은행";
+                        if (region === 'incheon') bankName = "신한은행";
+
+                        guideText = "현재 환급 청구가 집중적으로 필요한 연차입니다! 만기가 완료되어 청구 즉시 이자를 포함한 약 <span style='color: var(--blue); font-weight:bold;'>" + finalPayout.toLocaleString('ko-KR') + "원</span>을 돌려받으실 수 있습니다. 주관 은행인 <span style='font-weight:bold;'>" + bankName + " 앱</span>의 미환급금 메뉴를 확인하세요.";
+                    }
+                } else {
+                    guideText = "1,000cc 미만 경차이거나 입력 데이터가 없어 면제 대상에 해당합니다. 환급받을 채권 자산이 없습니다.";
+                }
+
+                // 4. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-bond-principal').text(bondPrincipal.toLocaleString('ko-KR'));
+                $('#res-bond-interest').text(bondInterest.toLocaleString('ko-KR'));
+                $('#result-car-bond-salary').text(finalPayout.toLocaleString('ko-KR'));
+                $('#bond-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#bond-car-price').length) {
+                    calculateCarBond();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

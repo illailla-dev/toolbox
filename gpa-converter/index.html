@@ -55,11 +55,16 @@
                         <p>⚖️ 4.5 만점 환산: <strong id="res-gpa-45" style="color: var(--orange);">0.00</strong> / 4.5</p>
                         <p>⚖️ 4.3 만점 환산: <strong id="res-gpa-43" style="color: var(--green);">0.00</strong> / 4.3</p>
                         <p>⚖️ 4.0 만점 환산: <strong id="res-gpa-40" style="color: var(--blue);">0.00</strong> / 4.0</p>
+                        <p id="current-scale-info" style="color: var(--purple); font-weight: bold;"></p>
                         <hr>
-                        <!-- 📌 중복 없이 유니크하게 설계한 백분위 고유 타겟 ID -->
                         <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">이력서용 백분위 점수: <strong id="result-gpa-percent">0.0</strong> 점 (100점 만점)</p>
+                        <p class="mt-2">📊 학점 등급 변환: <strong id="result-gpa-grade" style="color: var(--red);">-</strong></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 계산기는 교육부 공식 대학 학점 환산 표준 수식에 기반하여 연산되었으며, 대학별 학칙(소수점 처리 방식)에 따라 0.1~0.2점 내외의 미세한 오차가 있을 수 있습니다.</p>
+                    <p class="result-tip guide-text mt-3">
+                        * 본 계산기는 교육부 공식 대학 학점 환산 표준 수식에 기반하여 연산되었으며,
+                        <span class="red">대학별 학칙(소수점 처리 방식)에 따라 0.1~0.2점 내외의 미세한 오차가 있을 수 있습니다.</span><br>
+                        * 추가로 GPA를 4.5 기준 등급(A+, A, B+, B, C+, C, D, F)으로 변환하여 참고용으로 제공합니다.
+                    </p>
                 </div>
             </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
@@ -69,16 +74,13 @@
     </div>
     <script src="/js/common.js"></script>
     <script>
-        // js/gpa-converter.js
         $(document).ready(function () {
-            // 인풋 데이터 입력단 실시간 감지
-            $('#gpa-form').on('input change', calculateGpa);
+            $('#gpa-form').on('input change keyup', calculateGpa);
 
             function calculateGpa() {
                 const maxScale = parseFloat($('#max-select').val());
                 let currentGpa = parseFloat($('#current-gpa').val()) || 0;
 
-                // 선택한 만점 기준보다 높은 점수를 입력했을 때 방어하는 캡(Cap) 로직
                 if (currentGpa > maxScale) {
                     currentGpa = maxScale;
                     $('#current-gpa').val(maxScale);
@@ -89,32 +91,39 @@
                     $('#res-gpa-43').text('0.00');
                     $('#res-gpa-40').text('0.00');
                     $('#result-gpa-percent').text('0.0');
+                    $('#result-gpa-grade').text('-');
                     return;
                 }
 
-                // 1. 기준점 통일을 위한 원점수 백분위 비율(0.0 ~ 1.0) 추출
                 const baseRatio = currentGpa / maxScale;
-
-                // 2. 표준 비율 기준 타겟 만점별 크로스 변환 연산
                 const gpa45 = baseRatio * 4.5;
                 const gpa43 = baseRatio * 4.3;
                 const gpa40 = baseRatio * 4.0;
 
-                // 3. 취업 이력서용 교육부 표준 공식 백분위(100점 만점) 역산 엔진
-                // 공식 표준 가이드라인: 백분위점수 = ((GPA / 만점) * 40) + 60
-                // (단, 낙제점 방어를 위해 평점이 최하위일 때의 예외 조건문 밸런싱 반영)
                 let percentScore = (baseRatio * 40) + 60;
                 if (percentScore > 100) percentScore = 100;
                 if (currentGpa === 0) percentScore = 0;
 
-                // 4. UI 고유 ID 노드 바인딩 출력 (학점은 소수점 둘째자리, 백분위는 첫째자리 마킹)
+                // ✅ 등급 변환 로직 (4.5 기준)
+                let grade = '';
+                if (gpa45 >= 4.3) grade = 'A+';
+                else if (gpa45 >= 4.0) grade = 'A';
+                else if (gpa45 >= 3.5) grade = 'B+';
+                else if (gpa45 >= 3.0) grade = 'B';
+                else if (gpa45 >= 2.5) grade = 'C+';
+                else if (gpa45 >= 2.0) grade = 'C';
+                else if (gpa45 >= 1.0) grade = 'D';
+                else grade = 'F';
+
+                // 출력
                 $('#res-gpa-45').text(gpa45.toFixed(2));
                 $('#res-gpa-43').text(gpa43.toFixed(2));
                 $('#res-gpa-40').text(gpa40.toFixed(2));
                 $('#result-gpa-percent').text(percentScore.toFixed(1));
+                $('#result-gpa-grade').text(grade);
+                $('#current-scale-info').text("현재 입력 기준: " + maxScale + " 만점");
             }
         });
-
     </script>
 </body>
 </html>

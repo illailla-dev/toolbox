@@ -149,3 +149,89 @@ function initShareButton() {
         }
     });
 }
+
+// ==========================================
+// 📐 EVERY CALC 전역 계산기 검색 데이터베이스 (2026 최신 라인업)
+// ==========================================
+// ==========================================
+// 📐 EVERY CALC 전역 계산기 완성형 검색 데이터베이스
+// ==========================================
+var everyCalcDatabase = [
+    { title: "🍀 로또 번호 생성기", url: "/lotto/", keywords: "로또 당첨 번호 추천 복권 행운 번호 추첨 ㄹㄸ" },
+    { title: "⏳ 만 나이 계산기", url: "/korean-age/", keywords: "만나이 연나이 생일 나이 계산 법적나이 나이 기준 ㄴㅇ" },
+    { title: "🍽️ 다이어트 탄단지 계산기", url: "/diet-macros/", keywords: "다이어트 기초대사량 탄단지 비율 식단 매크로 칼로리 ㄷㅇㅇㅌ" },
+    { title: "🚗 자동차 채권 환급 계산기", url: "/car-bond/", keywords: "자동차채권 미환급금 지역개발채권 도시철도 미청구 채권 환급 ㅈㄷㅊ" },
+    { title: "💰 예적금 만기 이자 계산기", url: "/savings/", keywords: "정기예금 정기적금 복리 단리 만기이자 세후 실수령액 적금 이자 ㅈㄱ" },
+    { title: "📉 해외주식 절세 계산기", url: "/global-stock-tax/", keywords: "미국주식 양도소득세 분할매도 250만원 공제 손실확정 절세 전략 ㅈㅅ" },
+    { title: "📉 주식 물타기 계산기", url: "/stock-average/", keywords: "평단가 평단 물타기 추매 추가매수 주식 평단 계산기 평단가낮추기 ㅈㅅ" },
+    { title: "📈 주식 수익률 계산기", url: "/stock-roi/", keywords: "수익률 실현손익 매매수수료 세금 주식 정산 평단가 수익률계산 ㅈㅅ" },
+    { title: "🏦 대환대출 이자 계산기", url: "/loan-refinancing/", keywords: "대출이자 대환대출 갈아타기 중도상환수수료 금리인하 원리금균등 ㄷㅊ" },
+    { title: "📦 쿠팡 파트너스 계산기", url: "/coupang-partners/", keywords: "쿠팡파트너스 제휴마케팅 부업 정산 수익 링크 수익률 ㅋㅍ" },
+    { title: "🎁 쿠팡 체험단 점수 & 확률 계산기", url: "/coupang-reviewer/", keywords: "쿠팡체험단 리뷰어점수 고가 가전 선정확률 도움돼요 리뷰점수 ㅋㅍ" },
+    { title: "📱 숏폼 수익 계산기", url: "/shorts-revenue/", keywords: "유튜브 쇼츠 인스타 릴스 틱톡 조회수 수익 플랫폼 정산 PPL 단가 ㅅㅊ" },
+    { title: "📈 셀러 마진율 계산기", url: "/seller-margin/", keywords: "스마트스토어 오픈마켓 판매 마진 수수료 세금 원가 도매 마진율 ㅅㄹ" },
+    { title: "✈️ 직구 관부가세 계산기", url: "/customs-duty/", keywords: "해외직구 관세 부가세 고시환율 면세 한도 통관 배대지 ㅈㄱ" },
+    { title: "🔤 웹폰트 서브셋 생성기", url: "/font-subset/", keywords: "웹폰트 경량화 woff2 서브셋 폰트 용량 줄이기 웹디자인 ㅍㅌ" },
+    { title: "📸 인스타 피드 이미지 분할기", url: "/insta-splitter/", keywords: "인스타그램 피드 분할 자르기 그리드 이미지 분할 바둑판 ㅇㅅㅌ" },
+    { title: "🧶 코바늘 게이지 계산기", url: "/gauge/", keywords: "코바늘 대바늘 뜨개질 게이지 스와치 단수 콧수 뜨개 계산 ㄱㅇㅈ" },
+    { title: "📅 군대 전역일 계산기", url: "/military-calc/", keywords: "육군 해군 공군 의경 해병대 전역일 복무일 휴가 계산 군대 ㅈㅇ" },
+    { title: "🔨 인쇄 픽셀 환산기", url: "/print-size/", keywords: "인쇄 사이즈 dpi 픽셀 mm 변환 실사출력 현수막 인쇄 크기 ㅇㅅ" },
+    { title: "💰 중고거래 마진 계산기", url: "/used-trade/", keywords: "당근 중고나라 번개장터 리셀 중고마진 수익 계산 차익 거래 ㅈㄱ" },
+    { title: "🎓 학점 변환기", url: "/gpa-converter/", keywords: "대학학점 백분율 평점 4.5 4.3 취업 이력서 학점 계산 ㅎㅈ" },
+    { title: "🧾 프리랜서 3.3% 세금 계산기", url: "/freelancer-tax/", keywords: "원천징수 사업소득 3.3 세후 실수령액 종합소득세 알바 프리랜서 세금 ㅂㅇ" },
+    { title: "🚗 유류비 정산 계산기", url: "/fuel-cost/", keywords: "연비 기름값 유류비 출장 정산 카풀 주유비 차비 계산 ㅇㄹㅂ" },
+    { title: "💸 주휴수당 계산기", url: "/weekly-holiday-pay/", keywords: "알바 주휴수당 시급 주 15시간 최저임금 근로기준법 수당 ㅈㅎㅅㄷ" },
+    { title: "💼 퇴사 가치, 실업급여 환산기", url: "/exit-salary/", keywords: "퇴직금 평균임금 실업급여 수급기간 하한액 고용보험 이직 확정금액 ㅌㅅ" },
+    { title: "📅 연차 수당 계산기", url: "/annual-leave/", keywords: "미사용 연차 연차수당 통상임금 연차일수 근로기준법 월급 환산 ㅇㅊ" },
+    { title: "🔤 연봉 인상률 계산기", url: "/salary-increment/", keywords: "연봉 협상 인상률 실수령액 세후 인상금액 임금인상 ㅇㅂ" },
+    { title: "👶 아기 예방접종 계산기", url: "/baby-vaccine/", keywords: "영유아 예방접종 차수별 국가예방접종 필수접종 아기 건강 육아 ㅇㄱ" },
+    { title: "🏦 청년도약계좌 만기 & 해지 계산기", url: "youth-leap", keywords: "청년도약 비과세 정부기여금 적금 만기수령 중도해지 특별해지 사유 ㅊㄴ" },
+    { title: "💵 건강보험 피부양자 계산기", url: "/hi-dependent/", keywords: "건보료 피부양자 자격상실 사업소득 과세표준 지역가입자 건강보험 ㄱㅂㄹ" },
+    { title: "🧾 신용카드 소득공제 계산기", url: "/card-deduction/", keywords: "연말정산 신용카드 체크카드 현금영수증 소득공제 문턱 황금비율 환급 ㅋㄷ" },
+    { title: "📊 연금저축 IRP 환급 계산기", url: "/irp-tax/", keywords: "연금저축 세액공제 IRP 개인형퇴직연금 연말정산 환급금 절세 한도 ㅇㄱ" }
+];
+
+
+// ==========================================
+// 🔍 독립 페이지 전용 초고속 실시간 검색 로직
+// ==========================================
+$(document).ready(function () {
+    // 공통 컴포넌트 비동기 fetch 완료 후 검색 인풋 감시를 위해 이벤트 위임 기법 적용
+    $(document).on('input', '#calc-search-input', function () {
+        var query = $(this).val().toLowerCase().trim();
+        var $resultBox = $('#calc-search-results');
+
+        // 검색어가 비어있으면 결과창을 닫고 초기화
+        if (query.length === 0) {
+            $resultBox.hide().html('');
+            return;
+        }
+
+        var filterResults = everyCalcDatabase.filter(function (item) {
+            return item.title.toLowerCase().includes(query) || item.keywords.toLowerCase().includes(query);
+        });
+
+        // 실시간 결과 UI 생성 구역
+        if (filterResults.length > 0) {
+            var htmlList = '<ul class="list-group" style="position:absolute; width:100%; z-index:9999; max-height:300px; overflow-y:auto; box-shadow:0 4px 10px rgba(0,0,0,0.15);">';
+            filterResults.forEach(function (calc) {
+                htmlList += '<a href="' + calc.url + '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="padding:12px 15px; font-size:0.95rem;">';
+                htmlList += '<span>' + calc.title + '</span>';
+                htmlList += '<span class="badge"">바로가기</span>';
+                htmlList += '</a>';
+            });
+            htmlList += '</ul>';
+            $resultBox.html(htmlList).show();
+        } else {
+            $resultBox.html('<div class="alert alert-light m-0 text-center text-muted" style="position:absolute; width:100%; z-index:9999; border:1px solid #ddd; font-size:0.9rem;">검색 결과가 없습니다.</div>').show();
+        }
+    });
+
+    // 화면 다른 곳을 클릭하면 검색 결과창 닫히는 디펜스 코드
+    $(document).click(function (e) {
+        if (!$(e.target).closest('#search-wrapper').length) {
+            $('#calc-search-results').hide();
+        }
+    });
+});
+

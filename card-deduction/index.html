@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신용카드 소득공제 최대 한도 및 황금비율 계산기 | 에브리캘크</title>
+    <meta name="description" content="연봉에 따른 신용카드 소득공제 문턱(25%)을 계산하고, 최대로 환급받기 위해 신용카드와 체크카드, 현금영수증을 섞어 써야 하는 지출 황금 비율을 실시간으로 계산해 줍니다.">
+    <meta name="keywords" content="신용카드소득공제, 연말정산카드공제, 체크카드소득공제, 현금영수증공제, 카드황금비율, 연말정산환급금, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/card-deduction/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/card-deduction.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="신용카드 소득공제 최대 한도 및 황금비율 계산기 - 에브리캘크">
+    <meta property="og:description" content="내 연봉에 딱 맞는 카드 지출 포트폴리오! 최대로 환급받을 수 있는 신용카드와 체크카드 지출 비율을 지금 계산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/card-deduction/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🧾 신용카드 소득공제 황금비율 계산기</h2>
+                <p>연말정산 카드 소득공제는 연봉(총급여)의 25%를 초과하여 지출한 금액부터 적용됩니다. 신용카드(공제율 15%)와 체크카드·현금(공제율 30%)의 특성을 결합하여 환급을 극대화하는 소비 전략을 시뮬레이션합니다.</p>
+                <form id="card-deduction-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 소득 및 지출 정보 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="card-salary">연간 총급여액 (세전 연봉)</label>
+                            <input type="number" id="card-salary" class="form-control" placeholder="예: 40000000" min="0" value="40000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 상여금, 수당 등을 포함한 연간 총 근로소득입니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="card-credit">신용카드 연간 사용(예정)액</label>
+                            <input type="number" id="card-credit" class="form-control" placeholder="예: 12000000" min="0" value="12000000">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="card-check">체크카드 + 현금영수증 연간 사용(예정)액</label>
+                            <input type="number" id="card-check" class="form-control" placeholder="예: 5000000" min="0" value="5000000">
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 카드 소득공제 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>공제 시작을 위한 최저 문턱 (연봉의 25%): <strong id="res-card-threshold" style="color: #6c757d;">0</strong> 원</p>
+                        <p>현재 총 카드 지출액: <strong id="res-card-total-spend" style="color: #6c757d;">0</strong> 원</p>
+                        <p>공제 대상 인정 금액 (문턱 초과분): <strong id="res-card-over" style="color: var(--orange);">0</strong> 원</p>
+                        <p>현재 기준 나의 소득공제 한도: <strong id="res-card-max-limit" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액 필수 강조 규격 적용 (실제 세액 공제 환급액) -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            예상 연말정산 카드 환급 세액: <strong id="result-card-deduction-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <!-- 📌 요청하신 마스터 가이드 박스 UI 규격 완벽 반영 -->
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 지출 최적화 및 카드 소비 황금비율 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="card-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 소득세법상 신용카드 등 사용금액 소득공제 기본 규정(총급여 7천만 원 이하 한도 300만 원 및 공제 문턱 25%)을 기준으로 산정된 모의 결과입니다. 전통시장, 대중교통, 도서·공연·미술관 등 추가 공제 한도 항목 및 개별 세율 구간(6%~45%)에 따라 실제 환급금과 오차가 발생할 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#card-deduction-form', calculateCardDeduction);
+
+            function calculateCardDeduction() {
+                // 1. 값 추출 및 예외 제한 처리
+                var salary = parseFloat($('#card-salary').val()) || 0;
+                var credit = parseFloat($('#card-credit').val()) || 0;
+                var check = parseFloat($('#card-check').val()) || 0;
+
+                if (salary < 0) salary = 0;
+                if (credit < 0) credit = 0;
+                if (check < 0) check = 0;
+
+                // 2. 공제 문턱 및 총 지출액 기본 연산
+                var threshold = Math.floor(salary * 0.25);
+                var totalSpend = credit + check;
+                var overSpend = totalSpend - threshold;
+                if (overSpend < 0) overSpend = 0;
+
+                // 총급여 구간별 소득공제 기본 한도 세팅 (7천만 원 이하 300만 원, 1.2억 이하 250만 원 등 간소화 적용)
+                var maxLimit = 3000000;
+                if (salary > 70000000) {
+                    maxLimit = 2500000;
+                }
+
+                // 3. 신용카드 우선 차감 원칙 기반 공제액 정밀 연산 알고리즘
+                // 유리한 공제를 위해 최저 문턱(25%)은 공제율이 낮은 '신용카드' 지출부터 먼저 채우는 구조로 법이 설계됨
+                var deductionAmount = 0;
+
+                if (overSpend > 0) {
+                    // 신용카드로 문턱을 다 채웠는지 판정
+                    if (credit >= threshold) {
+                        // 신용카드로 문턱 채우고 남은 신용카드 금액분(15%) + 체크카드 금액 전체(30%)
+                        var remainingCredit = credit - threshold;
+                        deductionAmount = (remainingCredit * 0.15) + (check * 0.30);
+                    } else {
+                        // 신용카드로 문턱을 못 채워서 체크카드가 문턱 채우는 데 일부 소모됨
+                        var needCheckToThreshold = threshold - credit;
+                        var effectiveCheck = check - needCheckToThreshold;
+                        if (effectiveCheck < 0) effectiveCheck = 0;
+
+                        deductionAmount = effectiveCheck * 0.30;
+                    }
+                }
+
+                // 공제 한도 도달 차단 제어
+                if (deductionAmount > maxLimit) {
+                    deductionAmount = maxLimit;
+                }
+
+                // 과세표준 구간별 간이 소득세율 매칭 (연봉 대비 대략적인 한계세율 보정치 적용)
+                var taxRate = 0.06;
+                if (salary > 14000000 && salary <= 50000000) taxRate = 0.15;
+                else if (salary > 50000000 && salary <= 88000000) taxRate = 0.24;
+                else if (salary > 88000000) taxRate = 0.35;
+
+                // 최종 세액 환급금 계산 (소득공제액 * 소득세율 * 지방세 1.1)
+                var expectedRefund = Math.floor(deductionAmount * taxRate * 1.1);
+
+                // 4. 소비 포트폴리오 황금비율 분석 가이드라인 분기 생성
+                var guideText = "";
+                if (totalSpend <= threshold) {
+                    var needMore = threshold - totalSpend;
+                    guideText = "❌ 현재 총 지출이 공제 문턱인 연봉 25%에 미치지 못합니다. 앞으로 최소 <span style='color: var(--orange); font-weight:bold;'>" + needMore.toLocaleString('ko-KR') + " 원</span> 이상을 추가 소비하셔야 공제가 시작됩니다. 이때까지는 할인 혜택이 많은 신용카드를 주로 사용하시는 것을 추천합니다.";
+                } else {
+                    if (deductionAmount >= maxLimit) {
+                        guideText = "✨ 축하합니다! 이미 소득공제 최대 한도인 <span style='color: var(--blue); font-weight:bold;'>" + maxLimit.toLocaleString('ko-KR') + " 원</span>을 100% 꽉 채우셨습니다. 지금부터는 세금 환급 추가분이 없으므로 소득공제용 소비보다 포인트 적립이나 청구 할인이 우수한 카드를 선택해 지출하세요.";
+                    } else {
+                        var remainingLimitGap = maxLimit - deductionAmount;
+                        var checkTargetBuy = Math.ceil(remainingLimitGap / 0.30);
+                        guideText = "💡 황금비율 추천 전략: 이미 공제 문턱(25%)을 넘었습니다. 공제 한도를 완벽히 채우기 위해 남은 지출은 신용카드 대신 <span style='color: var(--green); font-weight:bold;'>체크카드나 현금영수증</span>을 집중 사용하세요. 연말까지 약 <span style='font-weight:bold; color: var(--blue);'>" + checkTargetBuy.toLocaleString('ko-KR') + " 원</span>을 체크카드로 쓰시면 한도가 전액 마감됩니다.";
+                    }
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-card-threshold').text(threshold.toLocaleString('ko-KR'));
+                $('#res-card-total-spend').text(totalSpend.toLocaleString('ko-KR'));
+                $('#res-card-over').text(overSpend.toLocaleString('ko-KR'));
+                $('#res-card-max-limit').text(deductionAmount.toLocaleString('ko-KR'));
+                $('#result-card-deduction-salary').text(expectedRefund.toLocaleString('ko-KR'));
+                $('#card-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#card-salary').length) {
+                    calculateCardDeduction();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

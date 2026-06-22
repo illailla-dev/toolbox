@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대환대출 갈아타기 및 이자 절감 계산기 | 에브리캘크</title>
+    <meta name="description" content="현재 대출 조건과 갈아탈 대출 조건을 비교하여 금리 인하에 따른 월 상환액 변화, 총 이자 절감액, 중도상환수수료를 감안한 실제 이득 비용을 실시간으로 계산합니다.">
+    <meta name="keywords" content="대환대출계산기, 대출갈아타기, 대출이자계산기, 이자절감계산기, 중도상환수수료, 금리인하, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/loan-refinancing/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/loan-refinancing.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="대환대출 갈아타기 및 이자 절감 계산기 - 에브리캘크">
+    <meta property="og:description" content="대출 금리를 낮췄을 때 내가 아낄 수 있는 총 이자 비용과 월 지출 상환금을 실시간 시뮬레이션으로 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/loan-refinancing/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏦 대환대출 갈아타기 이자 계산기</h2>
+                <p>기존 대출에서 더 낮은 금리의 대출로 갈아탈 때, 중도상환수수료 페널티를 제외하고도 실제로 아낄 수 있는 총 이자 비용과 매월 줄어드는 상환 금액을 비교 정산합니다.</p>
+                <form id="loan-refinancing-form" class="form" onsubmit="return false;">
+                    <!-- 기존 대출 정보 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 기존 보유 대출 정보 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="loan-principal">대출 잔액 또는 갈아탈 금액 (원)</label>
+                            <input type="number" id="loan-principal" class="form-control" placeholder="예: 50000000" min="0" value="50000000">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="loan-old-rate">기존 대출 금리 (연 %)</label>
+                            <input type="number" id="loan-old-rate" class="form-control" placeholder="예: 5.5" min="0" max="30" step="0.1" value="5.5">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="loan-period">남은 대출 만기 기간 (개월)</label>
+                            <input type="number" id="loan-period" class="form-control" placeholder="예: 24" min="1" max="420" value="24">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="loan-penalty-rate">기존 대출 중도상환수수료율 (%)</label>
+                            <input type="number" id="loan-penalty-rate" class="form-control" placeholder="예: 1.2" min="0" max="5" step="0.1" value="0.5">
+                            <small class="text-muted" style="font-size: 0.8rem; display:block; mt-1;">* 대출 실행 후 3년이 지났다면 0%를 입력하세요.</small>
+                        </div>
+                    </div>
+                    <!-- 신규 대출 정보 -->
+                    <div class="input-group-box">
+                        <h3>2. 갈아탈 신규 대출 조건 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="loan-new-rate">새로운 대출 금리 (연 %)</label>
+                            <input type="number" id="loan-new-rate" class="form-control" placeholder="예: 3.8" min="0" max="30" step="0.1" value="3.8">
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 대환대출 비교 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>기존 대출 월 상환액 (원리금균등): <strong id="res-loan-old-month" style="color: #6c757d;">0</strong> 원</p>
+                        <p>신규 대출 월 상환액 (원리금균등): <strong id="res-loan-new-month" style="color: var(--green);">0</strong> 원</p>
+                        <p>매월 절감되는 고정 지출: <strong id="res-loan-save-month" style="color: var(--orange);">0</strong> 원</p>
+                        <p>예상 중도상환 수수료 비용: <strong id="res-loan-penalty" style="color: var(--red);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액 필수 강조 규격 적용 (이자 절감 순수익액) -->
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
+                            대환 시 최종 순 절감 비용: <strong id="result-loan-refinancing-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 대환대출 실행 타당성 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="loan-decision-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 가장 범용적인 '원리금균등상환' 방식을 기준으로 실시간 연산됩니다. 중도상환수수료는 남은 기간에 따라 일할 계산되어 감소할 수 있으며, 신규 대출 시 발생하는 부대비용(인지세 등)에 따라 실정산 금액은 소폭 다를 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#loan-refinancing-form', calculateLoanRefinancing);
+
+            function calculateLoanRefinancing() {
+                // 1. 값 추출 및 예외 제한 처리
+                var principal = parseFloat($('#loan-principal').val()) || 0;
+                var oldRate = parseFloat($('#loan-old-rate').val()) || 0;
+                var period = parseInt($('#loan-period').val()) || 1;
+                var penaltyRate = parseFloat($('#loan-penalty-rate').val()) || 0;
+                var newRate = parseFloat($('#loan-new-rate').val()) || 0;
+
+                if (principal < 0) principal = 0;
+                if (oldRate < 0) oldRate = 0;
+                if (period < 1) period = 1;
+                if (penaltyRate < 0) penaltyRate = 0;
+                if (newRate < 0) newRate = 0;
+
+                // 2. 원리금균등 상환 계산 공식 함수 정의
+                // 월정액 = [원금 * 월금리 * (1 + 월금리)^기간] / [((1 + 월금리)^기간) - 1]
+                function getMonthlyPayment(prnc, annualRate, mths) {
+                    if (annualRate === 0) return Math.floor(prnc / mths);
+                    var monthlyRate = (annualRate / 100) / 12;
+                    var pow = Math.pow(1 + monthlyRate, mths);
+                    return Math.floor((prnc * monthlyRate * pow) / (pow - 1));
+                }
+
+                var oldMonthPayment = getMonthlyPayment(principal, oldRate, period);
+                var newMonthPayment = getMonthlyPayment(principal, newRate, period);
+
+                // 매월 아끼는 금액
+                var saveMonth = oldMonthPayment - newMonthPayment;
+                if (saveMonth < 0) saveMonth = 0;
+
+                // 3. 총 이자 절감액 및 중도상환수수료 패널티 연산
+                var totalOldPayment = oldMonthPayment * period;
+                var totalNewPayment = newMonthPayment * period;
+                var totalSaveInterest = totalOldPayment - totalNewPayment;
+                if (totalSaveInterest < 0) totalSaveInterest = 0;
+
+                // 중도상환 수수료 계산 (단순 잔액 비례 방식 보정 적용)
+                var penaltyFee = Math.floor(principal * (penaltyRate / 100));
+
+                // 최종 순 이득 금액 (총 이자 절감액 - 중도상환 수수료)
+                var finalNetBenefit = totalSaveInterest - penaltyFee;
+
+                // 4. 의사결정 추천 안내 가이드 라인 텍스트 분기 생성
+                var decisionText = "";
+                if (newRate >= oldRate) {
+                    decisionText = "❌ 갈아탈 대출 금리가 기존 대출보다 높거나 같습니다. 대환대출을 진행할 필요가 없습니다.";
+                } else if (finalNetBenefit <= 0) {
+                    decisionText = "⚠️ 금리는 낮아지지만 <span style='color: #dc3545; font-weight:bold;'>중도상환수수료 페널티(" + penaltyFee.toLocaleString('ko-KR') + "원)</span>가 이자 절감액보다 큽니다. 현재로서는 갈아타지 않는 것이 유리합니다.";
+                } else {
+                    decisionText = "✨ 대환 적극 추천! 중도상환수수료를 지불하더라도 만기까지 유지 시 총 <span style='color: var(--blue); font-weight:bold;'>" + finalNetBenefit.toLocaleString('ko-KR') + "원</span>의 이자 비용을 순수하게 아낄 수 있습니다.";
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-loan-old-month').text(oldMonthPayment.toLocaleString('ko-KR'));
+                $('#res-loan-new-month').text(newMonthPayment.toLocaleString('ko-KR'));
+                $('#res-loan-save-month').text(saveMonth.toLocaleString('ko-KR'));
+                $('#res-loan-penalty').text(penaltyFee.toLocaleString('ko-KR'));
+
+                // 최종 결과값이 음수이면 0으로 치환 표시
+                var displayBenefit = finalNetBenefit < 0 ? 0 : finalNetBenefit;
+                $('#result-loan-refinancing-salary').text(displayBenefit.toLocaleString('ko-KR'));
+                $('#loan-decision-text').html(decisionText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#loan-principal').length) {
+                    calculateLoanRefinancing();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
