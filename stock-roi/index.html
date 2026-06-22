@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주식 수익률 계산기 - 매매 마진 및 세후 순수익 자동 계산 | 에브리캘크</title>
+    <meta name="description" content="주식 매수가와 매도가, 수량을 입력하면 거래 수수료와 증권거래세 등 제세금을 완벽히 공제하여 실제 내 통장에 꽂히는 투자 순수익과 진짜 수익률을 정확하게 계산합니다.">
+    <meta name="keywords" content="주식 수익률 계산기, 주식 마진 계산기, 평단가 익절 계산, 주식 수수료 계산, 증권거래세 계산, 주식 세후 이익, 주식 투자 수익률">
+    <link rel="canonical" href="https://every-calc.co.kr/stock-roi/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/stock-roi.js"></script>
+    <link rel="stylesheet" href="/css/stock-roi.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="주식 수익률 및 매매 마진 계산기">
+    <meta property="og:description" content="수수료와 세금 떼고 나면 진짜 얼마 남을까? 매매 시나리오를 미리 돌려보고 오차 없는 익절 단가를 설계해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/stock-roi/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📈 주식 수익률 및 평단가 마진 계산기</h2>
+                <p>보유 혹은 매수 예정인 주식의 단가와 목표 매도가를 적어주세요. 증권사 수수료와 세금을 칼같이 제외한 진짜 알짜배기 순이익을 실시간 추정합니다.</p>
+                <form id="roi-form" class="form" onsubmit="return false;">
+                    <!-- 1. 매수 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 매수(진입) 조건 입력</h3>
+                        <div class="input-item">
+                            <label for="buy-price">매수 평단가 (원)</label>
+                            <input type="number" id="buy-price" class="form-control" placeholder="예: 50000" required min="1" step="1" style="margin-bottom:10px;">
+                            <label for="stock-qty">보유 및 매수 수량 (주)</label>
+                            <input type="number" id="stock-qty" class="form-control" placeholder="예: 100" required min="1" step="1">
+                        </div>
+                    </div>
+                    <!-- 2. 매도 정보 및 세금 요율 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 매도(익절) 조건 및 거래 비용 설정</h3>
+                        <div class="input-item">
+                            <label for="sell-price">목표 매도가 / 현재가 (원)</label>
+                            <input type="number" id="sell-price" class="form-control" placeholder="예: 55000" required min="1" step="1" style="margin-bottom:10px;">
+                            <label for="broker-fee">증권사 수수료율 (매수/매도 각각 적용, %)</label>
+                            <select id="broker-fee" class="form-control" style="margin-bottom:10px;">
+                                <option value="0.015" selected>일반 온라인 거래 평균 (0.015%)</option>
+                                <option value="0.0015">수수료 우대 계좌 (0.0015%)</option>
+                                <option value="0">평생 수수료 무료 (유관기관 제세금 제외, 0%)</option>
+                            </select>
+                            <label for="exchange-tax">국내 증권거래세율 (%)</label>
+                            <select id="exchange-tax" class="form-control">
+                                <option value="0.15" selected>코스피 / 코스닥 일반 (0.15%)</option>
+                                <option value="0">세금 미적용 / 해외 주식 등 (0%)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 수수료/세금 반영 익절 시뮬레이션</h3>
+                    <div class="result-display">
+                        <p>순수 매수 총액: <strong id="res-buy-total">0</strong> 원</p>
+                        <p>순수 매도 총액: <strong id="res-sell-total">0</strong> 원</p>
+                        <hr>
+                        <p>예상 거래 비용 총합 (수수료+세금): <strong id="res-total-costs" style="color:var(--red);">0</strong> 원</p>
+                        <hr>
+                        <p style="font-size:110%; color:var(--green); font-weight:bold;">💵 세후 최종 순수익: <span id="res-pure-profit">0</span> 원</p>
+                        <p style="font-size:110%; color:var(--blue); font-weight:bold;">📊 최종 실질 수익률: <span id="res-pure-roi">0.00</span> %</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 매수 시 수수료가 포함되고, 매도 시 수수료와 증권거래세가 합산 공제되어 정산됩니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>

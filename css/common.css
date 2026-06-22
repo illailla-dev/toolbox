@@ -11,9 +11,8 @@
     --font-family: Pretendard, sans-serif;
 
     /* color */
-    --main: #0089f2;
+    --blue: #0089f2;
     --dark: #1b222d;
-    --sub: #eda200;
     --bg: #f5fbff;
     --border: #e5e5e5;
     --text: #222;
@@ -23,9 +22,11 @@
     --gray70: #eee;
     --gray80: #f8f8f8;
     --muted: #888;
+    --yellow: #f1c40f;
     --red: #ff4757;
+    --orange: #e67e22;
     --dark-orange: #fb7638;
-    --green: #02b784;
+    --green: #2ecc71;
     --purple: #7c46b2;
 
     /* effect */
@@ -193,38 +194,31 @@ hr.dash {border-style: dashed;}
 .radio:has(:checked) label:before {
     color: var(--red);
 }
-.form-control {border-radius: var(--radius-sm); border-color: var(--gray50); background-color: #f9fafb; height: calc(1.5rem + 1.5rem + 2px); padding: .75rem;}
+.form-control {border-radius: var(--radius-sm); border-color: var(--gray50); height: calc(1.5rem + 1.5rem + 2px); padding: .75rem;}
+.form-control:disabled, .form-control[readonly] {background-color: var(--gray80);}
 .form-control::placeholder {color: #a8a8a8;}
 .form-control:focus {box-shadow: none;}
 select.form-control {appearance: none;padding-right: 2.5rem; background: #fff url(../img/chevron-down.png) no-repeat calc(100% - 1rem) 50% / 1.3rem}
 .form-control.cal {background: #f9fafb url(../images/ic_cal.png) no-repeat calc(100% - 1rem) 50% / 1.3rem; text-align: left}
 textarea {resize: none;}
-.form-row {gap: var(--gap); align-items: center;}
-.form-row .btn { min-width: 8rem;}
-.form-row+.form-row {margin-top: 1.5rem;}
-.col-form-label {font-weight: bold;}
-.form input[type="number"], .form input[type="text"], .form select {border: 1px solid #ddd; border-radius: .25rem; padding: .5rem;font-size: 1.125rem;}
-.form .btn {font-size: 1.125rem;padding: .5rem; vertical-align: top;}
-.form-row label {margin: 0;}
-.input-item {display: flex; flex-wrap: wrap; gap: var(--gap-sm); align-items: center;}
-.input-item label {width: 7rem; margin-bottom: 0;}
-.input-item input, .input-item select {flex-grow: 1;}
-.input-item input:focus, .input-item select:focus {border-color: var(--blue);outline: 0;}
-.input-item select {appearance: none;padding-right: 2.5rem; background: #fff url(../img/chevron-down.png) no-repeat calc(100% - 1rem) 50% / 1.3rem}
-.input-item+.input-item {margin-top: 0.5rem;}
+.form-row {/* gap: var(--gap); */ align-items: center;}
+.form-row .btn {min-width: 8rem;}
+.form-row+.form-row {margin-top: .5rem;}
+.form-row .col-form-label, .form label {margin: 0; padding-top: .75rem; padding-bottom: .75rem;;}
+.form-row input, .form-row select {width: 100%;}
 .input-group-box, .result-box  {border: 1px solid var(--border); border-radius: var(--radius-xs); padding:2rem; box-shadow: var(--shadow); margin-bottom: 1rem;}
-.input-group-box label {width: 7rem;}
 .flex-radios {display: flex; gap: var(--gap);}
 .flex-radios .radio label {width: auto;}
 .result-box {border-color: var(--green);border-width: 2px; border-radius: var(--radius-sm);}
 .result-display {font-size: 1.25rem;}
+.item-box+.item-box {margin-top: .5rem;}
 
 @media (max-width: 1024px) {
-    .input-item input {width: calc(100% - 8rem);}
+    .input-group-box, .result-box {padding: 1.25rem;}
 }
 
 /* 버튼 */
-.btn {border-radius: var(--radius-xs); box-shadow: none; padding: .75rem 1rem}
+.btn {border-radius: var(--radius-sm); box-shadow: none; padding: .75rem 1rem}
 .btn:hover {box-shadow: var(--shadow-lg)}
 .btn:has(img) {display: flex; align-items: center; justify-content: center;}
 .btn:is(.disabled, [disabled]) {background-color: #F1F1F5 !important; color: #999 !important; opacity: 1;cursor: not-allowed}
@@ -246,6 +240,7 @@ textarea {resize: none;}
 .btn.primary:not(.line):hover {background: var(--blue)}
 .btn.line.orange {border: 1px solid #ff7142; color: #ff7142}
 .btn.line.primary {border: 1px solid var(--main); color: var(--main)}
+.btn.lightgray:not(.line) {background-color: var(--gray50);}
 .btn.gray:not(.line) {background-color: var(--gray30); color: #fff;}
 .btn.orange:not(.line) {background-color: var(--orange); color: #fff;}
 .btn.dark-orange:not(.line) {background-color: var(--dark-orange); color: #fff;}

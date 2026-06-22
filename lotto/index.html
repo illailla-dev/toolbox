@@ -18,6 +18,12 @@
     <meta property="og:description" content="매주 로또 번호 고민되시나요? 무료로 번호를 생성해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr">
     <meta property="og:url" content="https://every-calc.co.kr/lotto/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <div id="wrap">
@@ -38,10 +44,10 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="random" role="tabpanel" aria-labelledby="random-tab">
                         <div class="form">
-                            <div>
-                                <label for="count">생성할 로또 번호 조합 수 </label>
-                                <input type="number" id="count" value="10" min="1" max="100">
-                                <button class="btn purple" id="generate">번호 생성</button>
+                            <div class="form-row">
+                                <label for="count" class="col-form-label col-12 col-sm-auto">생성할 로또 번호 조합 수 </label>
+                                <div class="col col-md-3"><input type="number" id="count" value="10" min="1" max="100" class="form-control"></div>
+                                <div class="col-auto"><button class="btn purple" id="generate">번호 생성</button></div>
                             </div>
                             <div class="guide-text mt-3">필요한 조합 수를 입력하고 생성 버튼을 눌러주세요.<br>당첨을 기원합니다! 😀</div>
                             <div id="result" class="result"></div>
@@ -49,12 +55,12 @@
                     </div>
                     <div class="tab-pane" id="exel" role="tabpanel" aria-labelledby="exel-tab">
                         <div class="form">
-                            <div>
-                                <p class="guide-text">회차별 당첨번호의 통계를 바탕으로 번호를 생성합니다. (이전 회차까지 업데이트 됨)<br>* <a href="/lotto/lotto.xlsx"><i class="bi bi-filetype-xlsx"></i> <u>샘플파일</u></a>을 다운받아 회차정보를 수정한 후 업로드 하세요.</p>
-                                <p class="mb-3"><input type="file" id="upload-exel" accept=".xlsx"></p>
-                                <label for="count-exel">생성할 로또 번호 조합 수</label>
-                                <input type="number" id="count-exel" value="10" min="1" max="100">
-                                <button class="btn purple" id="generate-exel">번호 생성</button>
+                            <p class="guide-text">회차별 당첨번호의 통계를 바탕으로 번호를 생성합니다. (이전 회차까지 업데이트 됨)<br>* <a href="/lotto/lotto.xlsx"><i class="bi bi-filetype-xlsx"></i> <u>샘플파일</u></a>을 다운받아 회차정보를 수정한 후 업로드 하세요.<br>* 본 계산기는 1등 당첨 확률 추적을 위해 <u class="spot red bolder">보너스 번호를 제외한 순수 당첨 번호 6개</u>만 정밀 분석합니다.</p>
+                            <p class="mb-3"><input type="file" id="upload-exel" accept=".xlsx" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;"></p>
+                            <div class="form-row">
+                                <label for="count-exel" class="col-form-label col-12 col-sm-auto">생성할 로또 번호 조합 수</label>
+                                <div class="col col-md-3"><input type="number" id="count-exel" value="10" min="1" max="100" class="form-control"></div>
+                                <div class="col-auto"><button class="btn purple" id="generate-exel">번호 생성</button></div>
                             </div>
                             <div class="guide-text mt-3">필요한 조합 수를 입력하고 생성 버튼을 눌러주세요.<br>당첨을 기원합니다! 😀</div>
                             <div id="result-exel" class="result"></div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다이어트 탄단지 계산기 - 기초대사량 및 TDEE 하루 권장 칼로리 | 에브리캘크</title>
+    <meta name="description" content="성별, 나이, 키, 체중 및 활동량을 기반으로 하루 총 소비 칼로리(TDEE)를 구하고, 다이어트 목적에 맞는 완벽한 탄수화물, 단백질, 지방 섭취 그람(g)수를 실시간 계산합니다.">
+    <meta name="keywords" content="탄단지 계산기, 기초대사량 계산기, TDEE 계산기, 하루 칼로리 계산기, 식단 계산기, 다이어트 칼로리, 단백질 섭취량, 저탄고지 비율">
+    <link rel="canonical" href="https://every-calc.co.kr/diet-macros/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/diet-macros.js"></script>
+    <link rel="stylesheet" href="/css/diet-macros.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="다이어트 탄단지 / 기초대사량 계산기">
+    <meta property="og:description" content="내 몸에 딱 맞는 하루 소비 칼로리와 탄단지 황금 비율을 1초 만에 확인하고 요요 없는 스마트한 다이어트 식단을 설계해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/diet-macros/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🍽️ 다이어트 탄단지 / 기초대사량 계산기</h2>
+                <p>신체 정보와 활동량, 다이어트 목적을 입력하시면 하루에 소모하는 총 칼로리와 꼭 먹어야 하는 영양소별 그람(g)수를 정밀하게 계산해 드립니다.</p>
+                <form id="diet-form" class="form" onsubmit="return false;">
+                    <!-- 1. 신체 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 기본 신체 정보 입력</h3>
+                        <div class="input-item">
+                            <div class="flex-radios">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="gender" value="male" checked> 남성
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="gender" value="female"> 여성
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="age">나이 (만 연령)</label>
+                            <input type="number" id="age" placeholder="예: 28" required min="1" max="120" class="form-control">
+                            <label for="height">신장 (cm)</label>
+                            <input type="number" id="height" placeholder="예: 175" required min="100" max="250" class="form-control">
+                            <label for="weight">체중 (kg)</label>
+                            <input type="number" id="weight" placeholder="예: 70" required min="30" max="200" class="form-control">
+                        </div>
+                    </div>
+                    <!-- 2. 활동량 및 목적 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 활동량 및 다이어트 목적</h3>
+                        <div class="input-item">
+                            <label for="activity-level">평소 활동량 수준</label>
+                            <select id="activity-level" class="form-control">
+                                <option value="1.2">활동 안 함 (주로 앉아서 생활, 운동 거의 없음)</option>
+                                <option value="1.375">가벼운 활동 (주 1~3회 가벼운 운동)</option>
+                                <option value="1.55" selected>보통 활동 (주 3~5회 적당한 강도 운동)</option>
+                                <option value="1.725">적극적 활동 (주 6~7회 강도 높은 운동)</option>
+                                <option value="1.9">매우 적극적 (매일 격렬한 운동 또는 현장 육체노동)</option>
+                            </select>
+                            <label for="diet-goal">조절 목적</label>
+                            <select id="diet-goal" class="form-control">
+                                <option value="-500">체중 감량 / 다이어트 (-500 kcal 권장)</option>
+                                <option value="0" selected>현재 체중 유지 (린매스업)</option>
+                                <option value="400">체중 증량 / 근육량 벌크업 (+400 kcal 권장)</option>
+                            </select>
+                            <label for="macro-ratio">영양소 섭취 성향 (탄:단:지 비율)</label>
+                            <select id="macro-ratio" class="form-control">
+                                <option value="5:3:2" selected>균형 잡힌 정석 식단 (5 : 3 : 2)</option>
+                                <option value="4:4:2">린매스업 / 고단백 집중 식단 (4 : 4 : 2)</option>
+                                <option value="2:3:5">키토제닉 / 저탄고지 베이스 식단 (2 : 3 : 5)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 나의 하루 식단 영양 가이드</h3>
+                    <div class="result-display">
+                        <p>숨만 쉬어도 타는 기초대사량(BMR): <strong id="res-bmr">0</strong> kcal</p>
+                        <p>활동을 포함한 일일 총 소비량(TDEE): <strong id="res-tdee">0</strong> kcal</p>
+                        <hr>
+                        <p style="color: var(--blue);font-weight: bold;font-size:110%">🎯 목표 하루 권장 섭취 칼로리: <span id="res-target-kcal">0</span> kcal</p>
+                        <hr>
+                        <p>🍞 <strong>탄수화물</strong> 권장량: <strong id="res-carbs" style="color:var(--orange);">0</strong> g</p>
+                        <p>🍗 <strong>단백질</strong> 권장량: <strong id="res-protein" style="color:var(--green);">0</strong> g</p>
+                        <p>🥑 <strong>지방</strong> 권장량: <strong id="res-fat" style="color:var(--yellow);">0</strong> g</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="background:#fff3cd; padding:10px; border-radius:5px; border-left:4px solid #ffc107;">
+                        * 단백질 권장량을 채우기 힘들다면 순수 닭가슴살 팩이나 고품질 유청 단백질 쉐이크 보충제를 활용해 간편하게 채우는 것이 근손실 방지에 절대적으로 유리합니다.
+                    </p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>

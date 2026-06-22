@@ -1,122 +1,142 @@
+// js/lotto.js
 $(document).ready(function () {
+
+    // ==========================================
+    // 1. 일반 번호 생성기 (기본 Fisher-Yates 방식)
+    // ==========================================
     $('#generate').on('click', function () {
-        // 기존 결과 삭제
         $('#result').empty();
 
-        // 입력된 갯수 가져오기
         const count = parseInt($('#count').val(), 10);
         if (isNaN(count) || count <= 0) {
             alert('올바른 갯수를 입력하세요.');
             return;
         }
 
-        // 로또 번호 생성
         for (let i = 0; i < count; i++) {
-            // 1부터 45까지 숫자 배열 생성
-            const numbers = Array.from({
-                length: 45
-            }, (_, index) => index + 1);
+            const numbers = Array.from({ length: 45 }, (_, index) => index + 1);
 
-            // Fisher-Yates Shuffle로 배열 섞기
             for (let j = numbers.length - 1; j > 0; j--) {
                 const randomIndex = Math.floor(Math.random() * (j + 1));
                 [numbers[j], numbers[randomIndex]] = [numbers[randomIndex], numbers[j]];
             }
 
-            // 6개 선택 후 정렬
             const selected = numbers.slice(0, 6).sort((a, b) => a - b);
-
-            // 번호를 HTML로 변환
             const styledNumbers = selected
-                .map((num) => `<i class="${getNumberClass(num)}">${num}</i>`)
+                .map((num) => getStyledNumber(num))
                 .join('');
 
-            // 결과 출력
             $('#result').append(
                 `<p><span>조합 ${i + 1}</span><b>${styledNumbers}</b></p>`
             );
         }
     });
 
-    // 번호에 따라 클래스 지정
-    function getNumberClass(num) {
-        if (num >= 1 && num <= 10) return 'range-1-10';
-        else if (num >= 11 && num <= 20) return 'range-11-20';
-        else if (num >= 21 && num <= 30) return 'range-21-30';
-        else if (num >= 31 && num <= 40) return 'range-31-40';
-        else if (num >= 41 && num <= 45) return 'range-41-45';
-        return '';
-    }
-
+    // ==========================================
+    // 2. 엑셀 데이터 분석 기반 추천 생성기 (고급 엔진)
+    // ==========================================
     $('#generate-exel').on('click', function () {
+        // [수정] 파일 인풋 객체에서 배열 첫 요소를 확실히 타겟팅
         const file = document.getElementById('upload-exel').files[0];
-        const count = parseInt($('#count-exel').val(), 10); // 입력한 조합 수
-        const reader = new FileReader();
-        
-        // 파일이 첨부되지 않았을 때 경고 메시지 표시
+        const count = parseInt($('#count-exel').val(), 10);
+
         if (!file) {
-            alert("파일을 첨부해주세요.");
-            return; // 파일이 없으면 더 이상 진행하지 않음
+            alert("엑셀 파일을 첨부해 주세요.");
+            return;
+        }
+        if (isNaN(count) || count <= 0) {
+            alert('생성할 조합 개수를 입력해 주세요.');
+            return;
         }
 
+        const reader = new FileReader();
         reader.onload = function (event) {
-            const data = new Uint8Array(event.target.result);
-            const workbook = XLSX.read(data, {
-                type: 'array'
-            });
-            const sheet = workbook.Sheets[workbook.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(sheet);
+            try {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
 
-            // 번호 출현 빈도 분석
-            const frequency = Array(45).fill(0);
-            rows.forEach(row => {
-                for (let i = 1; i <= 6; i++) {
-                    const num = row[`번호${i}`];
-                    if (num >= 1 && num <= 45) frequency[num - 1]++;
+                // 📌 [교정 완료] workbook.SheetNames 뒤에 빠졌던 [0] 배열 인덱스를 다시 채워 넣었습니다.
+                const firstSheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[firstSheetName];
+                const rows = XLSX.utils.sheet_to_json(sheet);
+
+                if (rows.length === 0) {
+                    alert("엑셀 파일 내에 데이터가 존재하지 않습니다.");
+                    return;
                 }
-            });
 
-            // 번호 정렬
-            const sortedFrequency = frequency
-                .map((count, index) => ({
+                const frequency = Array(45).fill(0);
+                rows.forEach(row => {
+                    for (let i = 1; i <= 6; i++) {
+                        const num = parseInt(row[`번호${i}`] || row[`번호 ${i}`], 10);
+                        if (num >= 1 && num <= 45) {
+                            frequency[num - 1]++;
+                        }
+                    }
+                });
+
+                const frequencyData = frequency.map((count, index) => ({
                     number: index + 1,
-                    count
-                }))
-                .sort((a, b) => b.count - a.count);
+                    weight: count
+                }));
 
-            // 추천 번호 생성
-            const recommendations = generateLottoNumbers(sortedFrequency, count);
+                const recommendations = generateWeightedLottoNumbers(frequencyData, count);
 
-            $('#result-exel').empty();
-            recommendations.forEach((set, index) => {
-                const styledSet = set.map(num => getStyledNumber(num)).join(' ');
-                $('#result-exel').append(`<p><span>조합 ${index + 1}</span><b>${styledSet}</b></p>`);
-            });
+                $('#result-exel').empty();
+                recommendations.forEach((set, index) => {
+                    const styledSet = set.map(num => getStyledNumber(num)).join('');
+                    $('#result-exel').append(`<p><span>조합 ${index + 1}</span><b>${styledSet}</b></p>`);
+                });
+            } catch (err) {
+                console.error("엑셀 파싱 세부 에러 내용:", err);
+                alert("엑셀 파일을 파싱하는 도중 에러가 발생했습니다. 올바른 포맷인지 확인해 주세요.");
+            }
         };
 
         reader.readAsArrayBuffer(file);
     });
 
-    function generateLottoNumbers(sortedFrequency, count) {
+    /**
+     * 누적 빈도 점수를 기반으로 높은 빈도의 번호가
+     * 더 자주 뽑히도록 설계한 정밀 확률 가중치 추첨 알고리즘
+     */
+    function generateWeightedLottoNumbers(frequencyData, count) {
         const recommendations = [];
-        const pool = sortedFrequency.map(item => item.number);
+
+        frequencyData.forEach(item => {
+            if (item.weight === 0) item.weight = 1;
+        });
 
         for (let i = 0; i < count; i++) {
             const selected = [];
+
             while (selected.length < 6) {
-                const randomIndex = Math.floor(Math.random() * pool.length);
-                const num = pool[randomIndex];
-                if (!selected.includes(num)) {
-                    selected.push(num);
+                const availableNumbers = frequencyData.filter(item => !selected.includes(item.number));
+                const totalWeight = availableNumbers.reduce((sum, item) => sum + item.weight, 0);
+
+                let randomWeight = Math.random() * totalWeight;
+                let chosenNumber = availableNumbers[availableNumbers.length - 1].number;
+
+                // 📌 [교정 완료] 내부 루프 인덱스 가중치 차감 연산의 수식 제어문 오타(r++)를 k++로 수정했습니다.
+                for (let k = 0; k < availableNumbers.length; k++) {
+                    randomWeight -= availableNumbers[k].weight;
+                    if (randomWeight <= 0) {
+                        chosenNumber = availableNumbers[k].number;
+                        break;
+                    }
+                }
+
+                if (!selected.includes(chosenNumber)) {
+                    selected.push(chosenNumber);
                 }
             }
+
             selected.sort((a, b) => a - b);
             recommendations.push(selected);
         }
         return recommendations;
     }
 
-    // 번호에 맞는 색상 클래스 반환
     function getStyledNumber(num) {
         let className = '';
         if (num >= 1 && num <= 10) className = 'range-1-10';

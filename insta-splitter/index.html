@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인스타그램 피드 이미지 분할기 - 3분할 9분할 바둑판 자르기 | 에브리캘크</title>
+    <meta name="description" content="인스타 감성 피드 조립을 위해 이미지를 가로 3분할, 6분할, 9분할 바둑판 형태로 부드럽고 정확하게 잘라내고 조각별로 다운로드할 수 있는 캔버스 유틸리티입니다.">
+    <meta name="keywords" content="인스타 분할기, 이미지 3분할, 피드 자르기, 인스타 9분할, 사진 바둑판 자르기, 인스타그램 그리드, 피드 분할 프로그램">
+    <link rel="canonical" href="https://every-calc.co.kr/insta-splitter/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/insta-splitter.js"></script>
+    <link rel="stylesheet" href="/css/insta-splitter.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="인스타그램 피드 이미지 분할기 - 바둑판 자르기 툴">
+    <meta property="og:description" content="큰 사진 한 장을 인스타 피드 규격에 맞춰 3분할, 6분할, 9분할로 깔끔하게 슬라이싱하세요. 로그인 없이 브라우저에서 바로 다운로드 가능!">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/insta-splitter/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📸 인스타그램 피드 이미지 분할기</h2>
+                <p>업로드한 이미지를 인스타 가로 3열 레이아웃에 맞춰 정사각형 조각으로 쪼갭니다. 피드 업로드 순서대로 번호가 지정됩니다.</p>
+                <form id="splitter-form" class="form" onsubmit="return false;">
+                    <!-- 1. 이미지 파일 업로드 -->
+                    <div class="input-group-box">
+                        <h3>1. 원본 이미지 업로드</h3>
+                        <div class="input-item">
+                            <input type="file" id="image-input" accept="image/*" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
+                        </div>
+                    </div>
+                    <!-- 2. 분할 방식 선택 옵션 -->
+                    <div class="input-group-box">
+                        <h3>2. 분할 그리드 방식 설정</h3>
+                        <div class="input-item">
+                            <label for="split-row">자르고 싶은 세로 칸 수 (가로는 3칸 고정)</label>
+                            <select id="split-row" class="form-control">
+                                <option value="1">가로 3분할 (조각 3개 - 가로형 피드)</option>
+                                <option value="2">가로 3열 x 세로 2단 (조각 6개)</option>
+                                <option value="3" selected>가로 3열 x 세로 3단 (조각 9개 - 추천 정사각형 바둑판)</option>
+                                <option value="4">가로 3열 x 세로 4단 (조각 12개)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 분할 미리보기 및 다운로드 결과창 -->
+                <div class="result-box" id="result-area" style="display:none;">
+                    <h3>💡 이미지 분할 미리보기 (조각별 다운로드)</h3>
+                    <p style="font-size:12px; color:#d9534f; text-align:center; margin-bottom:5px;">
+                        * 인스타 피드에는 <strong>우측 하단의 마지막 번호(가장 큰 번호)</strong> 조각부터 역순으로 업로드해야 모양이 맞춰집니다!
+                    </p>
+                    <!-- 분할된 이미지가 동적으로 박힐 컨테이너 -->
+                    <div id="preview-grid" class="preview-grid-container"></div>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+</body>
+</html>

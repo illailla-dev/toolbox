@@ -26,6 +26,34 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveMenu();
         initShareButton();
         initBookmarkButton(); // 🚀 안쪽으로 이동시켜 전역 에러를 완벽 방어합니다.
+
+        const toggleBtn = document.querySelector('#toggle-open');
+        const gnb = document.querySelector('#gnb'); // 🚀 nav 대신 #gnb 선택
+
+        if (!toggleBtn || !gnb) return;
+
+        const icon = toggleBtn.querySelector('.bi');
+        if (!icon) return;
+
+        // 1. 토글 버튼 클릭 이벤트
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = document.body.classList.toggle('is-open');
+            // if (isOpen) {
+            //     icon.classList.replace('bi-list', 'bi-x');
+            // } else {
+            //     icon.classList.replace('bi-x', 'bi-list');
+            // }
+        });
+
+        // 2. 🚀 #gnb::after 딤배경 클릭 시 메뉴 닫기
+        gnb.addEventListener('click', (e) => {
+            // 클릭된 타겟이 실제 메뉴창(<nav>) 내부가 아닐 때만 닫기 실행
+            if (!e.target.closest('nav')) {
+                document.body.classList.remove('is-open');
+                icon.classList.replace('bi-x', 'bi-list');
+            }
+        });
+
     });
 
     /**
