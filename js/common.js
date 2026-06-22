@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 전역 공간에 단독 배치하여 이벤트를 안정적으로 바인딩합니다.
 function initBookmarkButton() {
     const btnBookmark = document.getElementById('btn-bookmark-site');
     if (!btnBookmark) return;
@@ -105,16 +104,29 @@ function initBookmarkButton() {
         } else {
             const userAgent = navigator.userAgent.toLowerCase();
 
+            // 1. 아이폰 / 아이패드 유저 판별
             if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipad') > -1) {
-                alert('📱 [아이폰 유저 안내]\n브라우저 하단의 [공유] 버튼을 누른 뒤\n[홈 화면에 추가]를 선택하시면 앱처럼 편하게 쓰실 수 있습니다!');
-            } else if (userAgent.indexOf('android') > -1) {
+                // 사파리 외 다른 브라우저들 판별 (크롬, 네이버, 카카오톡, 라인, 페이스북 등)
+                const isNotSafari = /crios|crumbs|fxios|naver|kakaotalk|line|fbios|fban/.test(userAgent);
+
+                if (isNotSafari) {
+                    alert('📱 [아이폰 유저 안내]\n현재 브라우저에서는 홈 화면 추가가 지원되지 않습니다.\n[사파리(Safari)] 앱으로 접속하시면 앱처럼 사용 가능합니다!');
+                } else {
+                    alert('📱 [아이폰 유저 안내]\n브라우저 하단의 [공유] 버튼을 누른 뒤\n[홈 화면에 추가]를 선택하시면 앱처럼 편하게 쓰실 수 있습니다!');
+                }
+            }
+            // 2. 안드로이드 유저 판별
+            else if (userAgent.indexOf('android') > -1) {
                 alert('📱 [갤럭시 유저 안내]\n브라우저 우측 상단 또는 하단의 [메뉴(점3개)]를 누른 뒤\n[현재 페이지 추가] 또는 [북마크 추가]를 선택해 주세요!');
-            } else {
+            }
+            // 3. PC 및 기타 기기 유저 대응
+            else {
                 alert('💻 [PC 유저 안내]\n키보드에서 [ Ctrl + D ] 키를 동시에 누르시면\n현재 계산기가 북마크에 바로 등록됩니다!');
             }
         }
     });
 }
+
 
 function initShareButton() {
     const btnShare = document.getElementById('btn-share-site');
@@ -150,9 +162,6 @@ function initShareButton() {
     });
 }
 
-// ==========================================
-// 📐 EVERY CALC 전역 계산기 검색 데이터베이스 (2026 최신 라인업)
-// ==========================================
 // ==========================================
 // 📐 EVERY CALC 전역 계산기 완성형 검색 데이터베이스
 // ==========================================
@@ -201,7 +210,13 @@ var everyCalcDatabase = [
     { title: "🔲 모던 UI 다중 그림자 생성기", url: "/box-shadow/", keywords: "박스섀도우 boxshadow 그림자효과 피그마그림자 다중그림자 레이어 그림자디자인 ㅂㅅ" },
     { title: "✍️ 네이버 블로그 글자수 & 원고지 환산기", url: "/blog-wordcount/", keywords: "블로그글자수 공백제외 스마트에디터 원고대행 상위노출 체험단 원고지 환산 ㅂㄹㄱ" },
     { title: "📅 외주 프로젝트 마일스톤 D-Day 플래너", url: "/project-milestone/", keywords: "프리랜서 외주마감 일정관리 마일스톤 디데이 크몽 사파리날짜버그 플래너 ㅍㄹㅈㅌ" },
-    { title: "💼 프리랜서 적정 종합 시급 환산기", url: "/freelancer-wage/", keywords: "프리랜서시급 외주단가 연봉환산 프리랜서단가 몸값계산 프로젝트단가 부업 ㅂㅇ" }
+    { title: "💼 프리랜서 적정 종합 시급 환산기", url: "/freelancer-wage/", keywords: "프리랜서시급 외주단가 연봉환산 프리랜서단가 몸값계산 프로젝트단가 부업 ㅂㅇ" },
+    { title: "🏢 숨만 쉬고 건물 사기 기회비용 계산기", url: "/breathe-save/", keywords: "숨만쉬고모으기 건물주 적금 자산형성 부업권장 유머 스낵 밈 ㅁㅁ" },
+    { title: "💻 내 직업 AI 대체 위험도 진단기", url: "/ai-replacement/", keywords: "AI대체 위험도 계산기 직업수명 챗지피티 대체확률 인공지능 일자리 유머 스낵 밈 ㅁㅁ" },
+    { title: "🔗 QR코드 생성기", url: "/url-qr/", keywords: "qr코드생성기 무료큐알코드 큐알코드만들기 모바일마케팅 명함전단지 링크 ㅋㅇ" },
+    { title: "✈️ 해외 의류·신발 사이즈 변환기", url: "/size-converter/", keywords: "해외직구 옷사이즈 미국사이즈 유럽사이즈 신발사이즈표 직구 사이즈변환 ㅈㄱ" },
+    { title: "🏢 평수/제곱미터(㎡) 양방향 변환기", url: "/pyeong-converter/", keywords: "평수계산 제곱미터변환 아파트면적 전용면적 공급면적 평형 환산 부동산 ㅂㄷㅅ" },
+    { title: "💵 연봉 실수령액 상세 계산기", url: "/salary-calc/", keywords: "연봉계산기 월급실수령액 4대보험 근로소득세 비과세 세후월급 실수령 랭킹 ㅇㅂ" }
 ];
 
 

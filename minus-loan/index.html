@@ -72,7 +72,7 @@
                             더 유리한 방식 선택 시 연간 이자 절감액: <strong id="result-minus-loan-salary">0</strong> 원
                         </p>
                     </div>
-                    <div class="target-guide-box mt-3 p-3" style="background: #fff8fe; border-radius: 8px; border-left: 4px solid var(--pink);">
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 내 지출 성향에 맞는 최적의 대출 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="minus-loan-guide-text"></p>
                     </div>
@@ -131,7 +131,7 @@
                         guideText = "✨ <span style='color: var(--pink); font-weight:bold;'>마이너스통장(마통) 개설이 압도적 유리!</span><br>" +
                             "현재 한도 대비 실제 자금 사용 비율이 " + utilizationRate + "% 수준으로 낮습니다. 마통 금리가 신용대출보다 높더라도, 필요한 금액만 뺐다 다시 메우는 수시 상환 지출 패턴을 고수하면 일반 신용대출 대비 한 달에 " + diffMonthly.toLocaleString('ko-KR') + "원, <span style='font-weight:bold; color: var(--pink);'>1년에 총 " + annualSavings.toLocaleString('ko-KR') + "원</span>의 대출 이자를 통장에 남길 수 있습니다.";
                     } else if (minusMonthlyInterest > creditMonthlyInterest) {
-                        guideText = "❌ <span style='color: #dc3545; font-weight:bold;'>일반 신용대출 실행이 훨씬 유리!</span><br>" +
+                        guideText = "❌ <span style='color: var(--red); font-weight:bold;'>일반 신용대출 실행이 훨씬 유리!</span><br>" +
                             "대출 한도 금액의 대부분을 계좌에 항상 마이너스로 빼두고 상환하지 않는 묵직한 지출 성향입니다. 이 경우 마이너스통장의 높은 금리와 일복리 기믹 때문에 이자 폭탄을 맞게 됩니다. 가산금리가 없고 고정 지출 통제가 수월한 일반 신용대출을 실행하시는 것이 안전합니다.";
                     } else {
                         guideText = "👍 <span style='color: var(--green); font-weight:bold;'>두 대출 방식의 비용이 동일한 균형 구간입니다.</span><br>" +

@@ -125,7 +125,7 @@
 
                     guideText = "• 현재 원고 상태 지표 평가:<br>";
                     if (textLengthNoSpace < 1000) {
-                        guideText += "⚠️ <span style='color: #dc3545; font-weight:bold;'>원고 분량 부족 위험.</span> 공백 제외 1,000자 미만의 글은 정보성 문서 점수가 낮게 책정됩니다. 상위 노출을 위해 살을 더 붙여 최소 1,200자 이상으로 문장을 늘리시는 것을 추천합니다.";
+                        guideText += "⚠️ <span style='color: var(--red); font-weight:bold;'>원고 분량 부족 위험.</span> 공백 제외 1,000자 미만의 글은 정보성 문서 점수가 낮게 책정됩니다. 상위 노출을 위해 살을 더 붙여 최소 1,200자 이상으로 문장을 늘리시는 것을 추천합니다.";
                     } else {
                         if (images < optimalImageMin) {
                             guideText += "⚠️ <span style='color: var(--orange); font-weight:bold;'>이미지 배치 부족 진단.</span> 현재 글자 수(" + textLengthNoSpace.toLocaleString('ko-KR') + "자) 대비 등록된 사진 장수가 너무 적어 텍스트 피로도가 높습니다. 최적의 정보 전달을 위해 가급적 <span style='font-weight:bold;'>사진을 최소 " + optimalImageMin + "장 이상</span>으로 증설하는 것이 알고리즘 노출에 유리합니다.";

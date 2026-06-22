@@ -129,15 +129,15 @@
                 } else {
                     if (netSalary < 0) {
                         var lossAmount = Math.abs(netSalary);
-                        guideText = "🚨 <span style='color: #dc3545; font-weight:bold;'>현재 적자 운영 구간입니다.</span><br>" +
+                        guideText = "🚨 <span style='color: var(--red); font-weight:bold;'>현재 적자 운영 구간입니다.</span><br>" +
                             "예상 월 매출이 손익분기점 문턱인 " + bepSales.toLocaleString('ko-KR') + "만 원에 미달하여 매달 약 <span style='font-weight:bold;'>" + lossAmount.toLocaleString('ko-KR') + "원</span>의 손실이 예상됩니다. 일평균 매출을 최소 " + bepDailySales.toLocaleString('ko-KR') + "원 이상으로 끌어올리거나 고정비를 낮추어야 합니다.";
                     } else if (netSalary === 0) {
-                        guideText = "👍 <span style='color: var(--green); font-weight:bold;'>본전치기(손익분기 딱 도달) 상태입니다.</span><br>" +
+                        guideText = "👍 <span style='color: var(--orange); font-weight:bold;'>본전치기(손익분기 딱 도달) 상태입니다.</span><br>" +
                             "수익도 손실도 없는 완벽한 BEP 균형 상태입니다. 도난/변실율 제어 및 이벤트 프로모션을 통해 추가 매출을 확보하면 순수익 구조로 즉시 전환됩니다.";
                     } else {
                         // 순수익 전환 완료 및 직장인 시급 가치 비교 매칭
                         var dailyNet = Math.floor(netSalary / 30);
-                        guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>흑자 전환 완료! 안정적인 파이프라인 형성</span><br>" +
+                        guideText = "✨ <span style='color: var(--green); font-weight:bold;'>흑자 전환 완료! 안정적인 파이프라인 형성</span><br>" +
                             "손익분기점을 넘겨 매달 약 <span style='font-weight:bold; color: var(--blue);'>" + netSalary.toLocaleString('ko-KR') + "원</span>의 순수 오토 수익이 발생합니다. (하루 평균 약 " + dailyNet.toLocaleString('ko-KR') + "원의 순이익 축적 중) 무인 매장 입지 경쟁력을 유지하는 관리에 집중하세요.";
                     }
                 }

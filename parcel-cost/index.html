@@ -160,7 +160,7 @@
                     // 반값택배 불가 규격 (대형 박스 혹은 5kg 초과)
                     lowestCost = Math.min(cvsCost, postCost);
 
-                    guideText = "⚠️ <span style='color: #dc3545; font-weight:bold;'>반값택배 접수 불가 물품!</span><br>" +
+                    guideText = "⚠️ <span style='color: var(--red); font-weight:bold;'>반값택배 접수 불가 물품!</span><br>" +
                         "물품이 너무 크거나 무거워 GS25/CU 반값택배 규격 한도(세 변의 합 80cm 이하, 5kg 이하)를 초과했습니다. 일반 택배로만 발송이 가능합니다. 현재 조건에서는 이자 지출이 덜한 <span style='color: var(--blue); font-weight:bold;'>" + (cvsCost < postCost ? "일반 편의점 택배" : "우체국 택배") + "</span> 옵션이 저렴하므로 이를 선택하시고, 구매자에게 " + lowestCost.toLocaleString('ko-KR') + "원을 청구하시는 것이 현명합니다.";
                 }
 

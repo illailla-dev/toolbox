@@ -5,7 +5,7 @@
 @import url('jquery-ui.min.css');
 
 :root {
-    --html-base: clamp(13px, 0.25vw + 11.2px, 16px);
+    --html-base: clamp(14px, 0.15vw + 13.17px, 16px);
 
     /* font */
     --font-family: Pretendard, sans-serif;
@@ -23,7 +23,7 @@
     --gray80: #f8f8f8;
     --muted: #888;
     --yellow: #f1c40f;
-    --red: #ff4757;
+    --red: #dc3545;
     --orange: #e67e22;
     --dark-orange: #fb7638;
     --green: #17b13b;

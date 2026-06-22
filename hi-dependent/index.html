@@ -142,7 +142,7 @@
                     // 월 최고액 및 최저액 디펜스 라인 구축
                     if (estimatedMonthlyPremium < 30000) estimatedMonthlyPremium = 25110;
 
-                    decisionHtml = "🚨 <span style='color: #dc3545; font-weight:bold;'>피부양자 자격 탈락 (지역 전환 대상)</span><br>" +
+                    decisionHtml = "🚨 <span style='color: var(--red); font-weight:bold;'>피부양자 자격 탈락 (지역 전환 대상)</span><br>" +
                         "원인: " + reason + "<br>국민건강보험공단으로부터 11월 전후로 지역가입자 전환 고지서를 받을 확률이 높습니다. 사업소득의 경우 필요경비 처리를 통한 소득 조절 혹은 증빙 서류 제출을 통한 조 조정 검토가 필요합니다.";
                 } else {
                     estimatedMonthlyPremium = 0;

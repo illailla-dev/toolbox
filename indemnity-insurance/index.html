@@ -160,14 +160,14 @@
                 } else {
                     if (annualSavings > 0) {
                         if (nonBenefit >= 1500000) {
-                            guideText = "⚠️ <span style='color: #dc3545; font-weight:bold;'>보험료는 절감되나 주의 필요 (" + statusLabel + ")</span><br>" +
+                            guideText = "⚠️ <span style='color: var(--red); font-weight:bold;'>보험료는 절감되나 주의 필요 (" + statusLabel + ")</span><br>" +
                                 "4세대로 전환 시 연간 고정 이자 비용은 세이브되지만, 현재 가입자의 비급여 청구량(도수치료 등)이 너무 많아 4세대 특유의 할증 페널티가 누적되고 있습니다. 병원을 자주 가셔야 하는 만성 질환자나 도수치료 고정 이용자는 보장 100% 형태인 기존 구실손을 유지하는 것이 장기적으로 유리할 수 있습니다.";
                         } else {
                             guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>4세대 전환 적극 추천 (고정비 다이어트 최고 구간)</span><br>" +
                                 "현재 병원 방문 빈도가 낮고 비급여 치료 지출이 적어 4세대로 갈아타기에 가장 이상적인 컨디션입니다. 전환 즉시 매달 새어 나가는 보험료 폭탄을 방어하고, 1년에 무려 <span style='font-weight:bold; color: var(--blue);'>" + annualSavings.toLocaleString('ko-KR') + "원</span>의 현금을 순수하게 아낄 수 있습니다. 금융 재테크 효과가 뛰어납니다.";
                         }
                     } else {
-                        guideText = "❌ <span style='color: #dc3545; font-weight:bold;'>기존 보험 유지 유리</span><br>" +
+                        guideText = "❌ <span style='color: var(--red); font-weight:bold;'>기존 보험 유지 유리</span><br>" +
                             "현재 가입 상태 대비 4세대 전환의 실익이 마이너스이거나 제로에 가깝습니다. 구관이 명관이므로 기존 가입하신 실손 의료비 대안을 해지하지 말고 그대로 계약을 고수하시는 것을 강력히 권장합니다.";
                     }
                 }

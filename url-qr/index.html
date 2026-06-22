@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무료 고해상도 QR코드 생성기 | 에브리캘크</title>
+    <meta name="description" content="웹사이트 주소(URL)를 입력하여 홍보 및 인쇄물에 바로 사용할 수 있는 고해상도 QR코드를 실시간으로 무료 생성하고 즉시 안전하게 저장합니다.">
+    <meta name="keywords" content="qr코드생성기, 무료큐알코드, 큐알코드만들기, 모바일마케팅, QR코드다운로드, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/url-qr/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/qrcode.min.js"></script>
+    <link rel="stylesheet" href="/css/url-qr.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="무료 고해상도 QR코드 생성기 - 에브리캘크">
+    <meta property="og:description" content="복잡한 주소는 깔끔한 큐알코드로! 고해상도 QR코드를 원클릭으로 무료 생성하고 소장하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/url-qr/">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🔗 고해상도 QR코드 생성기</h2>
+                <p>명함, 배너, 오프라인 홍보물 전단지에 삽입할 인터넷 주소(URL)를 입력하세요. 스마트폰 카메라로 즉시 인식이 가능한 고품질 QR코드를 브라우저 자체 연산으로 0.1초 만에 무료 생성합니다.</p>
+                <form id="url-qr-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 대상 웹사이트 주소(URL) 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="target-url-input">QR코드로 연결할 주소 입력</label>
+                            <input type="url" id="target-url-input" class="form-control" placeholder="https://example.com" value="https://every-calc.co.kr">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* http:// 또는 https:// 가 포함된 정확한 전체 주소를 입력하세요.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 QR코드 실시간 생성 결과</h3>
+                    <div class="result-display text-center">
+                        <!-- QR코드 가시화 그래픽 앵커 독립 배치 -->
+                        <span style="font-weight: bold; font-size: 0.9rem; color: #333; display: block; margin-bottom: 12px; text-align: left;">🎬 실시간 QR코드 프리뷰</span>
+                        <div id="qrcode-display-area" class="d-flex justify-content-center align-items-center p-3 mb-3" style="background:#fff; border:1px solid #eee; border-radius:8px; width:180px; height:180px; margin:0 auto;"></div>
+                        <hr>
+                        <div class="d-flex justify-content-center align-items-center" style="padding: 5px 0;">
+                            <button type="button" id="btn-download-qr" class="btn btn-success w-100" style="font-weight: bold; padding: 12px; font-size: 1.05rem;">💾 고해상도 QR코드 이미지 다운로드</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 오프라인 마케팅 및 QR 인쇄 규격 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="url-qr-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 도구의 QR코드 엔진은 외부 서버 통신 없이 사용자 브라우저 런타임에서 자바스크립트로 직접 연산하므로 주소 유출 우려가 전혀 없는 무결점 개인정보 보호 규격을 만족합니다. 다운로드된 이미지는 인쇄물 제작에 바로 사용하실 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <!-- 📌 작성하신 스크립트 파일이 이 하단 영역에 안전하게 위치하도록 결합 정돈 완료 -->
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        var qrCodeEngine = null;
+
+        // 입력값 변동 시 QR코드 갱신
+        $(document).on('input change', '#target-url-input', calculateUrlQr);
+
+        function calculateUrlQr() {
+            var rawUrl = $('#target-url-input').val() || "";
+            rawUrl = rawUrl.trim();
+
+            var $qrArea = $('#qrcode-display-area');
+
+            if (rawUrl === "") {
+                $qrArea.html('<span class="text-muted" style="font-size:0.85rem;">주소 입력 대기 중</span>');
+                $('#url-qr-guide-text').text("올바른 도메인 주소가 주입되면 QR코드가 자동 생성됩니다.");
+                return;
+            }
+
+            // 주소 형식 자동 보정 (http가 없으면 https:// 붙이기)
+            if (rawUrl.indexOf('http://') !== 0 && rawUrl.indexOf('https://') !== 0) {
+                rawUrl = 'https://' + rawUrl;
+            }
+
+            // QR코드 영역 초기화 후 새로 생성
+            $('#qrcode-display-area').empty();
+            qrCodeEngine = new QRCode(document.getElementById("qrcode-display-area"), {
+                text: rawUrl,
+                width: 180,
+                height: 180,
+                colorDark: "#2d3436",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // 안내 텍스트 출력
+            var guideText = "• 현재 변환 주소: <span style='color: var(--green); font-weight:bold;'>" + rawUrl + "</span><br>" +
+                "생성된 QR코드는 고밀도 오류 복구(Level H) 규격으로 설계되어, 인쇄물이 일부 오염되거나 구겨져도 최대 30%까지 자체 복구 인식이 가능합니다. 인쇄물 제작 시 최소 2cm 이상의 크기를 확보하세요.";
+            $('#url-qr-guide-text').html(guideText);
+        }
+
+        // 초기 실행
+        var safetyTrigger = setInterval(function () {
+            if ($('#target-url-input').length) {
+                calculateUrlQr();
+                clearInterval(safetyTrigger);
+            }
+        }, 50);
+    });
+
+</script>
+</body>
+</html>

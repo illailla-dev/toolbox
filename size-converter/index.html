@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해외 의류/신발 사이즈 변환기 | 에브리캘크</title>
+    <meta name="description" content="미국(US), 유럽(EU), 영국(UK), 일본(JP) 등 해외 직구 시 헷갈리는 남녀 의류 및 신발 사이즈를 한국 표준 규격(cm/호수)으로 실시간 자동 변환해 줍니다.">
+    <meta name="keywords" content="해외사이즈변환, 미국옷사이즈, 유럽신발사이즈, 직구사이즈표, 남성의류직구, 여성구두사이즈, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/size-converter/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/size-converter.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="해외 의류/신발 사이즈 변환기 - 에브리캘크">
+    <meta property="og:description" content="직구 실패 방지 필수품! 미국, 유럽, 영국의 옷과 신발 사이즈를 한국 규격으로 즉시 변환하고 절세 쇼핑하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/size-converter/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📐 해외 의류/신발 사이즈 변환기</h2>
+                <p>국가별로 완전히 다르게 표기되어 혼선을 주는 미국(US), 유럽(EU), 영국(UK), 일본(JP)의 남녀 의류 및 신발 표준 규격을 한국 사이즈 기준으로 실시간 매칭합니다.</p>
+                <form id="size-converter-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 품목 및 한국 기준 사이즈 선택</h3>
+                        <div class="input-item mb-3">
+                            <label for="size-category">직구 품목 분류</label>
+                            <select id="size-category" class="form-control">
+                                <option value="m-shoes" selected>남성 신발 (Men Shoes)</option>
+                                <option value="w-shoes">여성 신발 (Women Shoes)</option>
+                                <option value="m-clothes">남성 의류 (Men Clothes)</option>
+                                <option value="w-clothes">여성 의류 (Women Clothes)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="size-kr">한국 표준 사이즈 선택</label>
+                            <select id="size-kr" class="form-control"></select>
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 품목을 바꾸면 선택할 수 있는 사이즈 목록이 자동으로 실시간 갱신됩니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 글로벌 사이즈 매칭 결과</h3>
+                    <div class="result-display">
+                        <p>미국 규격 (US): <strong id="res-size-us" style="color: var(--orange);">-</strong></p>
+                        <p>유럽 규격 (EU): <strong id="res-size-eu" style="color: var(--green);">-</strong></p>
+                        <p>영국 규격 (UK): <strong id="res-size-uk" style="color: var(--purple);">-</strong></p>
+                        <p>일본 규격 (JP): <strong id="res-size-jp" style="color: #6c757d;">-</strong></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                가장 범용적인 미국(US) 추천 사이즈: <span id="result-size-salary" style="color: var(--red); font-weight: bold;">-</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-size-salary" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 국가별 핏(Fit) 선택 및 브랜드 직구 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="size-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 사이즈 환산표는 글로벌 의류 가이드라인 표준 규격을 정밀 변환한 수치입니다. 해외 브랜드 고유의 아시안 핏(Asian Fit), 인터내셔널 핏(International Fit) 여부 및 가죽/니트재질 수축률 특성에 따라 실제 착용감은 반 치수 내외의 미세 편차가 발생할 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            var sizeOptions = {
+                'm-shoes': [250, 255, 260, 265, 270, 275, 280, 285, 290],
+                'w-shoes': [220, 225, 230, 235, 240, 245, 250, 255, 260],
+                'm-clothes': [90, 95, 100, 105, 110],
+                'w-clothes': [44, 55, 66, 77, 88]
+            };
+            // 품목 변경 시 하단 한국 사이즈 옵션을 실시간 갱신하는 런타임 제어 장치
+            function updateSizeSelect() {
+                var category = $('#size-category').val();
+                var options = sizeOptions[category];
+                var $selectKr = $('#size-kr');
+
+                $selectKr.empty();
+                options.forEach(function (size) {
+                    var unit = (category.indexOf('shoes') !== -1) ? " mm" : " (국내규격)";
+                    $selectKr.append('<option value="' + size + '">' + size + unit + '</option>');
+                });
+
+                calculateSizeConverter();
+            }
+
+            // 변경 트래킹 감시 위임 엔진 결합
+            $(document).on('change', '#size-category', updateSizeSelect);
+            $(document).on('input change', '#size-kr', calculateSizeConverter);
+
+            // 복사 버튼 클릭 피드백 및 상태 변경 제어 로직
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText === "" || codeText === "-") {
+                    alert("기준 사이즈를 정확히 지정해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateSizeConverter() {
+                var category = $('#size-category').val();
+                var krSize = parseFloat($('#size-kr').val()) || 0;
+
+                var usSize = "-";
+                var euSize = "-";
+                var ukSize = "-";
+                var jpSize = "-";
+                var guideText = "";
+
+                if (krSize === 0) return;
+
+                // 정밀 매칭 스코어링 테이블 연산 트리
+                if (category === 'm-shoes') {
+                    jpSize = (krSize / 10).toFixed(1);
+                    if (krSize === 250) { usSize = "7"; euSize = "40"; ukSize = "6.5"; }
+                    else if (krSize === 255) { usSize = "7.5"; euSize = "40.5"; ukSize = "7"; }
+                    else if (krSize === 260) { usSize = "8"; euSize = "41"; ukSize = "7.5"; }
+                    else if (krSize === 265) { usSize = "8.5"; euSize = "42"; ukSize = "8"; }
+                    else if (krSize === 270) { usSize = "9"; euSize = "42.5"; ukSize = "8.5"; }
+                    else if (krSize === 275) { usSize = "9.5"; euSize = "43"; ukSize = "9"; }
+                    else if (krSize === 280) { usSize = "10"; euSize = "44"; ukSize = "9.5"; }
+                    else if (krSize === 285) { usSize = "10.5"; euSize = "44.5"; ukSize = "10"; }
+                    else if (krSize === 290) { usSize = "11"; euSize = "45"; ukSize = "10.5"; }
+
+                    guideText = "• 남성 스니커즈/구두 가이드:<br>미국(US) 기준 <span style='color: var(--orange); font-weight:bold;'>" + usSize + "</span> 사이즈가 매칭됩니다. 나이키, 아디다스 등 글로벌 스포츠 브랜드는 유럽(EU) 표기법을 주로 혼용하므로 신발 박스의 <span style='font-weight:bold; color: var(--green);'>" + euSize + "</span> 표기를 함께 교차 검증하세요.";
+                }
+                else if (category === 'w-shoes') {
+                    jpSize = (krSize / 10).toFixed(1);
+                    if (krSize === 220) { usSize = "5"; euSize = "35"; ukSize = "2.5"; }
+                    else if (krSize === 225) { usSize = "5.5"; euSize = "35.5"; ukSize = "3"; }
+                    else if (krSize === 230) { usSize = "6"; euSize = "36"; ukSize = "3.5"; }
+                    else if (krSize === 235) { usSize = "6.5"; euSize = "36.5"; ukSize = "4"; }
+                    else if (krSize === 240) { usSize = "7"; euSize = "37.5"; ukSize = "4.5"; }
+                    else if (krSize === 245) { usSize = "7.5"; euSize = "38"; ukSize = "5"; }
+                    else if (krSize === 250) { usSize = "8"; euSize = "38.5"; ukSize = "5.5"; }
+                    else if (krSize === 255) { usSize = "8.5"; euSize = "39"; ukSize = "6"; }
+                    else if (krSize === 260) { usSize = "9"; euSize = "40"; ukSize = "6.5"; }
+
+                    guideText = "• 여성 슈즈 가이드:<br>미국(US) 기준 <span style='color: var(--orange); font-weight:bold;'>" + usSize + "</span> 사이즈가 가장 적합합니다. 발볼이 좁게 나오는 이탈리아 브랜드 직구 시에는 한 치수 크게(0.5 업) 주문하시는 것이 교환 리스크를 최소화합니다.";
+                }
+                else if (category === 'm-clothes') {
+                    jpSize = krSize === 90 ? "S" : (krSize === 95 ? "M" : (krSize === 100 ? "L" : (krSize === 105 ? "XL" : "XXL")));
+                    if (krSize === 90) { usSize = "XS (34)"; euSize = "44"; ukSize = "34"; }
+                    else if (krSize === 95) { usSize = "S (36)"; euSize = "46"; ukSize = "36"; }
+                    else if (krSize === 100) { usSize = "M (38)"; euSize = "48"; ukSize = "38"; }
+                    else if (krSize === 105) { usSize = "L (40)"; euSize = "50"; ukSize = "40"; }
+                    else if (krSize === 110) { usSize = "XL (42)"; euSize = "52"; ukSize = "42"; }
+
+                    guideText = "• 남성 의류 직구 조언:<br>미국/영국 브랜드 기준 <span style='color: var(--orange); font-weight:bold;'>" + usSize + "</span> 사이즈가 매칭됩니다. 폴로, 타미 등 서구권 의류는 암홀과 소매가 국내 규격보다 반 치수 이상 길고 크게 나오므로 슬림핏을 원하시면 한 치수 다운을 권장합니다.";
+                }
+                else if (category === 'w-clothes') {
+                    jpSize = krSize === 44 ? "XS" : (krSize === 55 ? "S" : (krSize === 66 ? "M" : (krSize === 77 ? "L" : "XL")));
+                    if (krSize === 44) { usSize = "0~2 (XS)"; euSize = "32~34"; ukSize = "4~6"; }
+                    else if (krSize === 55) { usSize = "4~6 (S)"; euSize = "36~38"; ukSize = "8~10"; }
+                    else if (krSize === 66) { usSize = "8~10 (M)"; euSize = "40~42"; ukSize = "12~14"; }
+                    else if (krSize === 77) { usSize = "12~14 (L)"; euSize = "44~46"; ukSize = "16~18"; }
+                    else if (krSize === 88) { usSize = "16~18 (XL)"; euSize = "48~50"; ukSize = "20~22"; }
+
+                    guideText = "• 여성 의류 가이드:<br>미국(US) 의류 규격 <span style='color: var(--orange); font-weight:bold;'>" + usSize + "</span> 표기가 적절합니다. 유럽 컨템포러리 명품 브랜드(산드로, 마쥬 등)는 프랑스/이탈리아 표기법인 EU 계수를 반드시 대조하여 선택하는 것이 현명합니다.";
+                }
+
+                // 값 바인딩 및 출력형 문자 세팅
+                $('#res-size-us').text(usSize);
+                $('#res-size-eu').text(euSize);
+                $('#res-size-uk').text(ukSize);
+                $('#res-size-jp').text(jpSize + (category.indexOf('shoes') !== -1 ? " cm" : ""));
+
+                $('#result-size-salary').text(usSize);
+                $('#size-guide-text').html(guideText);
+            }
+
+            // GNB 비동기 페치 완료 추적 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#size-category').length) {
+                    updateSizeSelect(); // 처음 실행 시 목록 바인딩 유도
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 연봉 실수령액 상세 계산기 | 에브리캘크</title>
+    <meta name="description" content="2026년 최신 4대보험 요율과 비과세 급여, 부양가족 기준을 바탕으로 세전 연봉에 따른 월 실수령액 및 공제 내역을 정밀하게 모의 계산합니다.">
+    <meta name="keywords" content="연봉계산기, 실수령액계산기, 2026년연봉, 월급실수령액, 4대보험요율, 세후월급, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/salary-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/salary-calc.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="2026년 연봉 실수령액 상세 계산기 - 에브리캘크">
+    <meta property="og:description" content="내 연봉의 진짜 월 실수령액은 얼마일까? 최신 4대보험과 세금 공제액을 실시간으로 확인해보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/salary-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>💵 2026년 연봉 실수령액 상세 계산기</h2>
+                <p>계약 연봉을 입력하시면 국민연금, 건강보험, 고용보험, 장기요양보험료 및 근로소득세(지방소득세 포함)를 차감한 실제 매월 통장에 꽂히는 세후 금액을 정밀 정산합니다.</p>
+                <form id="salary-calc-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 급여 및 공제 조건 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="sal-annual">근로계약서 상 세전 연봉 (원)</label>
+                            <input type="number" id="sal-annual" class="form-control" placeholder="예: 40000000" min="0" step="10000" value="45000000">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="sal-non-tax">월 비과세 급여액 (식대, 자가운전보조금 등)</label>
+                            <input type="number" id="sal-non-tax" class="form-control" placeholder="예: 200000" min="0" value="200000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 2026년 법정 식대 비과세 한도는 월 20만 원입니다. 일반적인 경우 20만 원을 유지하세요.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="sal-dependents">공제 대상 부양가족 수 (본인 포함)</label>
+                            <select id="sal-dependents" class="form-control">
+                                <option value="1" selected>1명 (본인 혼자)</option>
+                                <option value="2">2명</option>
+                                <option value="3">3명</option>
+                                <option value="4">4명 이상</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 월 공제 내역 및 정산 결과</h3>
+                    <div class="result-display">
+                        <p>기본 월 세전 급여액: <strong id="res-sal-monthly-gross">0</strong> 원</p>
+                        <p>국민연금 공제 (4.5%): <strong id="res-sal-np">0</strong> 원</p>
+                        <p>건강보험 공제 (3.545%): <strong id="res-sal-hi">0</strong> 원</p>
+                        <p>장기요양보험 공제 (건보료의 12.95%): <strong id="res-sal-lti">0</strong> 원</p>
+                        <p>고용보험 공제 (0.9%): <strong id="res-sal-ei">0</strong> 원</p>
+                        <p>근로소득세 + 지방소득세 (간이세액 추정): <strong id="res-sal-tax" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                <strong>매월 세후 실제 수령액:</strong> <span id="result-salary-calc-salary" style="color: var(--red); font-weight: bold;">0</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-salary-calc-salary" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 급여 구조 분석 및 절세 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="salary-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 2026년 기준 4대보험 법정 고정 요율(국민연금 상한액 보정 포함) 및 국세청 근로소득 간이세액표 누진 단계 공식을 역산 변환하여 연산한 정밀 모의 지표입니다. 기업별 복리후생비 지급 조건 및 연말정산 시 개별 인적/특별공제 셋에 따라 최종 수령액 세액과는 일부 오차가 있을 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#salary-calc-form', calculateSalary);
+
+            // 결과 복사 버튼 클릭 피드백 및 상태 변경 제어 로직
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText === "" || codeText.indexOf('0원') === 0 || codeText === "-") {
+                    alert("정확한 연봉 금액을 먼저 입력해 주세요!");
+                    return;
+                }
+
+                // 콤마와 원 텍스트를 정제하고 숫자와 단위만 깔끔하게 클립보드에 주입
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateSalary() {
+                // 1. 값 추출 및 예외 요율 제한 처리
+                var annualSalary = parseFloat($('#sal-annual').val()) || 0;
+                var monthlyNonTax = parseFloat($('#sal-non-tax').val()) || 0;
+                var dependents = parseInt($('#sal-dependents').val()) || 1;
+
+                if (annualSalary < 0) annualSalary = 0;
+                if (monthlyNonTax < 0) monthlyNonTax = 0;
+
+                // 2. 기본 월 급여 구조 쪼개기
+                var monthlyGross = Math.floor(annualSalary / 12);
+
+                if (monthlyGross === 0) {
+                    clearDisplay();
+                    return;
+                }
+
+                // 4대보험 산정 기준 소득 (세전 총액 - 비과세)
+                var targetIncome = monthlyGross - monthlyNonTax;
+                if (targetIncome < 0) targetIncome = 0;
+
+                // 3. 2026년 기준 4대보험 요율 정밀 연산 알고리즘
+                // (1) 국민연금: 4.5% (2025/2026 보건복지부 기준 월 상한선 6,170,000원 보정 반영)
+                var npInput = targetIncome;
+                if (npInput > 6170000) npInput = 6170000;
+                var nationalPension = Math.floor(npInput * 0.045);
+                // 하한선 디펜스
+                if (npInput < 390000 && npInput > 0) nationalPension = Math.floor(390000 * 0.045);
+
+                // (2) 건강보험: 2026년 현행 요율 3.545% 적용
+                var healthInsurance = Math.floor(targetIncome * 0.03545);
+
+                // (3) 장기요양보험: 건강보험료의 12.95% 적용
+                var longTermCare = Math.floor(healthInsurance * 0.1295);
+
+                // (4) 고용보험: 근로자 부담 요율 0.9% 적용
+                var employmentInsurance = Math.floor(targetIncome * 0.009);
+
+                // 4. 국세청 간이세액표 기반 소득세(지방세 포함) 누진 추정 연산
+                // 연간 과세 소득 역산 근거 간이 알고리즘 대입
+                var taxableAnnual = targetIncome * 12;
+                var pureTax = 0;
+
+                // 과세표준 구간별 기본 누진 공제 산식
+                if (taxableAnnual <= 14000000) {
+                    pureTax = taxableAnnual * 0.06;
+                } else if (taxableAnnual <= 50000000) {
+                    pureTax = (14000000 * 0.06) + ((taxableAnnual - 14000000) * 0.15);
+                } else if (taxableAnnual <= 88000000) {
+                    pureTax = (14000000 * 0.06) + (36000000 * 0.15) + ((taxableAnnual - 50000000) * 0.24);
+                } else {
+                    pureTax = (14000000 * 0.06) + (36000000 * 0.15) + (38000000 * 0.24) + ((taxableAnnual - 88000000) * 0.35);
+                }
+
+                // 인적공제 및 기본 세액공제 간이 반영 보정 (가족 수 비례 차감)
+                var monthlyTax = Math.floor((pureTax / 12) * (1 - (dependents - 1) * 0.15));
+                // 표준세액공제 기본 디펜스 처리
+                monthlyTax = Math.max(0, monthlyTax - 15000);
+
+                // 지방소득세는 소득세의 10% 추가 가산
+                var localTax = Math.floor(monthlyTax * 0.1);
+                var totalTax = monthlyTax + localTax;
+
+                // 5. 최종 월 세후 실수령액 정산
+                var totalDeduction = nationalPension + healthInsurance + longTermCare + employmentInsurance + totalTax;
+                var netSalary = monthlyGross - totalDeduction;
+                if (netSalary < 0) netSalary = 0;
+
+                // 6. 가이드라인 리포트 텍스트 가공 분기
+                var deductionRate = ((totalDeduction / monthlyGross) * 100).toFixed(1);
+                var guideText = "• 월간 급여 요약 지표:<br>" +
+                    "현재 입력하신 연봉 규격 기준, 매월 월급 총액에서 약 <span style='color: var(--blue); font-weight:bold;'>" + deductionRate + "%</span>에 해당하는 " + totalDeduction.toLocaleString('ko-KR') + "원이 4대보험 및 세금으로 공제됩니다. 비과세 식대 한도(20만 원)를 적극 활용하고 계시며, 연말정산 시 신용카드 소득공제 및 연금저축 IRP 세액공제 유틸리티를 병행 활용하시면 공제 소득세율 구간을 대폭 낮춰 세후 환급금을 크게 보전할 수 있습니다.";
+
+                // 7. DOM 출력 바인딩
+                $('#res-sal-monthly-gross').text(monthlyGross.toLocaleString('ko-KR'));
+                $('#res-sal-np').text(nationalPension.toLocaleString('ko-KR'));
+                $('#res-sal-hi').text(healthInsurance.toLocaleString('ko-KR'));
+                $('#res-sal-lti').text(longTermCare.toLocaleString('ko-KR'));
+                $('#res-sal-ei').text(employmentInsurance.toLocaleString('ko-KR'));
+                $('#res-sal-tax').text(totalTax.toLocaleString('ko-KR'));
+
+                $('#result-salary-calc-salary').text(netSalary.toLocaleString('ko-KR') + " 원");
+                $('#salary-guide-text').html(guideText);
+            }
+
+            function clearDisplay() {
+                $('#res-sal-monthly-gross').text('0');
+                $('#res-sal-np').text('0');
+                $('#res-sal-hi').text('0');
+                $('#res-sal-lti').text('0');
+                $('#res-sal-ei').text('0');
+                $('#res-sal-tax').text('0');
+                $('#result-salary-calc-salary').text('-');
+                $('#salary-guide-text').text('연봉을 입력하시면 월 공제 내역과 세후 실제령액 진단 리포트가 실시간 출력됩니다.');
+            }
+
+            // GNB 비동기 페치 조립 시점 자동 추적 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#sal-annual').length) {
+                    calculateSalary();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

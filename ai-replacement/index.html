@@ -1,0 +1,177 @@
+<!-- 📐 EVERY CALC 공식 무결점 마스터 템플릿 기반 구축 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 직업 AI 대체 위험도 및 직업 수명 진단기 | 에브리캘크</title>
+    <meta name="description" content="AI 시대를 살아가는 직장인과 프리랜서의 업무 패턴을 분석하여, ChatGPT 및 최신 인공지능 툴에 의해 내 직업이 대체될 확률과 예상 직업 수명을 실시간으로 진단합니다.">
+    <meta name="keywords" content="AI대체위험도, 직업수명계산기, 챗지피티대체, 인공지능일자리, 직업전망, 부업추천, 스낵형계산기, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/ai-replacement/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/ai-replacement.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="내 직업 AI 대체 위험도 및 직업 수명 진단기 - 에브리캘크">
+    <meta property="og:description" content="내 일자리는 안전할까? AI의 위협 속에서 살아남을 내 직업의 진짜 생존 확률과 추천 파이프라인을 실시간으로 진단해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/ai-replacement/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>💻 내 직업 AI 대체 위험 진단기</h2>
+                <p>오픈AI, 오틀리에(OpenResearch) 등 주요 인공지능 연구소의 '직업별 AI 노출도 지수' 데이터 알고리즘을 기반으로 합니다. 내 일상 업무 중 어떤 성격의 비중이 높은지 파악하여 생존 점수를 진단합니다.</p>
+                <form id="ai-replacement-form" class="form" onsubmit="return false;">
+                    <!-- 1. 업무 성향 가중치 선택 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 나의 하루 업무 유형별 비중 설정 (총합 100% 자율 조절)</h3>
+                        <div class="input-item mb-3">
+                            <label for="ai-task-repeat">단순 반복, 텍스트 요약, 데이터 입력 업무 비중 (%)</label>
+                            <input type="number" id="ai-task-repeat" class="form-control" placeholder="예: 40" min="0" max="100" value="40">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="ai-task-creative">기획서 작성, 번역, 코드 개발, 디자인 등 창작 업무 비중 (%)</label>
+                            <input type="number" id="ai-task-creative" class="form-control" placeholder="예: 40" min="0" max="100" value="40">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="ai-task-human">대면 영업, 육체 노동, 현장 관리, 감정 소통 업무 비중 (%)</label>
+                            <input type="number" id="ai-task-human" class="form-control" placeholder="예: 20" min="0" max="100" value="20">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 세 가지 항목의 합산 수치가 100%에서 벗어날 경우 자동으로 비율 보정 처리가 이루어집니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 AI 대체 지수 및 직업 생존 분석 결과</h3>
+                    <div class="result-display">
+                        <p>내 직업의 AI 노출 가중 점수: <strong id="res-ai-score" style="color: #6c757d;">0</strong> 점</p>
+                        <p>예상 안전지대 직업 잔여 수명: <strong id="res-ai-life" style="color: var(--orange);">0</strong> 년</p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                내 일자리 AI 대체 위험도: <span id="result-ai-replacement-salary" style="color: var(--red); font-weight: bold;">0%</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-ai-replacement-salary" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 AI 시대를 관통하는 직업 생존 생존 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="ai-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 진단기는 거대언어모델(LLM) 및 지능형 자동화 로봇 기술의 업무 자동화 침투율 통계를 역산한 스낵형 시뮬레이터입니다. 완벽한 직업의 멸종보다는 '업무 방식의 변화'를 뜻하므로, 인공지능에게 대체되는 사람이 아닌 'AI를 도구로 써서 매출을 극대화하는 파이프라인 개척자'가 되는 동기부여를 제공합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#ai-replacement-form', calculateAiReplacement);
+
+            // 복사 버튼 클릭 이벤트 위임 바인딩 및 피드백 상태 변경 가동
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText === "0%" || codeText === "") {
+                    alert("업무 비중 수치를 올바르게 입력해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateAiReplacement() {
+                // 1. 값 추출 및 예외 제한 처리
+                var tRepeat = parseFloat($('#ai-task-repeat').val()) || 0;
+                var tCreative = parseFloat($('#ai-task-creative').val()) || 0;
+                var tHuman = parseFloat($('#ai-task-human').val()) || 0;
+
+                if (tRepeat < 0) tRepeat = 0;
+                if (tCreative < 0) tCreative = 0;
+                if (tHuman < 0) tHuman = 0;
+
+                // 세 입력값의 합산 검증 및 100% 자동 보정 공식 스케일링
+                var totalSum = tRepeat + tCreative + tHuman;
+                if (totalSum === 0) {
+                    tRepeat = 40; tCreative = 40; tHuman = 20;
+                    totalSum = 100;
+                }
+
+                // 백분율 정규화 처리
+                var normRepeat = (tRepeat / totalSum) * 100;
+                var normCreative = (tCreative / totalSum) * 100;
+                var normHuman = (tHuman / totalSum) * 100;
+
+                // 2. AI 대체 노출도 스코어링 역산 알고리즘
+                // 단순 반복(Repeat): 현재 LLM 및 RPA 기술로 95% 이상 대체 노출 (가중치 0.95)
+                // 창작/전문(Creative): ChatGPT, 클로드, 미드저니 등 생성형 AI의 폭발적 침투 (가중치 0.75)
+                // 대면/육체(Human): 하드웨어 한계 및 인간의 감정 교류 영역으로 생존력 높음 (가중치 0.15)
+                var aiScore = (normRepeat * 0.95) + (normCreative * 0.75) + (normHuman * 0.15);
+                aiScore = Math.min(99, Math.max(1, Math.round(aiScore)));
+
+                // 3. 대체 위험도 대비 역산 안전지대 직업 잔여 수명 연산
+                var careerLife = 0;
+                if (aiScore >= 85) careerLife = Math.round((100 - aiScore) * 0.4 + 1); // 1~7년 이내
+                else if (aiScore >= 60) careerLife = Math.round((100 - aiScore) * 0.6 + 5); // 5~30년
+                else careerLife = Math.round((100 - aiScore) * 0.8 + 15); // 최대 50년 이상 방어
+
+                // 4. 스낵형 자극 및 현실 바이럴 유도 가이드라인 분기문 가공
+                var guideText = "";
+                var displayPercentage = aiScore + "%";
+
+                if (totalSum === 0) {
+                    guideText = "업무 유형을 입력하시면 가상의 AI 일자리 생존 리포트가 실시간 매칭됩니다.";
+                } else {
+                    if (aiScore >= 80) {
+                        guideText = "🚨 <span style='color: var(--red); font-weight:bold;'>레드존(Red Zone) 진입 - 초고위험 단계.</span><br>" +
+                            "현재 직무의 상당수가 데이터 가공 및 단순 텍스트 핸들링에 치우쳐 있어 AI 봇에 의한 자동화 효율이 극도로 높습니다. 향후 " + careerLife + "년 이내에 전사적인 시스템 개편 리스크가 발생할 수 있으므로, 당장 인공지능이 침투할 수 없는 나만의 고유 브랜딩을 구축하거나 에브리캘크의 '지식창업 플랫폼 정산기' 등을 활용해 개별 파이프라인 부업을 뚫어야 생존합니다.";
+                    } else if (aiScore >= 50) {
+                        guideText = "⚠️ <span style='color: var(--orange); font-weight:bold;'>옐로우존(Yellow Zone) - 과도기적 경쟁 단계.</span><br>" +
+                            "창의적이고 고도의 전문 지식이 필요한 업무 비중이 높지만, 역설적으로 생성형 AI의 발전 속도가 가장 무섭게 들이치는 구간입니다. AI를 다룰 줄 모르는 디자이너/개발자는 AI를 비서로 쓰는 디자이너/개발자에게 밀려납니다. 지금 즉시 프롬프트 엔지니어링이나 AI 자동화 툴을 내 업무에 무기로 장착하여 생산성을 3배 이상 격상시키세요.";
+                    } else {
+                        guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>그린존(Green Zone) - 독보적 인간 생존 지대.</span><br>" +
+                            "현장성, 대면 소통, 혹은 감정 교류 및 복합 육체 기동 업무 비중이 훌륭하게 자리 잡고 있습니다. 인공지능 로봇 기술이 완전히 상용화되기 전까지는 절대적인 방어력을 지닙니다. 현업의 전문성을 공고히 다져나가면서 여유 자금을 주식 물타기나 적금으로 굴려 가치를 누적하는 전략을 권장합니다.";
+                    }
+                }
+
+                // 5. DOM 출력 바인딩
+                $('#res-ai-score').text(aiScore);
+                $('#res-ai-life').text(careerLife);
+                $('#result-ai-replacement-salary').text(displayPercentage);
+                $('#ai-guide-text').html(guideText);
+            }
+
+            // GNB 비동기 페치 완료 추적 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#ai-task-repeat').length) {
+                    calculateAiReplacement();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

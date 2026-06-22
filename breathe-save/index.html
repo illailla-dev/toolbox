@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숨만 쉬고 목표 자산 모으기 계산기 | 에브리캘크</title>
+    <meta name="description" content="내 월급과 원하는 목표 자산 규모를 설정하여 단 1원도 쓰지 않고 숨만 쉬며 저축했을 때 도달하는 현실적인 기간을 위트 있게 계산하고, 이를 단축하기 위한 부업 솔루션을 제시합니다.">
+    <meta name="keywords" content="숨만쉬고모으기, 건물주계산기, 로또당첨금, 목표자산, 짠테크, 부업유도, 스낵형계산기, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/breathe-save/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/breathe-save.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="숨만 쉬고 목표 자산 모으기 계산기 - 에브리캘크">
+    <meta property="og:description" content="내가 숨만 쉬고 백만년 모으면 서울에 내 집 마련 가능할까? 현실 직시 팩트폭행 저축 기간을 실시간으로 시뮬레이션해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/breathe-save/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏢 숨만 쉬고 목표 자산 모으기 계산기</h2>
+                <p>현실 자산 형성 시뮬레이터입니다. 현재 나의 월급(소득)에서 단 1원도 쓰지 않고 100% 전부 저축하는 불가능한 '숨만 쉬기' 모드를 가정했을 때, 꿈의 목표 자산에 도달하기까지 걸리는 물리적인 시간을 역산합니다.</p>
+                <form id="breathe-save-form" class="form" onsubmit="return false;">
+                    <!-- 1. 저축 능력치 입력 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 현재 월평균 저축 가능 금액 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="save-monthly-money">월평균 저축 (또는 월급 총액) (원)</label>
+                            <input type="number" id="save-monthly-money" class="form-control" placeholder="예: 3000000" min="0" value="3000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 숨만 쉬고 전액 저축하는 밈을 체험하려면 월급 실수령액 전체를 입력해 보세요.</small>
+                        </div>
+                    </div>
+                    <!-- 2. 목표 자산 규모 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 달성하고 싶은 꿈의 워너비 자산 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="save-target-asset">목표 자산 테마 선택</label>
+                            <select id="save-target-asset" class="form-control">
+                                <option value="150000000" selected>수도권 신축 아파트 내집마련 (1억 5천만 원 선 주메뉴 디펜스 갭투자 기준)</option>
+                                <option value="1500000000">서울 역세권 신축 아파트 전세 혹은 매매 (15억 원)</option>
+                                <option value="5000000000">지방 중소형 빌딩 및 상가 건물주 (50억 원)</option>
+                                <option value="10000000000">강남 화려한 메인 타워 건물주 등극 (100억 원)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 숨만 쉬기 저축 프로젝트 연산 결과</h3>
+                    <div class="result-display">
+                        <p>연간 순수 누적 저축액: <strong id="res-save-annual" style="color: #6c757d;">0</strong> 원</p>
+                        <p>목표 도달을 위해 숨만 쉬어야 하는 기간: <strong id="res-save-total-time" style="color: var(--orange);">0</strong></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                내 자산 등극 소요 시간: <span id="result-breathe-save-salary" style="color: var(--red); font-weight: bold;">0년</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-breathe-save-salary" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 자산 형성 타임라인 단축을 위한 현실 팩트폭행 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="save-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 물가 인상률 및 부동산 자산 가격 상승 동향 변수를 배제하고 오직 순수 정적 저축 금액 지표로만 계산한 풍자형 유틸리티입니다. 근로 소득의 한계를 인지하고 파이프라인을 늘리기 위해 수익형 블로그, 쿠팡 파트너스, 스마트스토어 등 부업 전선에 당장 뛰어들어야 하는 강력한 동기부여를 목적으로 합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#breathe-save-form', calculateBreatheSave);
+
+            // 복사 버튼 클릭 이벤트 위임 바인딩 및 피드백 상태 변경 가동
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText.indexOf('0년') === 0 || codeText === "") {
+                    alert("저축 금액을 0원 이상으로 정밀하게 입력해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateBreatheSave() {
+                // 1. 값 추출 및 예외 제한 처리
+                var monthlyMoney = parseFloat($('#save-monthly-money').val()) || 0;
+                var targetAsset = parseFloat($('#save-target-asset').val()) || 150000000;
+
+                if (monthlyMoney < 0) monthlyMoney = 0;
+
+                // 2. 연간 단순 저축액 연산
+                var annualSave = monthlyMoney * 12;
+
+                // 3. 목표치 도달 소요 개월수 및 년수 변환 알고리즘
+                var totalMonths = 0;
+                var displayYears = 0;
+                var displayMonths = 0;
+                var timeText = "백만년 이상 (연산 불가)";
+                var copyText = "";
+
+                if (annualSave > 0) {
+                    totalMonths = Math.ceil(targetAsset / monthlyMoney);
+                    displayYears = Math.floor(totalMonths / 12);
+                    displayMonths = totalMonths % 12;
+
+                    if (displayYears > 0) {
+                        timeText = displayYears + "년 " + displayMonths + "개월";
+                        copyText = displayYears + "년 " + displayMonths + "개월";
+                    } else {
+                        timeText = displayMonths + "개월";
+                        copyText = displayMonths + "개월";
+                    }
+                }
+
+                // 4. 유머러스한 현실 자각 팩트 가이드라인 텍스트 분기 생성
+                var guideText = "";
+                if (monthlyMoney === 0) {
+                    guideText = "저축 금액을 입력하시면 건물주 등극 프로젝트 현실 타임라인 리포트가 실시간 동적 빌드됩니다.";
+                } else {
+                    guideText = "• 자산 도달 소요 기간: <span style='color: var(--orange); font-weight:bold;'>" + timeText + "</span><br>";
+
+                    if (displayYears >= 100) {
+                        guideText += "🚨 <span style='color: var(--red); font-weight:bold;'>단군신화급 타임워프 경고!</span><br>현재 저축 페이스로는 인간의 평균 수명 내에 목표 자산을 구경하기 어렵습니다. 숨만 쉬다가는 다음 생을 기약해야 하므로, 지금 당장 에브리캘크의 부업 메뉴들을 활용해 스마트스토어, 숏폼 크리에이터, 원고 대행 등 추가 월 소득 파이프라인을 최소 150만 원 이상 강제로 창출하셔야 탈출이 가능합니다.";
+                    } else if (displayYears >= 20) {
+                        guideText += "⚠️ <span style='color: var(--orange); font-weight:bold;'>조금 긴 호흡의 장기전 구간.</span><br>평생 밥 한 끼 안 먹고 옷 한 벌 안 사 입어야 " + displayYears + "년 뒤에 간신히 문턱을 넘을 수 있습니다. 근로 소득 인상 속도보다 자산 가격 상승 속도가 빠를 수 있으니 소액으로라도 주식 물타기나 예적금 복리 재테크 유틸리티를 활용한 굴리기 전략을 다각도로 병행하세요.";
+                    } else {
+                        guideText += "✨ <span style='color: var(--blue); font-weight:bold;'>희망이 보이는 초안정권 달성 가능성!</span><br>재능이 뛰어나거나 이미 높은 소득을 확보하고 계십니다. 굳이 가혹하게 숨만 쉬지 않고 적당히 인생을 즐기면서 저축 포트폴리오를 유지해도 충분히 목표 자산을 손에 쥘 수 있는 우수한 흐름입니다.";
+                    }
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-save-annual').text(annualSave.toLocaleString('ko-KR'));
+                $('#res-save-total-time').text(timeText);
+
+                // 복사 전용 데이터 연동 바인딩
+                if (monthlyMoney === 0) {
+                    $('#result-breathe-save-salary').text("0년");
+                } else {
+                    $('#result-breathe-save-salary').text(copyText);
+                }
+                $('#save-guide-text').html(guideText);
+            }
+
+            // GNB 비동기 페치 완료 추적 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#save-monthly-money').length) {
+                    calculateBreatheSave();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

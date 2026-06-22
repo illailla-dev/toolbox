@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>평수/제곱미터(㎡) 양방향 변환기 | 에브리캘크</title>
+    <meta name="description" content="아파트, 빌라, 토지의 평수와 제곱미터(㎡) 단위를 실시간으로 양방향 상호 환산합니다. 아파트 전용면적(59㎡, 84㎡)별 실제 평수 매칭 가이드를 제공합니다.">
+    <meta name="keywords" content="평수계산기, 제곱미터환산, 평수변환, 아파트평수, 전용면적평수, 부동산계산기, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/pyeong-converter/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/pyeong-converter.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="평수/제곱미터(㎡) 양방향 변환기 - 에브리캘크">
+    <meta property="og:description" content="헷갈리는 아파트 면적 단위 종결! 평수와 제곱미터를 실시간으로 양방향 변환하고 표준 평형 가이드를 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/pyeong-converter/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏢 평수 / 제곱미터(㎡) 양방향 변환기</h2>
+                <p>평수와 제곱미터(㎡) 중 편한 항목에 숫자를 입력하세요. 1평 = 3.3058㎡ 표준 법정 계수를 기반으로 실시간 양방향 크로스 연산이 실행됩니다.</p>
+                <form id="pyeong-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 면적 수치 입력 (한 곳에만 입력해도 실시간 양방향 변환)</h3>
+                        <div class="input-item mb-3">
+                            <label for="input-pyeong">평수 입력 (평)</label>
+                            <input type="number" id="input-pyeong" class="form-control" placeholder="예: 34" min="0" step="0.01" value="25">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="input-meter">제곱미터 입력 (㎡)</label>
+                            <input type="number" id="input-meter" class="form-control" placeholder="예: 84" min="0" step="0.01">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 아파트 모델하우스나 청약 공고의 전용면적 숫자를 입력하시면 평수로 즉시 바뀝니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 면적 환산 최종 결과</h3>
+                    <div class="result-display">
+                        <p>정밀 변환 평수: <strong id="res-pyeong-val" style="color: var(--orange);">0</strong> 평</p>
+                        <p>정밀 변환 제곱미터: <strong id="res-meter-val" style="color: var(--green);">0</strong> ㎡</p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                환산된 대표 면적 지표: <span id="result-pyeong-salary" style="color: var(--red); font-weight: bold;">0</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-pyeong-salary" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 아파트 전용면적 표기법별 실무 매칭 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="pyeong-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 대한민국 법정계량단위 정책에 따라 현재 등기부등본 및 입주 공고에는 제곱미터(㎡) 표기가 의무화되어 있습니다. 통상적으로 아파트 분양 시장에서 말하는 24평형은 전용면적 59㎡, 34평형은 전용면적 84㎡ 내외를 뜻하며, 이는 주거공용면적(계단, 복도 등)이 합산된 '공급면적' 기준이기 때문에 차이가 발생합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 법정 표준 환산 상수 규격 (1평 = 3.305785㎡, 1㎡ = 0.3025평)
+            var PYEONG_TO_METER = 3.305785;
+            var METER_TO_PYEONG = 0.3025;
+
+            // 평수 인풋 변동 발생 시 제곱미터 강제 동기화
+            $(document).on('input', '#input-pyeong', function () {
+                var pyeong = parseFloat($(this).val());
+                if (isNaN(pyeong) || pyeong < 0) {
+                    $('#input-meter').val('');
+                    updatePyeongDisplay(0, 0);
+                    return;
+                }
+                var meter = parseFloat((pyeong * PYEONG_TO_METER).toFixed(2));
+                $('#input-meter').val(meter);
+                updatePyeongDisplay(pyeong, meter);
+            });
+
+            // 제곱미터 인풋 변동 발생 시 평수 강제 동기화
+            $(document).on('input', '#input-meter', function () {
+                var meter = parseFloat($(this).val());
+                if (isNaN(meter) || meter < 0) {
+                    $('#input-pyeong').val('');
+                    updatePyeongDisplay(0, 0);
+                    return;
+                }
+                var pyeong = parseFloat((meter * METER_TO_PYEONG).toFixed(2));
+                $('#input-pyeong').val(pyeong);
+                updatePyeongDisplay(pyeong, meter);
+            });
+
+            // 결과 복사 버튼 클릭 피드백 및 상태 변경 제어 로직
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText === "" || codeText.indexOf('0') === 0 || codeText === "-") {
+                    alert("정확한 면적 수치를 먼저 입력해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            // 화면 가이드 멘트 및 최종 메인 수치 출력 분기 엔진
+            function updatePyeongDisplay(pVal, mVal) {
+                if (pVal === 0 && mVal === 0) {
+                    $('#res-pyeong-val').text('0');
+                    $('#res-meter-val').text('0');
+                    $('#result-pyeong-salary').text('-');
+                    $('#pyeong-guide-text').text('면적 수치를 입력하시면 아파트 주거 실무 매칭 리포트가 실시간 동적 빌드됩니다.');
+                    return;
+                }
+
+                // 소수점 보정 가공
+                var pStr = pVal.toFixed(1);
+                var mStr = mVal.toFixed(1);
+
+                $('#res-pyeong-val').text(pStr);
+                $('#res-meter-val').text(mStr);
+                $('#result-pyeong-salary').text(pStr + "평 (" + mStr + "㎡)");
+
+                // 대한민국 아파트 청약/분양 시장의 전형적인 틈새 전용면적 매칭 필터링
+                var guideText = "";
+                if (mVal >= 55 && mVal <= 65) {
+                    guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>전국 표준 전용면적 59㎡(소형) 매칭!</span><br>통상적으로 방 3개, 화장실 2개 구조의 '기본 24평형~25평형 아파트'의 실면적 규격입니다. 신혼부부 및 1~2인 가구가 가장 선호하며, 매매 회전율이 압도적으로 우수한 황금 자산 면적대입니다.";
+                } else if (mVal >= 80 && mVal <= 89) {
+                    guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>국민평형 전용면적 84㎡(중형) 매칭!</span><br>대한민국 주거 시장의 뼈대이자 표준 잣대인 '국평 33평형~34평형 아파트' 규격입니다. 거실과 주방이 넓게 빠진 4Bay 판상형 구조의 핵심 대상이며, 향후 매도나 전세 계약 시 우수한 환금성을 보장하는 국민 면적대입니다.";
+                } else if (mVal >= 100 && mVal <= 118) {
+                    guideText = "📊 <span style='color: var(--blue); font-weight:bold;'>대형 평형 자산 구간 매칭 (38평형~45평형)</span><br>주거 공용면적과 실내가 대폭 확장된 중대형 고급 아파트 규격입니다. 다인가구 거주 및 하이엔드 인테리어 레이아웃 연출에 최적화되어 있으며, 희소성이 점차 높아지는 자산 포트폴리오 영역입니다.";
+                } else {
+                    guideText = "👍 <span style='color: var(--blue); font-weight:bold;'>커스텀 개별 면적 환산 모드 가동.</span><br>현재 입력하신 수치는 세전 " + pStr + "평 수준의 자산 가치를 지닙니다. 빌라, 원룸, 토지 등의 임대차 계약서 작성 시 실평수와 공급평수의 격차 요인(전용률 약 50%~75%)을 반드시 확인하고 청약 대열에 합류하세요.";
+                }
+
+                $('#pyeong-guide-text').html(guideText);
+            }
+
+            // GNB 컴포넌트 비동기 자동 조립 안전 시점 추적 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#input-pyeong').length) {
+                    // 최초 기본값인 25평을 제곱미터로 실시간 역산 반영 유도
+                    var initPyeong = parseFloat($('#input-pyeong').val());
+                    var initMeter = parseFloat((initPyeong * PYEONG_TO_METER).toFixed(2));
+                    $('#input-meter').val(initMeter);
+                    updatePyeongDisplay(initPyeong, initMeter);
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
