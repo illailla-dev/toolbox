@@ -22,7 +22,7 @@
 #header .container .action-area {margin-left: auto;display: flex; gap: var(--gap-sm);}
 #header .btn {font-size: 1rem; padding: .5rem 1rem;height:calc(1.5rem + 1.5rem + 2px)}
 #header h1 {font-size:  0;width: clamp(200px, 7.38vw + 158.3px, 300px);}
-#header h1 img {max-height: clamp(28px, 2.66vw + 12.99px, 64px);;}
+#header h1 img {max-height: clamp(32px, 2.36vw + 18.66px, 64px);}
 #header #toggle-open {font-size: 1.5rem;border: 1px solid var(--border); color: #000; display: none;}
 #header #toggle-open .bi:before {vertical-align: middle;}
 #header .btn i {font-style: normal;}
