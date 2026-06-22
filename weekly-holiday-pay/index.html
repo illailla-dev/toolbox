@@ -35,13 +35,19 @@
                     <!-- 1. 근무 조건 입력 -->
                     <div class="input-group-box">
                         <h3>1. 근무 조건 입력</h3>
-                        <div class="input-item">
-                            <label for="hourly-wage">올해 법정 기준 시급 (원)</label>
-                            <input type="number" id="hourly-wage" class="form-control" placeholder="예: 10030" value="10030" required min="1" style="margin-bottom:10px;">
-                            <label for="daily-hours">하루 근무 시간 (시간)</label>
-                            <input type="number" id="daily-hours" class="form-control" placeholder="예: 8" required min="1" max="24" step="0.1" style="margin-bottom:10px;">
-                            <label for="weekly-days">일주일 출근 일수 (일)</label>
-                            <input type="number" id="weekly-days" class="form-control" placeholder="예: 5" required min="1" max="7" step="1">
+                        <div class="form-row">
+                            <div class="col-xl input-item">
+                                <label for="hourly-wage">올해 법정 기준 시급 (원)</label>
+                                <input type="number" id="hourly-wage" class="form-control" placeholder="예: 10030" value="10030" required min="1">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="daily-hours">하루 근무 시간 (시간)</label>
+                                <input type="number" id="daily-hours" class="form-control" placeholder="예: 8" required min="1" max="24" step="0.1">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="weekly-days">일주일 출근 일수 (일)</label>
+                                <input type="number" id="weekly-days" class="form-control" placeholder="예: 5" required min="1" max="7" step="1">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 공제 세금 및 정산 방식 선택 -->

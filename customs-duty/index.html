@@ -35,22 +35,24 @@
                     <!-- 1. 구매 국가 및 환율 세팅 -->
                     <div class="input-group-box">
                         <h3>1. 구매 국가 및 적용 환율</h3>
-                        <div class="item-box">
-                            <label for="country-type">구입 국가 (면세 한도 기준)</label>
-                            <select id="country-type" class="form-control">
-                                <option value="USA">미국 (목록통관 기준 $200 이하 면세)</option>
-                                <option value="OTHER">미국 외 국가 (유럽/중국/일본 등 $150 이하 면세)</option>
-                            </select>
-                        </div>
-                        <div class="item-box">
-                            <label for="exchange-rate">현재 적용 환율 (원화 환산용)</label>
-                            <input type="number" id="exchange-rate" placeholder="예: 1350" value="1380" required min="1" step="0.1" class="form-control">
+                        <div class="form-row">
+                            <div class="col-xl-8 input-item mb-3">
+                                <label for="country-type">구입 국가 (면세 한도 기준)</label>
+                                <select id="country-type" class="form-control">
+                                    <option value="USA">미국 (목록통관 기준 $200 이하 면세)</option>
+                                    <option value="OTHER">미국 외 국가 (유럽/중국/일본 등 $150 이하 면세)</option>
+                                </select>
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="exchange-rate">현재 적용 환율 (원화 환산용)</label>
+                                <input type="number" id="exchange-rate" placeholder="예: 1350" value="1380" required min="1" step="0.1" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 물품 정보 및 가격 입력 -->
                     <div class="input-group-box">
                         <h3>2. 물품 정보 및 가격 입력 ($ 기준)</h3>
-                        <div class="item-box">
+                        <div class="input-item mb-3">
                             <label for="item-type">물품 품목 (관세율 기준)</label>
                             <select id="item-type" class="form-control">
                                 <option value="8">일반 의류 / 패션잡화 (관세 8%)</option>
@@ -60,13 +62,15 @@
                                 <option value="8">기타 일반 물품 (관세 8%)</option>
                             </select>
                         </div>
-                        <div class="item-box">
-                            <label for="product-price">물품 구매 가격 (USD $)</label>
-                            <input type="number" id="product-price" placeholder="예: 120" required min="0" step="0.01" class="form-control">
-                        </div>
-                        <div class="item-box">
-                            <label for="shipping-fee">현지 + 국제 배송비 (USD $)</label>
-                            <input type="number" id="shipping-fee" placeholder="예: 15" value="0" required min="0" step="0.01" class="form-control">
+                        <div class="form-row">
+                            <div class="col-xl-8 input-item mb-3 mb-xl-0">
+                                <label for="product-price">물품 구매 가격 (USD $)</label>
+                                <input type="number" id="product-price" placeholder="예: 120" required min="0" step="0.01" class="form-control">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="shipping-fee">현지 + 국제 배송비 (USD $)</label>
+                                <input type="number" id="shipping-fee" placeholder="예: 15" value="0" required min="0" step="0.01" class="form-control">
+                            </div>
                         </div>
                     </div>
                 </form>

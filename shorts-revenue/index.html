@@ -34,35 +34,37 @@
                 <form id="shorts-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 영상 성과 및 타겟 설정</h3>
-                        <div class="input-item mb-3">
-                            <label for="shorts-views">예상 월간 누적 조회수 (회)</label>
-                            <input type="number" id="shorts-views" class="form-control" placeholder="예: 500000" min="0" value="100000">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="shorts-platform">플랫폼 선택</label>
-                            <select id="shorts-platform" class="form-control">
-                                <option value="youtube" selected>유튜브 쇼츠</option>
-                                <option value="instagram">인스타그램 릴스</option>
-                                <option value="tiktok">틱톡</option>
-                            </select>
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="shorts-country">주요 시청 국가 (국가별 RPM 반영)</label>
-                            <select id="shorts-country" class="form-control">
-                                <option value="1.0" selected>대한민국 (평균 단가)</option>
-                                <option value="2.2">미국 / 유럽 (고단가 프리미엄)</option>
-                                <option value="1.5">일본 / 대만 (중고단가)</option>
-                                <option value="0.3">동남아 / 남미 (저단가 볼륨시장)</option>
-                            </select>
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="shorts-category">채널 콘텐츠 카테고리</label>
-                            <select id="shorts-category" class="form-control">
-                                <option value="2.0">재테크 / 비즈니스 / IT 가전</option>
-                                <option value="1.3">뷰티 / 패션 / 브이로그</option>
-                                <option value="1.0" selected>유머 / 웹예능 / 이슈</option>
-                                <option value="0.8">영화 요약 / 애니 / 게임</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="shorts-views">예상 월간 누적 조회수 (회)</label>
+                                <input type="number" id="shorts-views" class="form-control" placeholder="예: 500000" min="0" value="100000">
+                            </div>
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="shorts-platform">플랫폼 선택</label>
+                                <select id="shorts-platform" class="form-control">
+                                    <option value="youtube" selected>유튜브 쇼츠</option>
+                                    <option value="instagram">인스타그램 릴스</option>
+                                    <option value="tiktok">틱톡</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="shorts-country">주요 시청 국가 (국가별 RPM 반영)</label>
+                                <select id="shorts-country" class="form-control">
+                                    <option value="1.0" selected>대한민국 (평균 단가)</option>
+                                    <option value="2.2">미국 / 유럽 (고단가 프리미엄)</option>
+                                    <option value="1.5">일본 / 대만 (중고단가)</option>
+                                    <option value="0.3">동남아 / 남미 (저단가 볼륨시장)</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-6 input-item">
+                                <label for="shorts-category">채널 콘텐츠 카테고리</label>
+                                <select id="shorts-category" class="form-control">
+                                    <option value="2.0">재테크 / 비즈니스 / IT 가전</option>
+                                    <option value="1.3">뷰티 / 패션 / 브이로그</option>
+                                    <option value="1.0" selected>유머 / 웹예능 / 이슈</option>
+                                    <option value="0.8">영화 요약 / 애니 / 게임</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </form>

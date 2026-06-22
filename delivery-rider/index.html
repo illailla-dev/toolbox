@@ -35,13 +35,15 @@
                     <!-- 1. 지출 정보 입력 -->
                     <div class="input-group-box mb-4">
                         <h3>1. 주간 / 월간 배달 활동 성과 입력</h3>
-                        <div class="input-item mb-3">
-                            <label for="rider-gross-income">총 배달 매출 수입 (정산 전 금액)</label>
-                            <input type="number" id="rider-gross-income" class="form-control" placeholder="예: 300000" min="0" value="200000">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="rider-total-hours">실제 배달 운행 시간 (시간)</label>
-                            <input type="number" id="rider-total-hours" class="form-control" placeholder="예: 15" min="1" value="10">
+                        <div class="form-row">
+                            <div class="col-xl-7 input-item mb-3">
+                                <label for="rider-gross-income">총 배달 매출 수입 (정산 전 금액)</label>
+                                <input type="number" id="rider-gross-income" class="form-control" placeholder="예: 300000" min="0" value="200000">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="rider-total-hours">실제 배달 운행 시간 (시간)</label>
+                                <input type="number" id="rider-total-hours" class="form-control" placeholder="예: 15" min="1" value="10">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 배달 수단 및 지출 세부 입력 -->
@@ -56,7 +58,7 @@
                                 <option value="walk">도보 배달 (유지비 0원)</option>
                             </select>
                         </div>
-                        <div class="input-item mb-3">
+                        <div class="input-item">
                             <label for="rider-distance">총 운행 거리 (누적 km)</label>
                             <input type="number" id="rider-distance" class="form-control" placeholder="예: 80" min="0" value="80">
                             <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 픽업 이동부터 배달 완료 후 복귀까지의 총 누적 주행 거리입니다.</small>

@@ -201,9 +201,8 @@ hr.dash {border-style: dashed;}
 select.form-control {appearance: none;padding-right: 2.5rem; background: #fff url(../img/chevron-down.png) no-repeat calc(100% - 1rem) 50% / 1.3rem}
 .form-control.cal {background: #f9fafb url(../images/ic_cal.png) no-repeat calc(100% - 1rem) 50% / 1.3rem; text-align: left}
 textarea {resize: none;}
-.form-row {/* gap: var(--gap); */ align-items: center;}
 .form-row .btn {min-width: 8rem;}
-.form-row+.form-row {margin-top: .5rem;}
+.form-row+.form-row {margin-top: 1rem;}
 .form-row .col-form-label, .form label {margin: 0; padding-top: .75rem; padding-bottom: .75rem;;}
 .form-row input, .form-row select {width: 100%;}
 .input-group-box, .result-box  {border: 1px solid var(--border); border-radius: var(--radius-xs); padding:2rem; box-shadow: var(--shadow); margin-bottom: 1rem;}
@@ -211,6 +210,7 @@ textarea {resize: none;}
 .flex-radios .radio label {width: auto;}
 .result-box {border-color: var(--green);border-width: 2px; border-radius: var(--radius-sm);font-size: 1.125rem;}
 .item-box+.item-box {margin-top: .5rem;}
+.input-item label {}
 .result-box .btn {min-width: 8rem;}
 
 @media (max-width: 1024px) {

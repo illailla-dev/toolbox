@@ -35,25 +35,33 @@
                     <!-- 1. 매수 정보 입력 -->
                     <div class="input-group-box">
                         <h3>1. 매수(진입) 조건 입력</h3>
-                        <div class="input-item">
-                            <label for="buy-price">매수 평단가 (원)</label>
-                            <input type="number" id="buy-price" class="form-control" placeholder="예: 50000" required min="1" step="1" style="margin-bottom:10px;">
-                            <label for="stock-qty">보유 및 매수 수량 (주)</label>
-                            <input type="number" id="stock-qty" class="form-control" placeholder="예: 100" required min="1" step="1">
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="buy-price">매수 평단가 (원)</label>
+                                <input type="number" id="buy-price" class="form-control" placeholder="예: 50000" required min="1" step="1">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="stock-qty">보유 및 매수 수량 (주)</label>
+                                <input type="number" id="stock-qty" class="form-control" placeholder="예: 100" required min="1" step="1">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 매도 정보 및 세금 요율 설정 -->
                     <div class="input-group-box">
                         <h3>2. 매도(익절) 조건 및 거래 비용 설정</h3>
-                        <div class="input-item">
+                        <div class="input-item mb-3">
                             <label for="sell-price">목표 매도가 / 현재가 (원)</label>
-                            <input type="number" id="sell-price" class="form-control" placeholder="예: 55000" required min="1" step="1" style="margin-bottom:10px;">
+                            <input type="number" id="sell-price" class="form-control" placeholder="예: 55000" required min="1" step="1">
+                        </div>
+                        <div class="input-item mb-3">
                             <label for="broker-fee">증권사 수수료율 (매수/매도 각각 적용, %)</label>
-                            <select id="broker-fee" class="form-control" style="margin-bottom:10px;">
+                            <select id="broker-fee" class="form-control">
                                 <option value="0.015" selected>일반 온라인 거래 평균 (0.015%)</option>
                                 <option value="0.0015">수수료 우대 계좌 (0.0015%)</option>
                                 <option value="0">평생 수수료 무료 (유관기관 제세금 제외, 0%)</option>
                             </select>
+                        </div>
+                        <div class="input-item ">
                             <label for="exchange-tax">국내 증권거래세율 (%)</label>
                             <select id="exchange-tax" class="form-control">
                                 <option value="0.15" selected>코스피 / 코스닥 일반 (0.15%)</option>

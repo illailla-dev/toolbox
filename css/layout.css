@@ -79,6 +79,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #header #btn-bookmark-site i {font-size: 1rem;}
     #header .btn {height: 2.5rem; min-width: 2.5rem; padding: 0 .5rem;}
     #search-wrapper input {height: 2.5rem;}
+    #sidebar {display: none;}
 }
 @media (max-width: 768px) {
     #wrap {min-width: 320px;}

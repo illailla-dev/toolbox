@@ -35,17 +35,20 @@
                     <!-- 1. 군별 및 입대일 입력단 -->
                     <div class="input-group-box">
                         <h3>1. 군 복무 정보 입력</h3>
-                        <div class="input-item">
-                            <label for="military-type">복무 군별 선택</label>
-                            <!-- 📌 부트스트랩 .form-control 규격 적용 -->
-                            <select id="military-type" class="form-control" style="margin-bottom:10px;">
-                                <option value="army" selected>육군 / 해병대 / 의경 (18개월)</option>
-                                <option value="navy">해군 / 해양경찰 / 소방원 (20개월)</option>
-                                <option value="airforce">공군 (21개월)</option>
-                                <option value="social">사회복무요원 (21개월)</option>
-                            </select>
-                            <label for="enlist-date">입대일 (군 복무 시작일)</label>
-                            <input type="date" id="enlist-date" class="form-control" value="2026-01-01" required>
+                        <div class="form-row">
+                            <div class="col-md-7 input-item mb-3 mb-md-0">
+                                <label for="military-type">복무 군별 선택</label>
+                                <select id="military-type" class="form-control">
+                                    <option value="army" selected>육군 / 해병대 / 의경 (18개월)</option>
+                                    <option value="navy">해군 / 해양경찰 / 소방원 (20개월)</option>
+                                    <option value="airforce">공군 (21개월)</option>
+                                    <option value="social">사회복무요원 (21개월)</option>
+                                </select>
+                            </div>
+                            <div class="col-md input-item">
+                                <label for="enlist-date">입대일 (군 복무 시작일)</label>
+                                <input type="date" id="enlist-date" class="form-control" value="2026-01-01" required>
+                            </div>
                         </div>
                     </div>
                 </form>

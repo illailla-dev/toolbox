@@ -35,27 +35,29 @@
                     <!-- 1. 입력 그룹 박스 패턴 -->
                     <div class="input-group-box">
                         <h3>1. 현재 내 리뷰 활동 실적 데이터 입력</h3>
-                        <div class="input-item mb-3">
-                            <label for="coupang-reviews">작성한 총 리뷰 수 (개)</label>
-                            <input type="number" id="coupang-reviews" class="form-control" placeholder="예: 45" min="0">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="coupang-helpful">받은 '도움이 돼요' 총 개수 (개)</label>
-                            <input type="number" id="coupang-helpful" class="form-control" placeholder="예: 120" min="0">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="coupang-stars">5점 만점 리뷰 비율 (%)</label>
-                            <input type="number" id="coupang-stars" class="form-control" placeholder="예: 85" min="0" max="100" value="90">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 쿠팡은 다채로운 별점 분배(4~5점 위주) 정보성을 높게 평가합니다.</small>
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="coupang-images">리뷰당 평균 첨부 사진 수 (장)</label>
-                            <select id="coupang-images" class="form-control">
-                                <option value="0">사진 없음 (텍스트 전용)</option>
-                                <option value="1">1장~2장 (일반 리뷰)</option>
-                                <option value="3" selected>3장~5장 (고품질 권장)</option>
-                                <option value="6">6장 이상 (전문 리뷰어)</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="coupang-reviews">작성한 총 리뷰 수 (개)</label>
+                                <input type="number" id="coupang-reviews" class="form-control" placeholder="예: 45" min="0">
+                            </div>
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="coupang-helpful">받은 '도움이 돼요' 총 개수 (개)</label>
+                                <input type="number" id="coupang-helpful" class="form-control" placeholder="예: 120" min="0">
+                            </div>
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="coupang-stars">5점 만점 리뷰 비율 (%)</label>
+                                <input type="number" id="coupang-stars" class="form-control" placeholder="예: 85" min="0" max="100" value="90">
+                                <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 쿠팡은 다채로운 별점 분배(4~5점 위주) 정보성을 높게 평가합니다.</small>
+                            </div>
+                            <div class="col-xl input-item mb-3">
+                                <label for="coupang-images">리뷰당 평균 첨부 사진 수 (장)</label>
+                                <select id="coupang-images" class="form-control">
+                                    <option value="0">사진 없음 (텍스트 전용)</option>
+                                    <option value="1">1장~2장 (일반 리뷰)</option>
+                                    <option value="3" selected>3장~5장 (고품질 권장)</option>
+                                    <option value="6">6장 이상 (전문 리뷰어)</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </form>

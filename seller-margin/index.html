@@ -35,32 +35,36 @@
                     <!-- 1. 상품 가격 정보 입력 -->
                     <div class="input-group-box">
                         <h3>1. 상품 가격 정보 입력</h3>
-                        <div class="input-item">
-                            <label for="wholesale-price">도매 매입 원가 (원)</label>
-                            <input type="number" id="wholesale-price" placeholder="예: 6000" min="0" step="1" class="form-control">
-                        </div>
-                        <div class="input-item mt-2">
-                            <label for="customer-price">소비자 판매가 (원)</label>
-                            <input type="number" id="customer-price" placeholder="예: 12000" min="0" step="1" class="form-control">
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="wholesale-price">도매 매입 원가 (원)</label>
+                                <input type="number" id="wholesale-price" placeholder="예: 6000" min="0" step="1" class="form-control">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="customer-price">소비자 판매가 (원)</label>
+                                <input type="number" id="customer-price" placeholder="예: 12000" min="0" step="1" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 수수료 및 물류비 설정 -->
                     <div class="input-group-box">
                         <h3>2. 플랫폼 수수료 및 배송비 설정</h3>
-                        <div class="input-item">
-                            <label for="platform-select">판매 플랫폼 (수수료 자동 반영)</label>
-                            <select id="platform-select" class="form-control">
-                                <option value="3.85" selected>네이버 스마트스토어 (평균 3.85%)</option>
-                                <option value="10.8">쿠팡 윙 마켓 (평균 10.8%)</option>
-                                <option value="5.0">인스타 공동구매 / 블로그 페이 (평균 5.0%)</option>
-                                <option value="12.0">종합 오픈마켓 (지마켓/11번가 평균 12.0%)</option>
-                                <option value="custom">직접 입력</option>
-                            </select>
-                            <input type="number" id="custom-fee" placeholder="직접 입력(%) 예: 8" min="0" step="0.1" class="form-control mt-2" style="display:none;">
-                        </div>
-                        <div class="input-item mt-2">
-                            <label for="shipping-cost">셀러 부담 배송비/포장비 (원)</label>
-                            <input type="number" id="shipping-cost" placeholder="무료배송 전환 시 낼 택배비 (없으면 0)" value="0" min="0" step="1" class="form-control">
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="platform-select">판매 플랫폼 (수수료 자동 반영)</label>
+                                <select id="platform-select" class="form-control">
+                                    <option value="3.85" selected>네이버 스마트스토어 (평균 3.85%)</option>
+                                    <option value="10.8">쿠팡 윙 마켓 (평균 10.8%)</option>
+                                    <option value="5.0">인스타 공동구매 / 블로그 페이 (평균 5.0%)</option>
+                                    <option value="12.0">종합 오픈마켓 (지마켓/11번가 평균 12.0%)</option>
+                                    <option value="custom">직접 입력</option>
+                                </select>
+                                <input type="number" id="custom-fee" placeholder="직접 입력(%) 예: 8" min="0" step="0.1" class="form-control mt-2" style="display:none;">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="shipping-cost">셀러 부담 배송비/포장비 (원)</label>
+                                <input type="number" id="shipping-cost" placeholder="무료배송 전환 시 낼 택배비 (없으면 0)" value="0" min="0" step="1" class="form-control">
+                            </div>
                         </div>
                     </div>
                 </form>

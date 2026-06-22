@@ -35,23 +35,31 @@
                     <!-- 1. 보유 주식 (기존 평단) -->
                     <div class="input-group-box">
                         <h3>1. 현재 보유 중인 주식 (보유 평단)</h3>
-                        <div class="item-box">
-                            <label for="current-price">보유 평단가 (원)</label>
-                            <input type="number" id="current-price" placeholder="예: 50000" required min="1" step="1" class="form-control">
-                            <label for="current-quantity">보유 수량 (주)</label>
-                            <input type="number" id="current-quantity" placeholder="예: 100" required min="1" step="1" class="form-control">
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="current-price">보유 평단가 (원)</label>
+                                <input type="number" id="current-price" placeholder="예: 50000" required min="1" step="1" class="form-control">
+                            </div>
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="current-quantity">보유 수량 (주)</label>
+                                <input type="number" id="current-quantity" placeholder="예: 100" required min="1" step="1" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 추가 매수 (물타기 영역) -->
                     <div class="input-group-box">
                         <h3>2. 추가 매수할 주식 (물타기)</h3>
                         <div id="add-stock-list">
-                            <!-- 기본 1회차 물타기 인풋 -->
-                            <div class="item-box stock-row">
-                                <label>추가 매수가 (원)</label>
-                                <input type="number" class="add-price form-control" placeholder="예: 42000" required min="1" step="1">
-                                <label>추가 수량 (주)</label>
-                                <input type="number" class="add-quantity form-control" placeholder="예: 50" required min="1" step="1">
+                            <div class="form-row stock-row">
+                                <!-- 기본 1회차 물타기 인풋 -->
+                                <div class="col-xl input-item mb-3 mb-xl-0">
+                                    <label>추가 매수가 (원)</label>
+                                    <input type="number" class="add-price form-control" placeholder="예: 42000" required min="1" step="1">
+                                </div>
+                                <div class="col-xl input-item">
+                                    <label>추가 수량 (주)</label>
+                                    <input type="number" class="add-quantity form-control" placeholder="예: 50" required min="1" step="1">
+                                </div>
                             </div>
                         </div>
                         <!-- 다중 물타기 지원용 추가 버튼 (체류시간 증대 치트키) -->
@@ -83,14 +91,17 @@
 
             // [+ 매수 조건 추가] 버튼 동적 행 생성 로직
             $('#btn-add-row').on('click', function () {
-                const newRow = $('<div class="input-item stock-row mb-2"></div>');
+                const newRow = $('<div class="form-row stock-row align-items-end"></div>');
                 newRow.html(`
-                    <hr class="dash">
-                    <label class="pt-0">추가 매수가 (원)</label>
-                    <input type="number" class="add-price form-control" placeholder="예: 40000" required min="1" step="1">
-                    <label>추가 수량 (주)</label>
-                    <input type="number" class="add-quantity form-control" placeholder="예: 30" required min="1" step="1">
-                    <button type="button" class="btn-del-row btn lightgray mt-2 btn-block">X</button>
+                    <hr class="w-100 dash"><div class="col-xl-6 input-item mb-3 mb-xl-0">
+                        <label>추가 매수가 (원)</label>
+                        <input type="number" class="add-price form-control" placeholder="예: 40000" required min="1" step="1">
+                    </div>
+                    <div class="col-xl input-item mb-xl-0">
+                        <label>추가 수량 (주)</label>
+                        <input type="number" class="add-quantity form-control" placeholder="예: 30" required min="1" step="1">
+                    </div>
+                    <div class="col-12 col-xl-auto"><button type="button" class="btn-del-row btn lightgray mt-2 btn-block">X</button></div>
                 `);
                 $('#add-stock-list').append(newRow);
 

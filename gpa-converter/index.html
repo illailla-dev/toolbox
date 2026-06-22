@@ -35,16 +35,19 @@
                     <!-- 1. 현재 학점 입력단 -->
                     <div class="input-group-box">
                         <h3>1. 현재 나의 학점 입력</h3>
-                        <div class="input-item">
-                            <label for="max-select">현재 나의 학점 만점 기준</label>
-                            <!-- 📌 부트스트랩 .form-control 규격 적용 -->
-                            <select id="max-select" class="form-control" style="margin-bottom:10px;">
-                                <option value="4.5" selected>4.5 만점 (일반적인 국내 대학)</option>
-                                <option value="4.3">4.3 만점 (서울대, 연세대, 서강대 등)</option>
-                                <option value="4.0">4.0 만점 (일반적인 미국 및 해외 대학)</option>
-                            </select>
-                            <label for="current-gpa">나의 평점 평균 (GPA)</label>
-                            <input type="number" id="current-gpa" class="form-control" placeholder="예: 3.8" min="0" max="4.5" step="0.01" required>
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="max-select">현재 나의 학점 만점 기준</label>
+                                <select id="max-select" class="form-control">
+                                    <option value="4.5" selected>4.5 만점 (일반적인 국내 대학)</option>
+                                    <option value="4.3">4.3 만점 (서울대, 연세대, 서강대 등)</option>
+                                    <option value="4.0">4.0 만점 (일반적인 미국 및 해외 대학)</option>
+                                </select>
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="current-gpa">나의 평점 평균 (GPA)</label>
+                                <input type="number" id="current-gpa" class="form-control" placeholder="예: 3.8" min="0" max="4.5" step="0.01" required>
+                            </div>
                         </div>
                     </div>
                 </form>

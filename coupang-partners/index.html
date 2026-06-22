@@ -53,11 +53,11 @@
                         <h3>2. 정산 데이터 입력</h3>
                         <!-- 총 매출액 입력 필드 (기본 활성화) -->
                         <div id="field-sales">
-                            <div class="input-item">
+                            <div class="input-item mb-3">
                                 <label for="total-sales">총 발생 매출액 (원)</label>
                                 <input type="number" id="total-sales" placeholder="예: 10000000" min="0" step="1" class="form-control">
                             </div>
-                            <div class="input-item">
+                            <div class="input-item mb-3">
                                 <label for="commission-rate">수익 요율 (%)</label>
                                 <select id="commission-rate" class="form-control">
                                     <option value="3">3.0% (쿠팡 파트너스 기본)</option>
@@ -70,13 +70,13 @@
                         </div>
                         <!-- 세전 수익금 직접 입력 필드 (기본 숨김) -->
                         <div id="field-revenue" style="display:none;">
-                            <div class="input-item">
+                            <div class="input-item mb-3">
                                 <label for="pre-tax-revenue">세전 수익금 (원)</label>
                                 <input type="number" id="pre-tax-revenue" placeholder="예: 300000" min="0" step="1" class="form-control">
                             </div>
                         </div>
                         <!-- 세금 유형 선택 -->
-                        <div class="input-item mt-2">
+                        <div class="input-item">
                             <label for="tax-type">세금 징수 유형</label>
                             <select id="tax-type" class="form-control">
                                 <option value="3.3">인적용역 사업소득세 (3.3%) - 일반적인 경우</option>

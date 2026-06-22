@@ -35,24 +35,32 @@
                     <!-- 1. 입사일 및 근무 조건 입력 -->
                     <div class="input-group-box">
                         <h3>1. 입사일 및 기본 조건 입력</h3>
-                        <div class="input-item">
-                            <label for="join-date">회사 입사일 선택</label>
-                            <input type="date" id="join-date" class="form-control" value="2025-01-01" required style="margin-bottom:10px;">
-                            <label for="work-hours-select">근무 형태 선택 (기본 주 40시간)</label>
-                            <select id="work-hours-select" class="form-control">
-                                <option value="8" selected>하루 8시간 근무 (일반 주 5일 전일제)</option>
-                                <option value="4">하루 4시간 근무 (파트타임 / 단시간 근로)</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="join-date">회사 입사일 선택</label>
+                                <input type="date" id="join-date" class="form-control" value="2025-01-01" required>
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="work-hours-select">근무 형태 선택 (기본 주 40시간)</label>
+                                <select id="work-hours-select" class="form-control">
+                                    <option value="8" selected>하루 8시간 근무 (일반 주 5일 전일제)</option>
+                                    <option value="4">하루 4시간 근무 (파트타임 / 단시간 근로)</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <!-- 2. 급여 및 남은 연차 설정 -->
                     <div class="input-group-box">
                         <h3>2. 급여 및 미사용 연차 설정</h3>
-                        <div class="input-item">
-                            <label for="monthly-pay">기본 월 기본급 (원)</label>
-                            <input type="number" id="monthly-pay" class="form-control" placeholder="세전 기본급 예: 2500000" min="0" step="1" style="margin-bottom:10px;">
-                            <label for="unused-count">돈으로 정산받을 미사용 연차 개수 (일)</label>
-                            <input type="number" id="unused-count" class="form-control" placeholder="남은 연차 일수 입력 예: 10" value="0" min="0" step="0.5">
+                        <div class="form-row">
+                            <div class="col-xl input-item mb-3 mb-xl-0">
+                                <label for="monthly-pay">기본 월 기본급 (원)</label>
+                                <input type="number" id="monthly-pay" class="form-control" placeholder="세전 기본급 예: 2500000" min="0" step="1">
+                            </div>
+                            <div class="col-xl input-item">
+                                <label for="unused-count">돈으로 정산받을 미사용 연차 개수 (일)</label>
+                                <input type="number" id="unused-count" class="form-control" placeholder="남은 연차 일수 입력 예: 10" value="0" min="0" step="0.5">
+                            </div>
                         </div>
                     </div>
                 </form>
