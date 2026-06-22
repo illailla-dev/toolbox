@@ -188,7 +188,11 @@ var everyCalcDatabase = [
     { title: "🏦 청년도약계좌 만기 & 해지 계산기", url: "youth-leap", keywords: "청년도약 비과세 정부기여금 적금 만기수령 중도해지 특별해지 사유 ㅊㄴ" },
     { title: "💵 건강보험 피부양자 계산기", url: "/hi-dependent/", keywords: "건보료 피부양자 자격상실 사업소득 과세표준 지역가입자 건강보험 ㄱㅂㄹ" },
     { title: "🧾 신용카드 소득공제 계산기", url: "/card-deduction/", keywords: "연말정산 신용카드 체크카드 현금영수증 소득공제 문턱 황금비율 환급 ㅋㄷ" },
-    { title: "📊 연금저축 IRP 환급 계산기", url: "/irp-tax/", keywords: "연금저축 세액공제 IRP 개인형퇴직연금 연말정산 환급금 절세 한도 ㅇㄱ" }
+    { title: "📊 연금저축 IRP 환급 계산기", url: "/irp-tax/", keywords: "연금저축 세액공제 IRP 개인형퇴직연금 연말정산 환급금 절세 한도 ㅇㄱ" },
+    { title: "🚗 배달 라이더 순수익 계산기", url: "/delivery-rider/", keywords: "배민커넥트 쿠팡이츠 배달파트너 라이더 순시급 유류비 긱워커 부업 오토바이 ㅂㄷ" },
+    { title: "💰 무인 점포 창업 손익분기점 계산기", url: "/unmanned-store/", keywords: "무인카페 무인아이스크림 인생네컷 사진관 창업 손익분기점 마진율 고정비 bep 부업 ㅁㅇ" },
+    { title: "🏥 실손보험 세대별 갱신 및 4세대 전환 비교기", url: "/indemnity-insurance/", keywords: "실비보험 실손의료보험 4세대실비 보험료인상 갱신보험료 보험갈아타기 ㅂㅎ" },
+    { title: "🏦 마이너스통장 vs 신용대출 이자 비교기", url: "/minus-loan/", keywords: "마이너스통장 마통 신용대출 대출이자 일할계산 한도대출 복리이자 대출비교 ㄷㅊ" }
 ];
 
 

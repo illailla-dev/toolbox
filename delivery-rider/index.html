@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡이츠 배민 라이더 세후 순시급 및 유류비 정산기 | 에브리캘크</title>
+    <meta name="description" content="배민커넥트, 쿠팡이츠 배달파트너 수입에서 세금(3.3%), 보험료, 지출한 기름값 및 차량 감가상각비를 제외한 진짜 세후 순수익과 진짜 시급을 실시간 정산합니다.">
+    <meta name="keywords" content="배민라이더수익, 쿠팡이츠배달파트너, 배달부업시급, 배달유류비, 라이더순수익, 배달시급계산, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/delivery-rider/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/delivery-rider.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="쿠팡이츠 배민 라이더 세후 순시급 및 유류비 정산기 - 에브리캘크">
+    <meta property="og:description" content="매출이 전부가 아니다! 주유비와 세금을 뺀 나의 진짜 배달 순수익과 세후 시급을 지금 바로 정산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/delivery-rider/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🚗 배달 라이더 세후 순시급 계산기</h2>
+                <p>배달 부업으로 얻은 총매출에서 원천징수 세금, 플랫폼 이용료, 그리고 수단별(자동차/오토바이) 실제 지출 유류비 및 감가상각비를 제외하여 뼈 때리는 '진짜 세후 순수익'을 산출합니다.</p>
+                <form id="delivery-rider-form" class="form" onsubmit="return false;">
+                    <!-- 1. 지출 정보 입력 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 주간 / 월간 배달 활동 성과 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="rider-gross-income">총 배달 매출 수입 (정산 전 금액)</label>
+                            <input type="number" id="rider-gross-income" class="form-control" placeholder="예: 300000" min="0" value="200000">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="rider-total-hours">실제 배달 운행 시간 (시간)</label>
+                            <input type="number" id="rider-total-hours" class="form-control" placeholder="예: 15" min="1" value="10">
+                        </div>
+                    </div>
+                    <!-- 2. 배달 수단 및 지출 세부 입력 -->
+                    <div class="input-group-box">
+                        <h3>2. 이동 수단 및 유지비 조건 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="rider-method">배달 이동 수단 (유류비 및 감가 연동)</label>
+                            <select id="rider-method" class="form-control">
+                                <option value="car" selected>일반 자동차 (연비 낮음, 감가 높음)</option>
+                                <option value="motorcycle">오토바이 (연비 좋음, 소모품 주기 빠름)</option>
+                                <option value="bicycle">전기자전거 / 전동킥보드 (충전비 미미)</option>
+                                <option value="walk">도보 배달 (유지비 0원)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="rider-distance">총 운행 거리 (누적 km)</label>
+                            <input type="number" id="rider-distance" class="form-control" placeholder="예: 80" min="0" value="80">
+                            <!-- 📌 요청하신 부트스트랩 mt-2 표준 클래스 반영 완료 -->
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 픽업 이동부터 배달 완료 후 복귀까지의 총 누적 주행 거리입니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 라이더 활동 정산 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>원천징수 및 산재고용보험료 (약 4.5%): <strong id="res-rider-tax" style="color: #6c757d;">0</strong> 원</p>
+                        <p>예상 소모 유류비 (휘발유 1,650원 기준): <strong id="res-rider-fuel" style="color: var(--orange);">0</strong> 원</p>
+                        <p>수단별 감가상각 및 정비 비용 소계: <strong id="res-rider-depreciation" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액 필수 강조 규격 적용 -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            모든 비용을 뺀 진짜 순수익: <strong id="result-delivery-rider-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 배달 부업 채산성 가이드 및 순시급 평가</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="rider-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 휘발유 리터당 1,650원, 일반 승용차 연비 10km/L, 오토바이 연비 35km/L의 평균 수치를 기준으로 시뮬레이션합니다. 전기자전거 및 킥보드는 소모성 배터리 감가비용을 km당 30원으로 간이 계산합니다. 기상 악화 할증이나 플랫폼 프로모션 미션 보너스에 따라 수익성이 변동될 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#delivery-rider-form', calculateDeliveryRider);
+
+            function calculateDeliveryRider() {
+                // 1. 값 추출 및 예외 제한 처리
+                var grossIncome = parseFloat($('#rider-gross-income').val()) || 0;
+                var totalHours = parseFloat($('#rider-total-hours').val()) || 1;
+                var method = $('#rider-method').val();
+                var distance = parseFloat($('#rider-distance').val()) || 0;
+
+                if (grossIncome < 0) grossIncome = 0;
+                if (totalHours < 1) totalHours = 1;
+                if (distance < 0) distance = 0;
+
+                // 2. 고정 차감액 (원천징수 3.3% + 소득세/산재/고용보험 간이 보정 약 1.2% = 총 4.5%)
+                var taxAndInsurance = Math.floor(grossIncome * 0.045);
+
+                // 3. 이동 수단별 유류비 및 감가상각 정밀 연산 알고리즘
+                var fuelCost = 0;
+                var depreciationCost = 0;
+                var fuelPricePerLiter = 1650; // 기준 유가
+
+                if (method === 'car') {
+                    // 자동차: 연비 10km/L 기준, km당 감가상각비 150원 가산
+                    fuelCost = Math.floor((distance / 10) * fuelPricePerLiter);
+                    depreciationCost = Math.floor(distance * 150);
+                } else if (method === 'motorcycle') {
+                    // 오토바이: 연비 35km/L 기준, km당 오토바이 정비/소모품비 50원 가산
+                    fuelCost = Math.floor((distance / 35) * fuelPricePerLiter);
+                    depreciationCost = Math.floor(distance * 50);
+                } else if (method === 'bicycle') {
+                    // 전기자전거: 유류비 없음, 배터리 및 브레이크 패드 등 감가 km당 30원
+                    fuelCost = 0;
+                    depreciationCost = Math.floor(distance * 30);
+                } else if (method === 'walk') {
+                    // 도보: 비용 없음
+                    fuelCost = 0;
+                    depreciationCost = 0;
+                }
+
+                // 4. 세후 진짜 순수익 및 순시급 연산
+                var totalExpenses = taxAndInsurance + fuelCost + depreciationCost;
+                var netIncome = grossIncome - totalExpenses;
+                if (netIncome < 0) netIncome = 0;
+
+                var netHourlyWage = Math.floor(netIncome / totalHours);
+
+                // 2026년 기준 최저임금(10,030원 내외 상정) 지표 연동 평가 조건문 분기
+                var minimumWage2026 = 10030;
+                var guideText = "";
+
+                if (grossIncome === 0) {
+                    guideText = "데이터를 입력하시면 활동 분석 가이드라인이 이곳에 실시간 출력됩니다.";
+                } else {
+                    guideText = "• 나의 진짜 세후 순 시급: <span style='color: var(--orange); font-weight:bold;'>" + netHourlyWage.toLocaleString('ko-KR') + " 원</span><br>";
+
+                    if (netHourlyWage >= minimumWage2026 * 1.5) {
+                        guideText += "✨ <span style='color: var(--blue); font-weight:bold;'>최상위 프로 라이더 효율!</span> 각종 고정 비용과 기름값을 제하고도 일반 최저시급을 압도하는 훌륭한 부업 수익성을 보여주고 있습니다. 주행 안전에 유의하세요.";
+                    } else if (netHourlyWage >= minimumWage2026) {
+                        guideText += "👍 <span style='color: var(--green); font-weight:bold;'>주요 채산성 확보 완료.</span> 유류비와 자동차 감가를 방어하고 일반 아르바이트 최저임금 이상의 순수 시급을 확보하고 있습니다. 현 상태 유지가 좋습니다.";
+                    } else {
+                        var gap = minimumWage2026 - netHourlyWage;
+                        guideText += "⚠️ <span style='color: #dc3545; font-weight:bold;'>채산성 경고 (최저임금 미달).</span> 표면적인 정산 금액은 많아 보이지만 차량 감가상각과 세금, 기름값을 빼면 일반 최저시급보다 <span style='font-weight:bold;'>" + gap.toLocaleString('ko-KR') + "원</span> 손해를 보고 있습니다. 자동차 배달의 경우 단거리 콜 위주로 동선을 재정비하거나 프로모션 시간대를 노려야 합니다.";
+                    }
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-rider-tax').text(taxAndInsurance.toLocaleString('ko-KR'));
+                $('#res-rider-fuel').text(fuelCost.toLocaleString('ko-KR'));
+                $('#res-rider-depreciation').text(depreciationCost.toLocaleString('ko-KR'));
+                $('#result-delivery-rider-salary').text(netIncome.toLocaleString('ko-KR'));
+                $('#rider-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#rider-gross-income').length) {
+                    calculateDeliveryRider();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

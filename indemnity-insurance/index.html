@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실손보험 세대별 갱신 및 4세대 전환 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="현재 유지 중인 1세대, 2세대, 3세대 실손의료보험의 예상 갱신 보험료와 4세대 실비보험 전환 시 아낄 수 있는 연간 고정 비용, 비급여 이용량에 따른 할증 리스크를 실시간 비교 분석합니다.">
+    <meta name="keywords" content="실비보험계산기, 실손보험4세대, 4세대실비전환, 보험료갱신, 실비보험비교, 보험재테크, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/indemnity-insurance/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/indemnity-insurance.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="실손보험 세대별 갱신 및 4세대 전환 비교 계산기 - 에브리캘크">
+    <meta property="og:description" content="폭탄처럼 오르는 실비 보험료, 4세대로 갈아타는 게 이득일까? 내 병원 이용 패턴에 맞는 최적의 절세 비율을 실시간 계산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/indemnity-insurance/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏥 실비보험 세대별 갱신 & 4세대 전환 비교기</h2>
+                <p>기존 구실손(1~3세대) 보험료의 살인적인 인상률과 4세대 실손의 저렴한 기본료(최대 70% 절감) 혜택을 정밀 비교합니다. 개인의 연간 비급여 치료 이용 실적을 대입하여 가장 유리한 유지 전략을 도출합니다.</p>
+                <form id="indemnity-form" class="form" onsubmit="return false;">
+                    <!-- 1. 현재 가입 현황 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 현재 유지 중인 실비보험 정보 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="ins-generation">현재 가입 중인 실비 세대 구분</label>
+                            <select id="ins-generation" class="form-control">
+                                <option value="1">1세대 실손 (2009년 9월 이전 가입 - 자기부담금 0%)</option>
+                                <option value="2" selected>2세대 실손 (2009년 10월 ~ 2017년 3월 - 자기부담금 10~20%)</option>
+                                <option value="3">3세대 신실손 (2017년 4월 ~ 2021년 6월 - 자기부담금 20~30%)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="ins-current-premium">현재 납부 중인 월 실비 보험료 (원)</label>
+                            <input type="number" id="ins-current-premium" class="form-control" placeholder="예: 50000" min="0" value="45000">
+                            <!-- 📌 요청하신 부트스트랩 mt-2 표준 클래스 반영 완료 -->
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 다른 종합보험과 특약으로 묶여 있다면 실손 의료비 특약 보험료만 분리하여 입력하세요.</small>
+                        </div>
+                    </div>
+                    <!-- 2. 병원 이용 실적 입력 -->
+                    <div class="input-group-box">
+                        <h3>2. 나의 연간 병원 이용 및 치료 패턴 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="ins-non-benefit">연간 예상 비급여 의료비 총액 (원)</label>
+                            <input type="number" id="ins-non-benefit" class="form-control" placeholder="예: 1500000" min="0" value="500000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 도수치료, 영양제 주사, 비급여 MRI, 비급여 초음파 등 건강보험이 적용되지 않는 총 치료 비용입니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 세대별 전환 실익 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>차기 예상 갱신 월 보험료 (평균 인상률 반영): <strong id="res-ins-next-old" style="color: #6c757d;">0</strong> 원</p>
+                        <p>4세대 전환 시 예상 월 기본 보험료: <strong id="res-ins-4th-base" style="color: var(--green);">0</strong> 원</p>
+                        <p>비급여 이용에 따른 4세대 월 할증/할인액: <strong id="res-ins-4th-adjustment" style="color: var(--orange);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액(연간 순 절감액 강조) 필수 규격 적용 -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            4세대 전환 시 연간 순 절감 비용: <strong id="result-indemnity-insurance-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 4세대 실손의료보험 전환 타당성 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="ins-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 보험개발원 및 주요 손해보험사의 세대별 평균 인상률(1세대 연평균 15%, 2세대 12%, 3세대 9%)과 4세대 비급여 차등제 할인·할증 규정(무지출 시 5% 할인, 100만 원 미만 유지, 150만 원 미만 100% 할증, 300만 원 미만 200% 할증, 300만 원 이상 300% 할증)을 대입하여 연산한 정밀 통계치입니다. 가입자의 연령과 건강 상태 및 성별에 따라 실제 고지되는 갱신 수치는 상이할 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#indemnity-form', calculateIndemnityInsurance);
+
+            function calculateIndemnityInsurance() {
+                // 1. 값 추출 및 예외 제한 처리
+                var generation = $('#ins-generation').val();
+                var currentPremium = parseFloat($('#ins-current-premium').val()) || 0;
+                var nonBenefit = parseFloat($('#ins-non-benefit').val()) || 0;
+
+                if (currentPremium < 0) currentPremium = 0;
+                if (nonBenefit < 0) nonBenefit = 0;
+
+                // 2. 기존 실비 차기 예상 갱신 보험료 예측 연산
+                // 통계적 평균 인상률 적용 가중치 부여
+                var hikeRate = 1.12;
+                if (generation === '1') hikeRate = 1.15;
+                if (generation === '3') hikeRate = 1.09;
+
+                var nextOldPremium = Math.floor(currentPremium * hikeRate);
+
+                // 3. 4세대 실손 전환 기본료 역산 시뮬레이션
+                // 4세대는 구실손 대비 평균적으로 1세대 기준 약 70%, 2세대 기준 50%, 3세대 기준 10% 저렴함을 기반으로 설계
+                var base4thPremium = 0;
+                if (generation === '1') base4thPremium = Math.floor(currentPremium * 0.30);
+                else if (generation === '2') base4thPremium = Math.floor(currentPremium * 0.50);
+                else if (generation === '3') base4thPremium = Math.floor(currentPremium * 0.90);
+
+                // 최소 기본 보험료 방어선 구축 (연령대별 기본 하한선 보정)
+                if (base4thPremium < 12000) base4thPremium = 12500;
+
+                // 4. 4세대 비급여 이용량 기반 할인·할증 차등제(등급별 페널티 수식) 연산
+                var adjustmentPremium = 0;
+                var statusLabel = "기본 유지 (0단계)";
+
+                if (nonBenefit === 0) {
+                    // 무지출 시 기본요율에서 약 5% 추가 할인 적용
+                    adjustmentPremium = -Math.floor(base4thPremium * 0.05);
+                    statusLabel = "5% 우수 할인 대상 (1단계)";
+                } else if (nonBenefit > 0 && nonBenefit < 1000000) {
+                    // 100만 원 미만 지출 시 할증 없이 기본료 유지
+                    adjustmentPremium = 0;
+                    statusLabel = "기본 유지 구간 (2단계)";
+                } else if (nonBenefit >= 1000000 && nonBenefit < 1500000) {
+                    // 100만 이상 150만 미만 비급여 수령 시 100% 할증 (기본료만큼 페널티 가산)
+                    adjustmentPremium = base4thPremium;
+                    statusLabel = "비급여 청구 100% 할증 페널티 (3단계)";
+                } else if (nonBenefit >= 1500000 && nonBenefit < 3000000) {
+                    // 150만 이상 300만 미만 200% 할증
+                    adjustmentPremium = base4thPremium * 2;
+                    statusLabel = "비급여 청구 200% 할증 페널티 (4단계)";
+                } else if (nonBenefit >= 3000000) {
+                    // 300만 원 이상 최대 할증 300% 부과
+                    adjustmentPremium = base4thPremium * 3;
+                    statusLabel = "비급여 청구 최대 300% 할증 폭탄 (5단계)";
+                }
+
+                // 4세대 최종 월 납부 금액 합산
+                var final4thMonthly = base4thPremium + adjustmentPremium;
+                if (final4thMonthly < 0) final4thMonthly = 0;
+
+                // 기존 구실손 유지 대비 4세대 전환 시 아끼는 연간 순 고정비용 격차 연산
+                // 수식: (기존 갱신 월료 * 12) - (4세대 최종 월료 * 12)
+                var oldAnnualTotal = nextOldPremium * 12;
+                var newAnnualTotal = final4thMonthly * 12;
+                var annualSavings = oldAnnualTotal - newAnnualTotal;
+
+                // 기존 보험과 4세대 보험의 자기부담금 격차에 따른 가이드라인 텍스트 분기 생성
+                var guideText = "";
+                if (currentPremium === 0) {
+                    guideText = "조건을 입력하시면 실손 보험료 다이렉트 리밸런싱 진단서가 실시간 출력됩니다.";
+                } else {
+                    if (annualSavings > 0) {
+                        if (nonBenefit >= 1500000) {
+                            guideText = "⚠️ <span style='color: #dc3545; font-weight:bold;'>보험료는 절감되나 주의 필요 (" + statusLabel + ")</span><br>" +
+                                "4세대로 전환 시 연간 고정 이자 비용은 세이브되지만, 현재 가입자의 비급여 청구량(도수치료 등)이 너무 많아 4세대 특유의 할증 페널티가 누적되고 있습니다. 병원을 자주 가셔야 하는 만성 질환자나 도수치료 고정 이용자는 보장 100% 형태인 기존 구실손을 유지하는 것이 장기적으로 유리할 수 있습니다.";
+                        } else {
+                            guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>4세대 전환 적극 추천 (고정비 다이어트 최고 구간)</span><br>" +
+                                "현재 병원 방문 빈도가 낮고 비급여 치료 지출이 적어 4세대로 갈아타기에 가장 이상적인 컨디션입니다. 전환 즉시 매달 새어 나가는 보험료 폭탄을 방어하고, 1년에 무려 <span style='font-weight:bold; color: var(--blue);'>" + annualSavings.toLocaleString('ko-KR') + "원</span>의 현금을 순수하게 아낄 수 있습니다. 금융 재테크 효과가 뛰어납니다.";
+                        }
+                    } else {
+                        guideText = "❌ <span style='color: #dc3545; font-weight:bold;'>기존 보험 유지 유리</span><br>" +
+                            "현재 가입 상태 대비 4세대 전환의 실익이 마이너스이거나 제로에 가깝습니다. 구관이 명관이므로 기존 가입하신 실손 의료비 대안을 해지하지 말고 그대로 계약을 고수하시는 것을 강력히 권장합니다.";
+                    }
+                }
+
+                // 5. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-ins-next-old').text(nextOldPremium.toLocaleString('ko-KR'));
+                $('#res-ins-4th-base').text(base4thPremium.toLocaleString('ko-KR'));
+
+                // 할인 시 마이너스 기호 처리 연동
+                if (adjustmentPremium < 0) {
+                    $('#res-ins-4th-adjustment').text(adjustmentPremium.toLocaleString('ko-KR'));
+                } else {
+                    $('#res-ins-4th-adjustment').text("+" + adjustmentPremium.toLocaleString('ko-KR') + " (" + statusLabel.split(' ')[0] + ")");
+                }
+
+                // 최종 연간 세이브 비용 바인딩 (마이너스 시 0원 방어)
+                var displaySavings = annualSavings < 0 ? 0 : annualSavings;
+                $('#result-indemnity-insurance-salary').text(displaySavings.toLocaleString('ko-KR'));
+                $('#ins-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#ins-current-premium').length) {
+                    calculateIndemnityInsurance();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

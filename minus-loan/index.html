@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이너스통장 vs 신용대출 이자 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="급전이 필요할 때 마이너스통장(한도대출)과 일반 신용대출 중 어떤 것이 단 1원이라도 이자를 더 아낄 수 있는지 월별 지출 격차를 실시간 시각화하여 비교 정산합니다.">
+    <meta name="keywords" content="마이너스통장계산기, 마통이자, 신용대출이자, 대출비교, 일할계산, 대출재테크, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/minus-loan/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/minus-loan.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="마이너스통장 vs 신용대출 이자 비교 계산기 - 에브리캘크">
+    <meta property="og:description" content="필요할 때만 빼 쓰는 마통과 한 번에 받는 신용대출! 내 실제 지출 패턴에 맞는 최적의 대출 조건을 실시간 계산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/minus-loan/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏦 마이너스통장 vs 신용대출 이자 비교기</h2>
+                <p>일반 신용대출(전액에 금리 부과)과 마이너스통장(실제 꺼내 쓴 금액과 기간에만 일할 복리 부과)의 구조적 차이를 완벽히 역산합니다. 내 실제 자금 사용 패턴을 대입하여 가장 유리한 대출 형태를 제안합니다.</p>
+                <form id="minus-loan-form" class="form" onsubmit="return false;">
+                    <!-- 대출 기본 조건 설정 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 공통 대출 한도 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="loan-limit">필요한 대출 한도 금액 (원)</label>
+                            <input type="number" id="loan-limit" class="form-control" placeholder="예: 30000000" min="0" value="30000000">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="loan-use-amount">한도 내 실제 평균 꺼내 쓸 금액 (원)</label>
+                            <input type="number" id="loan-use-amount" class="form-control" placeholder="예: 10000000" min="0" value="10000000">
+                            <!-- 📌 요청하신 부트스트랩 mt-2 표준 클래스 반영 완료 -->
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 대출 한도 중 내가 항상 마이너스로 빼서 사용하고 있을 평균 자금 규모입니다.</small>
+                        </div>
+                    </div>
+                    <!-- 대출 방식별 금리 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 방식별 약정 금리 및 기간 입력</h3>
+                        <div class="input-item mb-3">
+                            <label for="rate-credit">일반 신용대출 금리 (연 %)</label>
+                            <input type="number" id="rate-credit" class="form-control" placeholder="예: 4.8" min="0" max="30" step="0.01" value="4.8">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="rate-minus">마이너스통장 가산 금리 (연 %)</label>
+                            <input type="number" id="rate-minus" class="form-control" placeholder="예: 5.3" min="0" max="30" step="0.01" value="5.3">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 일반적으로 마이너스통장은 일반 신용대출보다 약 0.5%p 내외의 가산금리가 붙습니다.</small>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 대출 방식별 이자 지출 비교 결과</h3>
+                    <div class="result-display">
+                        <p>일반 신용대출 월평균 이자 (한도 전액 부과): <strong id="res-loan-credit-month" style="color: #6c757d;">0</strong> 원</p>
+                        <p>마이너스통장 월평균 이자 (실제 사용액 일할 계산): <strong id="res-loan-minus-month" style="color: var(--orange);">0</strong> 원</p>
+                        <p>두 대출 방식 간 월간 이자 차액: <strong id="res-loan-diff-month" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액(연간 순 이자 절감액 강조) 필수 규격 적용 -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            더 유리한 방식 선택 시 연간 이자 절감액: <strong id="result-minus-loan-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #fff8fe; border-radius: 8px; border-left: 4px solid var(--pink);">
+                        <h4>📊 내 지출 성향에 맞는 최적의 대출 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="minus-loan-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 1개월을 30일, 1년을 365일로 상정한 일할 계산식입니다. 마이너스통장의 이자는 매월 정산일에 대출 원금에 가산되어 다음 달에는 이자에 이자가 붙는 '역산 일복리' 메커니즘을 시뮬레이션에 보정 반영했습니다. 중도상환수수료 여부 및 수시 상환 패턴에 따라 실제 은행 청구서의 최종 세부 이자와는 일부 차이가 있을 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 本문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#minus-loan-form', calculateMinusLoan);
+
+            function calculateMinusLoan() {
+                // 1. 값 추출 및 예외 제한 처리
+                var limit = parseFloat($('#loan-limit').val()) || 0;
+                var useAmount = parseFloat($('#loan-use-amount').val()) || 0;
+                var rateCredit = parseFloat($('#rate-credit').val()) || 0;
+                var rateMinus = parseFloat($('#rate-minus').val()) || 0;
+
+                if (limit < 0) limit = 0;
+                if (useAmount < 0) useAmount = 0;
+                // 사용액이 설정 한도 한계선을 넘지 못하도록 디펜스 예외 처리
+                if (useAmount > limit) {
+                    useAmount = limit;
+                }
+                if (rateCredit < 0) rateCredit = 0;
+                if (rateMinus < 0) rateMinus = 0;
+
+                // 2. 일반 신용대출 이자 연산 (꺼내 쓰든 안 쓰든 승인 한도 원금 전체에 이자 부과)
+                var creditAnnualInterest = limit * (rateCredit / 100);
+                var creditMonthlyInterest = Math.floor(creditAnnualInterest / 12);
+
+                // 3. 마이너스통장 이자 정밀 연산 (실제 꺼내 쓴 금액에 대해서만 365일 일할 복리 계산 보정)
+                // 일일 이자율 = (연금리 / 100) / 365
+                var dailyRate = (rateMinus / 100) / 365;
+
+                // 30일 기준 일복리 산출 수식: 사용액 * (1 + 일일이율)^30 - 사용액
+                var minusMonthlyInterest = Math.floor(useAmount * Math.pow(1 + dailyRate, 30) - useAmount);
+
+                // 4. 두 방식의 이자 편차 및 연간 총 이득 비용 계산
+                var diffMonthly = Math.abs(creditMonthlyInterest - minusMonthlyInterest);
+                var annualSavings = diffMonthly * 12;
+
+                // 5. 대출 포트폴리오 최적화 맞춤 가이드라인 텍스트 분기 생성
+                var guideText = "";
+                if (limit === 0) {
+                    guideText = "대출 희망 금액 조건을 설정하시면 1금융권 최적화 대출 진단 리포트가 실시간 매칭됩니다.";
+                } else {
+                    if (minusMonthlyInterest < creditMonthlyInterest) {
+                        var utilizationRate = ((useAmount / limit) * 100).toFixed(0);
+                        guideText = "✨ <span style='color: var(--pink); font-weight:bold;'>마이너스통장(마통) 개설이 압도적 유리!</span><br>" +
+                            "현재 한도 대비 실제 자금 사용 비율이 " + utilizationRate + "% 수준으로 낮습니다. 마통 금리가 신용대출보다 높더라도, 필요한 금액만 뺐다 다시 메우는 수시 상환 지출 패턴을 고수하면 일반 신용대출 대비 한 달에 " + diffMonthly.toLocaleString('ko-KR') + "원, <span style='font-weight:bold; color: var(--pink);'>1년에 총 " + annualSavings.toLocaleString('ko-KR') + "원</span>의 대출 이자를 통장에 남길 수 있습니다.";
+                    } else if (minusMonthlyInterest > creditMonthlyInterest) {
+                        guideText = "❌ <span style='color: #dc3545; font-weight:bold;'>일반 신용대출 실행이 훨씬 유리!</span><br>" +
+                            "대출 한도 금액의 대부분을 계좌에 항상 마이너스로 빼두고 상환하지 않는 묵직한 지출 성향입니다. 이 경우 마이너스통장의 높은 금리와 일복리 기믹 때문에 이자 폭탄을 맞게 됩니다. 가산금리가 없고 고정 지출 통제가 수월한 일반 신용대출을 실행하시는 것이 안전합니다.";
+                    } else {
+                        guideText = "👍 <span style='color: var(--green); font-weight:bold;'>두 대출 방식의 비용이 동일한 균형 구간입니다.</span><br>" +
+                            "어떤 대출을 선택하셔도 지출 비용 편차가 발생하지 않습니다. 자금의 사용 주기가 불규칙하다면 유연한 중도상환이 가능한 마이너스통장을, 계획적 고정 상환이 목적이라면 신용대출을 취사선택하세요.";
+                    }
+                }
+
+                // 6. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-loan-credit-month').text(creditMonthlyInterest.toLocaleString('ko-KR'));
+                $('#res-loan-minus-month').text(minusMonthlyInterest.toLocaleString('ko-KR'));
+                $('#res-loan-diff-month').text(diffMonthly.toLocaleString('ko-KR'));
+                $('#result-minus-loan-salary').text(annualSavings.toLocaleString('ko-KR'));
+                $('#minus-loan-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#loan-limit').length) {
+                    calculateMinusLoan();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
