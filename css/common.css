@@ -211,6 +211,7 @@ textarea {resize: none;}
 .flex-radios .radio label {width: auto;}
 .result-box {border-color: var(--green);border-width: 2px; border-radius: var(--radius-sm);font-size: 1.125rem;}
 .item-box+.item-box {margin-top: .5rem;}
+.result-box .btn {min-width: 8rem;}
 
 @media (max-width: 1024px) {
     .input-group-box, .result-box {padding: 1.25rem;}
@@ -304,6 +305,7 @@ ul.bullet li:before {content: ""; width: .2rem; height: .2rem; display: inline-b
 .fw-500 {font-weight: 500 !important}
 .fw-600 {font-weight: 600 !important}
 .fw-700 {font-weight: 700 !important}
+.gap-2 {gap: var(--gap-xs);}
 .bold {font-weight: 600}
 .bolder {font-weight: 700}
 .spot {color: var(--main) !important}

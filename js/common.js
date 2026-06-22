@@ -193,8 +193,15 @@ var everyCalcDatabase = [
     { title: "💰 무인 점포 창업 손익분기점 계산기", url: "/unmanned-store/", keywords: "무인카페 무인아이스크림 인생네컷 사진관 창업 손익분기점 마진율 고정비 bep 부업 ㅁㅇ" },
     { title: "🏥 실손보험 세대별 갱신 및 4세대 전환 비교기", url: "/indemnity-insurance/", keywords: "실비보험 실손의료보험 4세대실비 보험료인상 갱신보험료 보험갈아타기 ㅂㅎ" },
     { title: "🏦 마이너스통장 vs 신용대출 이자 비교기", url: "/minus-loan/", keywords: "마이너스통장 마통 신용대출 대출이자 일할계산 한도대출 복리이자 대출비교 ㄷㅊ" },
-    { title: "📦 당근·중고나라 택배비 최저가 비교기", url: "/parcel-cost/", keywords: "반값택배 알뜰택배 편의점택배 우체국택배 배송비비교 중고거래 택배요금 ㅌ배" }
-
+    { title: "📦 당근·중고나라 택배비 최저가 비교기", url: "/parcel-cost/", keywords: "반값택배 알뜰택배 편의점택배 우체국택배 배송비비교 중고거래 택배요금 ㅌ배" },
+    { title: "📐 UI 픽셀-rem 배수별 환산기", url: "/rem-converter/", keywords: "픽셀변환 rem em px 디자이너 피그마 모바일배수 레티나 해상도 ㅍㅅ" },
+    { title: "📐 CSS Clamp() 반응형 자동 계산기", url: "/css-clamp/", keywords: "클램프계산기 cssclamp 유동형폰트 반응형웹 모바일비율 픽셀환산 패딩마진 ㅋㄹ" },
+    { title: "🕒 CSS 큐빅 베이지어 애니메이션 계산기", url: "/css-bezier/", keywords: "큐빅베이지어 cubicbezier 가속도계산기 css트랜지션 이징함수 애니메이션 효과 ㅊㅈ" },
+    { title: "🎨 화사한 그라디언트 중간톤 보정기", url: "/gradient-blend/", keywords: "그라디언트 그라데이션 피그마 색상보정 cssgradient 컬러블렌딩 디자이너 ㅋㄹ" },
+    { title: "🔲 모던 UI 다중 그림자 생성기", url: "/box-shadow/", keywords: "박스섀도우 boxshadow 그림자효과 피그마그림자 다중그림자 레이어 그림자디자인 ㅂㅅ" },
+    { title: "✍️ 네이버 블로그 글자수 & 원고지 환산기", url: "/blog-wordcount/", keywords: "블로그글자수 공백제외 스마트에디터 원고대행 상위노출 체험단 원고지 환산 ㅂㄹㄱ" },
+    { title: "📅 외주 프로젝트 마일스톤 D-Day 플래너", url: "/project-milestone/", keywords: "프리랜서 외주마감 일정관리 마일스톤 디데이 크몽 사파리날짜버그 플래너 ㅍㄹㅈㅌ" },
+    { title: "💼 프리랜서 적정 종합 시급 환산기", url: "/freelancer-wage/", keywords: "프리랜서시급 외주단가 연봉환산 프리랜서단가 몸값계산 프로젝트단가 부업 ㅂㅇ" }
 ];
 
 

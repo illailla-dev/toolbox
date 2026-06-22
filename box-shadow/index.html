@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모던 웹 UI 그림자(Box-Shadow) 다중 레이어 플래너 | 에브리캘크</title>
+    <meta name="description" content="단일 그림자 특유의 탁함을 제거하기 위해 3중~5중 레이어로 정교하게 분할된 트렌디하고 부드러운 모던 UI box-shadow 코드를 실시간 디자인하고 복사합니다.">
+    <meta name="keywords" content="boxshadow계산기, 박스섀도우, 그림자효과, 모던UI디자인, 다중레이어그림자, 웹접근성, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/box-shadow/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/box-shadow.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="모던 웹 UI 그림자(Box-Shadow) 다중 레이어 플래너 - 에브리캘크">
+    <meta property="og:description" content="인위적인 그림자는 그만! 3겹으로 쪼개져 물드는 부드러운 모던 섀도우 코드를 실시간 추출하고 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/box-shadow/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🔲 모던 웹 UI 다중 그림자 생성기</h2>
+                <p>단 한 줄의 box-shadow 문장으로 그림자를 만들면 경계선이 뭉개지며 촌스러워집니다. 본 도구는 투명도와 퍼짐 정도가 수학적으로 점진 분할된 다중 레이어를 조립하여 안개처럼 부드럽게 스며드는 섀도우를 연산합니다.</p>
+                <form id="shadow-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 그림자 깊이 및 흐림 강도 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="shadow-style">원하는 모던 그림자 깊이(Depth) 유형</label>
+                            <select id="shadow-style" class="form-control">
+                                <option value="soft" selected>Soft Glow (카드 UI에 최적화된 부드러운 기본 그림자)</option>
+                                <option value="deep">Deep Float (화면 위로 높게 떠 있는 공중 부양 그림자)</option>
+                                <option value="sharp">Sharp Border (트렌디하고 명확한 경계의 미니멀 섀도우)</option>
+                                <option value="neon">Neon Blue (은은하게 번지는 트렌디한 컬러 아우라)</option>
+                            </select>
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 깊이를 선택하면 실무 표준 3중~4중 멀티 레이어 투명도 분해 계수가 실시간 교정 적용됩니다.</small>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 input-item mb-3">
+                                <label for="shadow-blur">그림자 총 흐림도 (Blur 강도)</label>
+                                <input type="number" id="shadow-blur" class="form-control" value="20" min="2" max="100">
+                            </div>
+                            <div class="col-sm-6 input-item mb-3">
+                                <label for="shadow-opacity">그림자 전체 투명도 (Opacity %)</label>
+                                <input type="number" id="shadow-opacity" class="form-control" value="8" min="1" max="100">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 및 애니메이션 프리뷰 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 다중 레이어 그림자 결과</h3>
+                    <div class="result-display">
+                        <span style="font-weight: bold; font-size: 0.9rem; color: #333; display: block; margin-bottom: 5px;">🎬 다중 레이어 그림자 실시간 프리뷰</span>
+                        <div class="shadow-preview-track">
+                            <div class="shadow-preview-box" id="shadow-preview">PREVIEW</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-4 mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                <span id="result-shadow-code" style="color: var(--red); font-weight: bold;">box-shadow: ...;</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-shadow-code" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
+                            추천 선언 구조: <strong id="result-css-shadow-salary">box-shadow: multiple layers</strong>
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 다중 레이어 그림자 컴포넌트 실무 배치 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="shadow-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 쉼표(,)를 통해 레이어 여러 개를 중첩하는 멀티 레이어 기법은, 첫 번째 레이어는 진하고 좁게 잡아서 경계를 방어하고, 두 번째와 세 번째 레이어는 흐릿하고 넓게 퍼뜨려 실제 태양광 아래에서 물체가 공중에 떠 있을 때 생기는 자연스러운 그림자 굴절 현상을 브라우저에 사실적으로 재현합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#shadow-form', calculateBoxShadow);
+
+            // 클립보드 복사 버튼 이벤트 위임 바인딩
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            // 다중 중첩 레이어 그림자 수학적 가중치 연산 분해 알고리즘
+            function calculateBoxShadow() {
+                var style = $('#shadow-style').val();
+                var blur = parseFloat($('#shadow-blur').val()) || 20;
+                var opacity = parseFloat($('#shadow-opacity').val()) || 8;
+
+                if (blur < 2) blur = 2;
+                if (opacity < 1) opacity = 1;
+                if (opacity > 100) opacity = 100;
+
+                // 기본 검은색 그림자 기본 알파 채널 환산
+                var alpha = opacity / 100;
+                var shadowColor = "rgba(0, 0, 0, ";
+
+                // 네온 유형일 경우 블루 아우라 컬러 피커 가중치 임의 강제 할당 보정
+                if (style === 'neon') {
+                    shadowColor = "rgba(9, 132, 227, ";
+                }
+
+                // 3중~4중으로 쪼개질 각 레이어별 수식 문자열 배열화 조립
+                var formulaStr = "";
+                var guideText = "";
+
+                if (style === 'soft' || style === 'neon') {
+                    // 3개 레이어로 중첩 분배 (가장 부드럽게 퍼지는 선형 비율 스케일링)
+                    var l1_y = Math.round(blur * 0.1); var l1_b = Math.round(blur * 0.15); var l1_a = (alpha * 0.5).toFixed(3);
+                    var l2_y = Math.round(blur * 0.35); var l2_b = Math.round(blur * 0.5); var l2_a = (alpha * 0.35).toFixed(3);
+                    var l3_y = Math.round(blur * 0.7); var l3_b = Math.round(blur * 0.9); var l3_a = (alpha * 0.15).toFixed(3);
+
+                    formulaStr = "0 " + l1_y + "px " + l1_b + "px " + shadowColor + l1_a + "), " +
+                        "0 " + l2_y + "px " + l2_b + "px " + shadowColor + l2_a + "), " +
+                        "0 " + l3_y + "px " + l3_b + "px " + shadowColor + l3_a + ")";
+
+                    guideText = "✨ <span style='color: var(--blue); font-weight:bold;'>안개식 다중 소프트 셰어링 링크 가동 중!</span><br>그림자의 50%가 아주 좁은 영역에 밀집하여 형태를 잡아주고, 나머지 15%의 연한 투명도가 넓게 퍼지면서 실제 자연광과 일치하는 탁함 없는 모던 카드 UI 그림자가 완성되었습니다.";
+                } else if (style === 'deep') {
+                    // 4개 레이어로 쪼개어 아주 높이 뜬 공중 부양 섀도우 구현 (Y축 수직 오프셋 확대 가산)
+                    var d1_y = Math.round(blur * 0.15); var d1_b = Math.round(blur * 0.15); var d1_a = (alpha * 0.45).toFixed(3);
+                    var d2_y = Math.round(blur * 0.5); var d2_b = Math.round(blur * 0.4); var d2_a = (alpha * 0.3).toFixed(3);
+                    var d3_y = Math.round(blur * 1.1); var d3_b = Math.round(blur * 0.8); var d3_a = (alpha * 0.18).toFixed(3);
+                    var d4_y = Math.round(blur * 1.8); var d4_b = Math.round(blur * 1.5); var d4_a = (alpha * 0.07).toFixed(3);
+
+                    formulaStr = "0 " + d1_y + "px " + d1_b + "px " + shadowColor + d1_a + "), " +
+                        "0 " + d2_y + "px " + d2_b + "px " + shadowColor + d2_a + "), " +
+                        "0 " + d3_y + "px " + d3_b + "px " + shadowColor + d3_a + "), " +
+                        "0 " + d4_y + "px " + d4_b + "px " + shadowColor + d4_a + ")";
+
+                    guideText = "🚀 <span style='color: var(--orange); font-weight:bold;'>고고도 공중 부양 오프셋 빌드 완료.</span><br>Y축 낙하 거리가 넓게 벌어지면서 물체가 화면 위로 크게 튀어나온 듯한 깊이감이 형성되었습니다. 클릭하여 활성화해야 하는 플로팅 액션 버튼(FAB)이나 최상단 팝업 경고창(Modal) 레이아웃에 장착하기 아주 훌륭합니다.";
+                } else if (style === 'sharp') {
+                    // 미니멀한 경계를 위한 촘촘한 간격 분배
+                    var s1_y = 1; var s1_b = 2; var s1_a = (alpha * 0.6).toFixed(3);
+                    var s2_y = 3; var s2_b = 6; var s2_a = (alpha * 0.3).toFixed(3);
+                    var s3_y = 10; var s3_b = 15; var s3_a = (alpha * 0.1).toFixed(3);
+
+                    formulaStr = "0 " + s1_y + "px " + s1_b + "px " + shadowColor + s1_a + "), " +
+                        "0 " + s2_y + "px " + s2_b + "px " + shadowColor + s2_a + "), " +
+                        "0 " + s3_y + "px " + s3_b + "px " + shadowColor + s3_a + ")";
+
+                    guideText = "📐 <span style='color: var(--green); font-weight:bold;'>미니멀 플랫 샤프 모드 적용.</span><br>번짐을 최소화하고 요소의 경계를 깔끔하고 단단하게 받쳐주는 구조입니다. 다크모드 화면이나 깔끔한 핀테크 대시보드의 콘텐츠 블록 정렬 시 세련미를 더해줍니다.";
+                }
+
+                // 실시간 프리뷰 박스에 스타일 시트 동적 주입 및 DOM 반영
+                $('#shadow-preview').css('box-shadow', formulaStr);
+                $('#result-shadow-code').text("box-shadow: " + formulaStr + ";");
+                $('#result-css-shadow-salary').text("box-shadow: [총 " + (style === 'deep' ? "4개" : "3개") + " 중첩 레이어 가동]");
+                $('#shadow-guide-text').html(guideText);
+            }
+
+            // GNB 컴포넌트 비동기 자동 결합 유무 추적 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#shadow-style').length) {
+                    calculateBoxShadow();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

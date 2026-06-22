@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 큐빅 베이지어(Cubic-Bezier) 애니메이션 가속도 계산기 | 에브리캘크</title>
+    <meta name="description" content="웹 UI 애니메이션의 가속도 곡선을 조절하는 cubic-bezier 속성값을 실시간으로 계산합니다. Elastic, Bounce, EaseInOut 등 실무 필수 프리셋 매칭과 실시간 애니메이션 프리뷰를 제공합니다.">
+    <meta name="keywords" content="큐빅베이지어, cubic-bezier, css애니메이션, 이징함수, 가속도계산기, 트랜지션효과, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/css-bezier/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/css-bezier.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CSS 큐빅 베이지어 애니메이션 가속도 계산기 - 에브리캘크">
+    <meta property="og:description" content="밋밋한 애니메이션은 가라! 슥- 팟하고 튀어나오는 감각적인 UI 트랜지션 베이지어 코드를 실시간 테스트하고 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/css-bezier/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🕒 CSS 큐빅 베이지어(Cubic-Bezier) 가속도 계산기</h2>
+                <p>일반적인 ease-in, ease-out을 넘어 모던 웹 인터랙션에 필수적인 탄성력(Elastic), 반동(Back) 등의 다이내믹한 큐빅 베이지어 곡선 수식을 실시간 조립하고 눈으로 움직임을 테스트합니다.</p>
+                <form id="bezier-form" class="form" onsubmit="return false;">
+                    <!-- 1. 프리셋 및 제어점 입력 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 가속도 곡선 프리셋 선택 및 수치 조정</h3>
+                        <div class="input-item mb-3">
+                            <label for="bezier-preset">실무 인기 가속도(Easing) 프리셋 매칭</label>
+                            <select id="bezier-preset" class="form-control">
+                                <option value="0.25,0.1,0.25,1" selected>Ease (기본 웹 표준 가속도)</option>
+                                <option value="0.42,0,1,1">Ease-In (점점 빨라지기)</option>
+                                <option value="0,0,0.58,1">Ease-Out (점점 느려지기)</option>
+                                <option value="0.34,1.56,0.64,1">Elastic Pop (슥- 팟! 튕기는 탄성 효과)</option>
+                                <option value="0.6, -0.28, 0.735, 0.045">Anticipate (뒤로 살짝 물러선 뒤 돌진)</option>
+                                <option value="0.175,0.885,0.32,1.275">Soft Back (부드럽게 경계선을 넘나드는 반동)</option>
+                                <option value="custom">직접 수치 입력 (Custom 제어점)</option>
+                            </select>
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 프리셋을 선택하면 최적화된 자바스크립트 제어점 수치가 자동 주입됩니다.</small>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 input-item mb-3">
+                                <label for="bez-x1">X1 (0~1)</label>
+                                <input type="number" id="bez-x1" class="form-control" value="0.25" min="0" max="1" step="0.01">
+                            </div>
+                            <div class="col-3 input-item mb-3">
+                                <label for="bez-y1">Y1</label>
+                                <input type="number" id="bez-y1" class="form-control" value="0.1" step="0.05">
+                            </div>
+                            <div class="col-3 input-item mb-3">
+                                <label for="bez-x2">X2 (0~1)</label>
+                                <input type="number" id="bez-x2" class="form-control" value="0.25" min="0" max="1" step="0.01">
+                            </div>
+                            <div class="col-3 input-item mb-3">
+                                <label for="bez-y2">Y2</label>
+                                <input type="number" id="bez-y2" class="form-control" value="1.0" step="0.05">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 및 애니메이션 프리뷰 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 생성된 CSS Transition 코드</h3>
+                    <div class="result-display">
+                        <!-- 실시간 박스 무빙 프리뷰 트랙 트래킹 -->
+                        <span style="font-weight: bold; font-size: 0.9rem; color: #333; display: block; margin-bottom: 5px;">🎬 애니메이션 모의 운행 프리뷰</span>
+                        <div class="preview-track" id="bezier-track">
+                            <div class="preview-box" id="bezier-box"></div>
+                        </div>
+                        <button type="button" id="btn-trigger-anim" class="btn btn-dark mt-2 btn-block">🔄 애니메이션 재생 (마우스 오버로도 작동)</button>
+                        <div class=" d-flex justify-content-between align-items-center mt-3 mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                <span id="result-bezier-code" style="color: var(--red); font-weight: bold;">cubic-bezier(0.25, 0.1, 0.25, 1);</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-bezier-code" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
+                            추천 선언 구조: <strong id="result-css-bezier-salary">transition: all 0.4s cubic-bezier(...)</strong>
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--green);">
+                        <h4>📊 UI 가속도 곡선 활용 및 인터랙션 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="bezier-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* cubic-bezier의 두 제어점 (X1, Y1)과 (X2, Y2)는 애니메이션의 진행 시간 대비 변화 속도를 나타내는 베이지어 곡선의 핸들 좌표입니다. Y축 값은 0 미만이나 1 초과로 설정할 수 있어, 바운스 효과처럼 상자 경계선을 벗어났다가 튕기며 되돌아오는 고급 모션 그래픽을 코딩하는 핵심 치트키입니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#bezier-form', function (e) {
+                // 프리셋 셀렉트 박스 조절 시 하단 인풋에 좌표 강제 주입 동기화
+                if (e.target.id === 'bezier-preset') {
+                    var presetVal = $('#bezier-preset').val();
+                    if (presetVal !== 'custom') {
+                        var coords = presetVal.split(',');
+                        $('#bez-x1').val(coords[0]);
+                        $('#bez-y1').val(coords[1]);
+                        $('#bez-x2').val(coords[2]);
+                        $('#bez-y2').val(coords[3]);
+                    }
+                } else {
+                    // 수치 인풋을 임의로 건드리면 프리셋을 'Custom'으로 자동 변경
+                    $('#bezier-preset').val('custom');
+                }
+                calculateCssBezier();
+            });
+
+            // 프리뷰 상자 수동 재생 이벤트 위임
+            $(document).on('click', '#btn-trigger-anim', function () {
+                var $track = $('#bezier-track');
+                $track.addClass('active');
+                setTimeout(function () {
+                    $track.removeClass('active');
+                }, 1600); // 리셋 딜레이타임 확보
+            });
+
+            // 클립보드 복사 버튼 이벤트 위임 바인딩
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            // 베이지어 연산 및 스타일 속성 런타임 주입 알고리즘
+            function calculateCssBezier() {
+                var x1 = parseFloat($('#bez-x1').val());
+                var y1 = parseFloat($('#bez-y1').val());
+                var x2 = parseFloat($('#bez-x2').val());
+                var y2 = parseFloat($('#bez-y2').val());
+
+                // 범위 오류 디펜스 라인
+                if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)) return;
+
+                if (x1 < 0) x1 = 0; if (x1 > 1) x1 = 1;
+                if (x2 < 0) x2 = 0; if (x2 > 1) x2 = 1;
+
+                var bezierFormula = "cubic-bezier(" + x1 + ", " + y1 + ", " + x2 + ", " + y2 + ")";
+
+                // 3. 프리뷰 상자의 transition-timing-function에 실시간 수식 박아넣기
+                // 0.6초 기준의 유려한 스케일링 무브먼트 동적 주입
+                $('#bezier-box').css({
+                    'transition': 'left 0.6s ' + bezierFormula
+                });
+
+                // DOM 문자열 출력 바인딩
+                $('#result-bezier-code').text(bezierFormula + ";");
+                $('#result-css-bezier-salary').text("transition: all 0.4s " + bezierFormula + ";");
+
+                // 4. 가속도 곡선의 특성별 맞춤형 가이드라인 텍스트 가공
+                var guideText = "";
+                if (y1 > 1 || y2 > 1 || y1 < 0 || y2 < 0) {
+                    guideText = "✨ <span style='color: var(--orange); font-weight:bold;'>바운스 탄성 모션 감지!</span><br>좌표가 한계 범위를 넘어서도록 설계되어, 목적지에 도달할 때 자석처럼 과하게 튕겨 나갔다가 제자리로 착지하는 고급 'Elastic 팝 효과'가 구현됩니다. 앱 내 모달창 오픈, 토글 스위치, 클릭 피드백 버튼에 적용 시 UI 생동감이 폭발적으로 살아납니다.";
+                } else {
+                    guideText = "👍 <span style='color: var(--green); font-weight:bold;'>안정적인 선형 보간 이징 모드.</span><br>0과 1 사이의 표준 베이지어 곡선입니다. 화면 전체가 자연스럽게 페이드아웃되거나 서서히 슬라이딩되는 드롭다운 메뉴, 내비게이션 바 등의 기본 트랜지션 요소에 장착할 때 눈의 피로도를 대폭 낮춰줍니다.";
+                }
+
+                $('#bezier-guide-text').html(guideText);
+            }
+
+            // GNB 비동기 컴포넌트 자동 완성 추적용 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#bezier-preset').length) {
+                    calculateCssBezier();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

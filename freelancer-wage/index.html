@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리랜서 적정 시급 및 외주 단가 환산 계산기 | 에브리캘크</title>
+    <meta name="description" content="직장인 연봉과 동등한 가치를 가지기 위해 프리랜서가 요구해야 하는 퇴직금, 4대보험, 복지 가중치가 포함된 진짜 적정 시급과 일당 외주 단가를 실시간 역산합니다.">
+    <meta name="keywords" content="프리랜서시급, 외주단가계산, 프리랜서몸값, 연봉시급환산, 프리랜서세금, 단가산정, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/freelancer-wage/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/freelancer-wage.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="프리랜서 적정 시급 및 외주 단가 환산 계산기 - 에브리캘크">
+    <meta property="og:description" content="회사원 연봉만큼 프리랜서로 벌려면 시급을 얼마 받아야 할까? 퇴직금과 복지 비용을 반영한 진짜 단가를 실시간 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/freelancer-wage/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>💼 프리랜서 적정 종합 시급 환산기</h2>
+                <p>퇴직금, 주휴수당, 연차수당, 명절 상여금 및 4대 가입 보험료 회사 부담금이 전무한 프리랜서의 특성을 반영합니다. 일반 근로자 대비 발생하는 공백기 리스크와 제반 비용 가중치를 역산하여 손해 없는 진짜 몸값을 도출합니다.</p>
+                <form id="freelancer-wage-form" class="form" onsubmit="return false;">
+                    <!-- 1. 비교 타겟 직장인 소득 입력 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 비교 기준 직장인 연봉 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="wage-target-salary">기준으로 잡을 직장인 세전 연봉 (원)</label>
+                            <input type="number" id="wage-target-salary" class="form-control" placeholder="예: 40000000" min="0" value="45000000">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 내가 회사에 다녔다면 받았거나, 동등한 가치를 지니고 싶은 세전 연봉 기준입니다.</small>
+                        </div>
+                    </div>
+                    <!-- 2. 프리랜서 근무 환경 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 프리랜서 고유 리스크 및 복지 환경 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="wage-risk-factor">프로젝트 공백기 및 비가동 리스크 수준</label>
+                            <select id="wage-risk-factor" class="form-control">
+                                <option value="1.3" selected>일반 수준 (공백기 연간 약 1~2달 미만 - 추천)</option>
+                                <option value="1.5">높은 수준 (구인 구직이 불규칙하고 상시 대기 기간 긴 편)</option>
+                                <option value="1.15">낮은 수준 (정기 장기 외주 계약이 확보되어 안정적인 상태)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="wage-work-hours">하루 평균 실무 작업 시간 (시간)</label>
+                            <input type="number" id="wage-work-hours" class="form-control" placeholder="예: 8" min="1" max="24" value="8">
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 프리랜서 최적 단가 산정 결과</h3>
+                    <div class="result-display">
+                        <p>직장인 기준 단순 환산 시급 (월 209시간 기준): <strong id="res-wage-pure-hour" style="color: #6c757d;">0</strong> 원</p>
+                        <p>퇴직금 및 복지 비용 보전 최소 보정 시급: <strong id="res-wage-bojun-hour" style="color: var(--orange);">0</strong> 원</p>
+                        <p>공백기 리스크 가산 보정 일당 (8시간 기준): <strong id="res-wage-bojun-day" style="color: var(--green);">0</strong> 원</p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                제안해야 할 필수 최저 시급: <span id="result-freelancer-wage-salary" style="color: var(--red); font-weight: bold;">0</span>원
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-freelancer-wage-salary" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 프리랜서 몸값 네고 및 단가 방어 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="wage-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 한국노동연구원 및 프리랜서 권리 가이드의 단가 산정 표준 공식(직장인 환산 소득에 퇴직금 전환율 8.3%, 주휴/연차 보전 15%, 지역건보료 및 국민연금 본인 전액 부담분 약 9%를 가산하고 선택한 공백기 계수를 곱함)을 근거로 역산된 종합 몸값 지표입니다. 장비 리스료, 사무실 임대료 등 개인 고정 지출 요인에 따라 필요 요구 수치는 조금 더 높아질 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#freelancer-wage-form', calculateFreelancerWage);
+
+            // 복사 버튼 클릭 이벤트 위임 바인딩 및 피드백 상태 변경 가동
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim().replace(/,/g, ''); // 콤마 제거 후 숫자만 순수 복사
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                if (codeText === "0" || codeText === "") {
+                    alert("기준 연봉 소득 금액을 먼저 입력해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateFreelancerWage() {
+                // 1. 값 추출 및 예외 제한 처리
+                var targetSalary = parseFloat($('#wage-target-salary').val()) || 0;
+                var riskFactor = parseFloat($('#wage-risk-factor').val()) || 1.3;
+                var workHours = parseInt($('#wage-work-hours').val()) || 8;
+
+                if (targetSalary < 0) targetSalary = 0;
+                if (workHours < 1) workHours = 1;
+                if (workHours > 24) workHours = 24;
+
+                // 2. 직장인 표준 단순 환산 시급 연산 (연봉 / 12개월 / 월 표준 근로기준 209시간)
+                var pureMonthly = targetSalary / 12;
+                var pureHourlyWage = Math.floor(pureMonthly / 209);
+
+                // 3. 프리랜서 복지 패널티 보전 비용 가산 알고리즘
+                // 법정 퇴직금 보전 요율(1/12 = 8.3%), 연차/주휴 보전(15%), 4대보험 사측 부담분 전가 보정(9%) = 총 약 32.3% 가산 기본 방어선
+                var bojunMultiplier = 1.323;
+                var bojunHourlyWage = Math.floor(pureHourlyWage * bojunMultiplier);
+
+                // 4. 공백기 리스크 계수 최종 가산 및 최종 시급/일당 도출
+                var finalHourlyWage = Math.floor(bojunHourlyWage * riskFactor);
+                var finalDailyWage = finalHourlyWage * workHours;
+
+                // 5. 프리랜서 계약 가이드라인 분기 멘트 가공
+                var guideText = "";
+                if (targetSalary === 0) {
+                    guideText = "희망하는 기준 소득 금액을 입력하시면 프리랜서 계약 단가 협상 리포트가 실시간 매칭됩니다.";
+                } else {
+                    var gapPercent = (((finalHourlyWage - pureHourlyWage) / pureHourlyWage) * 100).toFixed(0);
+                    guideText = "• 계약 단가 제안 마지노선 분석:<br>" +
+                        "직장인 연봉과의 가치 균형을 맞추려면 단순 환산 시급보다 무려 <span style='color: var(--orange); font-weight:bold;'>" + gapPercent + "% 이상 높은 단가</span>를 요구해야 마이너스가 나지 않습니다. 기업과 외주 계약 논의 시 단기 프로젝트(3달 미만)라면 최소 시간당 <span style='font-weight:bold; color: var(--blue);'>" + finalHourlyWage.toLocaleString('ko-KR') + "원</span>, 1일 단위 계약이라면 일당 <span style='font-weight:bold; color: var(--blue);'>" + finalDailyWage.toLocaleString('ko-KR') + "원</span> 이하로는 절대 계약하지 않는 것이 내 몸값과 복지 자산을 안전하게 방어하는 길입니다.";
+                }
+
+                // 6. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                $('#res-wage-pure-hour').text(pureHourlyWage.toLocaleString('ko-KR'));
+                $('#res-wage-bojun-hour').text(bojunHourlyWage.toLocaleString('ko-KR'));
+                $('#res-wage-bojun-day').text(finalDailyWage.toLocaleString('ko-KR'));
+
+                $('#result-freelancer-wage-salary').text(finalHourlyWage.toLocaleString('ko-KR'));
+                $('#wage-guide-text').html(guideText);
+            }
+
+            // GNB 비동기 페치 완료 시점 안전 추적 폴링 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#wage-target-salary').length) {
+                    calculateFreelancerWage();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

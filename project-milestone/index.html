@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>외주 프로젝트 마일스톤 및 마감일 D-Day 플래너 | 에브리캘크</title>
+    <meta name="description" content="사파리 날짜 인식 오류 방어 코드를 기반으로 프로젝트 시작일과 마감일 사이의 기획, 디자인 초안, 수정, 최종 검수 단계별 필수 마감 일정 로드맵과 D-Day를 실시간 역산합니다.">
+    <meta name="keywords" content="마일스톤계산기, 프로젝트마감일, 외주일정관리, 프리랜서플래너, 디데이계산기, 사파리날짜버그, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/project-milestone/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/project-milestone.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="외주 프로젝트 마일스톤 및 마감일 D-Day 플래너 - 에브리캘크">
+    <meta property="og:description" content="외주 작업 펑크 방지 필수 템플릿! 프로젝트 일정 범위에 맞춰 실무 표준 마일스톤 날짜 로드맵을 자동으로 설계해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/project-milestone/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📅 외주 프로젝트 마일스톤 D-Day 플래너</h2>
+                <p>계약금만 받고 일정 조율에 실패해 마감 임박 독촉에 시달리는 프리랜서들을 위한 툴입니다. 일정 범위에 맞춰 실무 표준 작업 속도 분배율을 역산하여 단계별 권장 마감일을 달력 날짜로 지정해 줍니다.</p>
+                <form id="milestone-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 프로젝트 계약 일정 입력</h3>
+                        <div class="row">
+                            <div class="col-6 input-item mb-3">
+                                <label for="proj-start-date">계약/작업 시작일</label>
+                                <input type="date" id="proj-start-date" class="form-control" value="2026-06-22">
+                            </div>
+                            <div class="col-6 input-item mb-3">
+                                <label for="proj-end-date">최종 계약 납품일</label>
+                                <input type="date" id="proj-end-date" class="form-control" value="2026-07-15">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 프로젝트 마일스톤 스케줄 역산 결과</h3>
+                    <div class="result-display">
+                        <p>프로젝트 총 소요 기간: <strong id="res-proj-total-days" style="color: #6c757d;">0</strong> 일</p>
+                        <p>1단계 [기획/자료수집 완료]: <span id="res-stage-1" style="font-weight:bold; color: var(--orange);">-</span></p>
+                        <p>2단계 [초안/시안 클라이언트 공유]: <span id="res-stage-2" style="font-weight:bold; color: var(--green);">-</span></p>
+                        <p>3단계 [1차 수정본 피드백 반영]: <span id="res-stage-3" style="font-weight:bold; color: var(--purple);">-</span></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                최종 마감까지 남은 시간: <span id="result-project-milestone-salary" style="color: var(--red); font-weight: bold;">D-0</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="result-project-milestone-salary" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 클라이언트 관계 사수용 외주 방어 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="milestone-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 일정 시뮬레이터는 수많은 프리랜서 에이전시의 평균적 마감 비중 분배율(기획 20%, 시안 30%, 피드백 수정 30%, 최종 검수/패키징 20%) 공식을 내장하고 있습니다. 시작일과 마감일을 수동 조정하더라도 상호 간에 일정 펑크 없는 이상적인 크리에이티브 마일스톤 조율 데이터를 제공합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('input change', '#milestone-form', calculateMilestone);
+
+            // [프로젝트 마일스톤 전용] 복사 버튼 클릭 이벤트 위임 바인딩
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text().trim();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                // 데이터 오류 상태이거나 비어있을 때 복사 방어 및 경고창 피드백
+                if (codeText === "" || codeText === "D-0" || codeText === "일정 범위 오류") {
+                    alert("정확한 프로젝트 계약 일정을 먼저 설정해 주세요!");
+                    return;
+                }
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+
+            // 날짜 포맷 보조 가공 함수 (YYYY년 MM월 DD일 출력용)
+            function formatDateStr(dateObj) {
+                var y = dateObj.getFullYear();
+                var m = dateObj.getMonth() + 1;
+                var d = dateObj.getDate();
+                return y + "년 " + (m < 10 ? "0" + m : m) + "월 " + (d < 10 ? "0" + d : d) + "일";
+            }
+
+            function calculateMilestone() {
+                // 📌 필수 조건: 사파리 크로스 브라우징 버그 방어를 위한 하이픈 치환 기믹 적용
+                var startInput = $('#proj-start-date').val().replace(/-/g, '/');
+                var endInput = $('#proj-end-date').val().replace(/-/g, '/');
+
+                if (!startInput || !endInput) return;
+
+                var startDate = new Date(startInput);
+                var endDate = new Date(endInput);
+
+                // 밀리세컨드 단위 시간차 계산
+                var timeDiff = endDate.getTime() - startDate.getTime();
+                var totalDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                // 마감 당일까지 남은 간이 실시간 D-Day 연산
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+                endDate.setHours(0, 0, 0, 0);
+                var ddayDiff = endDate.getTime() - today.getTime();
+                var dday = Math.ceil(ddayDiff / (1000 * 60 * 60 * 24));
+                var ddayText = dday === 0 ? "D-Day (오늘 마감)" : (dday > 0 ? "D-" + dday : "만료 D+" + Math.abs(dday));
+
+                if (totalDays < 1) {
+                    $('#result-project-milestone-salary').text("일정 범위 오류");
+                    return;
+                }
+
+                // 2. 마일스톤 단계별 권장 마감일 가중치 역산 알고리즘
+                // 기획수집 20%, 초안공유 50% 누적, 수정반영 80% 누적 배정
+                var s1Days = Math.round(totalDays * 0.20);
+                var s2Days = Math.round(totalDays * 0.50);
+                var s3Days = Math.round(totalDays * 0.80);
+
+                var stage1Date = new Date(startDate); stage1Date.setDate(stage1Date.getDate() + s1Days);
+                var stage2Date = new Date(startDate); stage2Date.setDate(stage2Date.getDate() + s2Days);
+                var stage3Date = new Date(startDate); stage3Date.setDate(stage3Date.getDate() + s3Days);
+
+                // 3. 안내 가이드 멘트 분기
+                var guideText = "";
+                if (dday < 0) {
+                    guideText = "❌ 계약 마감일이 이미 경과된 프로젝트입니다. 납품 완료 상태가 아니라면 클라이언트와의 납품 기한 연장 재협상(지체상금 면제 계약서 수정 등) 조치가 즉시 시급합니다.";
+                } else {
+                    guideText = "• 신뢰도를 지키는 작업 페이스 분배 권장 사항:<br>" +
+                        "이상적인 외주 납품 성공을 위해 최초 시작 후 <span style='font-weight:bold; color:var(--orange);'>" + s2Days + "일 이내</span>인 " + formatDateStr(stage2Date) + " 전까지 반드시 클라이언트에게 디자인/개발 시안 초안을 발송하여 컨셉 방향성을 조기 확정 지어야만 연쇄적인 피드백 밀림 현상과 마감 독촉 펑크를 방어할 수 있습니다.";
+                }
+
+                // 4. DOM 바인딩 출력
+                $('#res-proj-total-days').text(totalDays);
+                $('#res-stage-1').text(formatDateStr(stage1Date) + "까지");
+                $('#res-stage-2').text(formatDateStr(stage2Date) + "까지");
+                $('#res-stage-3').text(formatDateStr(stage3Date) + "까지");
+                $('#result-project-milestone-salary').text(ddayText);
+                $('#milestone-guide-text').html(guideText);
+            }
+
+            var safetyTrigger = setInterval(function () {
+                if ($('#proj-start-date').length) {
+                    calculateMilestone();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI 픽셀(px) - 렘(rem) 배수별 상호 환산기 | 에브리캘크</title>
+    <meta name="description" content="피그마 디자인 및 웹 퍼블리싱 실무를 위해 브라우저 기준 폰트 크기별 px, rem, em 단위를 실시간 상호 변환하고 모바일 디스플레이 배수(1x, 2x, 3x)별 크기 스케일링 테이블을 제공합니다.">
+    <meta name="keywords" content="픽셀rem변환, px투rem, em계산기, 피그마픽셀, 레티나배수, 모바일UI디자인, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/rem-converter/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/rem-converter.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UI 픽셀(px) - 렘(rem) 배수별 상호 환산기 - 에브리캘크">
+    <meta property="og:description" content="디자이너와 개발자를 위한 코딩 규격 종결자! px 단위를 rem과 디스플레이 배수별 픽셀로 실시간 환산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/rem-converter/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📐 UI 픽셀(px) - 렘(rem) / VW 상호 환산기</h2>
+                <p>피그마(Figma)나 가이드라인의 고정 픽셀(px)을 웹 표준 가변 단위인 rem과 반응형 레이아웃의 필수 단위인 VW(뷰포트 너비 비례)로 초고속 환산하고 클립보드에 즉시 복사합니다.</p>
+                <form id="rem-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box mb-4">
+                        <h3>1. 변환 기준 해상도 및 폰트 크기 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="rem-root-size">기본 폰트 사이즈 (Base px)</label>
+                            <input type="number" id="rem-root-size" class="form-control" placeholder="기본값: 16" min="1" value="16">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* rem 연산의 기준이 되는 최상위 루트 폰트 크기입니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="rem-vw-base">뷰포트 기준 너비 (Viewport Width px)</label>
+                            <input type="number" id="rem-vw-base" class="form-control" placeholder="PC 기준: 1920" min="1" value="1920">
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* VW 연산의 기준이 되는 디자인 캔버스의 가로폭 해상도입니다. (PC 1920, 모바일 360~390 등)</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="rem-input-px">변환할 값 (Target px)</label>
+                            <!-- 📌 인터벌 연산을 위해 input에 ID 장착 완료 -->
+                            <input type="number" id="rem-input-px" class="form-control" placeholder="수치를 입력하세요" min="0" value="24">
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 CSS 단위 변환 및 해상도 배수 결과</h3>
+                    <div class="result-display">
+                        <!-- REM 결과줄 -->
+                        <div class="d-flex justify-content-between align-items-center mb-2" style="background:#fff; padding:10px 15px; border-radius:6px; border:1px solid #eee;">
+                            <div><span>REM: </span><strong id="res-rem-val" style="color: var(--orange); font-size:1.15rem;">0</strong> rem</div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="res-rem-val">수치 복사</button>
+                        </div>
+                        <!-- VW 결과줄 -->
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:10px 15px; border-radius:6px; border:1px solid #eee;">
+                            <div><span>VW: </span><strong id="res-vw-val" style="color: var(--green); font-size:1.15rem;">0</strong> vw</div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="res-vw-val">수치 복사</button>
+                        </div>
+                        <hr>
+                        <div style="font-size: 0.95rem; line-height: 1.6; color: #555; background: #fff; padding: 12px; border-radius: 6px; border: 1px solid #eee; margin-bottom: 15px;">
+                            <span style="font-weight: bold; display: block; margin-bottom: 6px; color: #333;">📱 에셋 수출용 디스플레이 배수별 픽셀 테이블</span>
+                            • 1x 기본 크기 (mdpi / @1x): <span id="res-scale-1x" style="font-weight:bold; color: #6f42c1;">0</span> px<br>
+                            • 2x 레티나 크기 (xhdpi / @2x): <span id="res-scale-2x" style="font-weight:bold; color: #6f42c1;">0</span> px<br>
+                            • 3x 최고밀도 크기 (xxhdpi / @3x): <span id="res-scale-3x" style="font-weight:bold; color: #6f42c1;">0</span> px
+                        </div>
+                        <!-- 📌 최종 단위 강조 규격 유지 (대표단위인 REM 노출) -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            최종 CSS 코드 적용 스타일: <strong id="result-rem-converter-salary">0</strong> rem
+                        </p>
+                    </div>
+                    <!-- 📌 최신 가이드 박스 UI 규격 완벽 반영 -->
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 디자이너-개발자 협업 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="rem-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* px(픽셀)는 고정 절대 단위이며, rem(루트 엠)과 vw(뷰포트 너비)는 디바이스 해상도와 폰트 설정에 비례하는 가변 단위입니다. 미디어쿼리 없는 반응형 웹 코딩 시 가로폭 크기 요소를 vw로 코딩하고, 타이포그래피 요소를 rem으로 작성하면 모바일과 태블릿 화면에 유연하게 대응하는 무결점 컴포넌트 마크업이 가능합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#rem-form', calculateRemConverter);
+
+            // 복사 버튼 클릭 이벤트 위임 바인딩
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var valText = $('#' + targetId).text();
+
+                if (valText === "0") return;
+
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                navigator.clipboard.writeText(valText).then(function () {
+                    $btn.text("복사됨!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+
+            function calculateRemConverter() {
+                // 1. 값 추출 및 예외 제한 처리
+                var rootSize = parseFloat($('#rem-root-size').val()) || 16;
+                var vwBase = parseFloat($('#rem-vw-base').val()) || 1920;
+                var inputPx = parseFloat($('#rem-input-px').val()) || 0;
+
+                if (rootSize < 1) rootSize = 1;
+                if (vwBase < 1) vwBase = 1;
+                if (inputPx < 0) inputPx = 0;
+
+                // 2. rem / vw 정밀 연산 알고리즘 (.000 문자열 깔끔히 지우는 parseFloat 기믹 결합)
+                var remValue = inputPx ? parseFloat((inputPx / rootSize).toFixed(3)) : 0;
+                var vwValue = inputPx ? parseFloat((inputPx / vwBase * 100).toFixed(3)) : 0;
+
+                // 3. 모바일 해상도 밀도 대응 디스플레이 배수별 픽셀 계산
+                var scale1x = inputPx;
+                var scale2x = inputPx * 2;
+                var scale3x = inputPx * 3;
+
+                // 4. 가이드라인 추천 텍스트 분기 생성
+                var guideText = "";
+                if (inputPx === 0) {
+                    guideText = "수치를 입력하시면 퍼블리싱 가이드와 마크업 추천 폰트 속성 코드가 실시간 자동 빌드됩니다.";
+                } else {
+                    guideText = "• CSS 추천 마크업: <span style='color: var(--orange); font-weight:bold;'>font-size: " + remValue + "rem;</span> 또는 <span style='color: var(--green); font-weight:bold;'>width: " + vwValue + "vw;</span><br>" +
+                        "선택하신 타겟 수치는 현재 기준 해상도에서 각각 <span style='font-weight:bold; color: var(--orange);'>" + remValue + "rem</span> 및 <span style='font-weight:bold; color: var(--green);'>" + vwValue + "vw</span>에 해당합니다. 텍스트 요소에는 가독성 보장을 위한 rem 단위를, 컨테이너 레이아웃이나 이미지 카드 정렬 상자에는 뷰포트 가로폭 변화에 실시간 유동 반응하는 vw 수치를 복사하여 사용하세요.";
+                }
+
+                // 5. DOM 출력 바인딩
+                $('#res-rem-val').text(remValue);
+                $('#res-vw-val').text(vwValue);
+
+                $('#res-scale-1x').text(scale1x.toLocaleString('ko-KR'));
+                $('#res-scale-2x').text(scale2x.toLocaleString('ko-KR'));
+                $('#res-scale-3x').text(scale3x.toLocaleString('ko-KR'));
+
+                $('#result-rem-converter-salary').text(remValue);
+                $('#rem-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#rem-root-size').length) {
+                    calculateRemConverter();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
