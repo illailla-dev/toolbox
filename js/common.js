@@ -192,7 +192,9 @@ var everyCalcDatabase = [
     { title: "🚗 배달 라이더 순수익 계산기", url: "/delivery-rider/", keywords: "배민커넥트 쿠팡이츠 배달파트너 라이더 순시급 유류비 긱워커 부업 오토바이 ㅂㄷ" },
     { title: "💰 무인 점포 창업 손익분기점 계산기", url: "/unmanned-store/", keywords: "무인카페 무인아이스크림 인생네컷 사진관 창업 손익분기점 마진율 고정비 bep 부업 ㅁㅇ" },
     { title: "🏥 실손보험 세대별 갱신 및 4세대 전환 비교기", url: "/indemnity-insurance/", keywords: "실비보험 실손의료보험 4세대실비 보험료인상 갱신보험료 보험갈아타기 ㅂㅎ" },
-    { title: "🏦 마이너스통장 vs 신용대출 이자 비교기", url: "/minus-loan/", keywords: "마이너스통장 마통 신용대출 대출이자 일할계산 한도대출 복리이자 대출비교 ㄷㅊ" }
+    { title: "🏦 마이너스통장 vs 신용대출 이자 비교기", url: "/minus-loan/", keywords: "마이너스통장 마통 신용대출 대출이자 일할계산 한도대출 복리이자 대출비교 ㄷㅊ" },
+    { title: "📦 당근·중고나라 택배비 최저가 비교기", url: "/parcel-cost/", keywords: "반값택배 알뜰택배 편의점택배 우체국택배 배송비비교 중고거래 택배요금 ㅌ배" }
+
 ];
 
 

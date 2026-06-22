@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중고거래 택배비 최저가 비교 및 배송비 정산기 | 에브리캘크</title>
+    <meta name="description" content="당근, 중고나라, 번개장터 거래 시 물품 무게와 배송 지역에 따른 GS25·CU 반값택배, 일반 편의점 택배, 우체국 택배 요금을 실시간 비교하여 가장 저렴한 최적의 발송 수단을 찾아줍니다.">
+    <meta name="keywords" content="택배비비교, 반값택배요금, 알뜰택배, 편의점택배가격, 우체국택배비, 중고거래택배, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/parcel-cost/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/parcel-cost.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="중고거래 택배비 최저가 비교 및 배송비 정산기 - 에브리캘크">
+    <meta property="og:description" content="반값택배 vs 우체국택배, 뭐가 더 쌀까? 중고거래 물품 무게만 입력하고 전국 최저가 택배 요금을 바로 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:url" content="https://every-calc.co.kr/parcel-cost/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📦 중고거래 택배비 최저가 비교기</h2>
+                <p>포털에서는 알려주지 않는 편의점 반값/알뜰택배 고유 구간 요금과 일반 CJ대한통운 위탁 편의점 택배, 규격별 우체국 택배 요금을 실시간 매칭하여 중고거래 시 가장 손해 안 보는 배송 옵션을 제안합니다.</p>
+                <form id="parcel-form" class="form" onsubmit="return false;">
+                    <!-- 1. 물품 조건 입력 -->
+                    <div class="input-group-box mb-4">
+                        <h3>1. 발송할 택배 물품의 조건 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="parcel-weight">물품 예상 무게 (g 기준)</label>
+                            <input type="number" id="parcel-weight" class="form-control" placeholder="예: 350" min="1" value="350">
+                            <!-- 📌 요청하신 부트스트랩 mt-2 표준 클래스 반영 완료 -->
+                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 의류 약 300~500g, 스마트폰 포장포함 약 400g, 전공책 약 1kg 내외입니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="parcel-size">물품 포장 크기 (가로+세로+높이 세 변의 합)</label>
+                            <select id="parcel-size" class="form-control">
+                                <option value="small" selected>소형 박스 (60cm 이하 - 일반적인 중고거래 물품)</option>
+                                <option value="medium">중형 박스 (60cm 초과 ~ 80cm 이하)</option>
+                                <option value="large">대형 박스 (80cm 초과 ~ 120cm 이하 - 반값택배 접수 불가)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 2. 배송 지역 설정 -->
+                    <div class="input-group-box">
+                        <h3>2. 배송 권역 및 목적지 선택</h3>
+                        <div class="input-item mb-3">
+                            <label for="parcel-region">배송 목적지 권역 구분</label>
+                            <select id="parcel-region" class="form-control">
+                                <option value="same" selected>동일 권역 내 배송 (수도권→수도권 등 가장 저렴)</option>
+                                <option value="other">타 권역 배송 (지방 배송 및 시도 간 이동)</option>
+                                <option value="jeju">제주도 및 도서산간 지역 (추가 배송비 발생)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 배송 수단별 예상 요금 비교</h3>
+                    <div class="result-display">
+                        <p>편의점 반값/알뜰 택배 (점포 편의점 수령): <strong id="res-parcel-half" style="color: var(--green);">0</strong> 원</p>
+                        <p>일반 편의점 대한통운 택배 (집 앞 주소 수령): <strong id="res-parcel-cvs" style="color: #6c757d;">0</strong> 원</p>
+                        <p>우체국 택배 (가장 빠르고 안전함): <strong id="res-parcel-post" style="color: #6c757d;">0</strong> 원</p>
+                        <hr>
+                        <!-- 📌 최종 수령액 필수 강조 규격 적용 (최저가 수단 요금 바인딩) -->
+                        <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
+                            추천 수단 적용 시 최저 택배비: <strong id="result-parcel-cost-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 중고거래 구매자 택배비 청구 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="parcel-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 2026년 기준 GS25 반값택배, CU 알뜰택배 규격별 공식 운임표와 편의점 일반 택배(대한통운 위탁), 우체국 창구 접수 등기 소포 운임 기준 규정을 근거로 역산한 모의 시뮬레이션입니다. 편의점 택배 앱 회원 등급별 할인 쿠폰 적용 여부 및 물품 가액 50만 원 초과 시 고가 할증료 부과 여부에 따라 실무 요금과 약간의 편차가 있을 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+            $(document).on('input change', '#parcel-form', calculateParcelCost);
+
+            function calculateParcelCost() {
+                // 1. 값 추출 및 예외 제한 처리
+                var weight = parseFloat($('#parcel-weight').val()) || 0;
+                var size = $('#parcel-size').val();
+                var region = $('#parcel-region').val();
+
+                if (weight < 1) weight = 1;
+
+                // 2. 수단별 요금 테이블 매칭 알고리즘 세팅
+                var halfCost = 0; // 반값/알뜰
+                var cvsCost = 0;  // 일반 편의점
+                var postCost = 0; // 우체국
+
+                // --- (1) 편의점 반값 / 알뜰 택배 연산 규칙 ---
+                // 반값택배는 가로+세로+높이 세변의 합이 80cm(medium 구간까지) 이하, 무게 5kg 이하만 접수 가능
+                if (size === 'large' || weight > 5000) {
+                    halfCost = -1; // 접수 불가 마킹
+                } else {
+                    if (weight <= 500) halfCost = 1800;
+                    else if (weight <= 1000) halfCost = 2100;
+                    else halfCost = 2700;
+
+                    // 제주 지역 내 배송 패널티 보정 (반값택배는 내륙↔제주 간 교차 접수 불가, 제주도 내 매장 간 이동만 고정운임 가능)
+                    if (region === 'jeju') {
+                        halfCost = 3000; // 제주도 내 운임 간이 세팅
+                    }
+                }
+
+                // --- (2) 일반 주소지 편의점 택배 (대한통운 위탁) 연산 규칙 ---
+                if (weight <= 350) cvsCost = 3200;
+                else if (weight <= 500) cvsCost = 3400;
+                else if (weight <= 1000) cvsCost = 3900;
+                else if (weight <= 2000) cvsCost = 4300;
+                else cvsCost = 4900;
+
+                // 크기별 할증 가산
+                if (size === 'medium') cvsCost += 500;
+                if (size === 'large') cvsCost += 1500;
+
+                // 지역별 타권/제주 할증 가산
+                if (region === 'other') cvsCost += 500;
+                else if (region === 'jeju') cvsCost += 3500;
+
+                // --- (3) 우체국 택배 (창구 접수 등기소포) 연산 규칙 ---
+                if (size === 'small' && weight <= 3000) postCost = 4000;
+                else if (size === 'medium' && weight <= 5000) postCost = 4500;
+                else postCost = 6000;
+
+                // 지역별 타권/제주 우체국 할증 가산
+                if (region === 'other') postCost += 500;
+                else if (region === 'jeju') postCost += 2500;
+
+
+                // 3. 최저가 수단 탐색 및 추천 가이드라인 텍스트 분기 구축
+                var lowestCost = 0;
+                var guideText = "";
+
+                // 반값택배가 가능한 규격인 경우
+                if (halfCost !== -1) {
+                    lowestCost = Math.min(halfCost, cvsCost, postCost);
+
+                    guideText = "💡 중고거래 최적화 추천 조언:<br>" +
+                        "상대방과 편의점 수령 합의가 되었다면 가장 추천하는 수단은 <span style='color: var(--green); font-weight:bold;'>편의점 반값/알뜰택배 (" + halfCost.toLocaleString('ko-KR') + "원)</span>입니다. 집 앞 주소지로 편하게 받기를 원한다면 일반 편의점 택배와 우체국 택배 요금 차이가 크지 않으므로 동선에 맞는 우체통이나 편의점을 이용하세요. 구매자에게 배송비 포함 정산 요청 시 <span style='color: var(--blue); font-weight:bold;'>선불 택배비 " + lowestCost.toLocaleString('ko-KR') + "원</span>을 물품가에 합산하여 유도하세요.";
+                } else {
+                    // 반값택배 불가 규격 (대형 박스 혹은 5kg 초과)
+                    lowestCost = Math.min(cvsCost, postCost);
+
+                    guideText = "⚠️ <span style='color: #dc3545; font-weight:bold;'>반값택배 접수 불가 물품!</span><br>" +
+                        "물품이 너무 크거나 무거워 GS25/CU 반값택배 규격 한도(세 변의 합 80cm 이하, 5kg 이하)를 초과했습니다. 일반 택배로만 발송이 가능합니다. 현재 조건에서는 이자 지출이 덜한 <span style='color: var(--blue); font-weight:bold;'>" + (cvsCost < postCost ? "일반 편의점 택배" : "우체국 택배") + "</span> 옵션이 저렴하므로 이를 선택하시고, 구매자에게 " + lowestCost.toLocaleString('ko-KR') + "원을 청구하시는 것이 현명합니다.";
+                }
+
+                // 4. 세자리 콤마 포맷팅 및 DOM 출력 바인딩
+                if (halfCost === -1) {
+                    $('#res-parcel-half').text("접수 불가 (규격 초과)");
+                } else {
+                    $('#res-parcel-half').text(halfCost.toLocaleString('ko-KR') + " 원");
+                }
+
+                $('#res-parcel-cvs').text(cvsCost.toLocaleString('ko-KR') + " 원");
+                $('#res-parcel-post').text(postCost.toLocaleString('ko-KR') + " 원");
+                $('#result-parcel-cost-salary').text(lowestCost.toLocaleString('ko-KR'));
+                $('#parcel-guide-text').html(guideText);
+            }
+
+            // fetch include 조립 완료 시점을 자동 추적하는 무결점 폴링 인터벌 엔진
+            var safetyTrigger = setInterval(function () {
+                if ($('#parcel-weight').length) {
+                    calculateParcelCost();
+                    clearInterval(safetyTrigger);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
