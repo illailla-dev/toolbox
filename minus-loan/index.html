@@ -10,11 +10,11 @@
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/minus-loan.css">
+    <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="마이너스통장 vs 신용대출 이자 비교 계산기 - 에브리캘크">
     <meta property="og:description" content="필요할 때만 빼 쓰는 마통과 한 번에 받는 신용대출! 내 실제 지출 패턴에 맞는 최적의 대출 조건을 실시간 계산해 보세요.">
-    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/minus-loan/">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -42,7 +42,7 @@
                         <div class="input-item">
                             <label for="loan-use-amount">한도 내 실제 평균 꺼내 쓸 금액 (원)</label>
                             <input type="number" id="loan-use-amount" class="form-control" placeholder="예: 10000000" min="0" value="10000000">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 대출 한도 중 내가 항상 마이너스로 빼서 사용하고 있을 평균 자금 규모입니다.</small>
+                            <small class="text-muted mt-2 d-block">* 대출 한도 중 내가 항상 마이너스로 빼서 사용하고 있을 평균 자금 규모입니다.</small>
                         </div>
                     </div>
                     <!-- 대출 방식별 금리 설정 -->
@@ -55,7 +55,7 @@
                         <div class="input-item">
                             <label for="rate-minus">마이너스통장 가산 금리 (연 %)</label>
                             <input type="number" id="rate-minus" class="form-control" placeholder="예: 5.3" min="0" max="30" step="0.01" value="5.3">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 일반적으로 마이너스통장은 일반 신용대출보다 약 0.5%p 내외의 가산금리가 붙습니다.</small>
+                            <small class="text-muted mt-2 d-block">* 일반적으로 마이너스통장은 일반 신용대출보다 약 0.5%p 내외의 가산금리가 붙습니다.</small>
                         </div>
                     </div>
                 </form>

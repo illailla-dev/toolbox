@@ -10,11 +10,11 @@
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/hi-dependent.css">
+    <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="건강보험료 피부양자 자격상실 및 모의 계산기 - 에브리캘크">
     <meta property="og:description" content="N잡 소득, 배당 수익으로 인한 건보료 폭탄 방지! 내 피부양자 자격 유지 여부와 예상 지역건보료를 실시간으로 확인하세요.">
-    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/hi-dependent/">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -43,12 +43,12 @@
                         <div class="input-item mb-3">
                             <label for="hi-business-notax">사업자등록이 없는 사업소득 - 프리랜서 등 (원)</label>
                             <input type="number" id="hi-business-notax" class="form-control" placeholder="예: 3000000" min="0" value="0">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 연간 총 500만 원 초과 시 박탈 사유가 됩니다.</small>
+                            <small class="text-muted mt-2 d-block">* 연간 총 500만 원 초과 시 박탈 사유가 됩니다.</small>
                         </div>
                         <div class="input-item mb-3">
                             <label for="hi-other-income">기타 금융·연근·근로 소득 총액 (원)</label>
                             <input type="number" id="hi-other-income" class="form-control" placeholder="이자, 배당, 연금, 근로소득 등 합산액" min="0" value="15000000">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 모든 소득 합산액이 연 2,000만 원을 초과하면 자격이 상실됩니다.</small>
+                            <small class="text-muted mt-2 d-block">* 모든 소득 합산액이 연 2,000만 원을 초과하면 자격이 상실됩니다.</small>
                         </div>
                     </div>
                     <!-- 재산 요건 입력 -->
@@ -57,7 +57,7 @@
                         <div class="input-item mb-3">
                             <label for="hi-property">소유 부동산 재산세 과세표준 (원)</label>
                             <input type="number" id="hi-property" class="form-control" placeholder="공시지가의 약 60% 수준" min="0" value="400000000">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 시세가 아닌 지방세 고지서상의 '재산세 과세표준' 금액입니다.</small>
+                            <small class="text-muted mt-2 d-block">* 시세가 아닌 지방세 고지서상의 '재산세 과세표준' 금액입니다.</small>
                         </div>
                     </div>
                 </form>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>배달 부업 세후 순수익 계산기 - 쿠팡이츠 배민커넥트 진짜 시급 환산 | 에브리캘크</title>
+    <meta name="description" content="쿠팡이츠, 배민커넥트 등 도보, 자전거, 오토바이 배달 부업러들을 위한 정밀 정산기. 플랫폼 수수료, 고용·산재보험, 소득세 3.3% 및 이동수단별 소모비용을 제외한 진짜 세후 순수익과 시급을 계산합니다.">
+    <meta name="keywords" content="배달부업계산기, 쿠팡이츠정산, 배민커넥트수익, 배달세후순수익, N잡러시급, 자전거배달수익, 도보배달, 배달수수료, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/delivery-side/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="쿠팡이츠·배민커넥트 배달 부업 세후 순수익 계산기">
+    <meta property="og:description" content="내가 오늘 번 배달 수입, 이것저것 떼면 진짜 내 돈은 얼마일까? 수수료, 보험료, 이동수단 유지비를 제외한 진짜 내 손에 쥐어지는 세후 순수익을 1초 만에 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/delivery-side/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📦 배달 부업 세후 순수익 계산기</h2>
+                <p>오늘 정산받은 총배달 수입과 실제 가동 시간, 운송 수단을 입력하시면 원천징수 세금(3.3%), 고용·산재보험료 및 유류비·감가상각비를 제외한 실제 순수익과 진짜 시급을 산출합니다.</p>
+                <form id="delivery-form" class="form" onsubmit="return false;">
+                    <!-- 수입 및 운영 정보 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 오늘의 배업 활동 데이터 입력</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="gross-revenue">총 배달 완료 정산액 (원)</label>
+                                <input type="number" id="gross-revenue" class="form-control" placeholder="예: 55000" value="55000" required>
+                                <small class="text-muted mt-2">프로모션 및 미션 리워드를 모두 합산한 금액을 적어주세요.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="work-hours">실제 총 가동 시간 (시간)</label>
+                                <input type="number" id="work-hours" class="form-control" placeholder="예: 3" value="3" min="0.5" max="24" step="0.5" required>
+                            </div>
+                        </div>
+                        <div class="form-row row">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="vehicle-select">나의 배달 운송 수단</label>
+                                <select id="vehicle-select" class="form-control">
+                                    <option value="walk">도보 (신발 감가상각 가상 반영)</option>
+                                    <option value="bicycle" selected>일반 자전거 / 전기 자전거 (배터리 및 유지비)</option>
+                                    <option value="motorbike">오토바이 / 승용차 (유류비 및 소모품 감가비)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="insurance-check">고용·산재보험 차감 적용</label>
+                                <select id="insurance-check" class="form-control">
+                                    <option value="y" selected>보험료 차감 적용 (플랫폼 정식 공제 요율)</option>
+                                    <option value="n">세금 3.3%만 차감 (기타 공제 제외)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 배달 부업 실질 정산 및 시급 환산 결과</h3>
+                    <div class="result-display">
+                        <p>공제되는 총 세금 및 보험료: <strong id="res-total-deduction" style="color: #6c757d;">0</strong> 원</p>
+                        <p>운송 수단 감가 및 예상 유지비: <strong id="res-maintenance-cost" style="color: var(--pink);">0</strong> 원</p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
+                                내 통장에 꽂힐 **세후 순수익**: <span id="result-delivery-net" style="color: var(--blue); font-weight: bold;">0원</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">결과 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 N잡러 효율 극대화를 위한 생존 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="delivery-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 정산기는 쿠팡이츠 및 배민커넥트의 고용보험(0.8%), 산재보험 노무제공자 표준 공제 요율과 원천징수 사업소득세(3.3%)를 기준으로 수식을 설계했습니다. 도보/자전거/자동차 등 수단별 감가 마진은 직장인 부업러들의 평균적인 소모 비용 통계를 대입한 역산치이므로 일일 주행 거리에 따라 차이가 발생할 수 있습니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function ($) {
+            // 공제 요율 상수 정의 (사업소득세 3.3%, 플랫폼 고용보험료 약 0.8%)
+            const TAX_RATE = 0.033;
+            const EMPLOYMENT_INSURANCE_RATE = 0.008;
+
+            // 이동수단별 시간당 예상 감가상각 및 유지 비용 테이블
+            const VEHICLE_MAINTENANCE_TABLE = {
+                walk: 300,       // 도보: 운동화 소모 및 무릎 감가 가상 보정 (시간당 300원)
+                bicycle: 1200,   // 자전거: 타이어, 브레이크 패드, 전기 자전거 배터리 충전 및 감가 (시간당 1,200원)
+                motorbike: 3500  // 오토바이/승용차: 기름값, 보험료 분할액, 엔진오일 등 소모품 (시간당 3,500원)
+            };
+
+            // 실질 순수익 및 세후 시급 정밀 연산 모듈
+            function calculateDeliveryNet(gross, hours, vehicle, useInsurance) {
+                // 1. 공제 세금 계산 (사업소득세 3.3%)
+                const tax = Math.floor(gross * TAX_RATE);
+
+                // 2. 고용 및 산재보험료 계산 (선택 여부에 따름, 대략 합산 1.0% 모사)
+                let insurance = 0;
+                if (useInsurance === 'y') {
+                    insurance = Math.floor(gross * (EMPLOYMENT_INSURANCE_RATE + 0.002));
+                }
+
+                const totalDeduction = tax + insurance;
+
+                // 3. 운송 수단 유지 및 감가비 계산 (가동 시간 비례)
+                const maintenanceCost = Math.floor((VEHICLE_MAINTENANCE_TABLE[vehicle] || 0) * hours);
+
+                // 4. 최종 세후 순수익 도출
+                const netProfit = Math.max(0, gross - totalDeduction - maintenanceCost);
+
+                // 5. 실질 시급 역산
+                const netHourlyWage = hours > 0 ? Math.floor(netProfit / hours) : 0;
+
+                return {
+                    deduction: totalDeduction,
+                    maintenance: maintenanceCost,
+                    net: netProfit,
+                    hourly: netHourlyWage
+                };
+            }
+
+            // 메인 컨트롤러 엔진 가동
+            function runDeliveryCalculation() {
+                const grossRevenue = parseFloat($('#gross-revenue').val()) || 0;
+                const workHours = parseFloat($('#work-hours').val()) || 0;
+                const vehicleSelect = $('#vehicle-select').val();
+                const insuranceCheck = $('#insurance-check').val();
+
+                // 데이터 예외 및 공백 방어선 구축
+                if (grossRevenue <= 0 || workHours <= 0) {
+                    $('#res-total-deduction').text('0');
+                    $('#res-maintenance-cost').text('0');
+                    $('#result-delivery-net').text('0원');
+                    $('#delivery-guide-text').html('총 정산액과 가동 시간을 올바르게 입력하셔야 실질 순수익 분석이 활성화됩니다.');
+                    return;
+                }
+
+                const res = calculateDeliveryNet(grossRevenue, workHours, vehicleSelect, insuranceCheck);
+
+                // UI 데이터 매칭 바인딩
+                $('#res-total-deduction').text(res.deduction.toLocaleString());
+                $('#res-maintenance-cost').text(res.maintenance.toLocaleString());
+                $('#result-delivery-net').text(res.net.toLocaleString() + '원 (실질 세후시급: ' + res.hourly.toLocaleString() + '원)');
+
+                const guideEl = $('#delivery-guide-text');
+
+                // 실질 시급 성과 지표별 맞춤 가이드라인 노출
+                if (res.hourly < 10000) {
+                    guideEl.html(`현재 구간은 감가 비용 대비 마진이 다소 아쉬운 <strong style="color: var(--red);">[최적화 시급 단계]</strong>입니다. 단가가 낮은 조리 대기 지역에 머물고 있거나 피크 타임 할증 프로모션을 놓쳤을 가능성이 큽니다. 가동 시간을 황금 시간대(11~13시, 17~20시)로 집중 재배치하는 것을 권장합니다.`);
+                } else if (res.hourly <= 18000) {
+                    guideEl.html(`대한민국 평균 N잡러의 표준 수익인 <strong style="color: var(--green);">[안정적 부업 단계]</strong>입니다. 직장 업무 외의 자투리 시간을 활용하여 고정 지출을 방어하기에 가장 이상적이고 지속 가능한 페이스를 유지하고 계십니다.`);
+                } else {
+                    guideEl.html(`지역 내 상위 5%의 고효율을 달성하신 <strong style="color: var(--blue);">[초고수 프로 배달러 단계]</strong>입니다. 플랫폼별 전투콜 및 묶음배달 AI 배차 동선을 완벽히 지배하고 계시며, 현재 페이스라면 단기 종잣돈 확보 속도가 매우 빠르게 상향 곡선을 그리게 됩니다.`);
+                }
+            }
+
+            // [⚠️ 고정 규칙] 위임 기법 기반 실시간 바인딩 이벤트 연동
+            $(document).on('input change', '#delivery-form input, #delivery-form select', function () {
+                runDeliveryCalculation();
+            });
+
+            // [✨ 고정 규칙] 최초 요청 규격의 복사 제어 및 예외 피드백 처리 결합
+            $(document).on('click', '#btn-copy-result', function () {
+                const netTxt = $('#result-delivery-net').text();
+                const gross = $('#gross-revenue').val();
+
+                if (!gross || gross === '0' || netTxt === '0원') {
+                    alert("배달 활동 데이터를 먼저 올바르게 입력해 주세요.");
+                    return;
+                }
+
+                const vehicleTxt = $('#vehicle-select option:selected').text().split(' (')[0];
+                const copyText = `[에브리캘크] N잡러 배달 부업 실질 정산 결과\n- 운송 수단: ${vehicleTxt}\n- 실제 내 손에 쥐어지는 세후 순수익\n👉 ${netTxt}\n내 부업 진짜 시급 측정하기: https://every-calc.co.kr`;
+
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = copyText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                alert("오늘의 배달 부업 세후 정산 결과가 클립보드에 복사되었습니다! 단톡방이나 커뮤니티에 인증해 보세요.");
+            });
+
+            // [⚠️ 고정 규칙] 50ms 감시 폴링 인터벌 보일러플레이트 엔진
+            const safetyPollingEngine = setInterval(function () {
+                if ($('#delivery-form').length > 0) {
+                    clearInterval(safetyPollingEngine);
+                    const safariDefense = "2026-06-23".replace(/-/g, '/');
+                    runDeliveryCalculation();
+                }
+            }, 50);
+
+        })(jQuery);
+    </script>
+</body>
+</html>

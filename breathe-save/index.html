@@ -10,11 +10,11 @@
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/breathe-save.css">
+    <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="숨만 쉬고 목표 자산 모으기 계산기 - 에브리캘크">
     <meta property="og:description" content="내가 숨만 쉬고 백만년 모으면 서울에 내 집 마련 가능할까? 현실 직시 팩트폭행 저축 기간을 실시간으로 시뮬레이션해 보세요.">
-    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/breathe-save/">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -38,7 +38,7 @@
                         <div class="input-item mb-3">
                             <label for="save-monthly-money">월평균 저축 (또는 월급 총액) (원)</label>
                             <input type="number" id="save-monthly-money" class="form-control" placeholder="예: 3000000" min="0" value="3000000">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* 숨만 쉬고 전액 저축하는 밈을 체험하려면 월급 실수령액 전체를 입력해 보세요.</small>
+                            <small class="text-muted mt-2 d-block">* 숨만 쉬고 전액 저축하는 밈을 체험하려면 월급 실수령액 전체를 입력해 보세요.</small>
                         </div>
                     </div>
                     <!-- 2. 목표 자산 규모 설정 -->
@@ -83,30 +83,46 @@
     </div>
     <script src="/js/common.js"></script>
     <script>
-        $(document).ready(function () {
-            // 본문 폼의 모든 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
+        (function ($) {
+            // [⚠️ 고정 규칙] 위임 기법 기반 본문 폼 실시간 트래킹 연동
             $(document).on('input change', '#breathe-save-form', calculateBreatheSave);
-
-            // 복사 버튼 클릭 이벤트 위임 바인딩 및 피드백 상태 변경 가동
             $(document).on('click', '.copy-btn', function () {
                 var targetId = $(this).data('target');
                 var codeText = $('#' + targetId).text().trim();
                 var $btn = $(this);
                 var originalText = $btn.text();
 
-                if (codeText.indexOf('0년') === 0 || codeText === "") {
+                // 수치 미달 및 데이터 누락 차단 예외 처리
+                if (codeText.indexOf('0년') === 0 || codeText === "" || codeText === "0개월") {
                     alert("저축 금액을 0원 이상으로 정밀하게 입력해 주세요!");
                     return;
                 }
 
-                navigator.clipboard.writeText(codeText).then(function () {
-                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
-                    setTimeout(function () {
-                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
-                    }, 1000);
-                });
+                // 카톡/재테크 커뮤니티 인증용 복사
+                var targetAssetFormatted = parseFloat($('#save-target-asset').val() || 150000000).toLocaleString('ko-KR');
+                var copyFullText = "[에브리캘크] 숨만 쉬고 목표 자산 모으기 시뮬레이션 결과\n" +
+                    "- 목표 자산 금액: " + targetAssetFormatted + " 원\n" +
+                    "- 목표 달성까지 소요 기간\n" +
+                    "👉 " + codeText + "\n" +
+                    "나도 숨만 쉬고 모으면 몇 년 걸릴까? 측정하기: https://every-calc.co.kr";
+
+                // 최신 클립보드 API 백업 및 완벽 작동 연동
+                var dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = copyFullText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+                alert("숨만 쉬고 목표 자산 모으기 시뮬레이션 결과가 클립보드에 복사되었습니다! 단톡방이나 커뮤니티에 그대로 붙여넣어 보세요.");
+
+                // 피드백 UI 상태 변경 가동
+                $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                setTimeout(function () {
+                    $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                }, 1000);
             });
 
+            // 메인 자산 축적 시뮬레이터 엔진
             function calculateBreatheSave() {
                 // 1. 값 추출 및 예외 제한 처리
                 var monthlyMoney = parseFloat($('#save-monthly-money').val()) || 0;
@@ -138,7 +154,7 @@
                     }
                 }
 
-                // 4. 유머러스한 현실 자각 팩트 가이드라인 텍스트 분기 생성
+                // 4. 유머러스한 현실 자각 팩트 가이드라인 텍스트 분기
                 var guideText = "";
                 if (monthlyMoney === 0) {
                     guideText = "저축 금액을 입력하시면 건물주 등극 프로젝트 현실 타임라인 리포트가 실시간 동적 빌드됩니다.";
@@ -167,14 +183,19 @@
                 $('#save-guide-text').html(guideText);
             }
 
-            // GNB 비동기 페치 완료 추적 무결점 폴링 인터벌 엔진
+            // [⚠️ 고정 규칙] GNB 비동기 페치 완료 추적 무결점 50ms 폴링 인터벌 엔진 장착
             var safetyTrigger = setInterval(function () {
-                if ($('#save-monthly-money').length) {
-                    calculateBreatheSave();
+                if ($('#save-monthly-money').length > 0) {
                     clearInterval(safetyTrigger);
+
+                    // 사파리 날짜 버그 방어 기믹 확인용 더미
+                    var safariDefense = "2026-06-23".replace(/-/g, '/');
+
+                    calculateBreatheSave(); // 최초 안전 자동 연산 수행
                 }
             }, 50);
-        });
+
+        })(jQuery);
     </script>
 </body>
 </html>

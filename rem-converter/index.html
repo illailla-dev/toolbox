@@ -10,11 +10,11 @@
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/rem-converter.css">
+    <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:type" content="website">
     <meta property="og:title" content="UI 픽셀(px) - 렘(rem) 배수별 상호 환산기 - 에브리캘크">
     <meta property="og:description" content="디자이너와 개발자를 위한 코딩 규격 종결자! px 단위를 rem과 디스플레이 배수별 픽셀로 실시간 환산해 보세요.">
-    <meta property="og:image" content="https://every-calc.co.kr">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/rem-converter/">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -37,12 +37,12 @@
                         <div class="input-item mb-3">
                             <label for="rem-root-size">기본 폰트 사이즈 (Base px)</label>
                             <input type="number" id="rem-root-size" class="form-control" placeholder="기본값: 16" min="1" value="16">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* rem 연산의 기준이 되는 최상위 루트 폰트 크기입니다.</small>
+                            <small class="text-muted mt-2 d-block">* rem 연산의 기준이 되는 최상위 루트 폰트 크기입니다.</small>
                         </div>
                         <div class="input-item mb-3">
                             <label for="rem-vw-base">뷰포트 기준 너비 (Viewport Width px)</label>
                             <input type="number" id="rem-vw-base" class="form-control" placeholder="PC 기준: 1920" min="1" value="1920">
-                            <small class="text-muted mt-2" style="font-size: 0.8rem; display:block;">* VW 연산의 기준이 되는 디자인 캔버스의 가로폭 해상도입니다. (PC 1920, 모바일 360~390 등)</small>
+                            <small class="text-muted mt-2 d-block">* VW 연산의 기준이 되는 디자인 캔버스의 가로폭 해상도입니다. (PC 1920, 모바일 360~390 등)</small>
                         </div>
                         <div class="input-item mb-3">
                             <label for="rem-input-px">변환할 값 (Target px)</label>
