@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 모든 인클루드 조립이 끝난 후 내부에서 모든 초기화 함수를 안전하게 실행합니다.
     Promise.all(promises).then(() => {
         setActiveMenu();
+        requestAnimationFrame(() => {
+            scrollToActiveMenu();
+        });
+
         initShareButton();
         initBookmarkButton(); // 🚀 안쪽으로 이동시켜 전역 에러를 완벽 방어합니다.
 
@@ -87,6 +91,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    function scrollToActiveMenu() {
+        const menuWrapper = document.querySelector('#gnb');
+        const activeMenu = document.querySelector('#gnb nav a.active'); // 🚀 li → a 로 변경
+
+        if (!menuWrapper || !activeMenu) {
+            console.log('조건 불만족으로 return');
+            return;
+        }
+
+        const wrapperRect = menuWrapper.getBoundingClientRect();
+        const activeRect = activeMenu.getBoundingClientRect();
+
+        const scrollTarget = menuWrapper.scrollTop
+            + (activeRect.top - wrapperRect.top)
+            - (menuWrapper.clientHeight / 2)
+            + (activeMenu.offsetHeight / 2);
+
+        console.log('scrollTarget:', scrollTarget);
+
+        menuWrapper.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth'
+        });
+    }
+
+
 });
 
 function initBookmarkButton() {
@@ -220,7 +250,13 @@ var everyCalcDatabase = [
     { title: "🔌 에어컨/난방 가전 전기세 폭탄 방지 계산기", url: "/electronic-bill/", keywords: "전기세계산기 에어컨전기세 전기요금누진세 인버터정속형 온풍기전기세 전기세폭탄 한전기본요금 여름철전기세 겨울전기요금 ㅇㅂ" },
     { title: "💰 목표 자금 달성 저축 스케줄러", url: "/target-savings/", keywords: "목표금액계산기 종잣돈모으기 목돈만들기 적금계산기 재테크스케줄러 미래자산 복리계산기 월저축액계산 목돈스케줄러 적금단리 복리역산 ㅇㅂ" },
     { title: "🏠 청년 주택드림 청약 통장 시뮬레이터", url: "/youth-housing/", keywords: "청년주택드림청약통장 청약통장계산기 주택드림대출한도 청약우대금리 청년적금 내집마련 청약통장이자 청년정책금융 주담대한도 ㅇㅂ" },
-    { title: "📦 쿠팡이츠·배민커넥트 배달 부업 세후 순수익 계산기", url: "/delivery-side/", keywords: "배달부업계산기 쿠팡이츠정산 배민커넥트수익 배달세후순수익 N잡러시급 자전거배달수익 도보배달 배달수수료 원천징수3.3 부업시급 ㅇㅂ" }
+    { title: "📦 쿠팡이츠·배민커넥트 배달 부업 세후 순수익 계산기", url: "/delivery-side/", keywords: "배달부업계산기 쿠팡이츠정산 배민커넥트수익 배달세후순수익 N잡러시급 자전거배달수익 도보배달 배달수수료 원천징수3.3 부업시급 ㅇㅂ" },
+    { title: "📐 CSS 세밀화 가변 라인 클램프 계산기", url: "/line-clamp/", keywords: "라인클램프 CSS말줄임 여러줄말줄임 line-clamp max-height계산 웹퍼블리싱 크로스브라우징 생략기호 퍼블리셔유틸 타이포그래피 소스코드자동생성 ㅇㅂ" },
+    { title: "🔲 CSS 가변 가로세로 비율 종횡비 계산기", url: "/aspect-ratio/", keywords: "종횡비계산기 aspect-ratio 가로세로비율 반응형이미지 유튜브임베드 웹퍼블리싱 비율유지 패딩우회 퍼블리셔유틸 피그마비율 박스크기 오차역산 순수CSS코드 ㅇㅂ" },
+    { title: "🔠 서체 행간 가변 감쇄 보정 계산기 (Line-Height Crop)", url: "/line-height-crop/", keywords: "행간종횡비 line-height-crop 고스트공백 텍스트여백제거 피그마정렬오차 타이포그래피교정 웹퍼블리싱 가상요소믹스인 퍼블리셔유틸 프리텐다드 본고딕 순수CSS코드 ㅇㅂ" },
+    { title: "📐 현대식 모던 CSS 그리드 트랙 오토배치 생성기", url: "/grid-template/", keywords: "그리드계산기 cssgrid 오토배치 auto-fit minmax계산 반응형레이아웃 웹퍼블리싱 거터정렬 퍼블리셔유틸 미디어쿼리 프리플렉스 순수CSS코드 ㅇㅂ" },
+    { title: "📱 반응형 웹 마스터 단위 변환기 (PX / REM / VW / VH)", url: "/responsive-unit/", keywords: "단위변환기 pxrem변환 pxvw변환 rem계산기 반응형웹 vw계산기 vh변환 웹퍼블리싱 퍼블리셔유틸 피그마수치 가변단위 역산교차 순수CSS코드 ㅇㅂ" }
+
 ];
 
 
@@ -266,4 +302,3 @@ $(document).ready(function () {
         }
     });
 });
-

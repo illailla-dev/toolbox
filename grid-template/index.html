@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS 그리드 계산기 - 모던 반응형 grid-template 자동 생성 | 에브리캘크</title>
+    <meta name="description" content="미디어쿼리 없이 화면 폭에 맞춰 컬럼 개수가 자동 가변하는 최신 CSS grid-template-columns 오토배치(auto-fit, minmax) 표준 소스코드를 실시간 계산 및 추출해 드립니다.">
+    <meta name="keywords" content="그리드계산기, cssgrid, 오토배치, auto-fit, minmax계산, 반응형레이아웃, 웹퍼블리싱, 거터정렬, 퍼블리셔유틸, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/grid-template/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="현대식 모던 CSS 그리드 트랙 오토배치 생성기">
+    <meta property="og:description" content="퍼블리셔 필수 생산성 툴! 미디어쿼리가 필요 없는 궁극의 반응형 레이아웃 스펙을 주석 없는 순수 CSS 소스코드로 1초 만에 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📐 현대식 모던 CSS 그리드 트랙 오토배치 생성기</h2>
+                <p>배치할 아이템의 최소 한계 크기와 그리드 간격(Gutter)을 설정하시면, 미디어쿼리 분기점 없이도 디바이스 폭에 따라 컬럼 수가 지능적으로 가변 조절되는 최신 CSS 표준 코드를 빌드합니다.</p>
+                <form id="grid-template-form" class="form" onsubmit="return false;">
+                    <!-- 그리드 트랙 매개변수 설정단 -->
+                    <div class="input-group-box">
+                        <h3>1. 아이템 최소 너비 및 여백 가이드 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="unit-select">그리드 제어 단위 선택</label>
+                                <select id="unit-select" class="form-control">
+                                    <option value="px" selected>PX 단위 제어</option>
+                                    <option value="rem">REM 단위 제어 (반응형 권장)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="min-item-width">아이템 최소 보장 너비 (<span class="target-unit-txt">px</span>)</label>
+                                <input type="number" id="min-item-width" class="form-control" value="280" step="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <div class="col-xl input-item">
+                                <label for="grid-gutter">아이템 간 간격 - Gutter (<span class="target-unit-txt">px</span>)</label>
+                                <input type="number" id="grid-gutter" class="form-control" value="20" step="1" required>
+                                <small class="text-muted mt-2">그리드 셀 사방에 균일하게 부여될 공백 마진(grid-gap) 수치입니다.</small>
+                            </div>
+                        </div>
+                        <!-- REM 단위 환산 보정용 루트 설정 -->
+                        <div class="form-row id-root-box" style="display:none;">
+                            <div class="col-xl input-item">
+                                <label for="root-font-size">HTML 루트 폰트 크기 (px)</label>
+                                <input type="number" id="root-font-size" class="form-control" value="16" min="1">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 모던 CSS 그리드 템플릿 연산 결과</h3>
+                    <div class="result-display">
+                        <p>디바이스 폭 해상도별 컬럼 유연성: <strong id="res-grid-flexibility" style="color: #6c757d;">자동 조절 가동</strong></p>
+                        <p>지정 유동형 트랙 한계폭 마진: <strong id="res-track-minmax" style="color: var(--orange);">0</strong></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// 그리드 소스코드 생성 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 반응형 트랙 배치 구조적 검증 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="grid-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 오토배치 생성기는 구형 브라우저 우회 기법 없이 W3C 현대 표준 웹 명세인 `display: grid;` 명세를 직결 매칭합니다. `auto-fill` 대신 `auto-fit` 엔진을 차용하므로 데이터 컴포넌트의 개수가 부족하더라도 빈 공간이 낭비되지 않고 트랙 잔여폭을 가변 팽창하여 화면을 꽉 채워줍니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function ($) {
+            // [무결점 지침 반영] 페이지 첫 로드 시점의 HTML 화면 초기값 마스터 캡처 메모리
+            let initialValues = {
+                minItemWidth: "",
+                gridGutter: ""
+            };
+
+            // 단위 전환 제어 핸들러 (텍스트 갱신 및 단위별 적정 디폴트 수치 스위칭)
+            $(document).on('change', '#unit-select', function () {
+                const unit = $(this).val();
+                $('.target-unit-txt').text(unit);
+
+                // 퍼블리셔 사용 편의를 위한 단위별 디폴트 적정 수치 자동 상속
+                if (unit === 'px') {
+                    $('#min-item-width').val('280').attr('step', '1');
+                    $('#grid-gutter').val('20').attr('step', '1');
+                } else {
+                    $('#min-item-width').val('18').attr('step', '0.01');
+                    $('#grid-gutter').val('1.25').attr('step', '0.01');
+                }
+
+                // 단위 전환 직후, 바뀐 화면의 수치를 새로운 기준 초기값으로 업데이트 메모리 상속
+                initialValues.minItemWidth = $('#min-item-width').val();
+                initialValues.gridGutter = $('#grid-gutter').val();
+
+                runGridTemplateCalculation();
+            });
+
+            // 모던 CSS 그리드 트랙 오토배치 정밀 연산 모듈
+            function calculateGridTemplate(minWidth, gutter, unit, rootSize) {
+                let displayMinMaxStr = '';
+                let cssGapStr = '';
+                let cssTrackStr = '';
+
+                if (unit === 'px') {
+                    // PX 모드 수식 및 데이터 바인딩
+                    const revRemMin = Math.round((minWidth / rootSize) * 10000) / 10000;
+                    const revRemGutter = Math.round((gutter / rootSize) * 10000) / 10000;
+
+                    displayMinMaxStr = `minmax(${minWidth}px, 1fr) / Gap: ${gutter}px`;
+                    cssGapStr = `${gutter}px`;
+                    cssTrackStr = `repeat(auto-fit, minmax(${minWidth}px, 1fr))`;
+                } else {
+                    // REM 모드 정밀도 가동 (소수점 4자리 유지)
+                    const revPxMin = Math.floor(minWidth * rootSize);
+                    const revPxGutter = Math.floor(gutter * rootSize);
+
+                    displayMinMaxStr = `minmax(${minWidth}rem, 1fr) / Gap: ${gutter}rem`;
+                    cssGapStr = `${gutter}rem`;
+                    cssTrackStr = `repeat(auto-fit, minmax(${minWidth}rem, 1fr))`;
+                }
+
+                // 주석과 홍보문구를 전면 배제한 100% 클린 모던 CSS 그리드 코드 생성
+                const generatedCss = `display: grid;\ngrid-template-columns: ${cssTrackStr};\ngrid-gap: ${cssGapStr};`;
+
+                return {
+                    displayTrack: displayMinMaxStr,
+                    cssCode: generatedCss,
+                    currentMinWidth: minWidth
+                };
+            }
+
+            // 메인 통합 연산 컨트롤러 (NaN 결함 및 공백 비움 현상 완전 방어)
+            function runGridTemplateCalculation() {
+                // [화면 대치형 고도화 적용] parseFloat 결과가 NaN(공백)일 때, 화면 초기 마스터 기억값 자동 대입
+                const minItemWidth = parseFloat($('#min-item-width').val()) || parseFloat(initialValues.minItemWidth);
+                const gridGutter = parseFloat($('#grid-gutter').val()) || parseFloat(initialValues.gridGutter);
+                const unit = $('#unit-select').val();
+                const rootFontSize = parseFloat($('#root-font-size').val()) || 16;
+
+                if (minItemWidth <= 0 || gridGutter < 0) return;
+
+                const res = calculateGridTemplate(minItemWidth, gridGutter, unit, rootFontSize);
+
+                // UI 데이터 매칭 바인딩
+                $('#res-track-minmax').text(res.displayTrack);
+                $('#result-css-code').text(res.cssCode);
+
+                const guideEl = $('#grid-guide-text');
+
+                // 입력된 최소 너비 규모별 반응형 배치 구조적 검증 리포트 [🎨 CSS 변수 표기 및 애드센스 단가 방어 전략]
+                // 단위를 고정 픽셀 기준으로 역산 판정하여 정밀 분기
+                const checkPxWidth = unit === 'px' ? res.currentMinWidth : res.currentMinWidth * rootFontSize;
+
+                if (checkPxWidth <= 160) {
+                    guideEl.html(`현재 설정은 좁은 폭의 아이템을 촘촘하게 배열하는 <strong style="color: var(--orange);">[초밀집 그리드 컴포넌트 단계]</strong>입니다. 모바일 화면(360px)에서도 2단 배치가 강제될 수 있으므로, 내부 카드 요소의 마크업 텍스트가 찌그러지거나 넘치지 않도록 글자 크기(font-size)에 유연한 가변 단위 규격을 연동시키는 것이 안전합니다.`);
+                } else if (checkPxWidth <= 380) {
+                    guideEl.html(`반응형 웹 카드 레이아웃에서 가장 범용적인 <strong style="color: var(--blue);">[스탠다드 오토 트랙 밸런스]</strong>입니다. 별도의 미디어쿼리 분기 코드 없이도 모바일에서는 영리하게 1단으로 떨어지고, 태블릿 및 데스크톱 해상도로 확장될 때마다 2단, 3단, 4단으로 가변 증설되는 최적의 상속 페이스를 보여줍니다.`);
+                } else {
+                    guideEl.html(`시원시원한 대형 비주얼 요소를 강조하기 좋은 <strong style="color: var(--green);">[와이드 갤러리 섹션 단계]</strong>입니다. 최소 확보 너비가 넓으므로 구형 저해상도 모니터나 태블릿 환경에서 가로 스크롤 레이아웃 터짐이 발생하지 않도록 상위 부모 컨테이너 박스의 <code>padding</code> 마진 구조를 슬림하게 유지해 주는 것이 레이아웃 무결성에 좋습니다.`);
+                }
+            }
+
+            // [⚠️ 고정 규칙] 위임 기법 기반 실시간 바인딩 이벤트 연동
+            $(document).on('input change', '#grid-template-form input, #grid-template-form select', function () {
+                runGridTemplateCalculation();
+            });
+
+            // [✨ 고정 규칙] 주석/링크 없는 순수 CSS 소스코드만 깔끔하게 클립보드에 전송하는 단독 복사 엔진
+            $(document).on('click', '#btn-copy-result', function () {
+                const cssCode = $('#result-css-code').text().trim();
+                const minWidth = $('#min-item-width').val();
+
+                if (!minWidth || minWidth === '0' || cssCode.indexOf('//') === 0) {
+                    alert("그리드 파라미터 및 설정을 완료한 후 코드를 추출해 주세요.");
+                    return;
+                }
+
+                // 변조 및 주석 링크 가공이 배제된 화면 상의 순수 CSS 코드 저장
+                const cleanCssText = cssCode;
+
+                // 클립보드 복사 실행
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = cleanCssText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                // 명확한 퍼블리셔 전용 작업 피드백 알림창 가동
+                alert("모던 가변 그리드 오토배치 순수 CSS 코드가 클립보드에 복사되었습니다. 스타일시트(CSS)에 바로 붙여넣어 보세요!");
+            });
+
+            // [⚠️ 고정 규칙] 비동기 로드 시점 추적 안전 감시 폴링 인터벌 엔진 (50ms)
+            const safetyPollingEngine = setInterval(function () {
+                if ($('#grid-template-form').length > 0) {
+                    clearInterval(safetyPollingEngine);
+
+                    // ⭐ [무결점 핵심 장치] 최초 구동 시점에 HTML 마크업에 배포되어 있는 진짜 가변 수치들을 통째로 캡처하여 메모리에 홀딩
+                    initialValues.minItemWidth = $('#min-item-width').val();
+                    initialValues.gridGutter = $('#grid-gutter').val();
+
+                    const safariDefense = "2026-06-23".replace(/-/g, '/');
+                    runGridTemplateCalculation(); // 안정 자립화 시점 최초 1회 즉시 실행
+                }
+            }, 50);
+
+        })(jQuery);
+    </script>
+</body>
+</html>

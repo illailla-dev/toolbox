@@ -30,11 +30,18 @@
 #search-wrapper .badge {padding: .75rem 1rem;}
 
 /* GNB */
-#gnb {grid-area: gnb; font-size: 1.125rem; position: sticky; top: 0; padding: 1.5rem 0 12rem;}
+#gnb {grid-area: gnb; font-size: 1.125rem; position: sticky; top: 0; padding: 0 1rem; max-height: calc(var(--full-height) - 10rem); overflow-y: auto;}
 #gnb a {display: block; padding: .25rem .5rem;;}
 #gnb .active {font-weight: bold; background-color: var(--purple); color: #fff;}
 #gnb #toggle-close {font-size: 1.5rem;border: 1px solid var(--border); color: #000; display: none; padding: 0 .5rem;}
 #gnb #toggle-close .bi:before {vertical-align: middle;}
+
+/* 2. 스크롤바가 구르는 배경 트랙 디자인 (배경과 일치시켜 투명도 확보) */
+#gnb::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+}
+
 
 /* SIDEBAR */
 #sidebar {grid-area: sidebar;position: sticky; top:0}
@@ -89,10 +96,10 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #header .container {flex-wrap: wrap;}
     #search-wrapper {order: 5; width: 100%; max-width: inherit;}
     #sidebar {display: none;}
-    #gnb {position: fixed; left: -280px; top: 0;bottom: 0;height: var(--full-height); transition: left 0.3s ease;; padding-top: 0; padding-bottom: 0; z-index: 30;}
+    #gnb {position: fixed; left: -280px; top: 0;bottom: 0;height: var(--full-height); max-height: inherit; transition: left 0.3s ease;; padding: 0; z-index: 30;}
     #gnb .container {padding: 0;height: 100%;}
     #gnb a {padding: .5rem 1rem;}
-    #gnb nav {position: relative;width: 280px;height: 100%; overflow-y: auto;background-color: #fff;padding: 1rem;z-index: 50}
+    #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;z-index: 50}
     .is-open #gnb #toggle-close {display: flex; align-items: center; justify-content: center; position: fixed; right: var(--gap-lg); top: 1.25rem; min-width:2.5rem; height: 2.5rem;; z-index: 33; background-color: #fff; border: 1px solid #000;}
     .is-open #gnb {left: 0;}
     #header #toggle-open {display: flex; align-items: center; justify-content: center; position: relative; z-index: 33;}

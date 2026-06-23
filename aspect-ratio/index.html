@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS 종횡비 계산기 - aspect-ratio 및 가로세로 비율 가변 환산 | 에브리캘크</title>
+    <meta name="description" content="시안의 픽셀(px) 또는 rem 가로폭을 입력하고 원하는 비율(16:9, 4:3, 1:1 등)을 설정하시면 반응형 세로 높이 역산과 함께 최신 aspect-ratio 및 구형 브라우저 방어용 퍼센트 패딩 코드를 실시간 자동 생성합니다.">
+    <meta name="keywords" content="종횡비계산기, aspect-ratio, 가로세로비율, 반응형이미지, 유튜브임베드, 웹퍼블리싱, 비율유지, 패딩우회, 퍼블리셔유틸, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/aspect-ratio/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CSS 가변 가로세로 비율 종횡비 계산기">
+    <meta property="og:description" content="웹 퍼블리셔 필수 도구! 미디어가 터지지 않는 완벽한 종횡비! 현대 표준 aspect-ratio 속성과 하위 호환성 코드를 주석 없는 순수 텍스트로 1초 만에 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/aspect-ratio/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🔲 CSS 가변 가로세로 비율 종횡비 계산기</h2>
+                <p>박스의 기준 가로폭과 원하는 종횡비 규격을 지정하시면 반응형 레이아웃에서 미디어나 이미지가 깨지지 않고 안전하게 홀딩되도록 정밀한 세로 높이 수식과 CSS 풀 코드를 생성합니다.</p>
+                <form id="ratio-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 레이아웃 폭 및 목표 종횡비 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="width-unit-select">가로폭 입력 단위 선택</label>
+                                <select id="width-unit-select" class="form-control">
+                                    <option value="px">PX 단위 입력</option>
+                                    <option value="rem" selected>REM 단위 입력 (반응형 표준)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="width-val">기준 가로폭 (<span class="target-unit-txt">rem</span>)</label>
+                                <input type="number" id="width-val" class="form-control" placeholder="예: 20" value="20" min="0.1" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="ratio-width">가로 비율 가중치 (Width)</label>
+                                <input type="number" id="ratio-width" class="form-control" placeholder="예: 16" value="16" min="1" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="ratio-height">세로 비율 가중치 (Height)</label>
+                                <input type="number" id="ratio-height" class="form-control" placeholder="예: 9" value="9" min="1" required>
+                            </div>
+                        </div>
+                        <!-- REM 환산 보정용 루트 크기 설정 -->
+                        <div class="form-row">
+                            <div class="col-xl input-item">
+                                <label for="root-font-size">기본 브라우저 HTML 루트 크기 (px)</label>
+                                <input type="number" id="root-font-size" class="form-control" value="16" min="1">
+                                <small class="text-muted mt-2">단위 교차 환산을 위한 브라우저 디폴트값입니다. (기본 16px)</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 종횡비 레이아웃 연산 결과</h3>
+                    <div class="result-display">
+                        <p>비율 유지에 필요한 세로 높이: <strong id="res-calc-height" style="color: #6c757d;">0</strong></p>
+                        <p>구형 브라우저 대응 패딩 비율: <strong id="res-padding-top-percent" style="color: var(--orange);">0%</strong></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 애드센스 단가 및 SEO 빌드업 반응형 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="ratio-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 연산기는 최신 모던 브라우저 표준인 `aspect-ratio` 명세와 함께, IE 및 구형 사파리 엔진에서 발생할 수 있는 레이아웃 무너짐을 원천 방어하는 `padding-top` 우회 기법(Padding-bottom Trick)을 복합 소스코드로 동시 추출합니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <!-- 제이쿼리 ready 시점 버그 방지를 위해 최하단에 직접 배치되는 스크립트 -->
+    <script>
+        (function ($) {
+            // 단위 전환 시 UI 텍스트 동적 변경 및 디폴트 밸류 매칭 기믹
+            $(document).on('change', '#width-unit-select', function () {
+                var unit = $(this).val();
+                $('.target-unit-txt').text(unit);
+
+                // 퍼블리셔 사용 편의를 위한 단위별 디폴트 적정 수치 자동 스위칭
+                if (unit === 'px') {
+                    $('#width-val').val('320').attr('step', '1');
+                } else {
+                    $('#width-val').val('20').attr('step', '0.01');
+                }
+                runRatioCalculation();
+            });
+
+            // 종횡비 및 패딩 우회 비율 정밀 연산 모듈
+            function calculateAspectRatio(widthVal, ratioW, ratioH, unit, rootSize) {
+                // 구형 브라우저 방어용 패딩 퍼센트 계산: (세로비율 / 가로비율) * 100
+                const paddingTopPercent = Math.round((ratioH / ratioW * 100) * 100) / 100;
+
+                // 지정된 비율에 따른 세로 높이 역산
+                let calculatedHeight = Math.round((widthVal * ratioH / ratioW) * 10000) / 10000;
+
+                let displayHeightStr = '';
+                let cssWidthStr = '';
+                let cssHeightStr = '';
+
+                if (unit === 'px') {
+                    calculatedHeight = Math.floor(calculatedHeight);
+                    const revRem = Math.round((calculatedHeight / rootSize) * 10000) / 10000;
+
+                    displayHeightStr = `${calculatedHeight} px (반응형: ${revRem}rem)`;
+                    cssWidthStr = `${widthVal}px`;
+                    cssHeightStr = `${calculatedHeight}px`;
+                } else {
+                    const revPx = Math.floor(calculatedHeight * rootSize);
+
+                    displayHeightStr = `${calculatedHeight} rem (픽셀 역산: ${revPx}px)`;
+                    cssWidthStr = `${widthVal}rem`;
+                    cssHeightStr = `${calculatedHeight}rem`;
+                }
+
+                // 크로스 브라우징 종횡비 믹스인 풀 CSS 생성 (주석/홍보문구 완전 배제 포맷)
+                const generatedCss = `width: 100%;\nmax-width: ${cssWidthStr};\naspect-ratio: ${ratioW} / ${ratioH};\n/* 구형 브라우저 대응 하위 호환 마크업 선언 시 활용 */\n/* padding-top: ${paddingTopPercent}%; height: 0; */`;
+
+                return {
+                    paddingPercent: paddingTopPercent,
+                    displayHeight: displayHeightStr,
+                    cssCode: generatedCss
+                };
+            }
+
+            // 메인 통합 연산 엔진
+            function runRatioCalculation() {
+                const widthUnit = $('#width-unit-select').val();
+                const widthVal = parseFloat($('#width-val').val()) || 0;
+                const ratioW = parseFloat($('#ratio-width').val()) || 0;
+                const ratioH = parseFloat($('#ratio-height').val()) || 0;
+                const rootFontSize = parseFloat($('#root-font-size').val()) || 16;
+
+                // 데이터 예외 및 공백 방어선 구축 [⚠️ 고정 규칙 가이드 적용]
+                if (widthVal <= 0 || ratioW <= 0 || ratioH <= 0) {
+                    $('#res-calc-height').text('0');
+                    $('#res-padding-top-percent').text('0%');
+                    $('#result-css-code').text('// 비율 및 가로폭 설정을 완료해 주세요.');
+                    $('#ratio-guide-text').html('가로폭, 가로 비율, 세로 비율을 모두 1 이상으로 정확히 입력해 주세요.');
+                    return;
+                }
+
+                const res = calculateAspectRatio(widthVal, ratioW, ratioH, widthUnit, rootFontSize);
+
+                // UI 데이터 매칭 바인딩
+                $('#res-calc-height').text(res.displayHeight);
+                $('#res-padding-top-percent').text(res.paddingPercent + '%');
+                $('#result-css-code').text(res.cssCode);
+
+                const guideEl = $('#ratio-guide-text');
+
+                // 종횡비 특성별 퍼블리싱 매칭 레이아웃 가이드라인 노출 [🎨 CSS 변수 표기 규칙 철저 준수]
+                if (ratioW === ratioH) {
+                    guideEl.html(`현재 설정은 완벽한 정방형 크기를 유지하는 <strong style="color: var(--green);">[1:1 스퀘어 비율 단계]</strong>입니다. 인스타그램 피드 뷰나 사용자 프로필 썸네일 박스에 주로 쓰이며, 내부 미디어가 늘어나는 현상을 막기 위해 <code>object-fit: cover;</code> 속성을 함께 부여하는 것이 레이아웃 무결성에 좋습니다.`);
+                } else if (ratioW > ratioH) {
+                    guideEl.html(`가장 대중적인 미디어 레이아웃 구조인 <strong style="color: var(--blue);">[시네마틱 와이드 뷰 단계]</strong>입니다. 유튜브 임베드 및 메인 배너 슬라이더에 표준 규격(16:9 등)으로 안착하며, 구형 사파리나 하위 브라우저 파괴를 방어하기 위해 추출된 <code>padding-top: ${res.paddingPercent}%;</code> 요소를 가변 분기 블록에 병행 선언하는 것을 권장합니다.`);
+                } else {
+                    guideEl.html(`숏폼 미디어 및 모바일 전용 UI에 최적화된 <strong style="color: var(--orange);">[버티컬 플렉서블 세로 단계]</strong>입니다. 세로 스크롤 시 화면 높이를 지나치게 침범할 수 있으므로, 미디어쿼리 대응을 위해 최상위 부모 컨테이너에 <code>max-height: 80vh;</code> 등의 안전 한계선을 선제 배치하는 것이 유리합니다.`);
+                }
+            }
+
+            // [⚠️ 고정 규칙] 위임 기법 기반 실시간 바인딩 이벤트 연동
+            $(document).on('input change', '#ratio-form input, #ratio-form select', function () {
+                runRatioCalculation();
+            });
+
+            // [✨ 고정 규칙] 주석/링크 없는 순수 CSS 소스코드만 깔끔하게 클립보드에 전송하는 단독 복사 엔진
+            $(document).on('click', '#btn-copy-result', function () {
+                const cssCode = $('#result-css-code').text().trim();
+                const width = $('#width-val').val();
+
+                if (!width || width === '0' || cssCode.indexOf('//') === 0) {
+                    alert("그리드 파라미터 및 가동 조건을 먼저 입력 후 코드를 추출해 주세요.");
+                    return;
+                }
+
+                // 변조 및 주석 링크 가공이 배제된 화면 상의 순수 CSS 코드 저장
+                const cleanCssText = cssCode;
+
+                // 클립보드 복사 실행
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = cleanCssText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                // 명확한 퍼블리셔 전용 작업 피드백 알림창 가동
+                alert("종횡비 반응형 순수 CSS 코드가 클립보드에 복사되었습니다. 스타일시트(CSS)에 바로 붙여넣어 보세요!");
+            });
+
+            // [⚠️ 고정 규칙] 50ms 감시 폴링 인터벌 보일러플레이트 엔진
+            const safetyPollingEngine = setInterval(function () {
+                if ($('#ratio-form').length > 0) {
+                    clearInterval(safetyPollingEngine);
+                    const safariDefense = "2026-06-23".replace(/-/g, '/');
+                    runRatioCalculation(); // 안정 자립화 시점 최초 1회 즉시 실행
+                }
+            }, 50);
+
+        })(jQuery);
+    </script>
+</body>
+</html>

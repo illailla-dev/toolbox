@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CSS Clamp() 반응형 글자 크기 및 마진 자동 계산기 | 에브리캘크</title>
-    <meta name="description" content="미디어쿼리 없이 화면 크기에 맞게 폰트, 마진, 패딩이 유동적으로 변하는 CSS clamp() 속성을 실시간 계산합니다. 최대/최소 화면 너비와 해상도별 타겟 크기 및 모바일 축소 비율 연동을 지원합니다.">
-    <meta name="keywords" content="cssclamp계산기, 클램프계산기, 반응형웹디자인, 유동형폰트, 모바일비율계산, 미디어쿼리대체, 에브리캘크">
+    <title>CSS 가변 클램프 계산기 - 반응형 뷰포트 clamp 수식 생성 | 에브리캘크</title>
+    <meta name="description" content="최소/최대 뷰포트와 가변 소자 크기(PX/REM 지원)를 입력하시면 미디어쿼리 없이 부드럽게 흐르는 최신 CSS clamp() 반응형 소스코드를 실시간 자동 빌드합니다.">
+    <meta name="keywords" content="클램프계산기, cssclamp, 반응형수식, 뷰포트계산, 유동형타이포, 웹퍼블리싱, 비율복구, pxrem변환, 퍼블리셔유틸, ㅇㅂ">
     <link class="canonical" href="https://every-calc.co.kr/css-clamp/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="CSS Clamp() 반응형 자동 계산기 - 에브리캘크">
-    <meta property="og:description" content="디자이너와 마크업 개발자를 위한 반응형 치트키! 모바일 비율 기반의 완벽한 CSS clamp 코드를 실시간으로 생성하고 복사하세요.">
+    <meta property="og:title" content="CSS 세밀화 가변 클램프(clamp) 수식 자동 생성기">
+    <meta property="og:description" content="퍼블리셔 필수 도구! 픽셀과 REM 단위를 교차 지원하고, 자동 비율 복구 로직이 반영된 최신 모던 반응형 clamp 수식을 주석 없는 순수 코드로 전송받으세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/css-clamp/">
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link class="apple-touch-icon" href="/apple-icon-180x180.png">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -29,62 +28,72 @@
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
             <div class="calculator-box">
-                <h2>📐 CSS Clamp() 반응형 레이아웃 계산기</h2>
-                <p>미디어쿼리(@media)를 촘촘히 쪼개 쓰지 않아도, 브라우저 가로폭 해상도 변화에 정비례하여 크기가 자연스럽게 스케일링되는 유동형(Fluid) 폰트 및 마진 코드를 수학적 슬로프 공식으로 정밀 도출합니다.</p>
+                <h2>📐 CSS 세밀화 가변 클램프(clamp) 생성기</h2>
+                <p>기준 뷰포트 영역과 소자의 가변 크기 한계선을 설정하시면, 복잡한 미디어쿼리 분기 없이 디바이스 해상도에 맞춰 글자 크기와 여백이 유연하게 렌더링되는 clamp 수식을 추출합니다.</p>
                 <form id="clamp-form" class="form" onsubmit="return false;">
-                    <!-- 1. 최대/최소 화면 범위 및 타겟 설정 -->
-                    <div class="input-group-box mb-4">
-                        <h3>1. 가변 스케일링 범위 설정</h3>
-                        <div class="form-row">
-                            <div class="col-6 input-item mb-3">
-                                <label for="clamp-max-vw">최대 화면 너비 (px)</label>
-                                <input type="number" id="clamp-max-vw" class="form-control" value="1920" min="1">
+                    <!-- 뷰포트 및 소자 파라미터 세팅단 -->
+                    <div class="input-group-box">
+                        <h3>1. 반응형 환경 및 소자 스펙 설정</h3>
+                        <!-- 단위 및 뷰포트 조건 설정 -->
+                        <div class="form-row row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="unit-select">가변 소자 크기 단위</label>
+                                <select id="unit-select" class="form-control">
+                                    <option value="px" selected>PX 단위 제어</option>
+                                    <option value="rem">REM 단위 제어</option>
+                                </select>
                             </div>
-                            <div class="col-6 input-item mb-3">
-                                <label for="clamp-max-val">최대 크기/마진 (px)</label>
-                                <input type="number" id="clamp-max-val" class="form-control" value="100" min="0">
+                            <div class="col-md-4 input-item">
+                                <label for="maxVw">최대 뷰포트 가로폭 (px)</label>
+                                <input type="number" id="maxVw" class="form-control" value="1920" required>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-6 input-item mb-3">
-                                <label for="clamp-min-vw">최소 화면 너비 (px)</label>
-                                <input type="number" id="clamp-min-vw" class="form-control" value="565" min="1">
-                            </div>
-                            <div class="col-6 input-item mb-3">
-                                <label for="clamp-min-val">최소 크기/마진 (px)</label>
-                                <input type="number" id="clamp-min-val" class="form-control" value="24" min="0">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="minVw">최소 뷰포트 가로폭 (px)</label>
+                                <input type="number" id="minVw" class="form-control" value="565" required>
                             </div>
                         </div>
-                        <!-- 2. 모바일 비율 연동 옵션 -->
-                        <div class="input-item mb-3">
-                            <label for="clamp-ratio">Mobile Ratio (%) - 선택 사항</label>
-                            <input type="number" id="clamp-ratio" class="form-control" placeholder="예: 40" min="1" max="100">
-                            <small class="text-muted mt-2 d-block">* 입력 시 최대 크기 기준 모바일 최소 크기가 퍼센트(%) 비율로 자동 역산 적용됩니다.</small>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="ratio">최소 크기 비율 자동 연산 (%)</label>
+                                <input type="number" id="ratio" class="form-control" placeholder="공백 시 수동 지정" step="0.1">
+                            </div>
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="maxVal">최대 목표 크기 (<span class="target-unit-txt">px</span>)</label>
+                                <input type="number" id="maxVal" class="form-control" value="24" step="0.01" required>
+                            </div>
+                            <div class="col-md-4 input-item">
+                                <label for="minVal">최소 한계 크기 (<span class="target-unit-txt">px</span>)</label>
+                                <input type="number" id="minVal" class="form-control" value="14" step="0.01" required>
+                            </div>
+                        </div>
+                        <!-- 상호 교차 환산을 위한 루트 폰트 고정값 -->
+                        <div class="form-row id-root-box" style="display:none;">
+                            <div class="col-xl input-item">
+                                <label for="root-font-size">HTML 루트 기준 폰트 크기 (px)</label>
+                                <input type="number" id="root-font-size" class="form-control" value="16" min="1">
+                            </div>
                         </div>
                     </div>
                 </form>
-                <!-- 2. 실시간 결과 출력 패턴 -->
+                <!-- 2. 결과 출력 영역 -->
                 <div class="result-box mt-4">
-                    <h3>💡 생성된 CSS 빌드 코드</h3>
+                    <h3>💡 뷰포트 감응형 브라우저 계산 결과</h3>
                     <div class="result-display">
-                        <!-- 클램프 완성 코드 결과 출력 앵커 박스 -->
-                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
-                            <div style="font-family: 'Courier New', Courier, monospace; font-size:1.05rem; word-break: break-all; width: 75%;">
-                                <span id="result-clamp-code" style="color: var(--red); font-weight: bold;">clamp(24px, 5.61vw - 7.69px, 100px);</span>
-                            </div>
-                            <button type="button" class="btn btn-success copy-btn" data-target="result-clamp-code" style="white-space: nowrap;">코드 복사하기</button>
-                        </div>
+                        <p>동적 타겟 가속 슬로프(Slope): <strong id="res-calc-slope" style="color: #6c757d;">0</strong></p>
+                        <p>오프셋 보정 Y절편 상수: <strong id="res-calc-intercept" style="color: var(--orange);">0</strong></p>
                         <hr>
-                        <!-- 최종 강조 영역에는 대표 수식 코드 바인딩 규정 장착 -->
-                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
-                            추천 선언 구조: <strong id="result-css-clamp-salary">font-size: clamp(...)</strong>
-                        </p>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <span id="resultCode" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// 수식 생성 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
                     </div>
                     <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
-                        <h4>📊 반응형 크로스 브라우징 구현 가이드</h4>
+                        <h4>📊 반응형 무결성 검증 및 동적 SEO 리포트</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="clamp-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* clamp() 속성은 총 3개의 인자 [최소값, 가변값(선형 슬로프), 최대값]을 가집니다. 브라우저 화면이 최소 너비보다 작아지면 최소값에 고정되고, 최대 너비보다 커지면 최대값에 고정되며, 그 사이 구간에서는 vw 단위로 선형 변환됩니다. 최신 모던 브라우저(IE 제외 전 기기)에서 완벽히 연동됩니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 가변 생성기는 사용자가 지정한 단위 변환 가중치를 상속하여 모던 뷰포트 명세를 역산합니다. `clamp()` 내부의 가변 유동 구간 영역은 CSS의 하드웨어 가속 주사율을 직접 공유하므로 미디어쿼리의 깜빡임 현상 없는 매끄러운 타이포그래피 구현을 보장합니다.</p>
                 </div>
             </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
@@ -94,110 +103,207 @@
     </div>
     <script src="/js/common.js"></script>
     <script>
-        $(document).ready(function () {
-            // 1. 초기 최소값을 안전하게 보관할 내부 클로저 변수 세팅
-            var initialMinVal = $('#clamp-min-val').val() || "24";
+        (function ($) {
+            // [무결점 고도화] 페이지 로드 시점의 HTML 화면 초기값을 실시간 기억할 마스터 메모리 래퍼
+            let initialValues = {
+                maxVal: "",
+                minVal: "",
+                minVw: "",
+                maxVw: ""
+            };
 
-            // 본문 폼의 글자 변동 발생 시 마다 실시간 강제 위임 계산 트래킹
-            $(document).on('input change', '#clamp-form', function (e) {
-                // 비율 입력칸 변동 조건 추적 처리 조치
-                if (e.target.id === 'clamp-ratio' || e.target.id === 'clamp-max-val') {
-                    updateMinSizeByRatio();
-                } else if (e.target.id === 'clamp-min-val') {
-                    // 사용자가 비율을 비워둔 상태에서 수동으로 최소값을 고치면 기본값 갱신
-                    if ($('#clamp-ratio').val().trim() === "") {
-                        initialMinVal = $('#clamp-min-val').val();
-                    }
+            // 단위 전환 제어 핸들러 (텍스트 갱신 및 단위별 적정 디폴트 수치 스위칭)
+            $(document).on('change', '#unit-select', function () {
+                const unit = $(this).val();
+                $('.target-unit-txt').text(unit);
+
+                // 단위가 바뀔 때는 브라우저 표준 반응형 밸런스 규격(PX <-> REM)으로 자동 스위칭
+                if (unit === 'px') {
+                    $('#maxVal').val('56').attr('step', '1');
+                    $('#minVal').val('24').attr('step', '1');
+                } else {
+                    $('#maxVal').val('3.5').attr('step', '0.01');
+                    $('#minVal').val('1.5').attr('step', '0.01');
                 }
-                calculateCssClamp();
+
+                // 단위 전환 직후, 바뀐 화면의 수치를 새로운 기준 초기값으로 자동 업데이트 메모리 상속
+                initialValues.maxVal = $('#maxVal').val();
+                initialValues.minVal = $('#minVal').val();
+
+                $('#ratio').val(''); // 단위 전환 시 비율 초기화로 충돌 차단
+                runClampCalculation();
             });
 
-            // 클립보드 복사 버튼 이벤트 위임 바인딩
-            $(document).on('click', '.copy-btn', function () {
-                var targetId = $(this).data('target');
-                var codeText = $('#' + targetId).text();
-                var $btn = $(this);
-                var originalText = $btn.text();
-
-                navigator.clipboard.writeText(codeText).then(function () {
-                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
-                    setTimeout(function () {
-                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
-                    }, 1000);
-                });
-            });
-
-            // 모바일 자동 비율 연산 동기화 처리 로직
+            // [고유 기능 이식] 비율 수치 입력 마찰 시 최솟값 자동 연산 및 공백 복구 모듈
             function updateMinSizeByRatio() {
-                var $maxValInput = $('#clamp-max-val');
-                var $minValInput = $('#clamp-min-val');
-                var $ratioInput = $('#clamp-ratio');
+                const maxValInput = $('#maxVal');
+                const minValInput = $('#minVal');
+                const ratioInput = $('#ratio');
 
-                var maxVal = parseFloat($maxValInput.val());
-                var ratioVal = parseFloat($ratioInput.val());
+                const maxVal = parseFloat(maxValInput.val());
+                const ratioVal = parseFloat(ratioInput.val());
 
-                // 비율 칸이 비어있거나 소수점이 정리가 안 된 공백 상태면 초기 세팅 수치로 복구
-                if ($ratioInput.val().trim() === "" || isNaN(ratioVal)) {
-                    $minValInput.val(initialMinVal);
+                // 비율 입력 칸이 비어 있거나 올바른 숫자가 아니면 화면 켜졌을 때 적혀있던 초기 최소값으로 안전 복구
+                if (ratioInput.val().trim() === "" || isNaN(ratioVal)) {
+                    minValInput.val(initialValues.minVal);
+                    runClampCalculation();
                     return;
                 }
 
-                // 최대값이 정상 범위면 모바일 비율 공식 대입 계산
+                // 비율 연산 가동 시 최대값 대비 퍼센트 크기 자동 추출 매칭
                 if (!isNaN(maxVal)) {
-                    var calculatedMin = Math.round(maxVal * (ratioVal / 100));
-                    $minValInput.val(calculatedMin);
+                    const unit = $('#unit-select').val();
+                    let calculatedMin = maxVal * (ratioVal / 100);
+
+                    // PX 단위는 정수형 올림, REM 단위는 정밀 소수점 2자리 정리
+                    if (unit === 'px') {
+                        calculatedMin = Math.round(calculatedMin);
+                    } else {
+                        calculatedMin = Math.round(calculatedMin * 100) / 100;
+                    }
+                    minValInput.val(calculatedMin);
+                    runClampCalculation();
                 }
             }
 
-            // 핵심 선형 보간 슬로프 알고리즘 수식 엔진
-            function calculateCssClamp() {
-                var vMin = parseFloat($('#clamp-min-vw').val());
-                var vMax = parseFloat($('#clamp-max-vw').val());
-                var mMin = parseFloat($('#clamp-min-val').val());
-                var mMax = parseFloat($('#clamp-max-val').val());
+            // 사용자가 비율 연산 인터페이스를 쓰지 않고 최소값을 직접 수정할 때 새로운 복구 지점 기억
+            $(document).on('change', '#minVal', function () {
+                if ($('#ratio').val().trim() === "") {
+                    initialValues.minVal = $(this).val();
+                }
+            });
 
-                if (isNaN(vMin) || isNaN(vMax) || isNaN(mMin) || isNaN(mMax)) return;
+            // 비율 연산 트리거 입력 위임 바인딩
+            $(document).on('input', '#ratio, #maxVal', function () {
+                updateMinSizeByRatio();
+            });
 
-                // 범위 역전 오류 방어 디펜스 라인
-                if (vMax <= vMin || mMax < mMin) {
-                    $('#result-clamp-code').text("범위 설정 오류 (최대값이 최소값보다 커야 합니다.)");
+            // 수학적 뷰포트 가속 슬로프 및 오프셋 클램프 메인 역산 모듈
+            function calculateClampFormula(Vmin, Vmax, Mmin, Mmax, unit, rootSize) {
+                let calcMmin = Mmin;
+                let calcMmax = Mmax;
+
+                if (unit === 'rem') {
+                    calcMmin = Mmin * rootSize;
+                    calcMmax = Mmax * rootSize;
+                }
+
+                // 공식: 슬로프(기울기) = (최대값 - 최소값) / (최대너비 - 최소너비)
+                const slope = (calcMmax - calcMmin) / (Vmax - Vmin);
+                // 공식: y절편(오프셋) = 최소값 - (최소너비 * 슬로프)
+                const yIntercept = calcMmin - Vmin * slope;
+
+                // 화면 가변 가속 100vw 비례 계수 산출 (소수점 3자리 정밀도 보정)
+                const vwFactor = Math.round((slope * 100) * 1000) / 1000;
+
+                let interceptOutVal = 0;
+                let signStr = "+";
+                let formattedFormula = "";
+
+                if (unit === 'px') {
+                    interceptOutVal = Math.round(yIntercept * 100) / 100;
+                    signStr = interceptOutVal >= 0 ? "+" : "-";
+                    formattedFormula = `clamp(${Mmin}px, ${vwFactor}vw ${signStr} ${Math.abs(interceptOutVal)}px, ${Mmax}px);`;
+                } else {
+                    const interceptRem = Math.round((yIntercept / rootSize) * 10000) / 10000;
+                    signStr = interceptRem >= 0 ? "+" : "-";
+                    formattedFormula = `clamp(${Mmin}rem, ${vwFactor}vw ${signStr} ${Math.abs(interceptRem)}rem, ${Mmax}rem);`;
+                    interceptOutVal = interceptRem;
+                }
+
+                return {
+                    slope: slope.toFixed(5),
+                    intercept: interceptOutVal + (unit === 'px' ? ' px' : ' rem'),
+                    formula: formattedFormula
+                };
+            }
+
+            // 메인 통합 연산 컨트롤러 (NaN 결함 및 공백 터짐 완전 방어)
+            function runClampCalculation() {
+                // [화면 대치형 고도화] parseFloat 결과가 NaN(공백)일 때, 스크립트 하드코딩 수치가 아닌 화면 초기 마스터 기억값 대입
+                const Vmin = parseFloat($('#minVw').val()) || parseFloat(initialValues.minVw);
+                const Vmax = parseFloat($('#maxVw').val()) || parseFloat(initialValues.maxVw);
+                const rootSize = parseFloat($('#root-font-size').val()) || 16;
+                const unit = $('#unit-select').val();
+
+                const Mmax = parseFloat($('#maxVal').val()) || parseFloat(initialValues.maxVal);
+                const Mmin = parseFloat($('#minVal').val()) || parseFloat(initialValues.minVal);
+
+                if (Vmin <= 0 || Vmax <= 0 || Mmin <= 0 || Mmax <= 0) return;
+
+                // 최솟값이 최댓값보다 커지는 퍼블리싱 모순 관계 방어선
+                if (Mmin > Mmax) {
+                    $('#res-calc-slope').text('오류');
+                    $('#res-calc-intercept').text('오류');
+                    $('#resultCode').text('// 최솟값이 최댓값보다 클 수 없습니다.');
+                    $('#clamp-guide-text').html(`🚨 <span style="color: var(--red); font-weight:bold;">수식 붕괴 경고!</span><br>현재 입력된 최소 한계값(${Mmin})이 최대 목표값(${Mmax})을 초과했습니다. 반응형 스케일이 상속되지 않으므로 수치 관계를 재조정해 주세요.`);
                     return;
                 }
 
-                // 공식 1: 슬로프(기울기 기울기 축적) = (최대 크기 - 최소 크기) / (최대 화면너비 - 최소 화면너비)
-                var slope = (mMax - mMin) / (vMax - vMin);
+                const res = calculateClampFormula(Vmin, Vmax, Mmin, Mmax, unit, rootSize);
 
-                // 공식 2: y절편 상수 = 최소 크기 - (최소 화면너비 * 슬로프)
-                var yIntercept = mMin - vMin * slope;
+                // UI 돔 데이터 동기화
+                $('#res-calc-slope').text(res.slope);
+                $('#res-calc-intercept').text(res.intercept);
+                $('#resultCode').text(res.formula);
 
-                // 소수점 둘째 자리 반올림 포맷 가공
-                var vwValue = parseFloat((slope * 100).toFixed(2));
-                var pxValue = parseFloat(yIntercept.toFixed(2));
+                const guideEl = $('#clamp-guide-text');
 
-                var sign = pxValue >= 0 ? "+" : "-";
-                var absPx = Math.abs(pxValue);
-
-                // 최종 유동형 clamp 수식 포맷 완성
-                var clampResult = "clamp(" + mMin + "px, " + vwValue + "vw " + sign + " " + absPx + "px, " + mMax + "px);";
-
-                // DOM 출력 및 가이드 바인딩
-                $('#result-clamp-code').text(clampResult);
-                $('#result-css-clamp-salary').text("font-size: " + clampResult.replace(';', ''));
-
-                var guideText = "• 생성 코드 용도: <span style='color: var(--orange); font-weight:bold;'>h1 ~ h6 타이포그래피</span> 및 섹션 <span style='color: var(--green); font-weight:bold;'>padding / margin</span> 속성 권장<br>" +
-                    "현재 주입된 슬로프 공식에 의하면 해상도가 넓어질수록 1vw당 글자 크기가 자동으로 늘어나며, 데스크톱 브라우저 환경(" + vMax + "px 이상)에서는 최대 <span style='font-weight:bold;'>" + mMax + "px</span>로 확장 한계선이 잠금 처리되어 깨짐 현상을 완벽히 방어합니다.";
-
-                $('#clamp-guide-text').html(guideText);
+                // 슬로프 가속 강도에 따른 동적 퍼블리싱 매칭 가이드라인 설계
+                const numericSlope = parseFloat(res.slope);
+                if (numericSlope <= 0.01) {
+                    guideEl.html(`현재 생성된 코드는 해상도별 가변폭이 부드럽고 완만한 <strong style="color: var(--green);">[초정밀 타이포 밸런스]</strong> 상태입니다. 모바일과 대화면 모니터 간의 시각 격차가 크지 않은 일반 본문 텍스트(Body)나 유동형 카드 패딩 영역에 적용하기 가장 이상적인 스타일 믹스인입니다.`);
+                } else if (numericSlope <= 0.03) {
+                    guideEl.html(`가장 대중적이고 시각 인지도가 높은 <strong style="color: var(--blue);">[반응형 스탠다드 스케일]</strong>입니다. 서브 타이틀이나 메인 배너 내의 핵심 컴포넌트 여백 마진에 적극 호환되며, 브라우저 리사이징 시 계단 현상 없는 매끄러운 크기 상속이 보장됩니다.`);
+                } else {
+                    guideEl.html(`디바이스 화면폭에 따라 글자 크기가 과감하게 팽창하는 <strong style="color: var(--orange);">[익스트림 와이드 임팩트]</strong> 대형 서체 레이아웃입니다. 초고해상도 디스플레이에서 컴포넌트가 화면 영역을 탈출할 우려가 있으므로, 생성된 코드의 상하한선 한계 제어선이 제대로 박혔는지 확인 후 적용하는 것이 좋습니다.`);
+                }
             }
 
-            // GNB 비동기 페치 조립 유무 추적 안전 시점 감시 인터벌 폴링 엔진
-            var safetyTrigger = setInterval(function () {
-                if ($('#clamp-max-vw').length) {
-                    calculateCssClamp();
-                    clearInterval(safetyTrigger);
+            // [⚠️ 고정 규칙] 위임 기법 기반 실시간 바인딩 이벤트 연동
+            $(document).on('input change', '#clamp-form input, #clamp-form select', function () {
+                runClampCalculation();
+            });
+
+            // [✨ 고정 규칙] 주석 없이 화면 상의 순수 CSS 코드만 깔끔하게 단독 복사하는 클린 엔진
+            $(document).on('click', '#btn-copy-result', function () {
+                const text = $('#resultCode').text().trim();
+                const minVal = $('#minVal').val();
+
+                if (!minVal || minVal === '0' || text.indexOf('//') === 0) {
+                    alert("그리드 파라미터 및 설정을 완료한 후 코드를 추출해 주세요.");
+                    return;
+                }
+
+                const cleanCssText = text;
+
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = cleanCssText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                alert("반응형 가변 clamp() 순수 CSS 소스코드가 클립보드에 복사되었습니다!");
+            });
+
+            // [⚠️ 고정 규칙] 비동기 로드 시점 추적 안전 감시 폴링 인터벌 엔진 (50ms)
+            const safetyPollingEngine = setInterval(function () {
+                if ($('#clamp-form').length > 0) {
+                    clearInterval(safetyPollingEngine);
+
+                    // ⭐ [핵심 개정] 최초 구동 시점에 HTML 마크업에 배포되어 있는 진짜 가변 수치들을 통째로 캡처하여 메모리에 박아둡니다.
+                    initialValues.maxVal = $('#maxVal').val();
+                    initialValues.minVal = $('#minVal').val();
+                    initialValues.minVw = $('#minVw').val();
+                    initialValues.maxVw = $('#maxVw').val();
+
+                    const safariDefense = "2026-06-23".replace(/-/g, '/');
+                    runClampCalculation();
                 }
             }, 50);
-        });
+
+        })(jQuery);
     </script>
 </body>
 </html>

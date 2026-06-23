@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS 라인 클램프 계산기 - 여러줄 말줄임 max-height 계산 | 에브리캘크</title>
+    <meta name="description" content="원하는 노출 텍스트 줄 수(Line)와 폰트 크기(PX/REM 선택), 행간(Line-height)을 입력하시면 크로스 브라우징이 보장되는 복합 -webkit-line-clamp 스타일 속성과 정확한 max-height 수치를 실시간 자동 생성해 드립니다.">
+    <meta name="keywords" content="라인클램프, CSS말줄임, 여러줄말줄임, line-clamp, max-height계산, 웹퍼블리싱, 크로스브라우징, 생략기호, 퍼블리셔유틸, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/line-clamp/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CSS 세밀화 가변 라인 클램프 계산기">
+    <meta property="og:description" content="웹 퍼블리셔 필수 생산성 툴! PX와 REM 입력 단위를 완벽 지원하여 여러 줄 말줄임표 구현을 위한 세밀한 높이(max-height) 마진과 완벽한 CSS 소스코드를 1초 만에 획득하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/line-clamp/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📐 CSS 세밀화 가변 라인 클램프 계산기</h2>
+                <p>텍스트 박스의 제한 줄 수와 타이포그래피 스펙을 설정하시면 영역의 이탈 없이 말줄임표가 안착하도록 브라우저 렌더링에 알맞은 정확한 최대 높이와 CSS 풀 코드를 빌드합니다.</p>
+                <form id="clamp-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 타이포그래피 및 제한 행수 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="clamp-lines">제한할 텍스트 노출 줄 수 (Line)</label>
+                                <input type="number" id="clamp-lines" class="form-control" placeholder="예: 3" value="3" min="1" max="10" required>
+                                <small class="text-muted mt-2">말줄임표(...)가 표시될 기준 행수입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="font-unit-select">폰트 입력 단위 선택</label>
+                                <select id="font-unit-select" class="form-control">
+                                    <option value="px">PX 단위 입력</option>
+                                    <option value="rem" selected>REM 단위 입력 (반응형 표준)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="font-size-val">기준 폰트 크기 (<span class="target-unit-txt">rem</span>)</label>
+                                <input type="number" id="font-size-val" class="form-control" placeholder="예: 1.5" value="1.5" min="0.1" step="0.01" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="line-height-ratio">줄 간격 비율 - line-height (배수)</label>
+                                <input type="number" id="line-height-ratio" class="form-control" placeholder="예: 1.5" value="1.5" min="1.0" max="3.0" step="0.1" required>
+                            </div>
+                        </div>
+                        <!-- REM 입력 시 연산 보정용 루트 크기 설정 (hidden으로 숨기거나 퍼블리셔 제어용 노출) -->
+                        <div class="form-row id-root-box">
+                            <div class="col-xl input-item">
+                                <label for="root-font-size">기본 브라우저 HTML 루트 크기 (px)</label>
+                                <input type="number" id="root-font-size" class="form-control" value="16" min="1">
+                                <small class="text-muted mt-2">상호 단위 교차 환산을 위한 기준값입니다. (기본 16px)</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 라인 클램프 스타일 연산 결과</h3>
+                    <div class="result-display">
+                        <p>1행당 실질 높이: <strong id="res-single-line-height" style="color: #6c757d;">0</strong></p>
+                        <p>레이아웃 차단 한도 고정 높이: <strong id="res-max-height-val" style="color: var(--orange);">0</strong></p>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="clamp-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 연산기는 크로스 브라우징이 검증된 Webkit 계열 엔진의 단독 분기 속성을 표준 믹스인 형태로 제공합니다. 인라인 블록 엘리먼트(`display: inline`)나 표 구조(`display: table-cell`) 내부에서는 렌더링 상의 박스 모델 오류가 발생할 수 있으므로, 해당 스타일을 부여하기 전에 부모 컴포넌트의 블록 무결성을 반드시 확인하시기 바랍니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function ($) {
+            // 단위 전환 시 UI 텍스트 동적 변경 및 디폴트 밸류 매칭 기믹
+            $(document).on('change', '#font-unit-select', function () {
+                var unit = $(this).val();
+                $('.target-unit-txt').text(unit);
+
+                // 퍼블리셔 사용 편의를 위한 단위별 디폴트 적정 수치 자동 스위칭
+                if (unit === 'px') {
+                    $('#font-size-val').val('16').attr('step', '1');
+                } else {
+                    $('#font-size-val').val('1.5').attr('step', '0.01');
+                }
+                runClampCalculation();
+            });
+
+            // 라인 클램프 높이 통합 연산 모듈 (PX/REM 다이렉트 유연 바인딩)
+            function calculateLineClamp(lines, fontVal, lineHeightRatio, unit, rootSize) {
+                let singleHeightVal = 0;
+                let maxHeightVal = 0;
+                let cssMaxHeightStr = '';
+                let displaySingleStr = '';
+                let displayMaxStr = '';
+
+                if (unit === 'px') {
+                    // 1. PX 입력 시 처리 연산
+                    singleHeightVal = Math.floor(fontVal * lineHeightRatio);
+                    maxHeightVal = singleHeightVal * lines;
+
+                    // 반응형 rem 수치도 함께 계산하여 주석으로 치환 매칭
+                    const revRem = Math.round((maxHeightVal / rootSize) * 10000) / 10000;
+
+                    cssMaxHeightStr = `${maxHeightVal}px; /* ${revRem}rem 보정 */`;
+                    displaySingleStr = `${singleHeightVal} px`;
+                    displayMaxStr = `${maxHeightVal} px (반응형: ${revRem}rem)`;
+                } else {
+                    // 2. REM 입력 시 처리 연산 (실무 중심 정밀 소수점 유지)
+                    singleHeightVal = Math.round((fontVal * lineHeightRatio) * 10000) / 10000;
+                    maxHeightVal = Math.round((singleHeightVal * lines) * 10000) / 10000;
+
+                    // 역산 px 수치도 함께 계산하여 매칭
+                    const revPx = Math.floor(maxHeightVal * rootSize);
+
+                    cssMaxHeightStr = `${maxHeightVal}rem; /* ${revPx}px 보정 */`;
+                    displaySingleStr = `${singleHeightVal} rem`;
+                    displayMaxStr = `${maxHeightVal} rem (픽셀 역산: ${revPx}px)`;
+                }
+
+                // 크로스 브라우징 멀티라인 믹스인 풀 CSS 생성 (주석/홍보문구 완전 배제 포맷)
+                const generatedCss = `overflow: hidden;\ntext-overflow: ellipsis;\ndisplay: -webkit-box;\n-webkit-line-clamp: ${lines};\n-webkit-box-orient: vertical;\nmax-height: ${cssMaxHeightStr}\nline-height: ${lineHeightRatio};`;
+
+                return {
+                    displaySingle: displaySingleStr,
+                    displayMax: displayMaxStr,
+                    cssCode: generatedCss
+                };
+            }
+
+            // 메인 통합 연산 엔진
+            function runClampCalculation() {
+                const clampLines = parseInt($('#clamp-lines').val()) || 0;
+                const fontUnit = $('#font-unit-select').val();
+                const fontSizeVal = parseFloat($('#font-size-val').val()) || 0;
+                const lineHeightRatio = parseFloat($('#line-height-ratio').val()) || 0;
+                const rootFontSize = parseFloat($('#root-font-size').val()) || 16;
+
+                // 데이터 예외 및 공백 방어선 구축 [⚠️ 고정 규칙 가이드 적용]
+                if (clampLines <= 0 || fontSizeVal <= 0 || lineHeightRatio <= 0) {
+                    $('#res-single-line-height').text('0');
+                    $('#res-max-height-val').text('0');
+                    $('#result-css-code').text('// 타이포그래피 설정을 완료해 주세요.');
+                    $('#clamp-guide-text').html('줄 수, 폰트 크기, 행간 비율을 모두 1 이상으로 정확히 입력해 주세요.');
+                    return;
+                }
+
+                const res = calculateLineClamp(clampLines, fontSizeVal, lineHeightRatio, fontUnit, rootFontSize);
+
+                // UI 데이터 매칭 바인딩
+                $('#res-single-line-height').text(res.displaySingle);
+                $('#res-max-height-val').text(res.displayMax);
+                $('#result-css-code').text(res.cssCode);
+
+                const guideEl = $('#clamp-guide-text');
+
+                // 제한 줄 수 규모별 퍼블리싱 매칭 레이아웃 가이드라인 노출 [🎨 CSS 변수 표기 규칙 준수]
+                if (clampLines <= 1) {
+                    guideEl.html(`현재 설정은 가장 보편적인 <strong style="color: var(--green);">[단일 행 말줄임 단계]</strong>입니다. 단일 행은 <code>-webkit-line-clamp</code> 대신 표준 문법인 <code>white-space: nowrap;</code> 속성을 부여해도 무방하지만, 유연한 반응형 레이아웃 대응을 위해 생성된 믹스인 코드를 박스 모델에 그대로 이식하는 것을 추천합니다.`);
+                } else if (clampLines <= 3) {
+                    guideEl.html(`게시판 리스트 및 요약 텍스트에 가장 알맞은 <strong style="color: var(--blue);">[표준 멀티라인 클램프 단계]</strong>입니다. 브라우저 렌더링 시 글자 꼬임 현상을 원천 방지하기 위해, 타겟 박스의 <code>padding-bottom</code>이나 <code>margin-bottom</code> 마진 요소를 정밀하게 분리 선언하시는 것이 레이아웃 무결성에 좋습니다.`);
+                } else {
+                    guideEl.html(`도서 소개나 롱폼 콘텐츠 요약에 쓰이는 <strong style="color: var(--orange);">[대용량 가변 텍스트 제어 단계]</strong>입니다. 높이가 크게 가변하므로 하위 컨포넌트가 밀려나지 않도록 부모 엘리먼트에 <code>position: relative;</code> 속성 및 안전 플렉스 베이스라인을 선제 구축하시는 것을 권장합니다.`);
+                }
+            }
+
+            // [⚠️ 고정 규칙] 위임 기법 기반 실시간 바인딩 이벤트 연동
+            $(document).on('input change', '#clamp-form input, #clamp-form select', function () {
+                runClampCalculation();
+            });
+
+            // [✨ 고정 규칙] 주석/링크 없는 순수 CSS 소스코드만 깔끔하게 클립보드에 전송하는 단독 복사 엔진
+            $(document).on('click', '#btn-copy-result', function () {
+                const cssCode = $('#result-css-code').text().trim();
+                const lines = $('#clamp-lines').val();
+
+                if (!lines || lines === '0' || cssCode.indexOf('//') === 0) {
+                    alert("타이포그래피 옵션 및 가동 조건을 먼저 입력 후 코드를 추출해 주세요.");
+                    return;
+                }
+
+                // 변조 및 주석 링크 가공이 배제된 화면 상의 순수 CSS 코드 저장
+                const cleanCssText = cssCode;
+
+                // 클립보드 복사 실행
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = cleanCssText;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                // 명확한 퍼블리셔 전용 작업 피드백 알림창 가동
+                alert("가변 라인 클램프 순수 CSS 코드가 클립보드에 복사되었습니다. 스타일시트(CSS)에 바로 붙여넣어 보세요!");
+            });
+
+            // [⚠️ 고정 규칙] 50ms 감시 폴링 인터벌 보일러플레이트 엔진
+            const safetyPollingEngine = setInterval(function () {
+                if ($('#clamp-form').length > 0) {
+                    clearInterval(safetyPollingEngine);
+                    const safariDefense = "2026-06-23".replace(/-/g, '/');
+                    runClampCalculation(); // 안정 자립화 시점 최초 1회 즉시 실행
+                }
+            }, 50);
+
+        })(jQuery);
+    </script>
+</body>
+</html>
