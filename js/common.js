@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         initShareButton();
-        initBookmarkButton(); // 🚀 안쪽으로 이동시켜 전역 에러를 완벽 방어합니다.
+        initBookmarkButton();
 
         const toggleBtn = document.querySelector('#toggle-open');
-        const gnb = document.querySelector('#gnb'); // 🚀 nav 대신 #gnb 선택
+        const gnb = document.querySelector('#gnb');
 
         if (!toggleBtn || !gnb) return;
 
@@ -48,25 +48,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!icon) return;
 
         // 1. 토글 버튼 클릭 이벤트
-        toggleBtn.addEventListener('click', () => {
+        toggleBtn.addEventListener('click', (e) => {
+            // 🚀 버튼 클릭이 document의 클릭 이벤트로 전파되는 것을 막습니다.
+            e.stopPropagation();
+
             const isOpen = document.body.classList.toggle('is-open');
-            // if (isOpen) {
-            //     icon.classList.replace('bi-list', 'bi-x');
-            // } else {
-            //     icon.classList.replace('bi-x', 'bi-list');
-            // }
+
+            // 주석 해제 및 아이콘 교체 로직 완성
+            if (isOpen) {
+                icon.classList.replace('bi-list', 'bi-x');
+            } else {
+                icon.classList.replace('bi-x', 'bi-list');
+            }
         });
 
-        // 2. 🚀 #gnb::after 딤배경 클릭 시 메뉴 닫기
-        gnb.addEventListener('click', (e) => {
+        // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
+        document.addEventListener('click', (e) => {
+            // 🚀 메뉴가 열려있을 때만 작동하도록 조건 추가 (성능 최적화)
+            if (!document.body.classList.contains('is-open')) return;
+
             // 클릭된 타겟이 실제 메뉴창(<nav>) 내부가 아닐 때만 닫기 실행
             if (!e.target.closest('nav')) {
                 document.body.classList.remove('is-open');
                 icon.classList.replace('bi-x', 'bi-list');
             }
         });
-
     });
+
 
     /**
      * 현재 인터넷 주소창의 경로를 분석하여
