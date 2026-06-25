@@ -269,7 +269,11 @@ var everyCalcDatabase = [
     { title: "📝 다국어 폰트 자간 보정 및 줄바꿈 차단기", url: "/word-break/", keywords: "word-break keep-all 자간보정 letter-spacing 퍼블리셔 타이포그래피 줄바꿈방지" },
     { title: "🔤 웹폰트 깜빡임 방지 FOIT/FOUT 제어기", url: "/font-display/", keywords: "font-display swap font-face 웹폰트최적화 퍼블리셔 로딩속도 깜빡임제어" },
     { title: "🔍 복합 미디어쿼리 디바이스 표준 브레이크포인트 빌더", url: "/media-query/", keywords: "미디어쿼리 브레이크포인트 @media 반응형웹 퍼블리셔 해상도분기 스켈레톤코드 본고딕" },
-    { title: "📺 유튜브 쇼츠·틱톡 조회수 수익 역산기", url: "/shorts-calc/", keywords: "쇼츠수익 유튜브수익계산기 틱톡수익 숏폼정산 RPM계산 조회수수익 크리에이터부업 세후순수익 부업계산기" }
+    { title: "📺 유튜브 쇼츠·틱톡 조회수 수익 역산기", url: "/shorts-calc/", keywords: "쇼츠수익 유튜브수익계산기 틱톡수익 숏폼정산 RPM계산 조회수수익 크리에이터부업 세후순수익 부업계산기" },
+    { title: "🎡 파이어족 조기 은퇴 자산 시뮬레이터", url: "/fire-movement/", description: "4% 법칙과 물가상승률 기반 조기 은퇴 가능 나이 및 필요 은퇴 자금 역산 시뮬레이션", keywords: "파이어족계산기 조기은퇴시뮬레이션 경제적자유 4%법칙 은퇴자금계산 파이어족 노후준비 재테크계산기" },
+    { title: "💰 배당주 월세 전환 은퇴 소득 계산기", url: "/dividend-income/", description: "목표 월 배당금 기준 국내외 대표 고배당주 포트폴리오 총 필요 투자 원금 및 절세 계좌 역산 계산기", keywords: "배당금계산기 배당주투자 SCHD배당 리얼티인컴 맥쿼리인프라 월세배당 은퇴소득 재테크계산기" }
+
+
 ];
 
 
@@ -277,8 +281,16 @@ var everyCalcDatabase = [
 // 🔍 독립 페이지 전용 초고속 실시간 검색 로직
 // ==========================================
 $(document).ready(function () {
+    // [추가] 검색 인풋 포커스 시 화면 어둡게 제어 클래스 장착
+    $(document).on('focus keyup', '#calc-search-input', function () {
+        var query = $(this).val().trim();
+        // 인풋에 포커스가 가거나 글자가 있을 때 body에 클래스 주입
+        $('body').addClass('search-open');
+    });
+
     // 공통 컴포넌트 비동기 fetch 완료 후 검색 인풋 감시를 위해 이벤트 위임 기법 적용
     $(document).on('input', '#calc-search-input', function () {
+        // [⚠️무결점 개정] keywords가 배열 형태일 때 터지는 런타임 다운 방어 엔진 결합
         var query = $(this).val().toLowerCase().trim();
         var $resultBox = $('#calc-search-results');
 
@@ -289,7 +301,9 @@ $(document).ready(function () {
         }
 
         var filterResults = everyCalcDatabase.filter(function (item) {
-            return item.title.toLowerCase().includes(query) || item.keywords.toLowerCase().includes(query);
+            var itemKeywords = Array.isArray(item.keywords) ? item.keywords.join(' ') : (item.keywords || '');
+            var itemTitle = item.title || '';
+            return itemTitle.toLowerCase().includes(query) || itemKeywords.toLowerCase().includes(query);
         });
 
         // 실시간 결과 UI 생성 구역
@@ -298,7 +312,7 @@ $(document).ready(function () {
             filterResults.forEach(function (calc) {
                 htmlList += '<a href="' + calc.url + '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="padding:12px 15px; font-size:0.95rem;">';
                 htmlList += '<span>' + calc.title + '</span>';
-                htmlList += '<span class="badge"">바로가기</span>';
+                htmlList += '<span class="badge">바로가기</span>';
                 htmlList += '</a>';
             });
             htmlList += '</ul>';
@@ -312,6 +326,9 @@ $(document).ready(function () {
     $(document).click(function (e) {
         if (!$(e.target).closest('#search-wrapper').length) {
             $('#calc-search-results').hide();
+            // [추가] 바깥 영역 클릭으로 닫힐 때 어두운 화면 클래스 전면 탈거 제거
+            $('body').removeClass('search-open');
         }
     });
 });
+
