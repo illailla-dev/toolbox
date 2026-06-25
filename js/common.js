@@ -264,8 +264,12 @@ var everyCalcDatabase = [
     { title: "🔠 서체 행간 가변 감쇄 보정 계산기 (Line-Height Crop)", url: "/line-height-crop/", keywords: "행간종횡비 line-height-crop 고스트공백 텍스트여백제거 피그마정렬오차 타이포그래피교정 웹퍼블리싱 가상요소믹스인 퍼블리셔유틸 프리텐다드 본고딕 순수CSS코드 ㅇㅂ" },
     { title: "📐 현대식 모던 CSS 그리드 트랙 오토배치 생성기", url: "/grid-template/", keywords: "그리드계산기 cssgrid 오토배치 auto-fit minmax계산 반응형레이아웃 웹퍼블리싱 거터정렬 퍼블리셔유틸 미디어쿼리 프리플렉스 순수CSS코드 ㅇㅂ" },
     { title: "📱 반응형 웹 마스터 단위 변환기 (PX / REM / VW / VH)", url: "/responsive-unit/", keywords: "단위변환기 pxrem변환 pxvw변환 rem계산기 반응형웹 vw계산기 vh변환 웹퍼블리싱 퍼블리셔유틸 피그마수치 가변단위 역산교차 순수CSS코드 ㅇㅂ" },
-    { title: "CSS 키프레임 이징 마스터 생성기", url: "/css-animation/", description: "CSS 애니메이션 키프레임 생성기 cubic-bezier 큐빅 베지에 가속도 이징 모션 프리셋 효과", keywords: ["CSS애니메이션", "키프레임", "@keyframes", "큐빅베지에", "이징계산기", "퍼블리셔"] },
-    { title: "SVG 마우스 드로잉 빌더", url: "/svg-drawing/", description: "SVG 애니메이션 패스 드로잉 라인아트 stroke-dasharray stroke-dashoffset 모션 계산기", keywords: ["SVG애니메이션", "SVG드로잉", "라인아트", "dasharray", "퍼블리셔", "인터랙션"] }
+    { title: "🎬 CSS 키프레임 이징 마스터 생성기", url: "/css-animation/", keywords: "CSS애니메이션 키프레임 @keyframes 큐빅베지에 이징계산기 퍼블리셔 모션프리셋 인터랙션" },
+    { title: "🖱️ SVG 마우스 드로잉 빌더", url: "/svg-drawing/", keywords: "SVG애니메이션 SVG드로잉 라인아트 dasharray 퍼블리셔 인터랙션 패스드로잉" },
+    { title: "📝 다국어 폰트 자간 보정 및 줄바꿈 차단기", url: "/word-break/", keywords: "word-break keep-all 자간보정 letter-spacing 퍼블리셔 타이포그래피 줄바꿈방지" },
+    { title: "🔤 웹폰트 깜빡임 방지 FOIT/FOUT 제어기", url: "/font-display/", keywords: "font-display swap font-face 웹폰트최적화 퍼블리셔 로딩속도 깜빡임제어" },
+    { title: "🔍 복합 미디어쿼리 디바이스 표준 브레이크포인트 빌더", url: "/media-query/", keywords: "미디어쿼리 브레이크포인트 @media 반응형웹 퍼블리셔 해상도분기 스켈레톤코드 본고딕" }
+
 
 ];
 

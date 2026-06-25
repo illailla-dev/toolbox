@@ -1,0 +1,19 @@
+@charset "utf-8";
+@import url('common.css');
+@import url('layout.css');
+
+.typo-preview-zone {
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+.typo-preview-text {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.6;
+    margin: 0;
+}

@@ -21,28 +21,6 @@
     <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link class="apple-touch-icon" href="/apple-icon-180x180.png">
     <link rel="manifest" href="/manifest.json">
-    <style>
-        .ani-preview-box {
-            background: #252830;
-            border-radius: 8px;
-            height: 180px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ani-preview-item {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--blue), #00d2ff);
-            border-radius: 8px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin-left: -25px;
-            margin-top: -25px;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
-    </style>
 </head>
 <body>
     <div id="wrap">
@@ -100,19 +78,19 @@
                 <div class="result-box mt-4">
                     <h3>💡 생성된 CSS 애니메이션 소스코드</h3>
                     <div class="result-display">
-                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
-                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                        <div class="result-code-box">
+                            <div class="result-code-box__inner">
                                 <style id="live-dynamic-style"></style>
                                 <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
                             </div>
                             <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4 style="color: var(--blue); font-weight: bold;">📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="ani-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산 코드는 애니메이션 무한 반복 시 뚝 끊기는 현상을 방지하기 위해 왕복 역재생(`alternate`) 분기가 계산식에 유연하게 반영되어 자동 매칭됩니다. 가속도가 비정상적으로 튀는 것을 막으려면 단독 블록 요소에 바인딩 하십시오.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray);">* 본 연산 코드는 애니메이션 무한 반복 시 뚝 끊기는 현상을 방지하기 위해 왕복 역재생(`alternate`) 분기가 계산식에 유연하게 반영되어 자동 매칭됩니다. 가속도가 비정상적으로 튀는 것을 막으려면 단독 블록 요소에 바인딩 하십시오.</p>
                 </div>
             </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
@@ -123,27 +101,10 @@
     <script src="/js/common.js"></script>
     <script>
         (function () {
-            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+
             const initialValues = {
                 'ani-duration': parseFloat($('#ani-duration').val()) || 2.0
             };
-
-            // 비동기 GNB 로드 인터벌 감시 엔진 및 활성 GNB 정중앙 오프셋 추적 자동 스크롤 연동
-            let gnbCheckCount = 0;
-            const gnbPolling = setInterval(function () {
-                gnbCheckCount++;
-                if ($('#gnb').children().length > 0 || gnbCheckCount > 40) {
-                    clearInterval(gnbPolling);
-                    const $activeMenu = $('#gnb .active, #gnb .on');
-                    if ($activeMenu.length) {
-                        const offsetTop = $activeMenu.offset().top;
-                        const windowHeight = $(window).height();
-                        $('html, body').animate({
-                            scrollTop: offsetTop - (windowHeight / 2)
-                        }, 200);
-                    }
-                }
-            }, 50);
 
             function getSafeValue(id) {
                 const $el = $('#' + id);
