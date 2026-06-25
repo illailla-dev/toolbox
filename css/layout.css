@@ -129,7 +129,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #gnb .container {padding: 0;height: 100%;}
     #gnb a {padding: .5rem 1rem;}
     #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;z-index: 50}
-    .is-open #gnb #toggle-close {display: flex; align-items: center; justify-content: center; position: fixed; right: var(--gap-lg); top: 1.25rem; min-width:2.5rem; height: 2.5rem;; z-index: 33; background-color: #fff; border: 1px solid #000;}
+    .is-open #gnb #toggle-close {display: flex; align-items: center; justify-content: center; position: fixed; right: var(--gap-lg); top: 1.25rem; min-width:2.5rem; height: 2.5rem;; z-index: 2002; background-color: #fff; border: 1px solid #000;}
     .is-open #gnb {left: 0;}
     #header #toggle-open {display: flex; align-items: center; justify-content: center; position: relative; z-index: 33;}
     .is-open #wrap:after {content: '';position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background: rgba(0, 0, 0, 0.5);z-index: 2001;}
