@@ -1,21 +1,22 @@
-// js/common.js
 document.addEventListener('DOMContentLoaded', () => {
     // 🚀 [애드센스 자동광고 스크립트 동적 주입 엔진]
     const adsenseScript = document.createElement('script');
     adsenseScript.async = true;
-    // ⚠️ 아래 src 주소 부분에 방금 애드센스에서 복사해 오신 본인의 고유 주소(ca-pub-xxx)를 그대로 붙여넣으세요!
     adsenseScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4325928042936631";
     adsenseScript.crossOrigin = "anonymous";
     document.head.appendChild(adsenseScript);
 
+    // 🚀 [애드센스 계정 메타 태그 동적 주입]
+    const adsenseMeta = document.createElement('meta');
+    adsenseMeta.name = "google-adsense-account";
+    adsenseMeta.content = "ca-pub-4325928042936631";
+    document.head.appendChild(adsenseMeta);
+
     // 1. [인클루드 엔진] data-include 속성을 가진 요소를 찾아 HTML 조립
     const includeElements = document.querySelectorAll('[data-include]');
-
     const promises = Array.from(includeElements).map(el => {
         const file = el.getAttribute('data-include');
         if (!file) return Promise.resolve();
-
-        // [참고] 절대경로 호출 싱크 유지를 위해 '/' 접두어 바인딩 유지
         return fetch('/' + file)
             .then(response => {
                 if (response.ok) return response.text();
