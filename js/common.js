@@ -268,9 +268,8 @@ var everyCalcDatabase = [
     { title: "🖱️ SVG 마우스 드로잉 빌더", url: "/svg-drawing/", keywords: "SVG애니메이션 SVG드로잉 라인아트 dasharray 퍼블리셔 인터랙션 패스드로잉" },
     { title: "📝 다국어 폰트 자간 보정 및 줄바꿈 차단기", url: "/word-break/", keywords: "word-break keep-all 자간보정 letter-spacing 퍼블리셔 타이포그래피 줄바꿈방지" },
     { title: "🔤 웹폰트 깜빡임 방지 FOIT/FOUT 제어기", url: "/font-display/", keywords: "font-display swap font-face 웹폰트최적화 퍼블리셔 로딩속도 깜빡임제어" },
-    { title: "🔍 복합 미디어쿼리 디바이스 표준 브레이크포인트 빌더", url: "/media-query/", keywords: "미디어쿼리 브레이크포인트 @media 반응형웹 퍼블리셔 해상도분기 스켈레톤코드 본고딕" }
-
-
+    { title: "🔍 복합 미디어쿼리 디바이스 표준 브레이크포인트 빌더", url: "/media-query/", keywords: "미디어쿼리 브레이크포인트 @media 반응형웹 퍼블리셔 해상도분기 스켈레톤코드 본고딕" },
+    { title: "📺 유튜브 쇼츠·틱톡 조회수 수익 역산기", url: "/shorts-calc/", keywords: "쇼츠수익 유튜브수익계산기 틱톡수익 숏폼정산 RPM계산 조회수수익 크리에이터부업 세후순수익 부업계산기" }
 ];
 
 
