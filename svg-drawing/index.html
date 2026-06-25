@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SVG 마우스 드로잉 빌더 - 라인 애니메이션 대시 계산기 | 에브리캘크</title>
+    <meta name="description" content="SVG 아이콘이나 로고 패스(Path)가 마우스 오버 시 스르륵 그려지는 듯한 트렌디한 라인 아트 애니메이션용 stroke-dasharray와 stroke-dashoffset CSS 소스코드를 자동 연산합니다.">
+    <meta name="keywords" content="SVG애니메이션, SVG드로잉, stroke-dasharray, stroke-dashoffset, 라인아트, 패스애니메이션, 퍼블리셔유틸, 웹퍼블리싱, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/svg-drawing/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/svg-drawing.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SVG 마우스 드로잉 빌더">
+    <meta property="og:description" content="웹 퍼블리셔 필수 타이포그래피 모션 툴! SVG 선의 총 길이에 알맞은 역동적 대시 오프셋 값과 트랜지션 CSS 소스코드를 1초 만에 획득하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/svg-drawing/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🖱️ SVG 마우스 드로잉 빌더</h2>
+                <p>마우스 오버나 컴포넌트 활성화 시 선이 스르륵 그려지는 듯한 고급 라인 모션을 구현하기 위해, SVG 선의 총 길이 정보를 바탕으로 최적화된 인터랙션 스타일 코드를 추출합니다.</p>
+                <form id="svg-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. SVG 오브젝트 라인 스펙 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="svg-path-length">SVG 선의 총 길이 (정수값 입력)</label>
+                                <input type="number" id="svg-path-length" class="form-control" placeholder="예: 300" value="300" min="1" max="5000" required>
+                                <small class="text-muted mt-2">일반적인 SVG 아이콘 패스의 평균 수치는 200~600 사이입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="svg-duration">드로잉 지속 시간 (초)</label>
+                                <input type="number" id="svg-duration" class="form-control" value="1.2" min="0.1" max="5.0" step="0.1" required>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-12 input-item">
+                                <label for="svg-trigger-mode">애니메이션 트리거 조건</label>
+                                <select id="svg-trigger-mode" class="form-control">
+                                    <option value="hover" selected>부모 컴포넌트에 마우스 오버 시 재생 (:hover)</option>
+                                    <option value="active">액티브 클래스 부여 시 재생 (.active)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="preview-title-box mt-4">
+                    <h3>👀 마우스 오버 / 터치 인터랙션 미리보기</h3>
+                    <div class="svg-preview-zone">
+                        <!-- 실시간 가시화용 가상 하트 SVG 패스 -->
+                        <svg viewBox="0 0 32 32" id="preview-svg-container">
+                            <path id="preview-svg-path" d="M16,28.2 C16,28.2 3,20.2 3,11.5 C3,6.8 6.8,3 11.5,3 C14.2,3 15.4,4.2 16,5 C16.6,4.2 17.8,3 20.5,3 C25.2,3 29,6.8 29,11.5 C29,20.2 16,28.2 16,28.2 Z"></path>
+                        </svg>
+                    </div>
+                    <small class="text-muted d-block text-center mt-2">* 상단 하트 영역에 마우스를 올리면 드로잉 애니메이션이 실시간 반복 재생됩니다.</small>
+                </div>
+                <div class="result-box mt-4">
+                    <h3>💡 추출된 SVG 드로잉 CSS 소스코드</h3>
+                    <div class="result-display">
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <style id="svg-dynamic-style"></style>
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 구문 연산 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4 style="color: var(--blue); font-weight: bold;">📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="svg-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">
+                        * <strong>[실무 활용 팁]</strong> 디자이너에게 받은 SVG 파일을 브라우저로 실행한 뒤, 개발자 도구(F12) 콘솔(Console)창에
+                        <code style="color: var(--red); background: #eee; padding: 2px 4px; border-radius: 4px;">document.querySelector('path').getTotalLength();</code>를
+                        입력하시면 선의 정확한 총 길이(px)를 바로 알아낼 수 있습니다. 그 숫자를 위 입력창에 넣고 빌드하시면 끝납니다.
+                    </p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+            const initialValues = {
+                'svg-path-length': parseFloat($('#svg-path-length').val()) || 300,
+                'svg-duration': parseFloat($('#svg-duration').val()) || 1.2
+            };
+
+            // 비동기 GNB 로드 스크롤 오류 원천 방어를 위해 자동 스크롤 감시 영역을 완전히 무력화 처리하여 격리
+            let gnbCheckCount = 0;
+            const gnbPolling = setInterval(function () {
+                gnbCheckCount++;
+                if ($('#gnb').children().length > 0 || gnbCheckCount > 40) {
+                    clearInterval(gnbPolling);
+                }
+            }, 50);
+
+            function getSafeValue(id) {
+                const $el = $('#' + id);
+                let valStr = $el.val() ? $el.val().trim() : "";
+                if (valStr === "") return initialValues[id];
+                let parsed = parseFloat(valStr);
+                return isNaN(parsed) ? initialValues[id] : parsed;
+            }
+
+            function calculateSvgDrawing() {
+                const length = getSafeValue('svg-path-length');
+                const duration = getSafeValue('svg-duration');
+                const triggerMode = $('#svg-trigger-mode').val();
+
+                let selector = '';
+                let hoverSelector = '';
+
+                if (triggerMode === 'hover') {
+                    selector = '.svg-draw-box path';
+                    hoverSelector = '.svg-draw-box:hover path';
+                } else {
+                    selector = '.svg-draw-box path';
+                    hoverSelector = '.svg-draw-box.active path';
+                }
+
+                // 주석/링크 없는 퍼블리셔 선언용 순수 CSS 코드 추출 조립
+                const cssCodeText = `${selector} {
+    stroke-dasharray: ${length};
+    stroke-dashoffset: ${length};
+    transition: stroke-dashoffset ${duration}s ease-in-out;
+}
+${hoverSelector} {
+    stroke-dashoffset: 0;
+}`;
+
+                $('#result-css-code').text(cssCodeText);
+
+                // 실시간 미리보기 가상 하트 컴포넌트에 스타일 바인딩 동적 연동
+                const liveCss = `#preview-svg-path { stroke-dasharray: ${length}; stroke-dashoffset: ${length}; transition: stroke-dashoffset ${duration}s ease-in-out; }\n.svg-preview-zone:hover #preview-svg-path { stroke-dashoffset: 0; }`;
+                $('#svg-dynamic-style').text(liveCss);
+
+                // 상속 가이드 텍스트 매칭
+                const triggerTxt = $('#svg-trigger-mode option:selected').text();
+                const guideMsg = `현재 선언된 드로잉 코드는 패스 길이 <span style="color: var(--orange); font-weight:bold;">${length}px</span> 스펙에 맞춤 제작되었습니다. <br>
+<strong>[CSS 부착 위치]</strong> 복사한 코드를 내 프로젝트의 <span style="color: var(--blue); font-weight:bold;">공통 CSS 파일(style.css 등)</span> 맨 아래에 붙여넣거나, HTML 문서 내부의 <span style="color: var(--blue); font-weight:bold;">&lt;style&gt; &lt;/style&gt; 태그 안</span>에 그대로 배치하시면 즉시 상속 가동됩니다. <br>
+<small class="text-muted" style="font-size:0.85rem;">* 조건: ${triggerTxt} 기준이며, 드로잉 완료 후 내부에 색상을 부드럽게 채우고 싶다면 호버 선택자 내부에 <code style="color: var(--red);">fill: var(--컬러); transition: fill 0.3s;</code> 속성을 추가하십시오.</small>`;
+
+                $('#svg-guide-text').html(guideMsg);
+
+            }
+
+            // 위임형 이벤트 바인딩 고수
+            $(document).on('input change', '#svg-form input, #svg-form select', function () {
+                calculateSvgDrawing();
+            });
+
+            $(document).on('click', '#btn-copy-result', function () {
+                const codeText = $('#result-css-code').text();
+                if (codeText.indexOf('//') === 0) return;
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    alert('SVG 드로잉 CSS 코드가 클립보드에 복사되었습니다.');
+                }).catch(function () {
+                    const $temp = $('<textarea>');
+                    $('body').append($temp);
+                    $temp.val(codeText).select();
+                    document.execCommand('copy');
+                    $temp.remove();
+                    alert('소스코드가 복사되었습니다.');
+                });
+            });
+
+            // 초기 실행
+            calculateSvgDrawing();
+        })();
+
+    </script>
+</body>
+</html>

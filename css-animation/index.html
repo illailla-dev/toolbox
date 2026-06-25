@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CSS 키프레임 이징 마스터 생성기 - 퍼블리셔용 애니메이션 가속도 계산 | 에브리캘크</title>
+    <meta name="description" content="현업 퍼블리셔들이 가장 자주 사용하는 부드러운 바운스, 부유, 페이드, 3D 회전 등의 모션 프리셋과 베지에 가속도(cubic-bezier), 지속 시간을 조합하여 순수 CSS @keyframes 소스코드를 실시간 자동 생성해 드립니다.">
+    <meta name="keywords" content="CSS애니메이션, 키프레임, @keyframes, 큐빅베지에, cubic-bezier, 퍼블리셔유틸, 웹퍼블리싱, 이징계산기, 인터랙션, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/css-animation/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/css-animation.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CSS 키프레임 이징 마스터 생성기">
+    <meta property="og:description" content="웹 퍼블리셔 필수 인터랙션 툴! 실무형 모션 프리셋과 가속도 조절을 지원하여 자연스럽고 트렌디한 CSS 애니메이션 풀 코드를 1초 만에 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/css-animation/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        .ani-preview-box {
+            background: #252830;
+            border-radius: 8px;
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ani-preview-item {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--blue), #00d2ff);
+            border-radius: 8px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -25px;
+            margin-top: -25px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🎬 CSS 키프레임 이징 마스터 생성기</h2>
+                <p>복잡한 수작업 없이 현업 트렌드에 맞는 부드러운 가속도 모션을 선택하고 시간 스펙을 설정하시면, 크로스 브라우징이 검증된 순수 CSS 애니메이션 구문 코드를 빌드합니다.</p>
+                <form id="ani-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 모션 프리셋 및 타임라인 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="ani-preset-select">실무 무결점 모션 프리셋</label>
+                                <select id="ani-preset-select" class="form-control">
+                                    <option value="floating" selected>둥실둥실 부유 (Floating)</option>
+                                    <option value="smooth-bounce">부드러운 바운스 (Smooth Bounce)</option>
+                                    <option value="fade-up">페이드 업 슬라이드 (Fade In Up)</option>
+                                    <option value="pulse-3d">3D 회전 펄스 (Pulse & Rotate)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="ani-easing-select">가속도 템플릿 (Easing)</label>
+                                <select id="ani-easing-select" class="form-control">
+                                    <option value="cubic-bezier(0.25, 1, 0.5, 1)" selected>Ease Out Quint (자연스럽게 감속 - 추천)</option>
+                                    <option value="cubic-bezier(0.68, -0.6, 0.32, 1.6)">Ease In Out Back (탄성 있는 반동 효과)</option>
+                                    <option value="cubic-bezier(0.4, 0, 0.2, 1)">Material Standard (부드러운 표준 이징)</option>
+                                    <option value="linear">Linear (일정한 등속도 운동)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="ani-duration">동작 지속 시간 (Duration - 초)</label>
+                                <input type="number" id="ani-duration" class="form-control" placeholder="예: 2.0" value="2.0" min="0.1" max="10.0" step="0.1" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="ani-iteration">반복 횟수 (Iteration Count)</label>
+                                <select id="ani-iteration" class="form-control">
+                                    <option value="infinite" selected>무한 반복 (infinite - 주로 사용)</option>
+                                    <option value="1">1회만 재생 (1)</option>
+                                    <option value="2">2회 반복 (2)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="preview-title-box mt-4">
+                    <h3>👀 실시간 모션 인터랙션 미리보기</h3>
+                    <div class="ani-preview-box d-flex align-items-center justify-content-center">
+                        <div id="preview-object" class="ani-preview-item"></div>
+                    </div>
+                </div>
+                <div class="result-box mt-4">
+                    <h3>💡 생성된 CSS 애니메이션 소스코드</h3>
+                    <div class="result-display">
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <style id="live-dynamic-style"></style>
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4 style="color: var(--blue); font-weight: bold;">📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="ani-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산 코드는 애니메이션 무한 반복 시 뚝 끊기는 현상을 방지하기 위해 왕복 역재생(`alternate`) 분기가 계산식에 유연하게 반영되어 자동 매칭됩니다. 가속도가 비정상적으로 튀는 것을 막으려면 단독 블록 요소에 바인딩 하십시오.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+            const initialValues = {
+                'ani-duration': parseFloat($('#ani-duration').val()) || 2.0
+            };
+
+            // 비동기 GNB 로드 인터벌 감시 엔진 및 활성 GNB 정중앙 오프셋 추적 자동 스크롤 연동
+            let gnbCheckCount = 0;
+            const gnbPolling = setInterval(function () {
+                gnbCheckCount++;
+                if ($('#gnb').children().length > 0 || gnbCheckCount > 40) {
+                    clearInterval(gnbPolling);
+                    const $activeMenu = $('#gnb .active, #gnb .on');
+                    if ($activeMenu.length) {
+                        const offsetTop = $activeMenu.offset().top;
+                        const windowHeight = $(window).height();
+                        $('html, body').animate({
+                            scrollTop: offsetTop - (windowHeight / 2)
+                        }, 200);
+                    }
+                }
+            }, 50);
+
+            function getSafeValue(id) {
+                const $el = $('#' + id);
+                let valStr = $el.val() ? $el.val().trim() : "";
+                if (valStr === "") return initialValues[id];
+                let parsed = parseFloat(valStr);
+                return isNaN(parsed) ? initialValues[id] : parsed;
+            }
+
+            // 프리셋별 순수 키프레임 데이터 맵
+            const keyframePresets = {
+                'floating': `@keyframes customFloating {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}`,
+                'smooth-bounce': `@keyframes customBounce {
+    0% { transform: translateY(0) scale(1, 1); }
+    30% { transform: translateY(-20px) scale(0.97, 1.03); }
+    100% { transform: translateY(0) scale(1, 1); }
+}`,
+                'fade-up': `@keyframes customFadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}`,
+                'pulse-3d': `@keyframes customPulse3D {
+    0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+    100% { transform: scale(1.1) rotate(5deg); filter: brightness(1.2); }
+}`
+            };
+
+            const animationNames = {
+                'floating': 'customFloating',
+                'smooth-bounce': 'customBounce',
+                'fade-up': 'customFadeUp',
+                'pulse-3d': 'customPulse3D'
+            };
+
+            function generateAnimation() {
+                const presetKey = $('#ani-preset-select').val();
+                const easing = $('#ani-easing-select').val();
+                const duration = getSafeValue('ani-duration');
+                const iteration = $('#ani-iteration').val();
+
+                const aniName = animationNames[presetKey];
+                const kfCode = keyframePresets[presetKey];
+
+                const isAlternate = (presetKey === 'floating' || presetKey === 'pulse-3d') ? ' alternate' : '';
+
+                const classCode = `.motion-item {
+    animation: ${aniName} ${duration}s ${easing} ${iteration}${isAlternate};
+}`;
+                const fullCssOutput = `${classCode}\n\n${kfCode}`;
+
+                $('#result-css-code').text(fullCssOutput);
+
+                const liveStyle = `${kfCode}\n#preview-object { animation: ${aniName} ${duration}s ${easing} ${iteration}${isAlternate}; }`;
+                $('#live-dynamic-style').text(liveStyle);
+
+                const presetTxt = $('#ani-preset-select option:selected').text();
+                const guideMsg = `현재 빌드된 <span style="color: var(--orange); font-weight:bold;">${presetTxt}</span> 모션은 <span style="color: var(--blue); font-weight:bold;">${duration}초</span> 주기로 작동하며 부드러운 가속도 곡선이 적용되었습니다. 크로스브라우징 환경에서 성능 저하를 방지하기 위해 가능한 한 <code style="color: var(--red);">will-change: transform, opacity;</code> 속성을 대상 클래스에 추가하는 것을 권장합니다.`;
+                $('#ani-guide-text').html(guideMsg);
+            }
+
+            // 위임형 이벤트 바인딩 고수
+            $(document).on('input change', '#ani-form input, #ani-form select', function () {
+                generateAnimation();
+            });
+
+            $(document).on('click', '#btn-copy-result', function () {
+                const codeText = $('#result-css-code').text();
+                if (codeText.indexOf('//') === 0) return;
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    alert('CSS 애니메이션 소스코드가 복사되었습니다.\nCSS 파일이나 <style> 태그 내에 즉시 붙여넣기 하세요.');
+                }).catch(function () {
+                    const $temp = $('<textarea>');
+                    $('body').append($temp);
+                    $temp.val(codeText).select();
+                    document.execCommand('copy');
+                    $temp.remove();
+                    alert('CSS 애니메이션 소스코드가 복사되었습니다.');
+                });
+            });
+
+            generateAnimation();
+        })();
+
+    </script>
+</body>
+</html>

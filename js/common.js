@@ -263,7 +263,9 @@ var everyCalcDatabase = [
     { title: "🔲 CSS 가변 가로세로 비율 종횡비 계산기", url: "/aspect-ratio/", keywords: "종횡비계산기 aspect-ratio 가로세로비율 반응형이미지 유튜브임베드 웹퍼블리싱 비율유지 패딩우회 퍼블리셔유틸 피그마비율 박스크기 오차역산 순수CSS코드 ㅇㅂ" },
     { title: "🔠 서체 행간 가변 감쇄 보정 계산기 (Line-Height Crop)", url: "/line-height-crop/", keywords: "행간종횡비 line-height-crop 고스트공백 텍스트여백제거 피그마정렬오차 타이포그래피교정 웹퍼블리싱 가상요소믹스인 퍼블리셔유틸 프리텐다드 본고딕 순수CSS코드 ㅇㅂ" },
     { title: "📐 현대식 모던 CSS 그리드 트랙 오토배치 생성기", url: "/grid-template/", keywords: "그리드계산기 cssgrid 오토배치 auto-fit minmax계산 반응형레이아웃 웹퍼블리싱 거터정렬 퍼블리셔유틸 미디어쿼리 프리플렉스 순수CSS코드 ㅇㅂ" },
-    { title: "📱 반응형 웹 마스터 단위 변환기 (PX / REM / VW / VH)", url: "/responsive-unit/", keywords: "단위변환기 pxrem변환 pxvw변환 rem계산기 반응형웹 vw계산기 vh변환 웹퍼블리싱 퍼블리셔유틸 피그마수치 가변단위 역산교차 순수CSS코드 ㅇㅂ" }
+    { title: "📱 반응형 웹 마스터 단위 변환기 (PX / REM / VW / VH)", url: "/responsive-unit/", keywords: "단위변환기 pxrem변환 pxvw변환 rem계산기 반응형웹 vw계산기 vh변환 웹퍼블리싱 퍼블리셔유틸 피그마수치 가변단위 역산교차 순수CSS코드 ㅇㅂ" },
+    { title: "CSS 키프레임 이징 마스터 생성기", url: "/css-animation/", description: "CSS 애니메이션 키프레임 생성기 cubic-bezier 큐빅 베지에 가속도 이징 모션 프리셋 효과", keywords: ["CSS애니메이션", "키프레임", "@keyframes", "큐빅베지에", "이징계산기", "퍼블리셔"] },
+    { title: "SVG 마우스 드로잉 빌더", url: "/svg-drawing/", description: "SVG 애니메이션 패스 드로잉 라인아트 stroke-dasharray stroke-dashoffset 모션 계산기", keywords: ["SVG애니메이션", "SVG드로잉", "라인아트", "dasharray", "퍼블리셔", "인터랙션"] }
 
 ];
 
