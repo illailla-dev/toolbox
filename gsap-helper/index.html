@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GSAP 실무 필수 스켈레톤 생성기 - 인터랙션 코드 빌더 | 에브리캘크</title>
+    <meta name="description" content="매번 공식 문서를 검색할 필요 없이, 현업 웹 퍼블리싱 실무에서 가장 자주 쓰이는 스크롤 트리거(ScrollTrigger), 타임라인(Timeline), 스태거(Stagger) 순수 JavaScript GSAP 스켈레톤 소스코드를 실시간 자동 생성합니다.">
+    <meta name="keywords" content="GSAP계산기, 스크롤트리거, ScrollTrigger, gsap타임라인, stagger, 퍼블리셔유틸, 웹퍼블리싱, 인터랙션코드, 애니메이션빌더, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/gsap-helper/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GSAP 실무 필수 스켈레톤 생성기">
+    <meta property="og:description" content="웹 퍼블리셔 필수 생산성 툴! 복잡한 인터랙션 문법 우회 기법과 최적의 GSAP 표준 구문을 조합하여 1초 만에 마스터 복사하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/gsap-helper/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🎡 GSAP 실무 필수 스켈레톤 생성기</h2>
+                <p>현대 웹퍼블리싱 모션의 표준인 GSAP 라이브러리를 오타 없이 정교하게 조합합니다. 원하는 트리거 모드와 타임라인 옵션을 조합하여 무결점 스크립트 소스코드를 빌드하세요.</p>
+                <form id="gsap-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 인터랙션 코어 모드 및 스펙 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="gsap-mode-select">주력 인터랙션 엔진 분류</label>
+                                <select id="gsap-mode-select" class="form-control">
+                                    <option value="scroll" selected>스크롤 트리거 연동 (ScrollTrigger / 스크롤 제어 모션)</option>
+                                    <option value="timeline">순차 타임라인 빌더 (Timeline / 정교한 서순 모션)</option>
+                                    <option value="stagger">시차 다중 노출 (Stagger / 목록 순차 노출 모션)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="gsap-target-class">타겟 오브젝트 클래스명 (Selector)</label>
+                                <input type="text" id="gsap-target-class" class="form-control" placeholder="예: .motion-item" value=".motion-item" required>
+                            </div>
+                        </div>
+                        <!-- 렌더링 선택 모드별 유연하게 노출되는 다이내믹 조건 세팅 구역 -->
+                        <div class="form-row row mb-3 id-gsap-dynamic-box">
+                            <div class="col-md-6 input-item mb-3 mb-md-0 id-opt-scroll">
+                                <label for="gsap-scroll-scrub">스크롤 속도 동기화 여부 (Scrub)</label>
+                                <select id="gsap-scroll-scrub" class="form-control">
+                                    <option value="true" selected>스크롤 휠 속도에 무조건 1:1 동기화 (scrub: true)</option>
+                                    <option value="false">뷰포트 진입 시 1회만 독립 재생 (scrub: false)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item mb-3 mb-md-0 id-opt-timeline" style="display: none;">
+                                <label for="gsap-tl-sequence">타임라인 다음 요소 실행 시점</label>
+                                <select id="gsap-tl-sequence" class="form-control">
+                                    <option value="'&lt;'" selected>이전 애니메이션과 동시에 실행 ('&lt;')</option>
+                                    <option value="'+=0.5'">이전 동작 완료 0.5초 후 실행 ('+=0.5')</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item mb-3 mb-md-0 id-opt-stagger" style="display: none;">
+                                <label for="gsap-stagger-dir">시차 배치 순서 방향 (From)</label>
+                                <select id="gsap-stagger-dir" class="form-control">
+                                    <option value="'start'" selected>첫 번째 요소부터 순서대로 ('start')</option>
+                                    <option value="'center'">중앙 요소부터 양옆으로 퍼짐 ('center')</option>
+                                    <option value="'end'">맨 마지막 요소부터 거꾸로 ('end')</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="gsap-duration">모션 기본 지속 시간 (Duration - 초)</label>
+                                <input type="number" id="gsap-duration" class="form-control" value="1.0" min="0.1" max="5.0" step="0.1" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 (3번 규칙: 복사 버튼 탑재 d-flex 가로 정렬 배치 포맷 고수, 주석/링크 배제) -->
+                <div class="result-box mt-4">
+                    <h3>💡 완벽 정렬 GSAP JavaScript 소스코드</h3>
+                    <div class="result-display">
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="background:#fff; padding:15px; border-radius:6px; border:1px solid #eee;">
+                            <div style="font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;">
+                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// GSAP 스켈레톤 빌드 대기 중...</span>
+                            </div>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4 style="color: var(--blue); font-weight: bold;">📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="gsap-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* <strong>[실무 활용 팁]</strong> GSAP 엔진 스펙이 정상 가동되려면 HTML 문서 내부에 <code style="color: var(--red);">gsap.min.js</code> 스크립트 CDN 플러그인 링크 파일이 본 커스텀 소스코드보다 상위에 반드시 선언되어 로드되어 있어야 인프라 충돌이 차단됩니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+            const initialValues = {
+                'gsap-target-class': $('#gsap-target-class').val() || '.motion-item',
+                'gsap-duration': parseFloat($('#gsap-duration').val()) || 1.0
+            };
+
+            function getSafeValue(id) {
+                const $el = $('#' + id);
+                let valStr = $el.val() ? $el.val().trim() : "";
+                if (valStr === "") return initialValues[id];
+                return valStr;
+            }
+
+            function getSafeNumber(id) {
+                const $el = $('#' + id);
+                let valStr = $el.val() ? $el.val().trim() : "";
+                if (valStr === "") return initialValues[id];
+                let parsed = parseFloat(valStr);
+                return isNaN(parsed) ? initialValues[id] : parsed;
+            }
+
+            function buildGsapEngine() {
+                const mode = $('#gsap-mode-select').val();
+                const target = getSafeValue('gsap-target-class');
+                const duration = getSafeNumber('gsap-duration');
+
+                // 동적 옵션 레이아웃 핸들링 가동
+                if (mode === 'scroll') {
+                    $('.id-opt-scroll').show();
+                    $('.id-opt-timeline, .id-opt-stagger').hide();
+                } else if (mode === 'timeline') {
+                    $('.id-opt-timeline').show();
+                    $('.id-opt-scroll, .id-opt-stagger').hide();
+                } else if (mode === 'stagger') {
+                    $('.id-opt-stagger').show();
+                    $('.id-opt-scroll, .id-opt-timeline').hide();
+                }
+
+                let jsCodeText = '';
+
+                if (mode === 'scroll') {
+                    const scrubVal = $('#gsap-scroll-scrub').val();
+                    // 주석/링크 없는 퍼블리셔 선언용 순수 GSAP 스크롤 트리거 스켈레톤 빌드
+                    jsCodeText = `gsap.registerPlugin(ScrollTrigger);
+
+gsap.to('${target}', {
+    scrollTrigger: {
+        trigger: '${target}',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: ${scrubVal},
+        toggleActions: 'play none none reverse'
+    },
+    opacity: 1,
+    y: 0,
+    duration: ${duration},
+    ease: 'power2.out'
+});`;
+                } else if (mode === 'timeline') {
+                    const seqVal = $('#gsap-tl-sequence').val();
+                    // 타임라인 연쇄 서순 구문 빌드
+                    jsCodeText = `const tl = gsap.timeline({
+    defaults: { duration: ${duration}, ease: 'power2.out' }
+});
+
+tl.to('${target}', { opacity: 1, y: 0 })
+  .to('${target}-thumb', { scale: 1.05, rotation: 2 }, ${seqVal})
+  .from('${target}-text', { opacity: 0, x: -20 }, '-=0.3');`;
+                } else if (mode === 'stagger') {
+                    const dirVal = $('#gsap-stagger-dir').val();
+                    // 다중 배열 스태거 시차 모션 구문 빌드
+                    jsCodeText = `gsap.from('${target}', {
+    opacity: 0,
+    y: 30,
+    duration: ${duration},
+    stagger: {
+        amount: 0.5,
+        from: ${dirVal}
+    },
+    ease: 'power3.out'
+});`;
+                }
+
+                $('#result-css-code').text(jsCodeText);
+
+                // 명확한 부착 위치 가이드라인 컨텍스트 조합
+                const modeTxt = $('#gsap-mode-select option:selected').text().split(' (');
+                const guideMsg = `현재 가공된 스크립트는 GSAP <span style="color: var(--orange); font-weight:bold;">${modeTxt[0]}</span> 표준 아키텍처 규격을 완벽히 준수합니다.<br>
+<strong>[스크립트 부착 위치]</strong> 복사한 자바스크립트 소스코드를 프로젝트 내부 공통 스크립트 파일 혹은 HTML 마크업 문서의 <span style="color: var(--blue); font-weight:bold;">&lt;/body&gt; 종료 태그 직전 최하단 &lt;script&gt; 영역</span>에 삽입하셔야 돔 파싱 지연 오류 없이 무결점으로 상속 복구 가동됩니다.`;
+
+                $('#gsap-guide-text').html(guideMsg);
+            }
+
+            // 위임형 이벤트 바인딩 규칙 고수
+            $(document).on('input change', '#gsap-form input, #gsap-form select', function () {
+                buildGsapEngine();
+            });
+
+            // 클립보드 바이럴 복사 및 피드백 연동
+            $(document).on('click', '#btn-copy-result', function () {
+                const codeText = $('#result-css-code').text();
+                if (codeText.indexOf('//') === 0) return;
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    alert('GSAP 실무 템플릿 코드가 클립보드에 복사되었습니다.\n스크립트 영역에 즉시 부착 가능합니다.');
+                }).catch(function () {
+                    const $temp = $('<textarea>');
+                    $('body').append($temp);
+                    $temp.val(codeText).select();
+                    document.execCommand('copy');
+                    $temp.remove();
+                    alert('소스코드가 복사되었습니다.');
+                });
+            });
+
+            // 최초 기동
+            buildGsapEngine();
+        })();
+
+    </script>
+</body>
+</html>

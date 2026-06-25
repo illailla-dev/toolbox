@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>하루 커피값 모아 목돈 만들기 계산기 - 소액 절약 복리 시뮬레이터 | 에브리캘크</title>
+    <meta name="description" content="매일 무심코 지출하는 하루 커피값이나 담뱃값 등 소액 소비를 아껴 꾸준히 저축하거나 미국 주식에 투자했을 때, 5년 후와 10년 후 내 미래 자산이 얼마의 복리로 불어나는지 실시간으로 시뮬레이션합니다.">
+    <meta name="keywords" content="커피값계산기, 소액저축계산기, 강제저축, 푼돈목돈, 복리계산기, 주식투자시뮬레이션, 절약자극, 퍼블리셔유틸, 재테크기초, ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/coffee-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="하루 커피값 모아 목돈 만들기 계산기">
+    <meta property="og:description" content="커뮤니티 절약 자극 치트키 툴! 매일 아낀 작은 돈이 만드는 놀라운 미래 자산 스펙과 복리 마법의 최종 총액을 1초 만에 직접 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/coffee-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>☕ 하루 커피값 모아 목돈 만들기 계산기</h2>
+                <p>내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 예상 투자 수익률을 매칭하시면, 시간이 지나 내 통장에 쌓이는 실질 미래 자산 가치를 무결점으로 빌드합니다.</p>
+                <form id="coffee-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 절약 품목 및 재테크 수익률 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="coffee-daily-cost">하루에 아낄 소액 지출 (원)</label>
+                                <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500" value="4500" min="500" step="100" required>
+                                <small class="text-muted mt-2">프랜차이즈 카페 아메리카노 혹은 담뱃값 기준 평균 4,500원입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="coffee-period-select">자산 축적 목표 기간</label>
+                                <select id="coffee-period-select" class="form-control">
+                                    <option value="3">3년 저축 시 (36개월 단기 레이스)</option>
+                                    <option value="5" selected>5년 저축 시 (60개월 중기 재테크 - 추천)</option>
+                                    <option value="10">10년 저축 시 (120개월 장기 복리의 마법)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-12 input-item">
+                                <label for="coffee-yield-select">아낀 돈을 굴릴 투자 자산 연수익률</label>
+                                <select id="coffee-yield-select" class="form-control">
+                                    <option value="2.0">일반 은행 적금 (연 2.0% 안정 추구형)</option>
+                                    <option value="8.0" selected>미국 S&P500 지수 추종 ETF (장기 평균 연 8.0% 성장형)</option>
+                                    <option value="12.0">배당 재투자 고배당주 포트폴리오 (적극 투자 연 12.0%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 (3번 고정 규칙: 복사 버튼 없을 때 단독 노출 포맷 엄격 고수) -->
+                <div class="result-box mt-4">
+                    <h3>💡 소액 절약 자산 축적 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>지정 기간 동안 절약한 순수 원금 총액: <strong id="res-coffee-pure-principal">0원</strong></p>
+                        <p>복리 마법으로 불어난 순수 이자/수익: <strong id="res-coffee-compound-interest" style="color: var(--orange);">0원</strong></p>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함 **최종 예상 총액**: <strong id="res-coffee-final-total">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4 style="color: var(--blue); font-weight: bold;">📊 푼돈 목돈 전환 절약 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="coffee-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 하루치의 절약 금액을 월 단위(하루 금액 * 30.41일)로 환산하여 매월 말 복리로 예치 연산하는 월 복리 적립식 공식 스펙을 고수합니다. 자산 가격의 단기 변동성 지표는 배제되었으므로 장기 자산 배분 비전 수립용 지표로 활용하시기 바랍니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+            const initialValues = {
+                'coffee-daily-cost': parseFloat($('#coffee-daily-cost').val()) || 4500
+            };
+
+            // 만원 단위를 사람이 읽기 직관적인 "X억 X,XXX만원" 한글 통화 해상도로 변환하는 무결점 포맷 엔진
+            function formatKoreanWonFromManwon(manWonValue) {
+                if (manWonValue <= 0) return '0원';
+                const uk = Math.floor(manWonValue / 10000);
+                const man = Math.floor(manWonValue % 10000);
+
+                let result = '';
+                if (uk > 0) result += uk.toLocaleString() + '억 ';
+                if (man > 0) result += man.toLocaleString() + '만 ';
+
+                return result.trim() + '원';
+            }
+
+            function getSafeValue(id) {
+                const $el = $('#' + id);
+                let valStr = $el.val() ? $el.val().trim() : "";
+                if (valStr === "") return initialValues[id];
+                let parsed = parseFloat(valStr);
+                return isNaN(parsed) ? initialValues[id] : parsed;
+            }
+
+            function calculateCoffeeCompound() {
+                const dailyCost = getSafeValue('coffee-daily-cost');
+                const targetYears = parseInt($('#coffee-period-select').val());
+                const annualYield = parseFloat($('#coffee-yield-select').val());
+
+                // 1년 평균 365.25일을 반영한 한 달 평균 일수 30.4375일 기준 한 달 절약금 역산
+                const monthlySaveWon = Math.floor(dailyCost * 30.4375);
+                const totalMonths = targetYears * 12;
+
+                // 순수 절약 원금 총액 (천단위 콤마 가공용 수치)
+                const purePrincipalWon = monthlySaveWon * totalMonths;
+
+                // 월 복리 적립식 공식 대입 가동
+                // 공식: S = P * [((1 + r)^n - 1) / r] (r = 월이율, n = 총개월수)
+                const monthlyRate = (annualYield / 100) / 12;
+                let finalAssetWon = 0;
+
+                if (monthlyRate === 0) {
+                    finalAssetWon = purePrincipalWon;
+                } else {
+                    // 월말 적립 구조 연산식 빌드
+                    finalAssetWon = monthlySaveWon * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate);
+                }
+
+                const finalAssetWonFloor = Math.floor(finalAssetWon);
+                const compoundInterestWon = Math.max(0, finalAssetWonFloor - purePrincipalWon);
+
+                // 한글 가독성 변환 엔진 탑재를 위한 만원 단위 평탄화
+                const finalAssetManwon = Math.floor(finalAssetWonFloor / 10000);
+
+                // UI 마크업 텍스트 리얼타임 바인딩
+                $('#res-coffee-pure-principal').text(purePrincipalWon.toLocaleString() + '원');
+                $('#res-coffee-compound-interest').text(compoundInterestWon.toLocaleString() + '원');
+                $('#res-coffee-final-total').text(finalAssetWonFloor.toLocaleString() + '원 (' + formatKoreanWonFromManwon(finalAssetManwon) + ')');
+
+                // 상속 가이드라인 가치 세팅
+                const yieldTxt = $('#coffee-yield-select option:selected').text().split(' (');
+                const guideMsg = `하루에 <span style="color: var(--orange); font-weight:bold;">${dailyCost.toLocaleString()}원</span>의 지출을 억제하여 한 달 평균 <span style="color: var(--blue); font-weight:bold;">${monthlySaveWon.toLocaleString()}원</span>을 <span style="color: var(--orange); font-weight:bold;">${targetYears}년</span> 동안 꾸준히 축적하면 총 원금은 <span style="color: var(--blue); font-weight:bold;">${purePrincipalWon.toLocaleString()}원</span>이 됩니다.<br>
+이 자금을 기회비용 삼아 <span style="color: var(--blue); font-weight:bold;">${yieldTxt[0]}</span> 조건으로 적립식 투자를 집행하셨을 경우, 눈에 보이지 않던 푼돈은 복리의 마법을 거쳐 최종적으로 <span style="color: var(--blue); font-weight:bold;">${formatKoreanWonFromManwon(finalAssetManwon)}</span>의 묵직한 목돈 자산 포트폴리오로 상속 복구되어 내 통장에 안착하게 됩니다.`;
+
+                $('#coffee-guide-text').html(guideMsg);
+            }
+
+            // 위임형 이벤트 바인딩 규칙 엄격 준수 고수
+            $(document).on('input change', '#coffee-form input, #coffee-form select', function () {
+                calculateCoffeeCompound();
+            });
+
+            // 최초 기동
+            calculateCoffeeCompound();
+        })();
+
+    </script>
+</body>
+</html>
