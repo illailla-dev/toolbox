@@ -35,11 +35,11 @@
                     <div class="input-group-box">
                         <h3>1. 캐릭터 장비 및 버프 스펙 설정</h3>
                         <div class="form-row row mb-3">
-                            <div class="col input-item mb-3 mb-md-0">
+                            <div class="col-6 input-item mb-3 mb-md-0">
                                 <label for="global-mpr">아이템 MP 소모 감소율 (MPR - %)</label>
                                 <input type="number" id="global-mpr" class="form-control" value="0" min="0" max="100" step="1" placeholder="예: 15">
                             </div>
-                            <div class="col input-item">
+                            <div class="col-6 input-item">
                                 <label for="global-cdr">아이템 재사용 대기시간 감소율 (CDR - %)</label>
                                 <input type="number" id="global-cdr" class="form-control" value="0" min="0" max="99" step="1" placeholder="예: 30">
                             </div>
@@ -53,7 +53,7 @@
                         </div>
                         <!-- 스킬 동적 컨테이너 -->
                         <div id="skill-container">
-                            <!-- 기본 스킬 로우 1 (초기값 정수형 바인딩 및 모드 탑재) -->
+                            <!-- 기본 스킬 로우 1 (쿨타임 소수점 첫째 자리 대입 허용) -->
                             <div class="form-row row mb-3 skill-row align-items-end">
                                 <div class="col-md input-item mb-2 mb-md-0">
                                     <label>스킬 분류</label>
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="col-6 col-md-3 input-item mb-2 mb-md-0 cooldown-group">
                                     <label>기본 쿨타임 (초)</label>
-                                    <input type="number" class="form-control skill-cooldown" value="6" min="1" step="1" placeholder="5">
+                                    <input type="number" class="form-control skill-cooldown" value="6.0" min="0.1" step="0.1" placeholder="5.0">
                                 </div>
                                 <div class="col-md-auto input-item text-end">
                                     <button type="button" class="btn btn-danger btn-delete-skill text-white w-100"><i class="bi bi-x-lg"></i></button>
@@ -83,25 +83,27 @@
                 <div class="result-box mt-4">
                     <h3>💡 최종 산출 MP 세팅 결과 데이터</h3>
                     <div class="result-display">
-                        <p style="font-size: 115%; color: var(--blue); font-weight: bold;" id="result-css-code">상단 설정을 토대로 연산 버튼을 누르면 실시간 시뮬레이션 결과가 반영됩니다.</p>
+                        <p id="result-css-code" style="font-size: 115%; color: var(--blue); font-weight: bold;">// 상단 설정을 토대로 연산 버튼을 누르면 실시간 시뮬레이션 결과가 반영됩니다.</p>
                     </div>
+                    <!-- 가이드 박스 영역 -->
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 인게임 자원 최적화 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="mp-guide-text">스킬 데이터를 입력하고 계산기 엔진을 가동해 주세요.</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* <strong>[전투 최적화 팁]</strong> 인게임 툴팁 스펙상에 이미 아이템 쿨감이 반영된 소수점 숫자가 표기된다면, 상단의 '아이템 재사용 대기시간 감소율(CDR)' 수치를 <code style="color: var(--blue);">0</code>으로 두고 인게임 쿨타임 소수점을 그대로 대입하시면 완벽히 연산됩니다.</p>
                 </div>
             </div>
-            <!-- 가이드 박스 영역 -->
-            <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
-                <h4>📊 인게임 자원 최적화 가이드</h4>
-                <p style="font-size: 1rem; margin-bottom: 0;" id="mp-guide-text">스킬 데이터를 입력하고 계산기 엔진을 가동해 주세요.</p>
-            </div>
-            <p class="result-tip guide-text mt-3">* <strong>[전투 최적화 팁]</strong> 패시브/토글 스킬은 아이템의 재사용 대기시간 감소(CDR)에 영향을 받지 않으며, 오직 MP 소모 감소율(MPR)만 적용되어 초당 마나가 차감됩니다.</p>
-    </div>
-    </div>
-    <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
-    </main>
-    <div id="sidebar" data-include="sidebar.html"></div>
-    <footer id="footer" data-include="footer.html"></footer>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
     </div>
     <script src="/js/common.js"></script>
     <script>
+        /**
+ * 에브리캘크 - 게임 초당 MP 소모량 및 세팅 계산기 코어 엔진 (V3)
+ * 기능: 쿨타임 소수점(Float) 입력 완벽 동기화 및 액티브/패시브 분기 시뮬레이션
+ */
         (function () {
             'use strict';
 
@@ -131,7 +133,7 @@
                 </div>
                 <div class="col-6 col-md-3 input-item mb-2 mb-md-0 cooldown-group">
                     <label>기본 쿨타임 (초)</label>
-                    <input type="number" class="form-control skill-cooldown" value="1" min="1" step="1" placeholder="1">
+                    <input type="number" class="form-control skill-cooldown" value="1.0" min="0.1" step="0.1" placeholder="1.0">
                 </div>
                 <div class="col-md-auto input-item text-end">
                     <button type="button" class="btn btn-danger btn-delete-skill text-white w-100"><i class="bi bi-x-lg"></i></button>
@@ -148,13 +150,11 @@
                         const mpLabel = row.querySelector('.mp-label');
 
                         if (e.target.value === 'passive') {
-                            // 패시브일 때: 쿨타임창 숨김, 레이블 문구 변경
                             cooldownGroup.style.opacity = '0.3';
                             cooldownGroup.style.pointerEvents = 'none';
-                            row.querySelector('.skill-cooldown').value = 1; // 연산 방어용 1초 고정
+                            row.querySelector('.skill-cooldown').value = 1.0; // 연산 방어용 1초 고정
                             mpLabel.textContent = '초당 지속 MP 소모량';
                         } else {
-                            // 액티브일 때: 원상복구
                             cooldownGroup.style.opacity = '1';
                             cooldownGroup.style.pointerEvents = 'auto';
                             mpLabel.textContent = '기본 MP 소모량';
@@ -174,9 +174,9 @@
                     }
                 });
 
-                // 4. 복합 연산 엔진 (액티브와 패시브 분기 로직)
+                // 4. 복합 연산 엔진 (쿨타임 소수점 파싱 정밀화)
                 btnCalculateMp.addEventListener('click', function () {
-                    // 소수점 유실 및 유저 입력값 무결성을 위해 정수 파싱 처리 우선
+                    // 글로벌 백분율은 정수 기반 유지
                     const globalMpr = parseInt(document.getElementById('global-mpr').value || 0, 10) / 100;
                     const globalCdr = parseInt(document.getElementById('global-cdr').value || 0, 10) / 100;
 
@@ -188,19 +188,19 @@
                         const baseMp = parseInt(row.querySelector('.skill-mp').value || 0, 10);
 
                         if (type === 'active') {
-                            // [액티브 연산] MP 소모감소와 쿨감(CDR) 모두 적용
-                            const baseCooldown = parseInt(row.querySelector('.skill-cooldown').value || 1, 10);
-                            const finalCooldown = Math.max(0.1, baseCooldown * (1 - globalCdr));
+                            // [정밀화 반영] 쿨타임값을 parseFloat로 파싱하여 소수점 연산 무결성 확보
+                            const baseCooldown = parseFloat(row.querySelector('.skill-cooldown').value || 1.0);
+                            const finalCooldown = Math.max(0.01, baseCooldown * (1 - globalCdr));
                             const finalMp = Math.max(0, baseMp * (1 - globalMpr));
                             totalMps += (finalMp / finalCooldown);
                         } else {
-                            // [패시브 연산] 쿨감 불필요, 오직 MP 소모감소(MPR)만 적용하여 초당 계산
+                            // [패시브 연산] 오직 MP 소모감소(MPR)만 적용하여 초당 계산
                             const finalMp = Math.max(0, baseMp * (1 - globalMpr));
-                            totalMps += finalMp; // 매초 소모되므로 쿨타임 없이 그대로 합산
+                            totalMps += finalMp;
                         }
                     });
 
-                    // 결과 데이터 출력 (소수점은 허용)
+                    // 결과 데이터 출력
                     const resultValue = totalMps.toFixed(2);
                     resultDisplay.textContent = `총 필요한 초당 MP 회복량 (Total MPS): ${resultValue} MP/sec`;
 
