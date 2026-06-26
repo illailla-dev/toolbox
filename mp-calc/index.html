@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>게임 초당 MP 소모량 및 MP 세팅 계산기 | 에브리캘크</title>
+    <meta name="description" content="스킬별 기본 MP 소모량과 쿨타임을 유동적으로 추가하고, 아이템 효과(MP 소모 감소, 재사용 대기시간 감소)를 반영하여 초당 필요한 총 MP 회복 세팅값을 계산하는 시뮬레이터">
+    <meta name="keywords" content="게임MP계산기,MP소모량초당계산,쿨감계산,MP감소율,스킬MP소모,엠피회복세팅,자원관리시뮬레이션,ㅇㅂ">
+    <link class="canonical" href="https://every-calc.co.kr/mp-calc/">
+    <meta name="robots" content="index,follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/mp-calc.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="게임 초당 MP 소모량 및 MP 세팅 계산기">
+    <meta property="og:description" content="스킬별 MP 소모량, 쿨타임, 아이템 쿨감 및 소모 감소 수치를 대입하여 캐릭터에게 필요한 최종 초당 MP 회복량을 실시간으로 역산하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/mp-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>⚡ 게임 초당 MP 소모량 및 세팅 계산기</h2>
+                <p>액티브 스킬의 쿨타임별 소모량과 패시브/토글 스킬의 초당 지속 소모량을 유동적으로 추가하고, 아이템 효과를 반영하여 필요한 최종 초당 MP 회복 세팅값을 계산합니다.</p>
+                <form id="mp-form" class="form" onsubmit="return false;">
+                    <!-- 1. 캐릭터 글로벌 스펙 설정 구역 -->
+                    <div class="input-group-box">
+                        <h3>1. 캐릭터 장비 및 버프 스펙 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col input-item mb-3 mb-md-0">
+                                <label for="global-mpr">아이템 MP 소모 감소율 (MPR - %)</label>
+                                <input type="number" id="global-mpr" class="form-control" value="0" min="0" max="100" step="1" placeholder="예: 15">
+                            </div>
+                            <div class="col input-item">
+                                <label for="global-cdr">아이템 재사용 대기시간 감소율 (CDR - %)</label>
+                                <input type="number" id="global-cdr" class="form-control" value="0" min="0" max="99" step="1" placeholder="예: 30">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. 동적 스킬 관리 구역 (유동적 추가/삭제 필드) -->
+                    <div class="input-group-box mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">2. 사용 스킬 리스트 설정</h3>
+                            <button type="button" id="btn-add-skill" class="btn btn-primary text-white">+ 스킬 추가</button>
+                        </div>
+                        <!-- 스킬 동적 컨테이너 -->
+                        <div id="skill-container">
+                            <!-- 기본 스킬 로우 1 (초기값 정수형 바인딩 및 모드 탑재) -->
+                            <div class="form-row row mb-3 skill-row align-items-end">
+                                <div class="col-md input-item mb-2 mb-md-0">
+                                    <label>스킬 분류</label>
+                                    <select class="form-control skill-type">
+                                        <option value="active" selected>액티브 (쿨타임 기준)</option>
+                                        <option value="passive">패시브 (초당 소모 버프)</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-md-3 input-item mb-2 mb-md-0">
+                                    <label class="mp-label">기본 MP 소모량</label>
+                                    <input type="number" class="form-control skill-mp" value="60" min="0" step="1" placeholder="0">
+                                </div>
+                                <div class="col-6 col-md-3 input-item mb-2 mb-md-0 cooldown-group">
+                                    <label>기본 쿨타임 (초)</label>
+                                    <input type="number" class="form-control skill-cooldown" value="6" min="1" step="1" placeholder="5">
+                                </div>
+                                <div class="col-md-auto input-item text-end">
+                                    <button type="button" class="btn btn-danger btn-delete-skill text-white w-100"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 연산 트리거 버튼 -->
+                    <button type="button" id="btn-calculate-mp" class="btn btn-block mt-4 text-white" style="background: var(--blue); font-size: 1.1rem; padding: 12px; font-weight: bold;">⚙️ 초당 총 MP 소모량 및 회복 요구량 계산하기</button>
+                </form>
+                <!-- 3. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 최종 산출 MP 세팅 결과 데이터</h3>
+                    <div class="result-display">
+                        <p style="font-size: 115%; color: var(--blue); font-weight: bold;" id="result-css-code">상단 설정을 토대로 연산 버튼을 누르면 실시간 시뮬레이션 결과가 반영됩니다.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 가이드 박스 영역 -->
+            <div class="target-guide-box mt-3 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                <h4>📊 인게임 자원 최적화 가이드</h4>
+                <p style="font-size: 1rem; margin-bottom: 0;" id="mp-guide-text">스킬 데이터를 입력하고 계산기 엔진을 가동해 주세요.</p>
+            </div>
+            <p class="result-tip guide-text mt-3">* <strong>[전투 최적화 팁]</strong> 패시브/토글 스킬은 아이템의 재사용 대기시간 감소(CDR)에 영향을 받지 않으며, 오직 MP 소모 감소율(MPR)만 적용되어 초당 마나가 차감됩니다.</p>
+    </div>
+    </div>
+    <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+    </main>
+    <div id="sidebar" data-include="sidebar.html"></div>
+    <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const skillContainer = document.getElementById('skill-container');
+                const btnAddSkill = document.getElementById('btn-add-skill');
+                const btnCalculateMp = document.getElementById('btn-calculate-mp');
+                const resultDisplay = document.getElementById('result-css-code');
+                const mpGuideText = document.getElementById('mp-guide-text');
+                const btnCopyResult = document.getElementById('btn-copy-result');
+
+                // 1. 유동적 스킬 필드 동적 추가 기능
+                btnAddSkill.addEventListener('click', function () {
+                    const newRow = document.createElement('div');
+                    newRow.className = 'form-row row mb-3 skill-row align-items-end';
+                    newRow.innerHTML = `
+                <div class="col-md input-item mb-2 mb-md-0">
+                    <label>스킬 분류</label>
+                    <select class="form-control skill-type">
+                        <option value="active" selected>액티브 (쿨타임 기준)</option>
+                        <option value="passive">패시브 (초당 소모 버프)</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-3 input-item mb-2 mb-md-0">
+                    <label class="mp-label">기본 MP 소모량</label>
+                    <input type="number" class="form-control skill-mp" value="0" min="0" step="1" placeholder="0">
+                </div>
+                <div class="col-6 col-md-3 input-item mb-2 mb-md-0 cooldown-group">
+                    <label>기본 쿨타임 (초)</label>
+                    <input type="number" class="form-control skill-cooldown" value="1" min="1" step="1" placeholder="1">
+                </div>
+                <div class="col-md-auto input-item text-end">
+                    <button type="button" class="btn btn-danger btn-delete-skill text-white w-100"><i class="bi bi-x-lg"></i></button>
+                </div>
+            `;
+                    skillContainer.appendChild(newRow);
+                });
+
+                // 2. 이벤트 위임: 스킬 분류(액티브/패시브) 변경 시 UI 동적 제어
+                skillContainer.addEventListener('change', function (e) {
+                    if (e.target && e.target.classList.contains('skill-type')) {
+                        const row = e.target.closest('.skill-row');
+                        const cooldownGroup = row.querySelector('.cooldown-group');
+                        const mpLabel = row.querySelector('.mp-label');
+
+                        if (e.target.value === 'passive') {
+                            // 패시브일 때: 쿨타임창 숨김, 레이블 문구 변경
+                            cooldownGroup.style.opacity = '0.3';
+                            cooldownGroup.style.pointerEvents = 'none';
+                            row.querySelector('.skill-cooldown').value = 1; // 연산 방어용 1초 고정
+                            mpLabel.textContent = '초당 지속 MP 소모량';
+                        } else {
+                            // 액티브일 때: 원상복구
+                            cooldownGroup.style.opacity = '1';
+                            cooldownGroup.style.pointerEvents = 'auto';
+                            mpLabel.textContent = '기본 MP 소모량';
+                        }
+                    }
+                });
+
+                // 3. 이벤트 위임: 동적 스킬 필드 삭제
+                skillContainer.addEventListener('click', function (e) {
+                    if (e.target && e.target.classList.contains('btn-delete-skill')) {
+                        const totalRows = skillContainer.querySelectorAll('.skill-row').length;
+                        if (totalRows > 1) {
+                            e.target.closest('.skill-row').remove();
+                        } else {
+                            alert('최소 1개 이상의 스킬 슬롯이 유지되어야 합니다.');
+                        }
+                    }
+                });
+
+                // 4. 복합 연산 엔진 (액티브와 패시브 분기 로직)
+                btnCalculateMp.addEventListener('click', function () {
+                    // 소수점 유실 및 유저 입력값 무결성을 위해 정수 파싱 처리 우선
+                    const globalMpr = parseInt(document.getElementById('global-mpr').value || 0, 10) / 100;
+                    const globalCdr = parseInt(document.getElementById('global-cdr').value || 0, 10) / 100;
+
+                    let totalMps = 0;
+                    const skillRows = skillContainer.querySelectorAll('.skill-row');
+
+                    skillRows.forEach(function (row) {
+                        const type = row.querySelector('.skill-type').value;
+                        const baseMp = parseInt(row.querySelector('.skill-mp').value || 0, 10);
+
+                        if (type === 'active') {
+                            // [액티브 연산] MP 소모감소와 쿨감(CDR) 모두 적용
+                            const baseCooldown = parseInt(row.querySelector('.skill-cooldown').value || 1, 10);
+                            const finalCooldown = Math.max(0.1, baseCooldown * (1 - globalCdr));
+                            const finalMp = Math.max(0, baseMp * (1 - globalMpr));
+                            totalMps += (finalMp / finalCooldown);
+                        } else {
+                            // [패시브 연산] 쿨감 불필요, 오직 MP 소모감소(MPR)만 적용하여 초당 계산
+                            const finalMp = Math.max(0, baseMp * (1 - globalMpr));
+                            totalMps += finalMp; // 매초 소모되므로 쿨타임 없이 그대로 합산
+                        }
+                    });
+
+                    // 결과 데이터 출력 (소수점은 허용)
+                    const resultValue = totalMps.toFixed(2);
+                    resultDisplay.textContent = `총 필요한 초당 MP 회복량 (Total MPS): ${resultValue} MP/sec`;
+
+                    // 가이드 텍스트 분기 처리
+                    if (totalMps === 0) {
+                        mpGuideText.textContent = "현재 세팅된 소모성 스킬이 없습니다. 스킬 소모량과 쿨타임을 정상 입력해 주세요.";
+                    } else if (totalMps > 0 && totalMps <= 20) {
+                        mpGuideText.textContent = `초당 MP 요구량이 ${resultValue}로 낮은 편입니다. 기본 물약 수급 또는 가벼운 MP 회복 장비 구성만으로 무한 유지가 가능합니다.`;
+                    } else if (totalMps > 20 && totalMps <= 70) {
+                        mpGuideText.textContent = `초당 MP 요구량이 ${resultValue}로 평균적인 마법 딜러 수준입니다. 장비 옵션에서 MP 회복 효율 세팅이나 마나 리젠 버프 링크가 권장됩니다.`;
+                    } else {
+                        mpGuideText.textContent = `초당 MP 요구량이 ${resultValue}로 매우 높습니다! 자원 고갈 위험이 크므로 스킬 레벨 조정, MP 소모 감소(MPR) 장비 추가 확보 또는 대형 마나 물약 자동 섭취 세팅을 필히 점검하세요.`;
+                    }
+                });
+
+                // 5. 결과 데이터 복사 인프라 제어
+                btnCopyResult.addEventListener('click', function () {
+                    const rawText = resultDisplay.textContent;
+                    if (rawText.indexOf('//') === 0) {
+                        alert('계산하기 버튼을 먼저 눌러 결과 데이터를 생성해 주세요.');
+                        return;
+                    }
+
+                    navigator.clipboard.writeText(rawText).then(function () {
+                        const originalText = btnCopyResult.textContent;
+                        btnCopyResult.textContent = '복사 완료!';
+                        btnCopyResult.className = 'btn btn-main-copy copy-btn text-white';
+
+                        setTimeout(function () {
+                            btnCopyResult.textContent = originalText;
+                            btnCopyResult.className = 'btn btn-success copy-btn text-white';
+                        }, 1500);
+                    }).catch(function () {
+                        alert('복사 기능이 지원되지 않는 환경입니다. 수동 복사해 주세요.');
+                    });
+                });
+            });
+        })();
+
+    </script>
+</body>
+</html>

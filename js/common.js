@@ -274,8 +274,8 @@ var everyCalcDatabase = [
     { title: "🎡 파이어족 조기 은퇴 자산 시뮬레이터", url: "/fire-movement/", description: "4% 법칙과 물가상승률 기반 조기 은퇴 가능 나이 및 필요 은퇴 자금 역산 시뮬레이션", keywords: "파이어족계산기 조기은퇴시뮬레이션 경제적자유 4%법칙 은퇴자금계산 파이어족 노후준비 재테크계산기" },
     { title: "💰 배당주 월세 전환 은퇴 소득 계산기", url: "/dividend-income/", description: "목표 월 배당금 기준 국내외 대표 고배당주 포트폴리오 총 필요 투자 원금 및 절세 계좌 역산 계산기", keywords: "배당금계산기 배당주투자 SCHD배당 리얼티인컴 맥쿼리인프라 월세배당 은퇴소득 재테크계산기" },
     { title: "☕ 하루 커피값 모아 목돈 만들기 계산기", url: "/coffee-calc/", description: "하루 한 잔의 커피값이나 소액 소비 지출을 아껴 장기 복리로 투자했을 때의 5년 및 10년 후 미래 자산 총액 역산 시뮬레이션", keywords: "커피값계산기 소액저축계산기 강제저축 푼돈목돈 복리계산기 주식투자시뮬레이션 절약자극" },
-    { title: "🎡 GSAP 실무 필수 스켈레톤 생성기", url: "/gsap-helper/", description: "현업 웹퍼블리싱 실무에서 가장 자주 쓰이는 스크롤 트리거(ScrollTrigger), 타임라인, 스태거 시차 모션용 자바스크립트 스켈레톤 소스코드 자동 빌더", keywords: "GSAP계산기 스크롤트리거 ScrollTrigger gsap타임라인 stagger 퍼블리셔유틸 웹퍼블리싱" }
-
+    { title: "🎡 GSAP 실무 필수 스켈레톤 생성기", url: "/gsap-helper/", description: "현업 웹퍼블리싱 실무에서 가장 자주 쓰이는 스크롤 트리거(ScrollTrigger), 타임라인, 스태거 시차 모션용 자바스크립트 스켈레톤 소스코드 자동 빌더", keywords: "GSAP계산기 스크롤트리거 ScrollTrigger gsap타임라인 stagger 퍼블리셔유틸 웹퍼블리싱" },
+    { title: "⚡ 게임 초당 MP 소모량 및 MP 세팅 계산기", url: "/mp-calc/", keywords: "게임MP계산기 MP소모량초당계산 쿨감계산 MP감소율 스킬MP소모 엠피회복세팅 자원관리시뮬레이션" },
 ];
 
 
