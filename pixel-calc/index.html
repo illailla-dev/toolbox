@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>네이버 블로그 글자수 및 원고지 환산 가이드 계산기 | 에브리캘크</title>
+    <meta name="description" content="네이버 스마트에디터 기준 공백 제외 글자 수를 정밀 판정하고, 200자 원고지 매수 환산 및 본문 이미지 장수 대비 최적의 노출 밸런스 가이드를 실시간 제공합니다.">
+    <meta name="keywords" content="블로그글자수, 공백제외글자수, 네이버글자수, 원고지환산, 블로그상위노출, 체험단원고, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/pixel-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/pixel-calc.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="네이버 블로그 글자수 및 원고지 환산 가이드 계산기 - 에브리캘크">
+    <meta property="og:description" content="네이버 스마트에디터와 100% 일치하는 공백 제외 글자 수와 원고대행 부업 필수 지표인 이미지 밸런스를 실시간 확인하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/pixel-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📸 픽셀아트 도안 차트 변환기</h2>
+                <p>업로드한 원본 이미지를 격자 눈금이 선명한 픽셀아트 도안으로 변환합니다. 십자수, 비즈, 컬러 도트 그래픽 실무 도안 차트 제작에 최적화되어 있습니다.</p>
+                <form id="pixel-form" class="form" onsubmit="return false;">
+                    <!-- 1. 원본 이미지 업로드 (인스타 분할기 포맷 계승) -->
+                    <div class="input-group-box">
+                        <h3>1. 도안 변환용 이미지 업로드</h3>
+                        <div class="input-item">
+                            <input type="file" id="pixel-image-input" accept="image/*" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
+                        </div>
+                    </div>
+                    <!-- 2. 정밀도 및 색상 옵션 설정 -->
+                    <div class="input-group-box mt-4">
+                        <h3>2. 픽셀 도안 스펙 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="pixel-size">픽셀 해상도 (가로 칸 수)</label>
+                                <select id="pixel-size" class="form-control">
+                                    <option value="16">16 x 16 (미니 도안)</option>
+                                    <option value="32" selected>32 x 32 (표준 크기)</option>
+                                    <option value="64">64 x 64 (정밀 도안)</option>
+                                    <option value="128">128 x 128 (고해상도 차트)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="color-count">제한할 색상 수 (팔레트 축소)</label>
+                                <select id="color-count" class="form-control">
+                                    <option value="0" selected>제한 없음 (원본 색상 유지)</option>
+                                    <option value="8">8색 제한 (레트로 감성)</option>
+                                    <option value="16">16색 제한 (표준 십자수 실)</option>
+                                    <option value="32">32색 제한 (디테일 도안)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 input-item">
+                                <label for="grid-toggle">도안 차트 눈금선 표시</label>
+                                <select id="grid-toggle" class="form-control">
+                                    <option value="true" selected>검은색 정밀 격자선 표시</option>
+                                    <option value="false">격자선 없이 블록만 노출</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 연산 트리거 버튼 -->
+                    <button type="button" id="btn-convert-pixel" class="btn blue btn-block mt-4 text-white">🎨 픽셀아트 도안 차트 생성하기</button>
+                </form>
+                <!-- 3. 결과 출력 영역 (아기 스케줄러 & 원고 카운팅 복합 포맷 매립) -->
+                <div class="result-box mt-4" id="pixel-result-area" style="display:none;">
+                    <h3>💡 픽셀 도안 차트 분석 및 시각화 결과</h3>
+                    <div class="result-display">
+                        <!-- 복합 지표 노출 구역 -->
+                        <p>📏 생성된 도안 스펙: <strong id="res-pixel-spec" style="color: var(--blue);">32 x 32 그리드</strong></p>
+                        <p>🎨 사용된 총 색상 수: <strong id="res-pixel-colors" style="color: var(--orange);">계산 중...</strong></p>
+                        <hr>
+                        <!-- 실시간 픽셀 도안 렌더링 캔버스 존 -->
+                        <h4 class="mb-3">📅 실물 작업용 도안 차트 미리보기</h4>
+                        <div class="d-flex justify-content-center p-3" style="background: #f1f3f5; border-radius: 6px;">
+                            <canvas id="pixel-canvas" style="max-width: 100%; height: auto; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); image-rendering: pixelated;"></canvas>
+                        </div>
+                        <hr>
+                        <!-- 인쇄 및 다운로드 가로 정렬 액션박스 (원고지 포맷 고수) -->
+                        <div class="form-row">
+                            <div class="col-md-6"><button type="button" class="btn btn-block green" id="btn-download-pixel">💾 도안 이미지 다운로드</button></div>
+                            <div class="col-md-6 mt-2 mt-md-0"><button type="button" class="btn btn-block green" onclick="window.print();">🖨️ 도안 차트 종이로 인쇄하기</button></div>
+                        </div>
+                    </div>
+                    <!-- 가이드 박스 영역 -->
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 도안 차트 실무 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="pixel-guide-text">픽셀 크기가 작을수록 난이도가 낮아지며, 64이상의 정밀 도안은 실물 인쇄 후 격자선을 보며 작업하시는 것을 추천합니다.</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 유틸리티는 브라우저의 HTML5 Canvas API 연산 기능을 활용하여 업로드한 이미지를 외부 서버로 전송하지 않고 사용자의 디바이스 내부에서 100% 안전하게 즉시 변환 처리하므로 개인정보가 완벽히 보호됩니다.</p>
+                </div>
+            </div>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // DOM 캐싱
+                const imageInput = document.getElementById('pixel-image-input');
+                const pixelSizeSelect = document.getElementById('pixel-size');
+                const colorCountSelect = document.getElementById('color-count');
+                const gridToggleSelect = document.getElementById('grid-toggle');
+                const btnConvert = document.getElementById('btn-convert-pixel');
+                const resultArea = document.getElementById('pixel-result-area');
+                const resSpec = document.getElementById('res-pixel-spec');
+                const resColors = document.getElementById('res-pixel-colors');
+                const canvas = document.getElementById('pixel-canvas');
+                const btnDownload = document.getElementById('btn-download-pixel');
+                const guideText = document.getElementById('pixel-guide-text');
+
+                const ctx = canvas.getContext('2d');
+                let loadedImage = null; // 이미지 오브젝트 저장용 프리셋
+
+                // 1. 파일 업로드 캐싱 처리
+                imageInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const img = new Image();
+                        img.onload = function () {
+                            loadedImage = img; // 전역 스코프 보호 영역에 이미지 캐싱
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 2. 픽셀 및 색상 복합 연산 변환 엔진
+                // 4. 복합 연산 엔진 (투명 영역 배경화 및 전체 격자 락 세팅)
+                btnConvert.addEventListener('click', function () {
+                    if (!loadedImage) {
+                        alert('도안으로 변환할 원본 이미지를 먼저 업로드해 주세요.');
+                        return;
+                    }
+
+                    const targetSize = parseInt(pixelSizeSelect.value, 10);
+                    const colorLimit = parseInt(colorCountSelect.value, 10);
+                    const showGrid = gridToggleSelect.value === 'true';
+
+                    const displayScale = Math.floor(600 / targetSize);
+                    const canvasSize = targetSize * displayScale;
+                    canvas.width = canvasSize;
+                    canvas.height = canvasSize;
+
+                    const memCanvas = document.createElement('canvas');
+                    memCanvas.width = targetSize;
+                    memCanvas.height = targetSize;
+                    const memCtx = memCanvas.getContext('2d');
+
+                    // 원본 이미지를 정방형으로 리사이즈하여 임시 캔버스에 드로잉
+                    memCtx.drawImage(loadedImage, 0, 0, loadedImage.width, loadedImage.height, 0, 0, targetSize, targetSize);
+                    const imgData = memCtx.getImageData(0, 0, targetSize, targetSize);
+                    const data = imgData.data;
+
+                    const colorMap = new Map();
+
+                    // 색상 제한(양자화) 연산
+                    if (colorLimit > 0) {
+                        const step = Math.floor(256 / Math.ceil(Math.pow(colorLimit, 1 / 3)));
+                        for (let i = 0; i < data.length; i += 4) {
+                            if (data[i + 3] === 0) continue; // 완전히 투명한 곳은 패스 (어차피 아래에서 흰색 처리)
+                            data[i] = Math.round(data[i] / step) * step;
+                            data[i + 1] = Math.round(data[i + 1] / step) * step;
+                            data[i + 2] = Math.round(data[i + 2] / step) * step;
+                        }
+                    }
+
+                    ctx.clearRect(0, 0, canvasSize, canvasSize);
+
+                    // [버그 수정 완료] 이미지 유무와 상관없이 무조건 전체 그리드 영역을 순회하며 채움
+                    for (let y = 0; y < targetSize; y++) {
+                        for (let x = 0; x < targetSize; x++) {
+                            const idx = (y * targetSize + x) * 4;
+                            let r = data[idx];
+                            let g = data[idx + 1];
+                            let b = data[idx + 2];
+                            let a = data[idx + 3];
+
+                            // 핵심 예외 제어: 알파값이 0(투명)이거나 값이 비어있다면 도안용 순백색(#FFFFFF)으로 강제 치환
+                            if (a === 0 || a === undefined) {
+                                r = 255;
+                                g = 255;
+                                b = 255;
+                                a = 255;
+                            }
+
+                            const hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+                            // 순백색 바탕 처리가 된 칸은 색상 통계 카운터에서 제외 (진짜 도안 색상만 집계되도록 방어)
+                            if (!(r === 255 && g === 255 && b === 255)) {
+                                colorMap.set(hex, (colorMap.get(hex) || 0) + 1);
+                            }
+
+                            // 픽셀 블록 렌더링
+                            ctx.fillStyle = `rgba(${r},${g},${b},${a / 255})`;
+                            ctx.fillRect(x * displayScale, y * displayScale, displayScale, displayScale);
+
+                            // 격자 눈금선 매핑: 투명했던 외곽 영역을 포함하여 전체 사각형에 무조건 100% 매핑
+                            if (showGrid) {
+                                ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+                                ctx.lineWidth = 1;
+                                ctx.strokeRect(x * displayScale, y * displayScale, displayScale, displayScale);
+                            }
+                        }
+                    }
+
+                    // 지표 데이터 출력
+                    resSpec.textContent = `${targetSize} x ${targetSize} 칸 그리드 (총 ${targetSize * targetSize}개 격자 블록)`;
+                    resColors.textContent = `${colorMap.size}개 단일 색상 감지됨 (바탕 흰색 제외)`;
+
+                    if (targetSize <= 32) {
+                        guideText.textContent = "초보자용 미니 도안입니다. 실물 비즈나 자수 입문용으로 알맞으며 가볍게 인쇄하여 작업하실 수 있습니다.";
+                    } else {
+                        guideText.textContent = "고해상도 전문가용 차트입니다. 칸 수가 많으므로 도안을 저장한 후 모니터로 크게 확대하거나, 상단의 인쇄 버튼을 눌러 큰 종이 도안으로 보면서 수놓으시는 것을 적극 추천합니다.";
+                    }
+
+                    resultArea.style.display = 'block';
+                });
+
+
+                // 5. 도안 이미지 다운로드 제어 (Blob 포맷 보존)
+                btnDownload.addEventListener('click', function () {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.download = 'every-calc-pixel-chart.png';
+                    link.href = dataUrl;
+                    link.click();
+                });
+            });
+        })();
+
+    </script>
+</body>
+</html>

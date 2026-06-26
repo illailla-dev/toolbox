@@ -276,6 +276,8 @@ var everyCalcDatabase = [
     { title: "☕ 하루 커피값 모아 목돈 만들기 계산기", url: "/coffee-calc/", description: "하루 한 잔의 커피값이나 소액 소비 지출을 아껴 장기 복리로 투자했을 때의 5년 및 10년 후 미래 자산 총액 역산 시뮬레이션", keywords: "커피값계산기 소액저축계산기 강제저축 푼돈목돈 복리계산기 주식투자시뮬레이션 절약자극" },
     { title: "🎡 GSAP 실무 필수 스켈레톤 생성기", url: "/gsap-helper/", description: "현업 웹퍼블리싱 실무에서 가장 자주 쓰이는 스크롤 트리거(ScrollTrigger), 타임라인, 스태거 시차 모션용 자바스크립트 스켈레톤 소스코드 자동 빌더", keywords: "GSAP계산기 스크롤트리거 ScrollTrigger gsap타임라인 stagger 퍼블리셔유틸 웹퍼블리싱" },
     { title: "⚡ 게임 초당 MP 소모량 및 MP 세팅 계산기", url: "/mp-calc/", keywords: "게임MP계산기 MP소모량초당계산 쿨감계산 MP감소율 스킬MP소모 엠피회복세팅 자원관리시뮬레이션" },
+    { title: "🎨 픽셀아트 도안 차트 변환기", url: "/pixel-calc/", keywords: "픽셀아트변환기 도안차트 십자수도안 비즈도안 도트그래픽 이미지도트화 픽셀화프로그램 격자눈금도안" },
+
 ];
 
 
