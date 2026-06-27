@@ -73,11 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const isOpen = document.body.classList.toggle('is-open');
 
             // 주석 해제 및 아이콘 교체 로직 완성
-            if (isOpen) {
-                icon.classList.replace('bi-list', 'bi-x');
-            } else {
-                icon.classList.replace('bi-x', 'bi-list');
-            }
+            // if (isOpen) {
+            //     icon.classList.replace('bi-list', 'bi-x');
+            // } else {
+            //     icon.classList.replace('bi-x', 'bi-list');
+            // }
         });
         toggleCloseBtn.addEventListener('click', (e) => {
             document.body.classList.remove('is-open');
