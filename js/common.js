@@ -12,6 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
     adsenseMeta.content = "ca-pub-4325928042936631";
     document.head.appendChild(adsenseMeta);
 
+    // 🚀 [네이버 애널리틱스 스크립트 동적 주입]
+    const naverAnalytics = document.createElement('script');
+    naverAnalytics.type = "text/javascript";
+    naverAnalytics.src = "//wcs.pstatic.net/wcslog.js";
+    document.head.appendChild(naverAnalytics);
+
+    // 네이버 애널리틱스 계정 설정
+    naverAnalytics.onload = () => {
+        if (!window.wcs_add) window.wcs_add = {};
+        window.wcs_add["wa"] = "2490d29a499a580"; // 본인 계정 ID
+        if (window.wcs) {
+            wcs_do();
+        }
+    };
+
     // 1. [인클루드 엔진] data-include 속성을 가진 요소를 찾아 HTML 조립
     const includeElements = document.querySelectorAll('[data-include]');
     const promises = Array.from(includeElements).map(el => {
@@ -30,100 +45,107 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error(error));
     });
 
-    // 2. 모든 인클루드 조립이 끝난 후 내부에서 모든 초기화 함수를 안전하게 실행합니다.
+    // 모든 include 완료 후 추가 작업 가능
     Promise.all(promises).then(() => {
-        setActiveMenu();
-        requestAnimationFrame(() => {
-            scrollToActiveMenu();
-        });
+        console.log("모든 include 파일 로딩 완료 ✅");
+    });
+});
 
-        initShareButton();
-        initBookmarkButton();
 
-        const toggleBtn = document.querySelector('#toggle-open');
-        const gnb = document.querySelector('#gnb');
-
-        if (!toggleBtn || !gnb) return;
-
-        const icon = toggleBtn.querySelector('.bi');
-        if (!icon) return;
-
-        // 1. 토글 버튼 클릭 이벤트
-        toggleBtn.addEventListener('click', (e) => {
-            // 🚀 버튼 클릭이 document의 클릭 이벤트로 전파되는 것을 막습니다.
-            e.stopPropagation();
-
-            const isOpen = document.body.classList.toggle('is-open');
-
-            // 주석 해제 및 아이콘 교체 로직 완성
-            if (isOpen) {
-                icon.classList.replace('bi-list', 'bi-x');
-            } else {
-                icon.classList.replace('bi-x', 'bi-list');
-            }
-        });
-
-        // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
-        document.addEventListener('click', (e) => {
-            // 🚀 메뉴가 열려있을 때만 작동하도록 조건 추가 (성능 최적화)
-            if (!document.body.classList.contains('is-open')) return;
-
-            // 클릭된 타겟이 실제 메뉴창(<nav>) 내부가 아닐 때만 닫기 실행
-            if (!e.target.closest('nav')) {
-                document.body.classList.remove('is-open');
-                icon.classList.replace('bi-x', 'bi-list');
-            }
-        });
+// 2. 모든 인클루드 조립이 끝난 후 내부에서 모든 초기화 함수를 안전하게 실행합니다.
+Promise.all(promises).then(() => {
+    setActiveMenu();
+    requestAnimationFrame(() => {
+        scrollToActiveMenu();
     });
 
+    initShareButton();
+    initBookmarkButton();
 
-    /**
-     * 현재 인터넷 주소창의 경로를 분석하여
-     * #gnb 사이드바 안의 메뉴 링크에 'active' 클래스를 붙여주는 함수
-     */
-    function setActiveMenu() {
-        const currentPath = window.location.pathname;
-        const menuLinks = document.querySelectorAll('#gnb nav a');
+    const toggleBtn = document.querySelector('#toggle-open');
+    const gnb = document.querySelector('#gnb');
 
-        menuLinks.forEach(link => {
-            const linkHref = link.getAttribute('href');
+    if (!toggleBtn || !gnb) return;
 
-            // 메인 홈(/) 처리
-            if (linkHref === '/' || linkHref === '/index.html') {
-                if (currentPath === '/' || currentPath === '/index.html') {
-                    link.classList.add('active');
-                }
-            }
-            // 서브 폴더 페이지 처리
-            else if (linkHref && currentPath.includes(linkHref)) {
+    const icon = toggleBtn.querySelector('.bi');
+    if (!icon) return;
+
+    // 1. 토글 버튼 클릭 이벤트
+    toggleBtn.addEventListener('click', (e) => {
+        // 🚀 버튼 클릭이 document의 클릭 이벤트로 전파되는 것을 막습니다.
+        e.stopPropagation();
+
+        const isOpen = document.body.classList.toggle('is-open');
+
+        // 주석 해제 및 아이콘 교체 로직 완성
+        if (isOpen) {
+            icon.classList.replace('bi-list', 'bi-x');
+        } else {
+            icon.classList.replace('bi-x', 'bi-list');
+        }
+    });
+
+    // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
+    document.addEventListener('click', (e) => {
+        // 🚀 메뉴가 열려있을 때만 작동하도록 조건 추가 (성능 최적화)
+        if (!document.body.classList.contains('is-open')) return;
+
+        // 클릭된 타겟이 실제 메뉴창(<nav>) 내부가 아닐 때만 닫기 실행
+        if (!e.target.closest('nav')) {
+            document.body.classList.remove('is-open');
+            icon.classList.replace('bi-x', 'bi-list');
+        }
+    });
+});
+
+
+/**
+ * 현재 인터넷 주소창의 경로를 분석하여
+ * #gnb 사이드바 안의 메뉴 링크에 'active' 클래스를 붙여주는 함수
+ */
+function setActiveMenu() {
+    const currentPath = window.location.pathname;
+    const menuLinks = document.querySelectorAll('#gnb nav a');
+
+    menuLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+
+        // 메인 홈(/) 처리
+        if (linkHref === '/' || linkHref === '/index.html') {
+            if (currentPath === '/' || currentPath === '/index.html') {
                 link.classList.add('active');
             }
-        });
-    }
-    function scrollToActiveMenu() {
-        const menuWrapper = document.querySelector('#gnb');
-        const activeMenu = document.querySelector('#gnb nav a.active'); // 🚀 li → a 로 변경
-
-        if (!menuWrapper || !activeMenu) {
-            console.log('조건 불만족으로 return');
-            return;
         }
+        // 서브 폴더 페이지 처리
+        else if (linkHref && currentPath.includes(linkHref)) {
+            link.classList.add('active');
+        }
+    });
+}
+function scrollToActiveMenu() {
+    const menuWrapper = document.querySelector('#gnb');
+    const activeMenu = document.querySelector('#gnb nav a.active'); // 🚀 li → a 로 변경
 
-        const wrapperRect = menuWrapper.getBoundingClientRect();
-        const activeRect = activeMenu.getBoundingClientRect();
-
-        const scrollTarget = menuWrapper.scrollTop
-            + (activeRect.top - wrapperRect.top)
-            - (menuWrapper.clientHeight / 2)
-            + (activeMenu.offsetHeight / 2);
-
-        console.log('scrollTarget:', scrollTarget);
-
-        menuWrapper.scrollTo({
-            top: scrollTarget,
-            behavior: 'smooth'
-        });
+    if (!menuWrapper || !activeMenu) {
+        console.log('조건 불만족으로 return');
+        return;
     }
+
+    const wrapperRect = menuWrapper.getBoundingClientRect();
+    const activeRect = activeMenu.getBoundingClientRect();
+
+    const scrollTarget = menuWrapper.scrollTop
+        + (activeRect.top - wrapperRect.top)
+        - (menuWrapper.clientHeight / 2)
+        + (activeMenu.offsetHeight / 2);
+
+    console.log('scrollTarget:', scrollTarget);
+
+    menuWrapper.scrollTo({
+        top: scrollTarget,
+        behavior: 'smooth'
+    });
+}
 
 
 });
