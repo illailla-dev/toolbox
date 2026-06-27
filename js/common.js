@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initBookmarkButton();
 
         const toggleBtn = document.querySelector('#toggle-open');
+        const toggleCloseBtn = document.querySelector('#toggle-close');
         const gnb = document.querySelector('#gnb');
 
         if (!toggleBtn || !gnb) return;
@@ -77,6 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 icon.classList.replace('bi-x', 'bi-list');
             }
+        });
+        toggleCloseBtn.addEventListener('click', (e) => {
+            document.body.classList.remove('is-open');
+            console.log('close');
         });
 
         // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
