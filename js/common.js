@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error(error));
     });
 
-    // 2. 모든 include 완료 후 초기화 및 네이버 애널리틱스 삽입
+    // 2. 모든 인클루드 조립이 끝난 후 내부에서 모든 초기화 함수를 안전하게 실행합니다.
     Promise.all(promises).then(() => {
         console.log("모든 include 파일 로딩 완료 ✅");
 
-        // 🚀 [네이버 애널리틱스 스크립트 동적 주입] — </body> 직전
+        // 네이버 애널리틱스 삽입 (</body> 직전)
         const naverScript = document.createElement('script');
         naverScript.type = "text/javascript";
         naverScript.src = "//wcs.pstatic.net/wcslog.js";
@@ -42,13 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         naverScript.onload = () => {
             if (!window.wcs_add) window.wcs_add = {};
-            window.wcs_add["wa"] = "2490d29a499a580"; // 성빈님 계정 ID
+            window.wcs_add["wa"] = "2490d29a499a580";
             if (window.wcs) {
                 wcs_do();
             }
         };
 
-        // 🚀 메뉴 및 버튼 초기화
         setActiveMenu();
         requestAnimationFrame(() => {
             scrollToActiveMenu();
@@ -59,21 +58,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const toggleBtn = document.querySelector('#toggle-open');
         const gnb = document.querySelector('#gnb');
+
         if (!toggleBtn || !gnb) return;
 
         const icon = toggleBtn.querySelector('.bi');
         if (!icon) return;
 
-        // 메뉴 토글 버튼 이벤트
+        // 1. 토글 버튼 클릭 이벤트
         toggleBtn.addEventListener('click', (e) => {
+            // 🚀 버튼 클릭이 document의 클릭 이벤트로 전파되는 것을 막습니다.
             e.stopPropagation();
+
             const isOpen = document.body.classList.toggle('is-open');
-            icon.classList.replace(isOpen ? 'bi-list' : 'bi-x', isOpen ? 'bi-x' : 'bi-list');
+
+            // 주석 해제 및 아이콘 교체 로직 완성
+            if (isOpen) {
+                icon.classList.replace('bi-list', 'bi-x');
+            } else {
+                icon.classList.replace('bi-x', 'bi-list');
+            }
         });
 
-        // 바깥 영역 클릭 시 메뉴 닫기
+        // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
         document.addEventListener('click', (e) => {
+            // 🚀 메뉴가 열려있을 때만 작동하도록 조건 추가 (성능 최적화)
             if (!document.body.classList.contains('is-open')) return;
+
+            // 클릭된 타겟이 실제 메뉴창(<nav>) 내부가 아닐 때만 닫기 실행
             if (!e.target.closest('nav')) {
                 document.body.classList.remove('is-open');
                 icon.classList.replace('bi-x', 'bi-list');
