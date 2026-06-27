@@ -125,13 +125,14 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #header .container {flex-wrap: wrap;}
     #search-wrapper {order: 5; width: 100%; max-width: inherit;}
     #sidebar {display: none;}
-    #gnb {position: fixed;width: 100%; left: -100%; top: 0;bottom: 0;height: var(--full-height); max-height: inherit; transition: left 0.3s ease;; padding: 0; z-index: 2002;}
+    #gnb {position: fixed; top: 0;bottom: 0;height: var(--full-height);max-height: inherit;transition: left 0.3s ease;padding: 0;z-index: -1;visibility: hidden;}
     #gnb .container {padding: 0;height: 100%;}
     #gnb a {padding: .5rem 1rem;}
-    #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;z-index: 50}
+    #gnb nav {position: fixed;transform: translate(-101%, 0);top: 0; left: 0; width: 280px;background-color: #fff;padding: 1rem; transition: all 0.3s ease;z-index: 1;}
     .is-open {overflow: hidden;}
     .is-open #gnb #toggle-close {display: flex; align-items: center; justify-content: center; position: fixed; right: var(--gap-lg); top: 1.25rem; min-width:2.5rem; height: 2.5rem;; z-index: 2010; background-color: #fff; border: 1px solid #000;}
-    .is-open #gnb {left: 0;}
+    .is-open #gnb {left: 0;visibility: visible;z-index: 2002;}
+    .is-open #gnb nav {transform: translate(0, 0);}
     #header #toggle-open {display: flex; align-items: center; justify-content: center; position: relative; z-index: 33;}
     .is-open #wrap:after {content: '';position: fixed;top: 0;left: 0;width: 100vw;height: 100vh;background: rgba(0, 0, 0, 0.5);z-index: 2001;}
     #content {overflow-x:hidden}
