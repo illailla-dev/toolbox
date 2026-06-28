@@ -298,6 +298,12 @@ var everyCalcDatabase = [
     { title: "🎡 GSAP 실무 필수 스켈레톤 생성기", url: "/gsap-helper/", description: "현업 웹퍼블리싱 실무에서 가장 자주 쓰이는 스크롤 트리거(ScrollTrigger), 타임라인, 스태거 시차 모션용 자바스크립트 스켈레톤 소스코드 자동 빌더", keywords: "GSAP계산기 스크롤트리거 ScrollTrigger gsap타임라인 stagger 퍼블리셔유틸 웹퍼블리싱" },
     { title: "⚡ 게임 초당 MP 소모량 및 MP 세팅 계산기", url: "/mp-calc/", keywords: "게임MP계산기 MP소모량초당계산 쿨감계산 MP감소율 스킬MP소모 엠피회복세팅 자원관리시뮬레이션" },
     { title: "🎨 픽셀아트 도안 차트 변환기", url: "/pixel-calc/", keywords: "픽셀아트변환기 도안차트 십자수도안 비즈도안 도트그래픽 이미지도트화 픽셀화프로그램 격자눈금도안" },
+    {
+        title: "🎨 랜덤 컬러 팔레트 생성기",
+        url: "/color-palette/",
+        keywords: "랜덤컬러팔레트 색상조합 색상추천 디자인팔레트 웹디자인 색상생성기 컬러조합추천 UI컬러픽커"
+    },
+
 
 ];
 

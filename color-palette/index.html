@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>무료 온라인 컬러 팔레트 생성기 | 에브리캘크</title>
+    <meta name="description" content="랜덤 팔레트 생성 또는 이미지 업로드를 통해 대표 색상을 추출하는 무료 온라인 컬러 팔레트 생성기. 웹 디자인, UI/UX, 쇼핑몰 상품 이미지, 썸네일 제작에 최적화된 실시간 툴입니다.">
+    <meta name="keywords" content="컬러팔레트, 색상조합, 랜덤팔레트, 이미지색상추출, 무료팔레트, 온라인팔레트, 웹디자인, UI컬러, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/color-palette/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="무료 온라인 컬러 팔레트 생성기 - 에브리캘크">
+    <meta property="og:description" content="랜덤 팔레트 생성 및 이미지 기반 색상 추출로 디자인에 최적화된 컬러 팔레트를 무료로 만들어보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/color-palette/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🎨 랜덤 컬러 팔레트 생성기</h2>
+                <p>버튼을 눌러 랜덤 팔레트를 만들거나, 이미지를 업로드해서 대표 색상을 추출하세요.</p>
+                <form id="palette-form" class="form" onsubmit="return false;">
+                    <!-- 랜덤 팔레트 -->
+                    <button type="button" id="btn-generate" class="btn blue btn-block mt-4 text-white">
+                        ✨ 랜덤 팔레트 생성하기
+                    </button>
+                    <!-- 이미지 업로드 팔레트 -->
+                    <div class="input-group-box mt-4">
+                        <h3>📷 이미지에서 색상 추출</h3>
+                        <input type="file" id="image-input" accept="image/*" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px;">
+                    </div>
+                </form>
+                <!-- 결과 출력 -->
+                <div class="result-box mt-4">
+                    <h3>💡 컬러 팔레트 결과</h3>
+                    <div class="result-display">
+                        <div id="palette-display" style="display:none; gap:10px; flex-wrap:wrap; margin-bottom: 1rem;"></div>
+                        <div class="result-code-box mb-3">
+                            <div class="result-code-box__inner">
+                                <span id="paletteCodes" style="color: var(--blue); font-weight: bold; white-space: pre-wrap;">// 색상 코드 대기 중...</span>
+                            </div>
+                            <button type="button" class="btn btn-success copy-btn" data-target="paletteCodes" style="white-space: nowrap;">코드 복사하기</button>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4 id="guide-title">📊 컬러 매칭 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="guide-text">무작위 색상 조합은 새로운 영감을 주고, 예상치 못한 디자인 아이디어를 발견할 수 있게 합니다.</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">
+                        * 본 엔진은 단순 평균이 아니라 HSL 기반 보정을 적용해 탁해지지 않는 자연스러운 색상 조합을 제공합니다.
+                    </p>
+                </div>
+            </div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnGenerate = document.getElementById('btn-generate');
+            const resultArea = document.getElementById('palette-result-area');
+            const display = document.getElementById('palette-display');
+            const imageInput = document.getElementById('image-input');
+
+            // 랜덤 HEX 색상 생성
+            function randomColor() {
+                return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+            }
+
+            // 팔레트 박스 생성
+            function createSwatch(hex) {
+                const swatch = document.createElement('div');
+                swatch.style.width = '80px';
+                swatch.style.height = '80px';
+                swatch.style.background = hex;
+                swatch.style.border = '1px solid #ccc';
+                swatch.style.display = 'flex';
+                swatch.style.alignItems = 'center';
+                swatch.style.justifyContent = 'center';
+                swatch.style.fontSize = '12px';
+                swatch.style.fontWeight = 'bold';
+
+                // HEX → RGB 변환
+                const r = parseInt(hex.substr(1, 2), 16);
+                const g = parseInt(hex.substr(3, 2), 16);
+                const b = parseInt(hex.substr(5, 2), 16);
+
+                // 명도 계산 (YIQ 방식)
+                const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                swatch.style.color = (yiq >= 128) ? '#000' : '#fff';
+
+                swatch.innerText = hex;
+                return swatch;
+            }
+
+
+            // 랜덤 팔레트
+            btnGenerate.addEventListener('click', function () {
+                display.innerHTML = '';
+                const hexArray = [];
+                for (let i = 0; i < 5; i++) {
+                    const hex = randomColor();
+                    hexArray.push(hex);
+                    display.appendChild(createSwatch(hex));
+                }
+                $('#paletteCodes').text(hexArray.join('\n'));
+                display.style.display = 'flex';   // 팔레트 영역 보이기
+            });
+
+            // 이미지 업로드 → 색상 추출
+            imageInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = function () {
+                    const colorThief = new ColorThief();
+                    const palette = colorThief.getPalette(img, 5);
+
+                    display.innerHTML = '';
+                    const hexArray = [];
+                    palette.forEach(rgb => {
+                        const hex = "#" + rgb.map(x => x.toString(16).padStart(2, '0')).join('');
+                        hexArray.push(hex);
+                        display.appendChild(createSwatch(hex));
+                    });
+                    $('#paletteCodes').text(hexArray.join('\n'));
+                    display.style.display = 'flex';   // 팔레트 영역 보이기
+                };
+                img.src = URL.createObjectURL(file);
+            });
+
+            $(document).on('click', '.copy-btn', function () {
+                var targetId = $(this).data('target');
+                var codeText = $('#' + targetId).text();
+                var $btn = $(this);
+                var originalText = $btn.text();
+
+                navigator.clipboard.writeText(codeText).then(function () {
+                    $btn.text("복사완료!").removeClass('btn-success').addClass('btn-primary');
+                    setTimeout(function () {
+                        $btn.text(originalText).removeClass('btn-primary').addClass('btn-success');
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
