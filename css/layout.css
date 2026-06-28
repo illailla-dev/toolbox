@@ -128,7 +128,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #gnb {position: fixed;width: 100%; left: -100%; top: 0;bottom: 0;height: var(--full-height); max-height: inherit; transition: left 0.3s ease;; padding: 0; z-index: 2002;}
     #gnb .container {padding: 0;height: 100%;}
     #gnb a {padding: .5rem 1rem;}
-    #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;padding-bottom:env(safe-area-inset-bottom);z-index: 50}
+    #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;padding-bottom: 10rem;z-index: 50}
     .is-open {overflow: hidden;}
     .is-open #header {}
     .is-open #gnb #toggle-close {display: none; align-items: center; justify-content: center; position: fixed; right: var(--gap-lg); top: 1.25rem; min-width:2.5rem; height: 2.5rem;; z-index: 2010; background-color: #fff; border: 1px solid #000;}
