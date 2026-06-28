@@ -125,7 +125,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     #header .container {flex-wrap: wrap;}
     #search-wrapper {order: 5; width: 100%; max-width: inherit;}
     #sidebar {display: none;}
-    #gnb {position: fixed;width: 100%; left: -100%; top: 0;bottom: 0;height: var(--full-height); max-height: inherit; transition: left 0.3s ease;; padding: 0; z-index: 2002;}
+    #gnb {position: fixed;width: 100%; left: -100%; top: 0;bottom: 0;height: var(--full-height);padding-bottom:env(safe-area-inset-bottom); max-height: inherit; transition: left 0.3s ease;; padding: 0; z-index: 2002;}
     #gnb .container {padding: 0;height: 100%;}
     #gnb a {padding: .5rem 1rem;}
     #gnb nav {position: relative;width: 280px;background-color: #fff;padding: 1rem;z-index: 50}
