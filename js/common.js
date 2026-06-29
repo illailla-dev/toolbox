@@ -12,6 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
     adsenseMeta.content = "ca-pub-4325928042936631";
     document.head.appendChild(adsenseMeta);
 
+    // 🚀 [구글 애널리틱스 GA4 동적 주입]
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-MK1PK91R7R"; // 측정 ID 넣기
+    document.head.appendChild(gaScript);
+
+    gaScript.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-MK1PK91R7R'); // 측정 ID 넣기
+    };
+
+
     // 1. [인클루드 엔진] data-include 속성을 가진 요소를 찾아 HTML 조립
     const includeElements = document.querySelectorAll('[data-include]');
     const promises = Array.from(includeElements).map(el => {
@@ -72,17 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const isOpen = document.body.classList.toggle('is-open');
 
-            // 주석 해제 및 아이콘 교체 로직 완성
-            // if (isOpen) {
-            //     icon.classList.replace('bi-list', 'bi-x');
-            // } else {
-            //     icon.classList.replace('bi-x', 'bi-list');
-            // }
         });
-        toggleCloseBtn.addEventListener('click', (e) => {
-            document.body.classList.remove('is-open');
-            console.log('close');
-        });
+        if (toggleCloseBtn) {
+            toggleCloseBtn.addEventListener('click', (e) => {
+                document.body.classList.remove('is-open');
+                icon.classList.replace('bi-x', 'bi-list');
+                console.log('close');
+            });
+        }
+
 
         // 2. 바깥 영역(딤배경 등) 클릭 시 메뉴 닫기
         document.addEventListener('click', (e) => {
