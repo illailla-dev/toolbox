@@ -46,7 +46,6 @@
                         </div>
                         <div class="input-item mb-3">
                             <label for="rem-input-px">변환할 값 (Target px)</label>
-                            <!-- 📌 인터벌 연산을 위해 input에 ID 장착 완료 -->
                             <input type="number" id="rem-input-px" class="form-control" placeholder="수치를 입력하세요" min="0" value="24">
                         </div>
                     </div>
@@ -72,12 +71,10 @@
                             • 2x 레티나 크기 (xhdpi / @2x): <span id="res-scale-2x" style="font-weight:bold; color: var(--purple);">0</span> px<br>
                             • 3x 최고밀도 크기 (xxhdpi / @3x): <span id="res-scale-3x" style="font-weight:bold; color: var(--purple);">0</span> px
                         </div>
-                        <!-- 📌 최종 단위 강조 규격 유지 (대표단위인 REM 노출) -->
                         <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
                             최종 CSS 코드 적용 스타일: <strong id="result-rem-converter-salary">0</strong> rem
                         </p>
                     </div>
-                    <!-- 📌 최신 가이드 박스 UI 규격 완벽 반영 -->
                     <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 디자이너-개발자 협업 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="rem-guide-text"></p>
@@ -85,6 +82,67 @@
                     <p class="result-tip guide-text mt-3">* px(픽셀)는 고정 절대 단위이며, rem(루트 엠)과 vw(뷰포트 너비)는 디바이스 해상도와 폰트 설정에 비례하는 가변 단위입니다. 미디어쿼리 없는 반응형 웹 코딩 시 가로폭 크기 요소를 vw로 코딩하고, 타이포그래피 요소를 rem으로 작성하면 모바일과 태블릿 화면에 유연하게 대응하는 무결점 컴포넌트 마크업이 가능합니다.</p>
                 </div>
             </div>
+            <section class="calculator-description">
+                <details>
+                    <summary style="cursor: pointer;">
+                        기본 폰트 사이즈 기준별 렘 환산 공식 및 디자인 캔버스 가로폭 대입형 VW 코드 변환 원리 확인하기 (클릭)
+                    </summary>
+                    <div class="description-content">
+                        <h2>💡 반응형 UI 코딩의 필수 단원, 픽셀 기반 가변 단위 환산과 크로스 브라우징 가이드</h2>
+                        <p>웹 UI 디자인 툴인 피그마(Figma)나 어도비 XD에서 에셋 가이드라인을 인계받아 마크업을 진행할 때, 시안에 적힌 고정 픽셀(PX) 수치를 스타일시트에 그대로 코딩하면 심각한 반응형 결함이 발생합니다. 픽셀은 디바이스의 화면 크기나 사용자의 시스템 폰트 확대 배율을 무시하는 고정 절대 단위이기 때문에, 스마트폰이나 태블릿 같은 가변 해상도 환경에서 레이아웃이 사정없이 깨지거나 글자가 엉망으로 겹쳐 보이기 때문인데요. 그렇다고 코딩 도중 매번 계산기를 두드려가며 가변 단위로 치환하기란 여간 번거롭고 시간이 오래 걸리는 작업이 아닙니다. 디자이너와 퍼블리셔의 협업 오차를 줄이고 완벽한 반응형 컴포넌트 스펙을 초고속으로 빌드할 수 있도록 이 상호 환산기를 제작했습니다.</p>
+                        <p>이 연산 도구는 사용자가 입력한 기본 폰트 사이즈(Base px)와 캔버스의 뷰포트 기준 너비 스펙을 상속하여 타겟 픽셀을 유기적으로 역산하며, 브라우저가 유연하게 인식하는 무결점 REM 및 VW 코드 데이터와 디스플레이 배수별 픽셀 리포트를 실시간으로 도출해 줍니다.</p>
+                        <h3>📊 디자인 실무 다소비 픽셀별 표준 렘(REM) 및 VW 가변 환산표</h3>
+                        <p>웹 표준 환경(기본 16px) 및 PC 표준 해상도(1920px) 기준 실무자들이 가장 자주 쓰는 픽셀 변환 데이터입니다. 아래 반응형 표를 통해 내 컴포넌트 크기에 맞는 스펙을 시각적으로 체크해 보세요.</p>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                            <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>피그마 시안 타겟 치수</th>
+                                        <th>루트 16px 기준 REM 환산값</th>
+                                        <th>PC 1920px 기준 VW 환산값</th>
+                                        <th>모바일 360px 기준 VW 환산값</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>12 px (초소형 서체)</td>
+                                        <td>0.75 rem</td>
+                                        <td>0.625 vw</td>
+                                        <td>3.333 vw</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16 px (기본 본문 크기)</td>
+                                        <td style="color: var(--orange); font-weight: bold;">1.00 rem</td>
+                                        <td>0.833 vw</td>
+                                        <td>4.444 vw</td>
+                                    </tr>
+                                    <tr>
+                                        <td>24 px (서브 타이틀)</td>
+                                        <td>1.50 rem</td>
+                                        <td style="color: var(--green); font-weight: bold;">1.250 vw</td>
+                                        <td>6.666 vw</td>
+                                    </tr>
+                                    <tr>
+                                        <td>32 px (메인 대형 제목)</td>
+                                        <td>2.00 rem</td>
+                                        <td>1.666 vw</td>
+                                        <td style="color: var(--green); font-weight: bold;">8.888 vw</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <small class="text-muted d-block mb-4">* 본 환산 요율은 소수점 세 자리 이하 올림 및 반올림 처리가 보정된 안전 수치입니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 해상도별 상세 스펙을 안전하게 검수하실 수 있습니다.</small>
+                        <h3>📌 웹 접근성을 지키는 REM 수식과 화면 비례형 VW 단위의 복합 매커니즘</h3>
+                        <p>반응형 퍼블리싱의 뼈대를 구축할 때 가장 중요한 함수는 두 가변 단위의 성격과 역할을 명확히 쪼개어 배치하는 것입니다. <code>REM</code>은 브라우저의 HTML 최상위 루트 폰트 크기(기본 16px)를 기준으로 작동하는 상대 단위인데요. 시각장애인이나 노안으로 인해 사용자가 스마트폰 브라우저 설정에서 글자 크기를 키우면 REM으로 짜인 타이포그래피 역시 그에 비례해 유기적으로 확대되므로 웹 접근성(WA) 인증 마크 획득에 절대적으로 유리합니다.</p>
+                        <p>이와 결을 달리하여 <code>VW(Viewport Width)</code> 단위는 화면의 순수 가로폭 해상도를 기계적으로 100등분 한 물리 수식입니다. 박스의 가로폭이나 컴포넌트의 사방 패딩 여백 요율을 이 VW 단위로 코딩해 두면, 별도의 미디어쿼리 분기 코드를 수백 줄씩 선언하지 않더라도 모바일과 데스크톱 화면 크기에 따라 컴포넌트 덩치가 알아서 안개처럼 부드럽게 스케일링 되는 마법이 발동합니다. 본 계산기는 이 두 단위의 교차 연산을 자동화하여 즉시 복사해 쓸 수 있는 소스코드를 빌드해 줍니다.</p>
+                        <h3>⚙️ 레티나 디스플레이 대응을 위한 2x, 3x 픽셀 스케일링 방어 전략</h3>
+                        <p>모던 UI 개발 현장에서 디자이너와 개발자가 가장 많이 삐걱거리는 원인 중 하나가 바로 맥북이나 최신 스마트폰의 고밀도 액정 화면인 '레티나(Retina) 디스플레이' 에셋 대응 문제입니다. 애플 기기나 고화질 OLED 액정은 화면의 물리적인 픽셀 밀도가 일반 모니터보다 2배에서 3배 이상 촘촘하기 때문에, 디자인 시안의 1배수 크기(@1x) 이미지 파일을 그대로 웹에 바인딩 하면 화면이 심각하게 흐릿하고 번져 보이는 가시성 파손 버그가 발생하는데요.</p>
+                        <p>이러한 그래픽 유실 사고를 방어하려면 본 계산기 하단 리포트가 도출하는 배수별 픽셀 가이드라인을 체크하여 피그마에서 에셋을 추출할 때 의도적으로 <code>@2x(xhdpi)</code> 나 <code>@3x(xxhdpi)</code> 스펙으로 이미지를 확장 출력하여 코드에 매립해야만 칼 같은 선명함을 유지할 수 있습니다. 본 가이드 기기가 매칭해 주는 무결점 최종 코드를 무기로, 깜빡임 없는 반응형 프론트엔드 아키텍처를 완벽하게 완성해 보시기 바랍니다.</p>
+                        <h3>⚠️ UI 픽셀(px) - 렘(rem) / VW 상호 환산기 이용 시 주의사항</h3>
+                        <p>본 반응형 CSS 단위 변환 프로그램은 W3C 글로벌 웹 표준 명세 및 크로스 브라우징 렌더링 공식 스펙을 기반으로 정밀 수학적 시뮬레이션을 제공합니다. 다만, 본 계산은 사용자가 제작 중인 웹사이트 내부 스타일시트에 <code>body { font-size: 62.5%; }</code> 와 같은 구형 꼼수 가중치(기본 10px 스왑 트릭) 선언을 적용해 두었을 경우의 변수, 혹은 브라우저 자체 최소 폰트 한계선(대다수 브라우저가 10px 이하 서체 강제 캡핑 적용) 규정에 따른 미세한 렌더링 딜레이 요인을 완벽히 포함하지 않은 명목 산술 결과입니다. 프로젝트의 전역 CSS 초기화 설정(Reset.css) 구조에 따라 실제 화면에 뿌려지는 시각적 크기와 미세한 오차가 발생할 수 있으므로, 본 결과 코드를 복사해 바인딩 하신 후에는 반드시 다양한 해상도 모드에서 레이아웃 정렬 라인을 최종 크로스 체크하시기 바랍니다.</p>
+                    </div>
+                </details>
+            </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
         </main>
         <div id="sidebar" data-include="sidebar.html"></div>

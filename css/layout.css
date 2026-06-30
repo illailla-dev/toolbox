@@ -140,3 +140,23 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
 }
 @media (max-width: 320px) {
 }
+
+/* 애드센스 심사 통과용 공통 설명 영역 스타일 */
+.calculator-description {
+    border-top: 1px solid #eee;
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+}
+.calculator-description summary {font-size: 1.125rem;}
+.calculator-description h2 {
+    margin-bottom: 1.5rem;
+}
+.calculator-description h2+p {margin-top: 0;}
+.calculator-description h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.calculator-description p {
+    margin-bottom: 1.2rem;
+}
+.description-content {margin-top: 2rem;}

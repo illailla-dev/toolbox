@@ -266,6 +266,8 @@ textarea {resize: none;}
 /* table */
 .table td, .table th {vertical-align: middle;}
 .table.center th, .table.center td {text-align: center;}
+.table thead th {vertical-align: middle;}
+.table-responsive>.table {margin-bottom: 0;}
 
 /* bullet */
 ul.bullet li {padding-left: .75rem;position: relative;}

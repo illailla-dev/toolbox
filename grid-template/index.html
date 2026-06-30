@@ -31,7 +31,6 @@
                 <h2>📐 현대식 모던 CSS 그리드 트랙 오토배치 생성기</h2>
                 <p>배치할 아이템의 최소 한계 크기와 그리드 간격(Gutter)을 설정하시면, 미디어쿼리 분기점 없이도 디바이스 폭에 따라 컬럼 수가 지능적으로 가변 조절되는 최신 CSS 표준 코드를 빌드합니다.</p>
                 <form id="grid-template-form" class="form" onsubmit="return false;">
-                    <!-- 그리드 트랙 매개변수 설정단 -->
                     <div class="input-group-box">
                         <h3>1. 아이템 최소 너비 및 여백 가이드 설정</h3>
                         <div class="form-row row mb-3">
@@ -51,10 +50,9 @@
                             <div class="col-xl input-item">
                                 <label for="grid-gutter">아이템 간 간격 - Gutter (<span class="target-unit-txt">px</span>)</label>
                                 <input type="number" id="grid-gutter" class="form-control" value="20" step="1" required>
-                                <small class="text-muted mt-2">그리드 셀 사방에 균일하게 부여될 공백 마진(grid-gap) 수치입니다.</small>
+                                <small class="text-muted mt-2 d-block">그리드 셀 사방에 균일하게 부여될 공백 마진(grid-gap) 수치입니다.</small>
                             </div>
                         </div>
-                        <!-- REM 단위 환산 보정용 루트 설정 -->
                         <div class="form-row id-root-box" style="display:none;">
                             <div class="col-xl input-item">
                                 <label for="root-font-size">HTML 루트 폰트 크기 (px)</label>
@@ -63,7 +61,6 @@
                         </div>
                     </div>
                 </form>
-                <!-- 2. 결과 출력 영역 -->
                 <div class="result-box mt-4">
                     <h3>💡 모던 CSS 그리드 템플릿 연산 결과</h3>
                     <div class="result-display">
@@ -84,6 +81,55 @@
                     <p class="result-tip guide-text mt-3">* 본 오토배치 생성기는 구형 브라우저 우회 기법 없이 W3C 현대 표준 웹 명세인 `display: grid;` 명세를 직결 매칭합니다. `auto-fill` 대신 `auto-fit` 엔진을 차용하므로 데이터 컴포넌트의 개수가 부족하더라도 빈 공간이 낭비되지 않고 트랙 잔여폭을 가변 팽창하여 화면을 꽉 채워줍니다.</p>
                 </div>
             </div>
+            <section class="calculator-description">
+                <details>
+                    <summary style="cursor: pointer;">
+                        모던 CSS 그리드 템플릿 제어 수식 및 auto-fit 기반 반응형 트랙 배치 원리 확인하기 (클릭)
+                    </summary>
+                    <div class="description-content">
+                        <h2>💡 반응형 레이아웃의 혁신, 미디어쿼리 없는 CSS 그리드 오토배치 최적화 가이드</h2>
+                        <p>웹사이트에 수많은 상품 카드나 블로그 포스팅 리스트를 격자 형태로 정렬할 때, 과거에는 수많은 미디어쿼리 분기점을 일일이 쪼개어가며 반응형 레이아웃을 방어해야 했습니다. 모바일에서는 1열, 태블릿에서는 2열, 데스크톱에서는 4열처럼 해상도가 바뀔 때마다 <code>width: 25%</code> 같은 깨지기 쉬운 수치를 수동으로 계산해 선언해 왔는데요. 이러한 레거시 방식은 스타일시트의 용량을 비대하게 만들 뿐만 아니라 가변 해상도 환경에서 미세한 픽셀 오차로 인해 레이아웃이 사정없이 무너지는 골치 아픈 버그를 유발합니다. 코드 단 한 줄로 디바이스 폭에 감응하여 알아서 컬럼 수가 조절되는 최신 인터페이스를 마우스 클릭만으로 빌드할 수 있도록 이 그리드 생성기를 제작했습니다.</p>
+                        <p>이 연산 도구는 사용자가 지정한 아이템의 최소 한계 너비와 간격(Gutter) 값을 상속하여, 구형 브라우저 우회 기법 없이 웹 표준 명세를 충족하는 무결점 모던 CSS 그리드 코드를 실시간으로 빌드해 줍니다.</p>
+                        <h3>📊 CSS 그리드 auto-fill 정책과 auto-fit 정책의 매커니즘 비교 표</h3>
+                        <p>그리드 트랙을 자동으로 배치할 때 가장 헷갈리는 두 가지 키워드의 결정적인 차이점입니다. 내 웹페이지의 컴포넌트 유동성에 맞는 최적의 옵션을 아래 비교 표를 통해 직관적으로 체크해 보세요.</p>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                            <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>그리드 키워드</th>
+                                        <th>아이템 개수가 많을 때</th>
+                                        <th>아이템 개수가 적을 때 (트랙 남을 때)</th>
+                                        <th>실무 추천 UI 컴포넌트 유형</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>auto-fill</td>
+                                        <td>화면 폭에 맞춰 빈틈없이 하단으로 밀리며 적정 열 자동 생성</td>
+                                        <td>공간이 남더라도 지정한 최소 너비 크기를 유지하며 빈 트랙을 남겨둠</td>
+                                        <td>대형 쇼핑몰의 상품 리스트, 고정된 카드 크기를 유지해야 하는 그리드 배열</td>
+                                    </tr>
+                                    <tr>
+                                        <td>auto-fit (기본 엔진)</td>
+                                        <td>화면 폭에 맞춰 빈틈없이 하단으로 밀리며 적정 열 자동 생성</td>
+                                        <td>남는 공간을 채우기 위해 아이템들이 가변 팽창하여 화면을 꽉 채움</td>
+                                        <td>콘텐츠 개수가 유동적인 대시보드 위젯, 포스팅 카드 뷰 (강력 추천)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <small class="text-muted d-block mb-4">* 두 속성 모두 minmax() 수식과 결합하여 작동하며, 모바일 기기에서는 표를 좌우로 슬라이드하여 렌더링 명세 차이를 확인할 수 있습니다.</small>
+                        <h3>📌 코드 한 줄로 끝내는 레이아웃 수학, minmax()와 가변 단위 fr의 시너지</h3>
+                        <p>모던 CSS 그리드 오토배치의 마법은 <code>repeat(auto-fit, minmax(최소값, 1fr))</code> 구조에서 출발합니다. 여기서 핵심 함수인 <code>minmax()</code>는 말 그대로 아이템이 아무리 찌그러져도 무너지지 않을 최소한의 마지노선 너비를 보장하는 안전장치 역할을 수행하는데요. 만약 브라우저 가로 폭이 넓어져서 화면에 추가적인 열을 배치할 수 있는 공간 밸런스가 확보되면 시스템이 알아서 새로운 컬럼 트랙을 옆으로 싹 추가해 줍니다.</p>
+                        <p>반대로 데이터의 개수가 모자라 우측에 빈 여백이 덩그러니 남는 어색한 레이아웃 상황이 오더라도, 유동 분합 단위인 <code>1fr</code> 분기가 작동하여 잔여 너비를 똑같이 N분의 1로 가변 확장시킵니다. 본 생성기는 이 정밀한 트랙 연산 과정을 자동화하여 복사 버튼 클릭 한 번으로 즉시 실무에 바인딩할 수 있는 무결점 소스코드를 추출해 줍니다.</p>
+                        <h3>⚙️ 여백 상실(Gutter)을 방지하는 grid-gap과 REM 단위 환산 전략</h3>
+                        <p>그리드 레이아웃을 설계할 때 초보 퍼블리셔들이 가장 많이 놓치는 실수가 바로 아이템 간의 간격인 거터(Gutter) 값을 마진으로 대충 때우는 것입니다. 마진을 쓰게 되면 양 끝단에 위치한 아이템들까지 불필요한 공백이 생겨 정렬 라인이 비뚤어지기 쉬운데요. 현대 웹 표준에서는 부모 컨테이너에 <code>grid-gap</code>(또는 gap) 속성을 부여하여 내부에 배치되는 셀들 사이에만 균일한 큐브 공백을 밀어 넣는 방식을 강력히 권장합니다.</p>
+                        <p>특히 반응형 접근성을 고려한다면 고정 픽셀(PX) 단위보다는 사용자의 시스템 배율에 감응하는 유연한 REM 서체 단위를 섞어 쓰는 것이 유리합니다. 본 가이드 기기는 교차 환산 연산을 기본 내장하고 있으므로, 복잡한 코드 설계 부담 없이 모바일과 웹 전체 환경에서 매끄럽게 흐르는 최적화 컴포넌트 뼈대를 빠르게 빌드할 수 있습니다.</p>
+                        <h3>⚠️ 모던 CSS 그리드 트랙 생성기 이용 시 주의사항</h3>
+                        <p>본 현대식 모던 CSS 그리드 트랙 오토배치 생성기가 빌드하는 소스코드는 W3C 표준 레이아웃 명세를 완벽히 준수하므로 크롬, 사파리, 파이어폭스 등 모든 모던 웹 환경에서 깜빡임 없는 하드웨어 가속 구동을 보장합니다. 다만, <code>auto-fit</code> 엔진을 활용해 유동형 트랙 가변 코드를 심으실 때, 그리드를 감싸고 있는 최상위 부모 컨테이너의 가로 폭 한계선(<code>max-width</code>)을 명확하게 지정해 두지 않으면 초고해상도 와이드 모니터(4K 이상) 환경에서 카드 컴포넌트들이 옆으로 비정상적이게 일렬로 길게 늘어나는 가시성 훼손이 발생할 수 있습니다. 따라서 본 코드를 바인딩 하신 후에는 반드시 전체 화면을 잡아주는 래퍼(Wrapper) div의 한계 마진을 체크하여 타이포그래피와 UI 가시성을 최종 튜닝하시기 바랍니다.</p>
+                    </div>
+                </details>
+            </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
         </main>
         <div id="sidebar" data-include="sidebar.html"></div>
