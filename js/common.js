@@ -315,6 +315,10 @@ var everyCalcDatabase = [
         url: "/color-palette/",
         keywords: "랜덤컬러팔레트 색상조합 색상추천 디자인팔레트 웹디자인 색상생성기 컬러조합추천 UI컬러픽커"
     },
+    { title: "🏥 지역건강보험료 모의계산기", url: "/hi-local-calc/", keywords: "지역건강보험료계산 건보료모의계산 지역가입자 건강보험료 재산세 자동차 건보료 폭탄" },
+    { title: "📅 기념일·디데이 통합 계산기", url: "/dday-calc/", keywords: "디데이계산기 기념일백일 커플 만난날짜 시험 수능 dday 카톡공유" },
+    { title: "💼 퇴직금 중간정산 및 정산금 계산기", url: "/retirement-pay/", keywords: "퇴직금계산기 중간정산 평균임금 노동법 세전퇴직금 이직 퇴사 정산금" },
+
 
 
 ];

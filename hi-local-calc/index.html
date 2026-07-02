@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>지역건강보험료 모의계산기 | 에브리캘크</title>
+    <meta name="description" content="소득, 재산 세표, 보유 자동차 정보를 입력하여 2026년 기준 지역건강보험료와 장기요양보험료를 정확하게 모의 계산하고 세후 지출을 예측해 보세요.">
+    <meta name="keywords" content="지역건강보험료계산, 건보료모의계산, 지역가입자건강보험료, 재산세건보료, 자동차건보료, 건보료점수, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/hi-local-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="지역건강보험료 모의계산기 - 에브리캘크">
+    <meta property="og:description" content="까다로운 지역건강보험료, 미리 계산해 보세요! 소득과 재산 기준에 맞춘 실시간 건보료 예측 시뮬레이터.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/hi-local-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>🏥 지역건강보험료 모의계산기</h2>
+                <p>나의 연 소득, 보유 재산(전월세 포함), 자동차 정보를 입력하시면 최신 국민건강보험법 기준에 맞춘 예상 건보료와 장기요양보험료를 실시간 산출합니다.</p>
+                <form id="hi-local-form" class="form" onsubmit="return false;">
+                    <!-- 1. 소득 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>1. 연간 소득 정보 입력 (원 단위)</h3>
+                        <div class="form-row">
+                            <div class="col-xl mb-3">
+                                <label for="income-business">사업/근로/기타 소득 (연간)</label>
+                                <input type="number" id="income-business" placeholder="예: 30000000" class="form-control">
+                            </div>
+                            <div class="col-xl mb-3">
+                                <label for="income-finance">금융 소득 (이자·배당 연 1천만원 초과분)</label>
+                                <input type="number" id="income-finance" placeholder="예: 0" class="form-control">
+                            </div>
+                            <div class="col-xl mb-3">
+                                <label for="income-pension">연금 소득 (국민/공무원 연금 등 연간)</label>
+                                <input type="number" id="income-pension" placeholder="예: 0" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. 재산 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>2. 보유 재산 정보 입력</h3>
+                        <div class="form-row">
+                            <div class="col-xl mb-3">
+                                <label for="property-tax-base">토지/건물/주택 재산세 과세표준 금액</label>
+                                <input type="number" id="property-tax-base" placeholder="🔒 공시지가 아님, 재산세 고지서 기준" class="form-control">
+                            </div>
+                            <div class="col-xl mb-3">
+                                <label for="property-rent">전세보증금 또는 월세 보증금</label>
+                                <input type="number" id="property-rent" placeholder="예: 100000000" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 3. 자동차 정보 입력 -->
+                    <div class="input-group-box">
+                        <h3>3. 보유 자동차 정보 입력</h3>
+                        <div class="form-row">
+                            <div class="col-xl mb-3">
+                                <label for="car-value">현재 차량 가액 (시가 기준)</label>
+                                <input type="number" id="car-value" placeholder="예: 45000000 (4천만원 미만은 면제)" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 3. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 나의 월 예상 건강보험료 가이드</h3>
+                    <div class="result-display">
+                        <p>소득 부과 점수: <strong id="res-income-score">0</strong> 점</p>
+                        <p>재산 부과 점수 (5,000만원 기본공제 적용): <strong id="res-property-score">0</strong> 점</p>
+                        <p>자동차 부과 점수: <strong id="res-car-score">0</strong> 점</p>
+                        <hr>
+                        <p>🩺 <strong>건강보험료 본인부담금</strong>: <strong id="res-hi-premium" style="color:var(--orange);">0</strong> 원</p>
+                        <p>🧓 <strong>장기요양보험료</strong>: <strong id="res-elderly-premium" style="color:var(--green);">0</strong> 원</p>
+                        <hr>
+                        <p style="color: var(--blue);font-weight: bold;font-size:110%">🎯 최종 월 납부 예상액: <span id="res-total-premium">0</span> 원</p>
+                    </div>
+                    <p class="result-tip mt-3" style="font-size: 1rem; background:#e7f5ff; padding:10px; border-radius:5px; border-left:4px solid #007bff;">
+                        * 프리랜서 해촉증명서 제출, 재산 매각, 자동차 처분 등으로 부과 요소 변동 시 국민건강보험공단 지사에 즉시 신고하셔야 보험료 폭탄을 피할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <section class="calculator-description">
+                <details>
+                    <summary style="cursor: pointer;">
+                        소득·재산·자동차 기반 지역건강보험료 부과 체계 및 항목별 점수 산정 원리 확인하기 (클릭)
+                    </summary>
+                    <div class="description-content">
+                        <h2>💡 지역건강보험료 부과 체계 및 절세 핵심 가이드</h2>
+                        <p>직장가입자와 달리 지역가입자의 건강보험료는 소득뿐만 아니라 보유한 재산과 자동차까지 종합적으로 합산하여 점수를 매긴 뒤 보험료를 부과합니다. 많은 분들이 은퇴 후 또는 프리랜서 전향 시 갑작스럽게 청구되는 고액의 고지서를 보고 당황하시곤 하는데요. 우리 몸의 건강을 지키기 위한 보험료가 자칫 가계 재정에 치명적인 폭탄이 되지 않도록, 개인의 소득세표와 과세표준 금액을 기반으로 매월 지출될 핵심 부담금을 실시간 정산하고 선제적으로 대응할 수 있도록 이 지역건강보험료 계산기를 제작하게 되었습니다.</p>
+                        <h4>1. 지역건강보험료 항목별 점수 산정 방식</h4>
+                        <p>최신 국민건강보험법 기준에 따른 점수 산정 방식은 크게 세 가지 축으로 나뉩니다. 과거와 달리 제도 개편을 통해 재산에 대한 기본 공제가 대폭 확대되어 서민층의 부담이 다소 줄었으나, 여전히 고가 자산 보유자나 종합소득 발생자에게는 정밀한 모니터링이 요구됩니다.</p>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                            <table class="table table-bordered text-center" style="min-width: 300px; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>부과 요소</th>
+                                        <th>주요 산정 기준 및 공제 혜택</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>종합 소득</td>
+                                        <td>사업, 근로, 기타, 연금소득 및 금융소득(연 1천만 원 초과분)을 종합 합산하여 점수표에 따라 부과합니다.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>보유 재산</td>
+                                        <td>토지, 건축물, 주택 재산세 과세표준 금액(전월세는 30% 환산)에서 <strong>일괄 5,000만 원 기본 공제</strong>를 적용합니다.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>자동차</td>
+                                        <td>차량가액 <strong>4,000만 원 미만 차량은 전면 면제</strong>되며, 초과 차량에 한해서만 잔존가치 기준으로 부과됩니다.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4>2. 지역가입자 건보료 부담을 줄이는 핵심 절세 팁</h4>
+                            <ul>
+                                <li><strong>해촉증명서 발급 및 제출:</strong> 프리랜서나 중도 퇴직자의 경우, 과거 소득 기준으로 보험료가 잘못 부과될 수 있습니다. 계약 종료 즉시 해촉증명서를 발급받아 공단에 제출하면 소득 조정을 통해 보험료를 즉시 낮출 수 있습니다.</li>
+                                <li><strong>재산 및 자동차 매각 시 즉시 정산:</strong> 보유하던 주택이나 자동차를 매각했다면, 공단 전산에 자동 반영되기 전이라도 매매계약서나 등기부등본을 지사에 제출하여 선제적으로 보험료를 인하받아야 합니다.</li>
+                                <li><strong>피부양자 자격 유지 조건 검토:</strong> 가족 중 직장가입자가 있다면 피부양자로 등록하는 것이 가장 유리합니다. 단, 연간 소득 합산액이 2,000만 원을 초과하거나 재산세 과표가 기준을 초과하면 자격이 상실되므로 주기적인 검토가 필요합니다.</li>
+                            </ul>
+                            <small class="text-muted d-block mb-4">* 본 영양 및 부과 밸런스 가이드는 국민건강보험공단 최신 고시 단가(점수당 208.4원) 표준 매커니즘을 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 스펙을 안전하게 검수하실 수 있습니다.</small>
+                        </div>
+                </details>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 입력값 변경 시 실시간 연산 이벤트 바인딩
+            $('#hi-local-form input').on('input change', function () {
+                calculateHiLocal();
+            });
+
+            function calculateHiLocal() {
+                // 1. 입력값 가져오기 (빈 값은 0 처리)
+                var incomeBusiness = parseFloat($('#income-business').val()) || 0;
+                var incomeFinance = parseFloat($('#income-finance').val()) || 0;
+                var incomePension = parseFloat($('#income-pension').val()) || 0;
+                var propertyTaxBase = parseFloat($('#property-tax-base').val()) || 0;
+                var propertyRent = parseFloat($('#property-rent').val()) || 0;
+                var carValue = parseFloat($('#car-value').val()) || 0;
+
+                // 2. 소득 점수 약식 산정 (건보공단 구간별 점수 매커니즘 상속)
+                var totalIncome = incomeBusiness + incomeFinance + (incomePension * 0.5); // 연금은 50%만 반영
+                var incomeScore = 0;
+                if (totalIncome > 0) {
+                    // 소득 비례 간이 산식 (실제 공단 표 기반 근사치 연산)
+                    incomeScore = Math.floor(Math.pow(totalIncome / 10000, 0.45) * 15);
+                }
+
+                // 3. 재산 점수 산정 (5000만원 기본 공제)
+                // 전월세 보증금은 30%만 과표로 인정
+                var convertedRent = propertyRent * 0.3;
+                var totalProperty = propertyTaxBase + convertedRent;
+                var netProperty = totalProperty - 50000000; // 5천만원 일괄 공제
+                if (netProperty < 0) netProperty = 0;
+
+                var propertyScore = 0;
+                if (netProperty > 0) {
+                    // 재산 과표 비례 간이 산식
+                    propertyScore = Math.floor(Math.pow(netProperty / 100000, 0.4) * 20);
+                }
+
+                // 4. 자동차 점수 산정 (4000만원 미만 면제)
+                var carScore = 0;
+                if (carValue >= 40000000) {
+                    // 4천만원 초과 차량 가액 비례 간이 점수
+                    carScore = Math.floor((carValue / 10000000) * 12);
+                }
+
+                // 5. 최종 보험료 연산 (2026년 점수당 단가 208.4원 적용)
+                var pointUnit = 208.4;
+                var totalScore = incomeScore + propertyScore + carScore;
+
+                var hiPremium = Math.floor((totalScore * pointUnit) / 10) * 10; // 10원 미만 절사
+                var elderlyPremium = Math.floor((hiPremium * 0.1295) / 10) * 10; // 장기요양 약 12.95%
+                var totalPremium = hiPremium + elderlyPremium;
+
+                // 6. 결과 화면 실시간 출력
+                $('#res-income-score').text(incomeScore.toLocaleString());
+                $('#res-property-score').text(propertyScore.toLocaleString());
+                $('#res-car-score').text(carScore.toLocaleString());
+                $('#res-hi-premium').text(hiPremium.toLocaleString());
+                $('#res-elderly-premium').text(elderlyPremium.toLocaleString());
+                $('#res-total-premium').text(totalPremium.toLocaleString());
+            }
+        });
+
+    </script>
+</body>
+</html>

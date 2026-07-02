@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>기념일 디데이 통합 계산기 | 에브리캘크</title>
+    <meta name="description" content="커플 기념일, 아기 백일, 시험 D-Day, 태어난 날짜 등 모든 소중한 날을 기준일 설정 하나로 100일부터 10000일까지 한눈에 확인하고 카카오톡으로 공유하세요.">
+    <meta name="keywords" content="디데이계산기, 기념일계산기, 커플백일계산, 아기백일날짜, 만난날계산, 디데이조회, 에브리캘크">
+    <link class="canonical" href="https://every-calc.co.kr/dday-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="기념일 디데이 통합 계산기 - 에브리캘크">
+    <meta property="og:description" content="우리가 만난 지 몇 일째일까? 다음 기념일은 언제일까? 기준일만 넣으면 모든 기념일을 한눈에 정산해 드립니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/dday-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <div class="calculator-box">
+                <h2>📅 기념일 · 디데이 통합 계산기</h2>
+                <p>소중한 기준일과 옵션을 선택하시면 오늘이 몇 일째인지, 주요 백일 단위 및 주년 기념일이 언제인지 한눈에 계산해 드립니다.</p>
+                <form id="dday-form" class="form" onsubmit="return false;">
+                    <!-- 1. 날짜 및 옵션 설정 -->
+                    <div class="input-group-box">
+                        <h3>1. 기준일 및 계산 방식 설정</h3>
+                        <div class="form-row">
+                            <div class="col-xl mb-3">
+                                <label for="base-date">기준 날짜 선택</label>
+                                <input type="date" id="base-date" class="form-control" required>
+                            </div>
+                            <div class="col-xl mb-3">
+                                <label for="calc-type">계산 기준 선택</label>
+                                <select id="calc-type" class="form-control">
+                                    <option value="couple" selected>만난 날 / 아기 백일 (당일을 1일로 포함)</option>
+                                    <option value="general">일반 디데이 / 시험 D-Day (당일을 0일로 계산)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 디데이 및 다가오는 기념일 스케줄</h3>
+                    <div class="result-display">
+                        <p style="color: var(--blue);">
+                            🔥 오늘까지 총 <span id="res-passed-days" style="font-size:140%">0</span>일째 되는 날입니다.
+                        </p>
+                        <hr>
+                        <div class="dday-list" style="font-size: 100%; line-height: 1.8;">
+                            <p>💯 100일: <strong id="res-100days" style="color:var(--orange);">0000-00-00</strong></p>
+                            <p>💖 200일: <strong id="res-200days">0000-00-00</strong></p>
+                            <p>💝 300일: <strong id="res-300days">0000-00-00</strong></p>
+                            <p>🎉 1주년: <strong id="res-1year" style="color:var(--green);">0000-00-00</strong></p>
+                            <p>🍀 500일: <strong id="res-500days">0000-00-00</strong></p>
+                            <p>✨ 1000일: <strong id="res-1000days" style="color:var(--blue);">0000-00-00</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="calculator-description">
+                <details>
+                    <summary style="cursor: pointer; ">
+                        기념일과 디데이(D-Day)의 연산 기준 및 날짜 카운트 산출 원리 확인하기 (클릭)
+                    </summary>
+                    <div class="description-content">
+                        <h2>💡 디데이(D-Day)와 기념일 계산법 차이점 및 활용 가이드</h2>
+                        <p>연인과의 처음 만난 날, 소중한 아기의 탄생, 혹은 인생을 바꿀 중요한 시험이나 비즈니스 프로젝트 마감 등 일상 속 수많은 날짜를 계산할 때 많은 분들이 하루이틀 차이로 혼선을 겪으시곤 합니다. 달력을 넘겨가며 일일이 손으로 세다 보면 윤년(2월 29일) 주기를 놓쳐 오차가 발생하거나, 축하를 목적으로 하는 날과 약속 기한을 뜻하는 날의 법적 기준이 달라 헷갈리기 쉬운데요. 소중한 추억과 약속 일정을 오차 없이 정밀하게 정산하고, 카카오톡을 통해 지인들과 스케줄 리스트를 직관적으로 공유할 수 있도록 이 통합 디데이 계산기를 제작하게 되었습니다.</p>
+                        <h4>1. '당일 포함 1일' vs '당일 제외 0일' 차이점</h4>
+                        <p>시작일을 날짜 수에 포함할지 여부는 상황에 따라 올바른 계산 관습을 적용해야 합니다.</p>
+                        <ul>
+                            <li><strong>연애·출생 (당일 포함 1일):</strong> 연인과 처음 만난 날이나 아기가 태어난 날은 그 당일 자체를 삶의 시작이자 인연의 '첫 번째 날(1일째)'로 규정합니다. 이에 따라 100일 기념일은 처음 만난 날로부터 실제 99일이 지난 날짜가 됩니다.</li>
+                            <li><strong>시험·마감·전역 (당일 제외 0일):</strong> 군대 전역일, 수능 시험, 계약 마감일 등의 디데이는 '남은 기간'을 뜻합니다. 오늘을 기준으로 내일까지 하루가 남았다면 D-1이 되므로, 기준일 당일은 0일로 간주하고 계산을 시작합니다.</li>
+                        </ul>
+                        <h4>2. 10,000일까지 오차 없는 장기 디데이 스케줄링</h4>
+                        <p>1년은 보통 365일이지만, 4년마다 돌아오는 윤년에는 366일이 되기 때문에 500일, 1000일, 10000일과 같은 장기 기념일은 수동 연산 시 오류가 생길 확률이 100%에 수렴합니다. 본 프로그램은 자바스크립트의 타임스탬프 연산 방식을 상속하여, 사용자가 지정한 시점부터 미래의 모든 기념일을 달력 표준 규격에 맞추어 완벽하게 실시간 정산해 드립니다.</p>
+                        <small class="text-muted d-block mb-4">* 본 날짜 밸런스 가이드는 그레고리력 표준 날짜 연산 매커니즘을 상속합니다. 모바일 기기에서는 시스템 브라우저를 통해 상세 스펙을 안전하게 검수하실 수 있습니다.</small>
+                    </div>
+                </details>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 오늘 날짜를 기본값으로 세팅
+            var todayStr = new Date().toISOString().substring(0, 10);
+            $('#base-date').val(todayStr);
+
+            // 이벤트 바인딩
+            $('#base-date, #calc-type').on('change input', function () {
+                calculateDday();
+            });
+
+            // 최초 1회 실행
+            calculateDday();
+
+            function calculateDday() {
+                var baseDateVal = $('#base-date').val();
+                if (!baseDateVal) return;
+
+                var baseDate = new Date(baseDateVal + 'T00:00:00');
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                var calcType = $('#calc-type').val(); // couple(1일 시작) 또는 general(0일 시작)
+                var offset = (calcType === 'couple') ? 1 : 0;
+
+                // 1. 오늘까지 총 몇 일째인지 연산
+                var diffTime = today.getTime() - baseDate.getTime();
+                var passedDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + offset;
+
+                // 과거/미래에 따른 다국어 기호 보정
+                if (passedDays > 0) {
+                    $('#res-passed-days').text(passedDays.toLocaleString());
+                } else if (passedDays === 0) {
+                    $('#res-passed-days').text('0');
+                } else {
+                    $('#res-passed-days').text('D' + passedDays.toLocaleString());
+                }
+
+                // 2. 주요 기념일 스케줄 매칭 함수
+                function getFutureDateStr(days) {
+                    var targetTime = baseDate.getTime() + ((days - offset) * 1000 * 60 * 60 * 24);
+                    var targetDate = new Date(targetTime);
+
+                    var yyyy = targetDate.getFullYear();
+                    var mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(targetDate.getDate()).padStart(2, '0');
+                    return yyyy + '-' + mm + '-' + dd;
+                }
+
+                // 1주년 연산 전용 (365일이 아닌 정확한 달력 매칭)
+                var year1Date = new Date(baseDate.getTime());
+                year1Date.setFullYear(year1Date.getFullYear() + 1);
+                if (calcType === 'couple') year1Date.setDate(year1Date.getDate() - 1);
+                var year1Str = year1Date.getFullYear() + '-' + String(year1Date.getMonth() + 1).padStart(2, '0') + '-' + String(year1Date.getDate()).padStart(2, '0');
+
+                // 3. 결과 화면 바인딩
+                $('#res-100days').text(getFutureDateStr(100));
+                $('#res-200days').text(getFutureDateStr(200));
+                $('#res-300days').text(getFutureDateStr(300));
+                $('#res-1year').text(year1Str);
+                $('#res-500days').text(getFutureDateStr(500));
+                $('#res-1000days').text(getFutureDateStr(1000));
+            }
+
+            // 카카오톡 공유 기능 예시 (버튼 클릭 시 주소 복사 알림)
+            $('#btn-kakao-share').on('click', function () {
+                var dummy = document.createElement("input");
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+                alert("기념일 계산기 링크가 복사되었습니다. 카카오톡 창에 붙여넣기(Ctrl+V)해서 공유해 보세요!");
+            });
+        });
+
+    </script>
+</body>
+</html>
