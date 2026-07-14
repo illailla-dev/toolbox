@@ -99,6 +99,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
 .result-code-box>div {flex-grow: 1;}
 .result-code-box .btn {align-self: center;}
 .result-code-box__inner {font-family: 'Courier New', Courier, monospace; font-size:0.95rem; word-break: break-all; width: 75%;}
+.target-guide-box h4 {margin-top: 0;}
 
 /* 기본 초기화 */
 .tool-category {margin-bottom: 3rem;}
