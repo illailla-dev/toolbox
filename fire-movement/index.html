@@ -84,9 +84,6 @@
                 </div>
             </div>
             <section class="calculator-description">
-                <summary style="cursor: pointer;">
-                    파이어족 4퍼센트 안전인출률 법칙 및 투자 연수익률 대비 물가상승률 실질 복리 연산 원리 확인하기 (클릭)
-                </summary>
                 <div class="description-content">
                     <h2>💡 경제적 자유와 조기 은퇴의 과학, 파이어족 4% 법칙과 자산 고갈 방지 가이드</h2>
                     <p>단 한 번뿐인 인생을 직장 생활과 노동에만 바치지 않고, 젊은 나이에 일찍 경제적 자립을 이루어 은퇴하는 '파이어족(FIRE, Financial Independence, Retire Early)' 열풍이 불고 있습니다. 하지만 단순히 통장에 수억 원의 뭉칫돈을 모았다고 해서 무작정 회사를 그만두었다가는, 매년 오르는 물가와 예상치 못한 소비 지출 때문에 자산이 생각보다 빠르게 말라버리는 비극을 맞이할 수 있는데요. 은퇴 후 내 자산이 자본주의 시장의 복리 마법을 타고 스스로 불어나면서, 원금을 영구적으로 훼손하지 않고 이자만으로 평생 살 수 있는 완벽한 재정적 분기점을 역산할 수 있도록 이 시뮬레이터 계산기를 제작하게 되었습니다.</p>
@@ -150,14 +147,14 @@
     <script src="/js/common.js"></script>
     <script>
         (function () {
-            // [⚠️무결점 핵심 개정] 초기 배포 상태 마크업 가치 실시간 캡처 보존 (초기 백스페이스 NaN 방어용)
+            // 🚀 [수정] 파일 로드 시점에 jQuery($)를 쓰지 않도록 순수 값으로 고정 (ReferenceError 완벽 방어)
             const initialValues = {
-                'fire-current-age': parseFloat($('#fire-current-age').val()) || 30,
-                'fire-current-asset': parseFloat($('#fire-current-asset').val()) || 5000,
-                'fire-monthly-save': parseFloat($('#fire-monthly-save').val()) || 200,
-                'fire-monthly-spend': parseFloat($('#fire-monthly-spend').val()) || 300,
-                'fire-return-rate': parseFloat($('#fire-return-rate').val()) || 8,
-                'fire-inflation-rate': parseFloat($('#fire-inflation-rate').val()) || 2.5
+                'fire-current-age': 30,
+                'fire-current-asset': 5000,
+                'fire-monthly-save': 200,
+                'fire-monthly-spend': 300,
+                'fire-return-rate': 8,
+                'fire-inflation-rate': 2.5
             };
 
             // 만원 단위를 사람이 읽기 편한 "X억 X,XXX만원" 구조로 실시간 해상도 가공하는 엔진
@@ -240,14 +237,27 @@
                 $('#fire-guide-text').html(guideMsg);
             }
 
-            // 위임형 이벤트 바인딩 고수
-            $(document).on('input change', '#fire-form input', function () {
-                calculateFireMovement();
-            });
+            function initFireCalculator() {
+                // 이벤트 바인딩
+                $(document).on('input change', '#fire-form input', function () {
+                    calculateFireMovement();
+                });
 
-            // 최초 기동
-            calculateFireMovement();
+                // 최초 기동 실행
+                calculateFireMovement();
+            }
+
+            // jQuery 및 DOM이 완벽히 준비되었는지 확인 후 실행 (구글 봇 디펜스)
+            if (typeof $ !== 'undefined') {
+                $(document).ready(initFireCalculator);
+            } else {
+                window.addEventListener('DOMContentLoaded', function () {
+                    if (typeof $ !== 'undefined') $(document).ready(initFireCalculator);
+                });
+            }
         })();
+
+
 
     </script>
 </body>

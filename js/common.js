@@ -323,6 +323,21 @@ var everyCalcDatabase = [
 
 ];
 
+// 🚀 [76개 페이지 일괄 구글봇 디펜스]
+// 스크립트 로드 시점에 jQuery가 없어도 가상 객체를 만들어 ReferenceError로 코드가 죽는 것을 방어합니다.
+if (typeof $ === 'undefined') {
+    window.$ = function (selector) {
+        return {
+            val: function () { return ''; }, // $.val() 호출 시 빈 문자열 반환하여 initialValues가 무너지지 않게 방어
+            text: function () { },
+            html: function () { },
+            on: function () { }
+        };
+    };
+    window.jQuery = window.$;
+}
+
+
 
 // ==========================================
 // 🔍 독립 페이지 전용 초고속 실시간 검색 로직
