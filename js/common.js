@@ -322,20 +322,23 @@ var everyCalcDatabase = [
 
 
 ];
-
-// 🚀 [76개 페이지 일괄 구글봇 디펜스]
-// 스크립트 로드 시점에 jQuery가 없어도 가상 객체를 만들어 ReferenceError로 코드가 죽는 것을 방어합니다.
+// 🚀 [76개 페이지 일괄 구글봇 디펜스 - 체이닝 완벽 보완판]
 if (typeof $ === 'undefined') {
-    window.$ = function (selector) {
-        return {
-            val: function () { return ''; }, // $.val() 호출 시 빈 문자열 반환하여 initialValues가 무너지지 않게 방어
-            text: function () { },
-            html: function () { },
-            on: function () { }
-        };
+    // 어떤 메서드를 호출해도 자기 자신을 반환하여 에러(TypeError)를 원천 차단하는 가상 dummy 객체
+    const dummy = function () { return dummy; };
+    dummy.val = function () { return ''; }; // 초기값 parseFloat 대비용 빈 문자열
+    dummy.trim = function () { return ''; };
+    dummy.text = dummy;
+    dummy.html = dummy;
+    dummy.on = dummy;
+    dummy.ready = function (cb) {
+        window.addEventListener('DOMContentLoaded', cb);
     };
+
+    window.$ = function () { return dummy; };
     window.jQuery = window.$;
 }
+
 
 
 
