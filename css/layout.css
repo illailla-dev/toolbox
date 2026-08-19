@@ -194,3 +194,7 @@ h4+p {margin-top: -.5rem;margin-bottom: 1rem;}
     margin-bottom: 1.2rem;
 }
 .description-content {margin-top: 2rem;}
+
+.description-faq {}
+.description-faq li b {font-size: 110%;}
+.description-faq li {padding: .5rem 0;}
