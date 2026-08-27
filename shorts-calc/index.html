@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>유튜브 쇼츠·틱톡 조회수 수익 역산기 - 숏폼 정산 시뮬레이터 | 에브리캘크</title>
-    <meta name="description" content="숏폼 크리에이터 부업 필수 툴! 예상 조회수와 카테고리별 단가(RPM)를 입력하시면 유튜브 펀드, YPP 정산금, 소득세 3.3% 공제 후의 실질 세후 순수익을 실시간으로 역산해 드립니다.">
+    <meta name="description"
+        content="숏폼 크리에이터 부업 필수 툴! 예상 조회수와 카테고리별 단가(RPM)를 입력하시면 유튜브 펀드, YPP 정산금, 소득세 3.3% 공제 후의 실질 세후 순수익을 실시간으로 역산해 드립니다.">
     <meta name="keywords" content="쇼츠수익, 유튜브수익계산기, 틱톡수익, 숏폼정산, RPM계산, 조회수수익, 크리에이터부업, 세후순수익, 부업계산기, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/shorts-calc/">
+    <link rel="canonical" href="https://every-calc.co.kr/shorts-calc/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="유튜브 쇼츠·틱톡 조회수 수익 역산기">
-    <meta property="og:description" content="부업 크리에이터 필수 툴! 채널 카테고리별 RPM 단가 보정과 플랫폼별 정산 비율을 반영하여 진짜 내 통장에 꽂히는 숏폼 순수익을 1초 만에 확인하세요.">
+    <meta property="og:description"
+        content="부업 크리에이터 필수 툴! 채널 카테고리별 RPM 단가 보정과 플랫폼별 정산 비율을 반영하여 진짜 내 통장에 꽂히는 숏폼 순수익을 1초 만에 확인하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/shorts-calc/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -36,7 +39,8 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="shorts-views">월간 목표/예상 조회수 (회)</label>
-                                <input type="number" id="shorts-views" class="form-control" placeholder="예: 1000000" value="1000000" min="1000" step="1000" required>
+                                <input type="number" id="shorts-views" class="form-control" placeholder="예: 1000000"
+                                    value="1000000" min="1000" step="1000" required>
                                 <small class="text-muted mt-2 d-block">유튜브 쇼츠 및 틱톡의 합산 누적 재생 횟수입니다.</small>
                             </div>
                             <div class="col-md-6 input-item">
@@ -59,7 +63,8 @@
                             </div>
                             <div class="col-md-6 input-item" id="custom-rpm-box" style="display: none;">
                                 <label for="shorts-rpm-val">커스텀 1,000회당 단가 (원)</label>
-                                <input type="number" id="shorts-rpm-val" class="form-control" value="100" min="1" step="1">
+                                <input type="number" id="shorts-rpm-val" class="form-control" value="100" min="1"
+                                    step="1">
                             </div>
                         </div>
                     </div>
@@ -71,23 +76,34 @@
                         <p>플랫폼 수수료 공제 전 총액: <strong id="res-raw-total">0원</strong></p>
                         <p>크리에이터 원천징수 세금 (3.3%): <strong id="res-tax-val" style="color: var(--red);">0원</strong></p>
                         <hr>
-                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함 **최종 예상 총액**: <strong id="res-final-total">0원</strong></p>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함
+                            **최종 예상 총액**: <strong id="res-final-total">0원</strong></p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 크리에이터 부업 운영 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="shorts-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산기는 각 플랫폼별 파트너 프로그램 정책 가이드라인 기본 수수료 분배율을 적용하여 계산됩니다. 시청 국가의 비중(외국인 트래픽), 시청 지속 시간(상호작용 품질)에 따라 실제 정산 리워드는 일부 상이할 수 있으므로 최종 운영 계획 수립 시 보정 지표로 활용하시기 바랍니다.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산기는 각
+                        플랫폼별 파트너 프로그램 정책 가이드라인 기본 수수료 분배율을 적용하여 계산됩니다. 시청 국가의 비중(외국인 트래픽), 시청 지속 시간(상호작용 품질)에 따라 실제 정산
+                        리워드는 일부 상이할 수 있으므로 최종 운영 계획 수립 시 보정 지표로 활용하시기 바랍니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 숏폼 콘텐츠의 머니 타이제이션, 쇼츠와 틱톡 조회수 수입 역산과 크리에이터 세무 가이드</h2>
-                    <p>출퇴근 시간 지하철이나 잠들기 전 침대 위에서 스마트폰으로 유튜브 쇼츠(Shorts), 틱톡(TikTok), 인스타그램 릴스를 넘겨보는 문화는 완전히 일상으로 안착했습니다. 이에 따라 수많은 직장인과 학생, 프리랜서들이 "나도 조회수 수입으로 제2의 월급을 벌어보겠다"며 영상 제작 부업 전선에 뛰어들고 있는데요. 하지만 단순히 "내 영상 조회수가 100만 회가 찍혔으니 돈을 이만큼 벌겠지?"라며 뜬구름 잡는 기대를 했다가, 정작 월말 정산 창에 찍히는 소박한 수익금 수치를 보고 좌절하는 경우가 허다합니다. 이는 대형 롱폼 영상의 조회수 단가와 숏폼의 정산 매커니즘이 완전히 결을 달리하는 데다, 플랫폼 수수료와 프리랜서 사업소득세 공제율을 계산식에 반영하지 않았기 때문입니다. 트래픽 거품을 걷어내고 내 통장에 안착할 실질 세후 정산 총액을 정밀하게 역산할 수 있도록 이 계산기를 제작하게 되었습니다.</p>
-                    <p>이 연산 도구는 사용자가 설정한 월간 목표 조회수와 주력 플랫폼 분기, 채널 주제별 평균 RPM(1,000회당 수익) 단가 스펙을 실시간 상속하여 수수료 차감 전 총액을 구하며, 프리랜서 원천징수 세금 3.3% 옵션을 정밀 결합한 최종 세후 예상 총액을 실시간으로 도출해 줍니다.</p>
+                    <p>출퇴근 시간 지하철이나 잠들기 전 침대 위에서 스마트폰으로 유튜브 쇼츠(Shorts), 틱톡(TikTok), 인스타그램 릴스를 넘겨보는 문화는 완전히 일상으로 안착했습니다.
+                        이에 따라 수많은 직장인과 학생, 프리랜서들이 "나도 조회수 수입으로 제2의 월급을 벌어보겠다"며 영상 제작 부업 전선에 뛰어들고 있는데요. 하지만 단순히 "내 영상
+                        조회수가 100만 회가 찍혔으니 돈을 이만큼 벌겠지?"라며 뜬구름 잡는 기대를 했다가, 정작 월말 정산 창에 찍히는 소박한 수익금 수치를 보고 좌절하는 경우가 허다합니다.
+                        이는 대형 롱폼 영상의 조회수 단가와 숏폼의 정산 매커니즘이 완전히 결을 달리하는 데다, 플랫폼 수수료와 프리랜서 사업소득세 공제율을 계산식에 반영하지 않았기 때문입니다.
+                        트래픽 거품을 걷어내고 내 통장에 안착할 실질 세후 정산 총액을 정밀하게 역산할 수 있도록 이 계산기를 제작하게 되었습니다.</p>
+                    <p>이 연산 도구는 사용자가 설정한 월간 목표 조회수와 주력 플랫폼 분기, 채널 주제별 평균 RPM(1,000회당 수익) 단가 스펙을 실시간 상속하여 수수료 차감 전 총액을
+                        구하며, 프리랜서 원천징수 세금 3.3% 옵션을 정밀 결합한 최종 세후 예상 총액을 실시간으로 도출해 줍니다.</p>
                     <h3>📊 숏폼 콘텐츠 주제별 평균 RPM 단가 및 정산 밸런스 비교 표</h3>
-                    <p>유튜브와 틱톡 알고리즘이 광고주 단가를 기준으로 크리에이터에게 매기는 카테고리별 정산 기본 뼈대입니다. 아래 반응형 표를 통해 내가 기획한 콘텐츠의 수익 효율성을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>유튜브와 틱톡 알고리즘이 광고주 단가를 기준으로 크리에이터에게 매기는 카테고리별 정산 기본 뼈대입니다. 아래 반응형 표를 통해 내가 기획한 콘텐츠의 수익 효율성을 시각적으로
+                        체크해 보세요.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -119,15 +135,29 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 단가 지표는 대한민국 시청자 트래픽(국내 IP) 기준의 평균 정산 요율입니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 정보를 안전하게 검수하실 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 단가 지표는 대한민국 시청자 트래픽(국내 IP) 기준의 평균 정산 요율입니다. 모바일 기기에서는 표를
+                        좌우로 슬라이드하여 상세 정보를 안전하게 검수하실 수 있습니다.</small>
                     <h3>📌 유튜브 YPP 45% 수수료 분배 구조와 광고 풀(Pool) 정산의 함수</h3>
-                    <p>유튜브 쇼츠 수익이 롱폼 영상보다 현저히 낮을 수밖에 없는 이유는 플랫폼의 <code>숏폼 광고 풀 정산 공식</code> 때문입니다. 일반 영상은 내 영상에 붙은 광고 수익을 유튜브와 내가 나눠 가지지만, 쇼츠는 매달 전 세계 크리에이터들이 생성한 전체 쇼츠 조회수와 총 광고 매출을 거대한 풀(Pool)에 한데 모으는데요. 여기서 음악 저작권료를 먼저 정산한 뒤, 남은 순수 자금에서 유튜브가 55%를 때가고 크리에이터 진영에게 오직 '45%'의 요율 스펙만을 분배 상속해 줍니다.</p>
-                    <p>이 45%의 파이를 다시 개인의 조회수 지분율에 비례하여 쪼개어 갖는 1차 방정식 구조를 취하기 때문에, 내 영상에 광고가 직접 붙었냐와 상관없이 채널의 카테고리별 RPM(Revenue Per Mille) 가중치가 수익의 운명을 좌우하게 됩니다. 본 계산기 엔진은 이 촘촘한 플랫폼별 수수료 정산 분기를 내부 알고리즘에 탑재해 두었기 때문에, 트래픽 유실 없는 현실적인 정산 결과를 무결점으로 빌드해 줍니다.</p>
+                    <p>유튜브 쇼츠 수익이 롱폼 영상보다 현저히 낮을 수밖에 없는 이유는 플랫폼의 <code>숏폼 광고 풀 정산 공식</code> 때문입니다. 일반 영상은 내 영상에 붙은 광고
+                        수익을 유튜브와 내가 나눠 가지지만, 쇼츠는 매달 전 세계 크리에이터들이 생성한 전체 쇼츠 조회수와 총 광고 매출을 거대한 풀(Pool)에 한데 모으는데요. 여기서 음악
+                        저작권료를 먼저 정산한 뒤, 남은 순수 자금에서 유튜브가 55%를 때가고 크리에이터 진영에게 오직 '45%'의 요율 스펙만을 분배 상속해 줍니다.</p>
+                    <p>이 45%의 파이를 다시 개인의 조회수 지분율에 비례하여 쪼개어 갖는 1차 방정식 구조를 취하기 때문에, 내 영상에 광고가 직접 붙었냐와 상관없이 채널의 카테고리별
+                        RPM(Revenue Per Mille) 가중치가 수익의 운명을 좌우하게 됩니다. 본 계산기 엔진은 이 촘촘한 플랫폼별 수수료 정산 분기를 내부 알고리즘에 탑재해 두었기
+                        때문에, 트래픽 유실 없는 현실적인 정산 결과를 무결점으로 빌드해 줍니다.</p>
                     <h3>💵 해외 시청자 트래픽의 대반전과 미국 세금 원천징수 방어선</h3>
-                    <p>크리에이터 부업을 할 때 많은 초보 유튜버들이 놓쳐서 당황하는 독소 변수가 바로 '시청 국가별 가중치 계수'와 '미국 원천징수 세금'의 벽입니다. 만약 내 채널이 언어의 장벽이 없는 고양이 영상이나 ASMR 콘텐츠를 다루어 동남아, 남미 등 글로벌 유저들의 조회수를 대량 수집했다면, 단순 조회수 숫자는 높을지라도 실질 정산 단가는 국내 트래픽의 반토막 이하로 뚝 떨어질 수 있는데요. 광고를 집행하는 해당 국가 기업들의 단가 체급 자체가 낮기 때문입니다. 반대로 미국이나 유럽 트래픽은 단가가 몇 배로 뛰어오릅니다.</p>
-                    <p>더불어 구글 에드센스 정산 시 미국 시청자로부터 발생한 수입에 대해서는 구글이 <code>미국 원천징수세(최대 30%)</code>를 먼저 떼어가므로, 애드센스 가입 즉시 한국-미국 조세조약에 따른 W-8BEN 세금 정보 양식 스펙을 제출하여 요율을 10%선으로 낮추는 방어전이 필수적입니다. 본 가이드 기기가 도출해내는 뼈 때리는 세후 실제 수령액 데이터를 나침반으로 삼아, 알고리즘 피드를 지배하는 현명한 디지털 노마드 크리에이터로 성장해 보시기 바랍니다.</p>
+                    <p>크리에이터 부업을 할 때 많은 초보 유튜버들이 놓쳐서 당황하는 독소 변수가 바로 '시청 국가별 가중치 계수'와 '미국 원천징수 세금'의 벽입니다. 만약 내 채널이 언어의
+                        장벽이 없는 고양이 영상이나 ASMR 콘텐츠를 다루어 동남아, 남미 등 글로벌 유저들의 조회수를 대량 수집했다면, 단순 조회수 숫자는 높을지라도 실질 정산 단가는 국내
+                        트래픽의 반토막 이하로 뚝 떨어질 수 있는데요. 광고를 집행하는 해당 국가 기업들의 단가 체급 자체가 낮기 때문입니다. 반대로 미국이나 유럽 트래픽은 단가가 몇 배로
+                        뛰어오릅니다.</p>
+                    <p>더불어 구글 에드센스 정산 시 미국 시청자로부터 발생한 수입에 대해서는 구글이 <code>미국 원천징수세(최대 30%)</code>를 먼저 떼어가므로, 애드센스 가입 즉시
+                        한국-미국 조세조약에 따른 W-8BEN 세금 정보 양식 스펙을 제출하여 요율을 10%선으로 낮추는 방어전이 필수적입니다. 본 가이드 기기가 도출해내는 뼈 때리는 세후 실제
+                        수령액 데이터를 나침반으로 삼아, 알고리즘 피드를 지배하는 현명한 디지털 노마드 크리에이터로 성장해 보시기 바랍니다.</p>
                     <h3>⚠️ 유튜브 쇼츠·틱톡 조회수 수익 역산기 이용 시 주의사항</h3>
-                    <p>본 숏폼 트래픽 정산 시뮬레이션 프로그램은 구글 유튜브 파트너 프로그램(YPP) 규정 및 틱톡 크리에이터 리워드 표준 정산 명세를 기반으로 정밀 수학적 시뮬레이션을 제공합니다. 다만, 본 계산은 시청자가 영상을 보다가 2초 만에 넘겨버리는 이탈율에 따른 '실질 유효 조회수 필터링 변수', 유튜브 프리미엄 회원이 내 영상을 시청했을 때 가산되는 특수 프리미엄 분배금 가중치, 그리고 연간 채널 총수입이 2,000만 원을 초과할 때 인적용역 프리랜서 소득세율(3.3%) 외에 복합 과세되는 5월 종합소득세 누진 요인을 완벽히 포함하지 않은 명목 산술 결과입니다. 플랫폼의 분기별 정산 정책 변경이나 개별 채널의 상호작용 품질 점수에 따라 실제 급여일 입금액과 미세한 오차가 발생할 수 있으므로, 본 결과는 채널 기획 방향성 수립을 위한 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
+                    <p>본 숏폼 트래픽 정산 시뮬레이션 프로그램은 구글 유튜브 파트너 프로그램(YPP) 규정 및 틱톡 크리에이터 리워드 표준 정산 명세를 기반으로 정밀 수학적 시뮬레이션을
+                        제공합니다. 다만, 본 계산은 시청자가 영상을 보다가 2초 만에 넘겨버리는 이탈율에 따른 '실질 유효 조회수 필터링 변수', 유튜브 프리미엄 회원이 내 영상을 시청했을 때
+                        가산되는 특수 프리미엄 분배금 가중치, 그리고 연간 채널 총수입이 2,000만 원을 초과할 때 인적용역 프리랜서 소득세율(3.3%) 외에 복합 과세되는 5월 종합소득세 누진
+                        요인을 완벽히 포함하지 않은 명목 산술 결과입니다. 플랫폼의 분기별 정산 정책 변경이나 개별 채널의 상호작용 품질 점수에 따라 실제 급여일 입금액과 미세한 오차가 발생할 수
+                        있으므로, 본 결과는 채널 기획 방향성 수립을 위한 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

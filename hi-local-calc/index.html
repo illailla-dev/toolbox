@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>지역건강보험료 모의계산기 | 에브리캘크</title>
-    <meta name="description" content="소득, 재산 세표, 보유 자동차 정보를 입력하여 2026년 기준 지역건강보험료와 장기요양보험료를 정확하게 모의 계산하고 세후 지출을 예측해 보세요.">
+    <meta name="description"
+        content="소득, 재산 세표, 보유 자동차 정보를 입력하여 2026년 기준 지역건강보험료와 장기요양보험료를 정확하게 모의 계산하고 세후 지출을 예측해 보세요.">
     <meta name="keywords" content="지역건강보험료계산, 건보료모의계산, 지역가입자건강보험료, 재산세건보료, 자동차건보료, 건보료점수, 에브리캘크">
-    <link class="canonical" href="https://every-calc.co.kr/hi-local-calc/">
+    <link rel="canonical" href="https://every-calc.co.kr/hi-local-calc/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="지역건강보험료 모의계산기 - 에브리캘크">
     <meta property="og:description" content="까다로운 지역건강보험료, 미리 계산해 보세요! 소득과 재산 기준에 맞춘 실시간 건보료 예측 시뮬레이터.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
@@ -38,7 +40,8 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="income-business">사업/근로/기타 소득 (연간)</label>
-                                <input type="number" id="income-business" placeholder="예: 30000000" class="form-control">
+                                <input type="number" id="income-business" placeholder="예: 30000000"
+                                    class="form-control">
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="income-finance">금융 소득 (이자·배당 연 1천만원 초과분)</label>
@@ -56,7 +59,8 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="property-tax-base">토지/건물/주택 재산세 과세표준 금액</label>
-                                <input type="number" id="property-tax-base" placeholder="🔒 공시지가 아님, 재산세 고지서 기준" class="form-control">
+                                <input type="number" id="property-tax-base" placeholder="🔒 공시지가 아님, 재산세 고지서 기준"
+                                    class="form-control">
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="property-rent">전세보증금 또는 월세 보증금</label>
@@ -70,7 +74,8 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="car-value">현재 차량 가액 (시가 기준)</label>
-                                <input type="number" id="car-value" placeholder="예: 45000000 (4천만원 미만은 면제)" class="form-control">
+                                <input type="number" id="car-value" placeholder="예: 45000000 (4천만원 미만은 면제)"
+                                    class="form-control">
                             </div>
                         </div>
                     </div>
@@ -83,12 +88,16 @@
                         <p>재산 부과 점수 (5,000만원 기본공제 적용): <strong id="res-property-score">0</strong> 점</p>
                         <p>자동차 부과 점수: <strong id="res-car-score">0</strong> 점</p>
                         <hr>
-                        <p>🩺 <strong>건강보험료 본인부담금</strong>: <strong id="res-hi-premium" style="color:var(--orange);">0</strong> 원</p>
-                        <p>🧓 <strong>장기요양보험료</strong>: <strong id="res-elderly-premium" style="color:var(--green);">0</strong> 원</p>
+                        <p>🩺 <strong>건강보험료 본인부담금</strong>: <strong id="res-hi-premium"
+                                style="color:var(--orange);">0</strong> 원</p>
+                        <p>🧓 <strong>장기요양보험료</strong>: <strong id="res-elderly-premium"
+                                style="color:var(--green);">0</strong> 원</p>
                         <hr>
-                        <p style="color: var(--blue);font-weight: bold;font-size:110%">🎯 최종 월 납부 예상액: <span id="res-total-premium">0</span> 원</p>
+                        <p style="color: var(--blue);font-weight: bold;font-size:110%">🎯 최종 월 납부 예상액: <span
+                                id="res-total-premium">0</span> 원</p>
                     </div>
-                    <p class="result-tip mt-3" style="font-size: 1rem; background:#e7f5ff; padding:10px; border-radius:5px; border-left:4px solid #007bff;">
+                    <p class="result-tip mt-3"
+                        style="font-size: 1rem; background:#e7f5ff; padding:10px; border-radius:5px; border-left:4px solid #007bff;">
                         * 프리랜서 해촉증명서 제출, 재산 매각, 자동차 처분 등으로 부과 요소 변동 시 국민건강보험공단 지사에 즉시 신고하셔야 보험료 폭탄을 피할 수 있습니다.
                     </p>
                 </div>
@@ -96,10 +105,14 @@
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 지역건강보험료 부과 체계 및 절세 핵심 가이드</h2>
-                    <p>직장가입자와 달리 지역가입자의 건강보험료는 소득뿐만 아니라 보유한 재산과 자동차까지 종합적으로 합산하여 점수를 매긴 뒤 보험료를 부과합니다. 많은 분들이 은퇴 후 또는 프리랜서 전향 시 갑작스럽게 청구되는 고액의 고지서를 보고 당황하시곤 하는데요. 우리 몸의 건강을 지키기 위한 보험료가 자칫 가계 재정에 치명적인 폭탄이 되지 않도록, 개인의 소득세표와 과세표준 금액을 기반으로 매월 지출될 핵심 부담금을 실시간 정산하고 선제적으로 대응할 수 있도록 이 지역건강보험료 계산기를 제작하게 되었습니다.</p>
+                    <p>직장가입자와 달리 지역가입자의 건강보험료는 소득뿐만 아니라 보유한 재산과 자동차까지 종합적으로 합산하여 점수를 매긴 뒤 보험료를 부과합니다. 많은 분들이 은퇴 후 또는
+                        프리랜서 전향 시 갑작스럽게 청구되는 고액의 고지서를 보고 당황하시곤 하는데요. 우리 몸의 건강을 지키기 위한 보험료가 자칫 가계 재정에 치명적인 폭탄이 되지 않도록,
+                        개인의 소득세표와 과세표준 금액을 기반으로 매월 지출될 핵심 부담금을 실시간 정산하고 선제적으로 대응할 수 있도록 이 지역건강보험료 계산기를 제작하게 되었습니다.</p>
                     <h4>1. 지역건강보험료 항목별 점수 산정 방식</h4>
-                    <p>최신 국민건강보험법 기준에 따른 점수 산정 방식은 크게 세 가지 축으로 나뉩니다. 과거와 달리 제도 개편을 통해 재산에 대한 기본 공제가 대폭 확대되어 서민층의 부담이 다소 줄었으나, 여전히 고가 자산 보유자나 종합소득 발생자에게는 정밀한 모니터링이 요구됩니다.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>최신 국민건강보험법 기준에 따른 점수 산정 방식은 크게 세 가지 축으로 나뉩니다. 과거와 달리 제도 개편을 통해 재산에 대한 기본 공제가 대폭 확대되어 서민층의 부담이 다소
+                        줄었으나, 여전히 고가 자산 보유자나 종합소득 발생자에게는 정밀한 모니터링이 요구됩니다.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 300px; width: 100%;">
                             <thead>
                                 <tr>
@@ -114,7 +127,8 @@
                                 </tr>
                                 <tr>
                                     <td>보유 재산</td>
-                                    <td>토지, 건축물, 주택 재산세 과세표준 금액(전월세는 30% 환산)에서 <strong>일괄 5,000만 원 기본 공제</strong>를 적용합니다.</td>
+                                    <td>토지, 건축물, 주택 재산세 과세표준 금액(전월세는 30% 환산)에서 <strong>일괄 5,000만 원 기본 공제</strong>를
+                                        적용합니다.</td>
                                 </tr>
                                 <tr>
                                     <td>자동차</td>
@@ -124,11 +138,15 @@
                         </table>
                         <h4>2. 지역가입자 건보료 부담을 줄이는 핵심 절세 팁</h4>
                         <ul>
-                            <li><strong>해촉증명서 발급 및 제출:</strong> 프리랜서나 중도 퇴직자의 경우, 과거 소득 기준으로 보험료가 잘못 부과될 수 있습니다. 계약 종료 즉시 해촉증명서를 발급받아 공단에 제출하면 소득 조정을 통해 보험료를 즉시 낮출 수 있습니다.</li>
-                            <li><strong>재산 및 자동차 매각 시 즉시 정산:</strong> 보유하던 주택이나 자동차를 매각했다면, 공단 전산에 자동 반영되기 전이라도 매매계약서나 등기부등본을 지사에 제출하여 선제적으로 보험료를 인하받아야 합니다.</li>
-                            <li><strong>피부양자 자격 유지 조건 검토:</strong> 가족 중 직장가입자가 있다면 피부양자로 등록하는 것이 가장 유리합니다. 단, 연간 소득 합산액이 2,000만 원을 초과하거나 재산세 과표가 기준을 초과하면 자격이 상실되므로 주기적인 검토가 필요합니다.</li>
+                            <li><strong>해촉증명서 발급 및 제출:</strong> 프리랜서나 중도 퇴직자의 경우, 과거 소득 기준으로 보험료가 잘못 부과될 수 있습니다. 계약 종료
+                                즉시 해촉증명서를 발급받아 공단에 제출하면 소득 조정을 통해 보험료를 즉시 낮출 수 있습니다.</li>
+                            <li><strong>재산 및 자동차 매각 시 즉시 정산:</strong> 보유하던 주택이나 자동차를 매각했다면, 공단 전산에 자동 반영되기 전이라도 매매계약서나
+                                등기부등본을 지사에 제출하여 선제적으로 보험료를 인하받아야 합니다.</li>
+                            <li><strong>피부양자 자격 유지 조건 검토:</strong> 가족 중 직장가입자가 있다면 피부양자로 등록하는 것이 가장 유리합니다. 단, 연간 소득 합산액이
+                                2,000만 원을 초과하거나 재산세 과표가 기준을 초과하면 자격이 상실되므로 주기적인 검토가 필요합니다.</li>
                         </ul>
-                        <small class="text-muted d-block mb-4">* 본 영양 및 부과 밸런스 가이드는 국민건강보험공단 최신 고시 단가(점수당 208.4원) 표준 매커니즘을 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 스펙을 안전하게 검수하실 수 있습니다.</small>
+                        <small class="text-muted d-block mb-4">* 본 영양 및 부과 밸런스 가이드는 국민건강보험공단 최신 고시 단가(점수당 208.4원) 표준
+                            매커니즘을 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 스펙을 안전하게 검수하실 수 있습니다.</small>
                     </div>
                 </div>
             </section>

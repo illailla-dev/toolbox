@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>쿠팡이츠 배민 라이더 세후 순시급 및 유류비 정산기 | 에브리캘크</title>
-    <meta name="description" content="배민커넥트, 쿠팡이츠 배달파트너 수입에서 세금(3.3%), 보험료, 지출한 기름값 및 차량 감가상각비를 제외한 진짜 세후 순수익과 진짜 시급을 실시간 정산합니다.">
+    <meta name="description"
+        content="배민커넥트, 쿠팡이츠 배달파트너 수입에서 세금(3.3%), 보험료, 지출한 기름값 및 차량 감가상각비를 제외한 진짜 세후 순수익과 진짜 시급을 실시간 정산합니다.">
     <meta name="keywords" content="배민라이더수익, 쿠팡이츠배달파트너, 배달부업시급, 배달유류비, 라이더순수익, 배달시급계산, 에브리캘크">
-    <link class="canonical" href="https://every-calc.co.kr/delivery-rider/">
+    <link rel="canonical" href="https://every-calc.co.kr/delivery-rider/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="쿠팡이츠 배민 라이더 세후 순시급 및 유류비 정산기 - 에브리캘크">
     <meta property="og:description" content="매출이 전부가 아니다! 주유비와 세금을 뺀 나의 진짜 배달 순수익과 세후 시급을 지금 바로 정산해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
@@ -30,7 +32,8 @@
         <main id="content">
             <div class="calculator-box">
                 <h2>🚗 배달 라이더 세후 순시급 계산기</h2>
-                <p>배달 부업으로 얻은 총매출에서 원천징수 세금, 플랫폼 이용료, 그리고 수단별(자동차/오토바이) 실제 지출 유류비 및 감가상각비를 제외하여 뼈 때리는 '진짜 세후 순수익'을 산출합니다.</p>
+                <p>배달 부업으로 얻은 총매출에서 원천징수 세금, 플랫폼 이용료, 그리고 수단별(자동차/오토바이) 실제 지출 유류비 및 감가상각비를 제외하여 뼈 때리는 '진짜 세후 순수익'을
+                    산출합니다.</p>
                 <form id="delivery-rider-form" class="form" onsubmit="return false;">
                     <!-- 1. 지출 정보 입력 -->
                     <div class="input-group-box mb-4">
@@ -38,11 +41,13 @@
                         <div class="form-row">
                             <div class="col-xl-7 input-item mb-3">
                                 <label for="rider-gross-income">총 배달 매출 수입 (정산 전 금액)</label>
-                                <input type="number" id="rider-gross-income" class="form-control" placeholder="예: 300000" min="0" value="200000">
+                                <input type="number" id="rider-gross-income" class="form-control"
+                                    placeholder="예: 300000" min="0" value="200000">
                             </div>
                             <div class="col-xl input-item">
                                 <label for="rider-total-hours">실제 배달 운행 시간 (시간)</label>
-                                <input type="number" id="rider-total-hours" class="form-control" placeholder="예: 15" min="1" value="10">
+                                <input type="number" id="rider-total-hours" class="form-control" placeholder="예: 15"
+                                    min="1" value="10">
                             </div>
                         </div>
                     </div>
@@ -60,7 +65,8 @@
                         </div>
                         <div class="input-item">
                             <label for="rider-distance">총 운행 거리 (누적 km)</label>
-                            <input type="number" id="rider-distance" class="form-control" placeholder="예: 80" min="0" value="80">
+                            <input type="number" id="rider-distance" class="form-control" placeholder="예: 80" min="0"
+                                value="80">
                             <small class="text-muted mt-2 d-block">* 픽업 이동부터 배달 완료 후 복귀까지의 총 누적 주행 거리입니다.</small>
                         </div>
                     </div>
@@ -70,29 +76,39 @@
                     <h3>💡 라이더 활동 정산 시뮬레이션 결과</h3>
                     <div class="result-display">
                         <p>원천징수 및 산재고용보험료 (약 4.5%): <strong id="res-rider-tax">0</strong> 원</p>
-                        <p>예상 소모 유류비 (휘발유 1,650원 기준): <strong id="res-rider-fuel" style="color: var(--orange);">0</strong> 원</p>
-                        <p>수단별 감가상각 및 정비 비용 소계: <strong id="res-rider-depreciation" style="color: var(--green);">0</strong> 원</p>
+                        <p>예상 소모 유류비 (휘발유 1,650원 기준): <strong id="res-rider-fuel"
+                                style="color: var(--orange);">0</strong> 원</p>
+                        <p>수단별 감가상각 및 정비 비용 소계: <strong id="res-rider-depreciation"
+                                style="color: var(--green);">0</strong> 원</p>
                         <hr>
                         <!-- 📌 최종 수령액 필수 강조 규격 적용 -->
                         <p id="result-total-money" style="font-size: 115%; color: var(--blue); font-weight: bold;">
                             모든 비용을 뺀 진짜 순수익: <strong id="result-delivery-rider-salary">0</strong> 원
                         </p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 배달 부업 채산성 가이드 및 순시급 평가</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="rider-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 계산기는 휘발유 리터당 1,650원, 일반 승용차 연비 10km/L, 오토바이 연비 35km/L의 평균 수치를 기준으로 시뮬레이션합니다. 전기자전거 및 킥보드는 소모성 배터리 감가비용을 km당 30원으로 간이 계산합니다. 기상 악화 할증이나 플랫폼 프로모션 미션 보너스에 따라 수익성이 변동될 수 있습니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 휘발유 리터당 1,650원, 일반 승용차 연비 10km/L, 오토바이 연비 35km/L의 평균
+                        수치를 기준으로 시뮬레이션합니다. 전기자전거 및 킥보드는 소모성 배터리 감가비용을 km당 30원으로 간이 계산합니다. 기상 악화 할증이나 플랫폼 프로모션 미션 보너스에 따라
+                        수익성이 변동될 수 있습니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 배달 부업의 냉정한 현실, 라이더 매출 거품을 걷어내는 진짜 순시급 계산 가이드</h2>
-                    <p>최근 본업 외에 남는 시간을 활용해 배민커넥트나 쿠팡이츠, 요기요 등에서 배달 라이더로 뛰며 부수입을 올리는 분들이 정말 많습니다. "하루 3시간 투자해서 한 달에 100만 원 벌었다"는 후기들을 보면 당장 나도 뛰어들고 싶어지는데요. 하지만 정산 앱에 찍히는 총매출 수입만 보고 만족했다가, 추후 종합소득세 신고 시기나 자동차 정비소에 방문했을 때 생각지도 못한 지출이 빵꾸가 나며 오히려 '남는 게 없는 장사'였음을 뒤늦게 깨닫는 경우가 허다합니다. 내가 흘린 땀방울의 가치를 뼈 때리는 수치로 냉정하게 정산하고 채산성 있는 소비 계획을 세울 수 있도록 이 계산기를 제작했습니다.</p>
-                    <p>이 시뮬레이터는 사용자가 입력한 총 배달 수입과 운행 시간, 이동 수단(자동차, 오토바이, 전기자전거, 도보) 및 총 주행거리를 연동하여 프리랜서 세금과 세부 유지비를 실시간 역산한 진짜 순수익을 도출해 줍니다.</p>
+                    <p>최근 본업 외에 남는 시간을 활용해 배민커넥트나 쿠팡이츠, 요기요 등에서 배달 라이더로 뛰며 부수입을 올리는 분들이 정말 많습니다. "하루 3시간 투자해서 한 달에 100만
+                        원 벌었다"는 후기들을 보면 당장 나도 뛰어들고 싶어지는데요. 하지만 정산 앱에 찍히는 총매출 수입만 보고 만족했다가, 추후 종합소득세 신고 시기나 자동차 정비소에 방문했을
+                        때 생각지도 못한 지출이 빵꾸가 나며 오히려 '남는 게 없는 장사'였음을 뒤늦게 깨닫는 경우가 허다합니다. 내가 흘린 땀방울의 가치를 뼈 때리는 수치로 냉정하게 정산하고
+                        채산성 있는 소비 계획을 세울 수 있도록 이 계산기를 제작했습니다.</p>
+                    <p>이 시뮬레이터는 사용자가 입력한 총 배달 수입과 운행 시간, 이동 수단(자동차, 오토바이, 전기자전거, 도보) 및 총 주행거리를 연동하여 프리랜서 세금과 세부 유지비를 실시간
+                        역산한 진짜 순수익을 도출해 줍니다.</p>
                     <h3>📊 배달 운송수단별 평균 연비 및 km당 실질 감가 비용 기준표</h3>
                     <p>내가 선택한 배달 수단에 따라 도로 위에 뿌려지는 숨은 지출 비용의 스펙입니다. 아래 반응형 표를 통해 내가 뛰고 있는 부업의 실질 마진율을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -130,15 +146,26 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 유지비 지표는 휘발유 리터당 1,650원 기준 및 라이더 운행 통계를 기반으로 대입한 간이 역산치입니다. 모바일 기기에서는 표를 좌우로 밀어서 텍스트 레이아웃을 안전하게 검수할 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 유지비 지표는 휘발유 리터당 1,650원 기준 및 라이더 운행 통계를 기반으로 대입한 간이
+                        역산치입니다. 모바일 기기에서는 표를 좌우로 밀어서 텍스트 레이아웃을 안전하게 검수할 수 있습니다.</small>
                     <h3>📌 플랫폼이 떼가는 프리랜서 3.3% 세금과 산재·고용보험료의 함수</h3>
-                    <p>배달 라이더는 개인이 원할 때 유연하게 일하는 자유 계약 프리랜서(인적용역 사업자) 신분입니다. 따라서 주간 혹은 월간 정산 금액이 계좌로 들어올 때, 약 4.5%에 달하는 법정 공제 금액이 원천징수된 후 입금되는데요. 기본적으로 소득세법에 따른 사업소득세 3.3%가 차감되며, 플랫폼 종사자 보호법 개정에 따라 의무 적용되는 산재보험료 및 고용보험료의 라이더 본인 부담분이 추가로 정산되기 때문입니다.</p>
-                    <p>이 세금과 보험료는 내 수입의 크기에 비례하여 기계적으로 빠져나가는 고정 비용이므로, 세후 실질 소득을 파악할 때 가장 먼저 걷어내야 할 거품입니다. 본 계산기는 이러한 세무 정산 명세를 철저히 준수하여 공제액 소계를 실시간으로 걸러내 줍니다.</p>
+                    <p>배달 라이더는 개인이 원할 때 유연하게 일하는 자유 계약 프리랜서(인적용역 사업자) 신분입니다. 따라서 주간 혹은 월간 정산 금액이 계좌로 들어올 때, 약 4.5%에 달하는
+                        법정 공제 금액이 원천징수된 후 입금되는데요. 기본적으로 소득세법에 따른 사업소득세 3.3%가 차감되며, 플랫폼 종사자 보호법 개정에 따라 의무 적용되는 산재보험료 및
+                        고용보험료의 라이더 본인 부담분이 추가로 정산되기 때문입니다.</p>
+                    <p>이 세금과 보험료는 내 수입의 크기에 비례하여 기계적으로 빠져나가는 고정 비용이므로, 세후 실질 소득을 파악할 때 가장 먼저 걷어내야 할 거품입니다. 본 계산기는 이러한 세무
+                        정산 명세를 철저히 준수하여 공제액 소계를 실시간으로 걸러내 줍니다.</p>
                     <h3>🚗 이동 수단별 유류비와 도로 위에 뿌려지는 감가상각비의 비밀</h3>
-                    <p>배달 부업 수입에서 가장 큰 변수를 차지하는 것이 바로 '이동 수단별 유지비'입니다. 특히 일반 승용차(자동차)를 이용해 배달 전선에 뛰어드신 분들은 유독 주의하셔야 하는데요. 자동차는 오토바이나 전기자전거에 비해 연비가 현저히 낮아 휘발유 리터당 소모되는 유류비 비중이 엄청나게 큽니다. 더 무서운 것은 눈에 당장 보이지 않는 '차량 감가상각 및 정비 비용'입니다.</p>
-                    <p>배달 특성상 골목길을 자주 급가속·급감속하고 시동을 자주 껐다 켜기 때문에 엔진오일, 브레이크 패드, 타이어 등 소모품 교체 주기가 일반 주행보다 최소 2배 이상 빠라집니다. 킬로미터(km)를 달릴 때마다 내 차의 자산 가치가 깎여나가는 셈인데요. 본 가이드 기기는 수단별 평균 연비와 소모성 감가 비용 스펙을 수학적으로 결합하여 실제 순수익과 진짜 내 순시급의 가치를 명확히 도출해 줍니다.</p>
+                    <p>배달 부업 수입에서 가장 큰 변수를 차지하는 것이 바로 '이동 수단별 유지비'입니다. 특히 일반 승용차(자동차)를 이용해 배달 전선에 뛰어드신 분들은 유독 주의하셔야
+                        하는데요. 자동차는 오토바이나 전기자전거에 비해 연비가 현저히 낮아 휘발유 리터당 소모되는 유류비 비중이 엄청나게 큽니다. 더 무서운 것은 눈에 당장 보이지 않는 '차량
+                        감가상각 및 정비 비용'입니다.</p>
+                    <p>배달 특성상 골목길을 자주 급가속·급감속하고 시동을 자주 껐다 켜기 때문에 엔진오일, 브레이크 패드, 타이어 등 소모품 교체 주기가 일반 주행보다 최소 2배 이상 빠라집니다.
+                        킬로미터(km)를 달릴 때마다 내 차의 자산 가치가 깎여나가는 셈인데요. 본 가이드 기기는 수단별 평균 연비와 소모성 감가 비용 스펙을 수학적으로 결합하여 실제 순수익과
+                        진짜 내 순시급의 가치를 명확히 도출해 줍니다.</p>
                     <h3>⚠️ 배달 라이더 채산성 시뮬레이터 이용 시 주의사항</h3>
-                    <p>본 배달 라이더 세후 순시급 계산기는 시장 평균 유가 지표와 수단별 표준 소모품 정비 비용 통계를 기반으로 모의 계산 결과를 제공합니다. 다만, 본 계산은 기상 악화 시 발생하는 폭우·폭설 할증 배달 팁, 플랫폼이 불시에 제공하는 피크타임 프로모션 미션 보너스 수치, 그리고 개인 차량의 연간 자동차 보험료(유상운송 특약 가입 여부)의 미세 변수를 포함하지 않은 산술 시뮬레이션 결과입니다. 주행 환경이나 도로 정체 수준에 따라 실제 연비와 오차가 발생할 수 있으므로, 본 결과는 내 배달 부업의 효율성을 검증하기 위한 가이드라인 참고용으로만 활용하시고 지속적인 수익성 개선의 지표로 삼으시기 바랍니다.</p>
+                    <p>본 배달 라이더 세후 순시급 계산기는 시장 평균 유가 지표와 수단별 표준 소모품 정비 비용 통계를 기반으로 모의 계산 결과를 제공합니다. 다만, 본 계산은 기상 악화 시
+                        발생하는 폭우·폭설 할증 배달 팁, 플랫폼이 불시에 제공하는 피크타임 프로모션 미션 보너스 수치, 그리고 개인 차량의 연간 자동차 보험료(유상운송 특약 가입 여부)의 미세
+                        변수를 포함하지 않은 산술 시뮬레이션 결과입니다. 주행 환경이나 도로 정체 수준에 따라 실제 연비와 오차가 발생할 수 있으므로, 본 결과는 내 배달 부업의 효율성을 검증하기
+                        위한 가이드라인 참고용으로만 활용하시고 지속적인 수익성 개선의 지표로 삼으시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

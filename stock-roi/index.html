@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>주식 수익률 계산기 - 매매 마진 및 세후 순수익 자동 계산 | 에브리캘크</title>
-    <meta name="description" content="주식 매수가와 매도가, 수량을 입력하면 거래 수수료와 증권거래세 등 제세금을 완벽히 공제하여 실제 내 통장에 꽂히는 투자 순수익과 진짜 수익률을 정확하게 계산합니다.">
+    <meta name="description"
+        content="주식 매수가와 매도가, 수량을 입력하면 거래 수수료와 증권거래세 등 제세금을 완벽히 공제하여 실제 내 통장에 꽂히는 투자 순수익과 진짜 수익률을 정확하게 계산합니다.">
     <meta name="keywords" content="주식 수익률 계산기, 주식 마진 계산기, 평단가 익절 계산, 주식 수수료 계산, 증권거래세 계산, 주식 세후 이익, 주식 투자 수익률">
     <link rel="canonical" href="https://every-calc.co.kr/stock-roi/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="주식 수익률 및 매매 마진 계산기">
     <meta property="og:description" content="수수료와 세금 떼고 나면 진짜 얼마 남을까? 매매 시나리오를 미리 돌려보고 오차 없는 익절 단가를 설계해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
@@ -38,11 +40,13 @@
                         <div class="form-row">
                             <div class="col-xl input-item mb-3 mb-xl-0">
                                 <label for="buy-price">매수 평단가 (원)</label>
-                                <input type="number" id="buy-price" class="form-control" placeholder="예: 50000" required min="1" step="1">
+                                <input type="number" id="buy-price" class="form-control" placeholder="예: 50000" required
+                                    min="1" step="1">
                             </div>
                             <div class="col-xl input-item">
                                 <label for="stock-qty">보유 및 매수 수량 (주)</label>
-                                <input type="number" id="stock-qty" class="form-control" placeholder="예: 100" required min="1" step="1">
+                                <input type="number" id="stock-qty" class="form-control" placeholder="예: 100" required
+                                    min="1" step="1">
                             </div>
                         </div>
                     </div>
@@ -51,7 +55,8 @@
                         <h3>2. 매도(익절) 조건 및 거래 비용 설정</h3>
                         <div class="input-item mb-3">
                             <label for="sell-price">목표 매도가 / 현재가 (원)</label>
-                            <input type="number" id="sell-price" class="form-control" placeholder="예: 55000" required min="1" step="1">
+                            <input type="number" id="sell-price" class="form-control" placeholder="예: 55000" required
+                                min="1" step="1">
                         </div>
                         <div class="input-item mb-3">
                             <label for="broker-fee">증권사 수수료율 (매수/매도 각각 적용, %)</label>
@@ -79,8 +84,10 @@
                         <hr>
                         <p>예상 거래 비용 총합 (수수료+세금): <strong id="res-total-costs" style="color:var(--red);">0</strong> 원</p>
                         <hr>
-                        <p style="font-size:110%; color:var(--green); font-weight:bold;">💵 세후 최종 순수익: <span id="res-pure-profit">0</span> 원</p>
-                        <p style="font-size:110%; color:var(--blue); font-weight:bold;">📊 최종 실질 수익률: <span id="res-pure-roi">0.00</span> %</p>
+                        <p style="font-size:110%; color:var(--green); font-weight:bold;">💵 세후 최종 순수익: <span
+                                id="res-pure-profit">0</span> 원</p>
+                        <p style="font-size:110%; color:var(--blue); font-weight:bold;">📊 최종 실질 수익률: <span
+                                id="res-pure-roi">0.00</span> %</p>
                     </div>
                     <p class="result-tip guide-text mt-3">* 매수 시 수수료가 포함되고, 매도 시 수수료와 증권거래세가 합산 공제되어 정산됩니다.</p>
                 </div>
@@ -88,11 +95,18 @@
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 주식 매매의 냉정한 수학, 명목 수익률의 함정과 세후 마진 방어 전략</h2>
-                    <p>재테크나 전업 투자를 목적으로 주식 시장에 진입한 투자자들이 HTS나 MTS 모바일 앱을 보며 가장 자주 범하는 실수가 있습니다. 바로 화면에 표시되는 '평가 손익 퍼센트(%)' 숫자가 플러스로 돌아서는 순간, 무작정 내가 돈을 벌었다고 착각하여 익절 매도 버튼을 누르는 행동인데요. 하지만 주식 시장에는 눈에 당장 보이지 않는 '숨은 거래 비용의 함수'가 촘촘하게 작동하고 있습니다. 내가 산 금액과 판 금액 사이에서 증권사가 때가는 왕복 수수료와 국가가 징수하는 거래세 요율을 빼고 나면, 겉보기에는 분명 이득이었는데 내 예수금 원금 잔고는 오히려 줄어들어 있거나 푼돈만 남는 씁쓸한 정산 사고가 종종 발생하기 때문입니다. 거래 거품을 완벽히 필터링하고 진짜 내 통장에 입금될 세후 최종 순수익을 역산할 수 있도록 이 계산기를 제작했습니다.</p>
-                    <p>이 연산 도구는 사용자가 입력한 매수 평단가와 수량 스펙을 상속하여 순수 매수·매도 총액을 구하며, 증권사 수수료율 분기와 국내 증권거래세율 조건을 복합 대입하여 거래 비용이 차감된 진짜 실질 수익률(%) 데이터를 실시간으로 도출해 줍니다.</p>
+                    <p>재테크나 전업 투자를 목적으로 주식 시장에 진입한 투자자들이 HTS나 MTS 모바일 앱을 보며 가장 자주 범하는 실수가 있습니다. 바로 화면에 표시되는 '평가 손익
+                        퍼센트(%)' 숫자가 플러스로 돌아서는 순간, 무작정 내가 돈을 벌었다고 착각하여 익절 매도 버튼을 누르는 행동인데요. 하지만 주식 시장에는 눈에 당장 보이지 않는 '숨은
+                        거래 비용의 함수'가 촘촘하게 작동하고 있습니다. 내가 산 금액과 판 금액 사이에서 증권사가 때가는 왕복 수수료와 국가가 징수하는 거래세 요율을 빼고 나면, 겉보기에는 분명
+                        이득이었는데 내 예수금 원금 잔고는 오히려 줄어들어 있거나 푼돈만 남는 씁쓸한 정산 사고가 종종 발생하기 때문입니다. 거래 거품을 완벽히 필터링하고 진짜 내 통장에 입금될
+                        세후 최종 순수익을 역산할 수 있도록 이 계산기를 제작했습니다.</p>
+                    <p>이 연산 도구는 사용자가 입력한 매수 평단가와 수량 스펙을 상속하여 순수 매수·매도 총액을 구하며, 증권사 수수료율 분기와 국내 증권거래세율 조건을 복합 대입하여 거래 비용이
+                        차감된 진짜 실질 수익률(%) 데이터를 실시간으로 도출해 줍니다.</p>
                     <h3>📊 국내 주식 시장 매매 시 차감되는 법정 거래 비용 및 정산 방식 대조표</h3>
-                    <p>내 주식 계좌의 거래 형태와 우대 조건에 따라 예수금 원금에서 차감 정산되는 필수 세무 요율표입니다. 아래 반응형 표를 통해 내가 제안받은 계좌 스펙의 방어선을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>내 주식 계좌의 거래 형태와 우대 조건에 따라 예수금 원금에서 차감 정산되는 필수 세무 요율표입니다. 아래 반응형 표를 통해 내가 제안받은 계좌 스펙의 방어선을 시각적으로
+                        체크해 보세요.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -124,15 +138,28 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 거래세 기준은 대한민국 소득세법 및 조세특례제한법의 주식 시장 표준 명세를 철저하게 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 정보를 안전하게 검수하실 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 거래세 기준은 대한민국 소득세법 및 조세특례제한법의 주식 시장 표준 명세를 철저하게 상속합니다. 모바일
+                        기기에서는 표를 좌우로 슬라이드하여 상세 정보를 안전하게 검수하실 수 있습니다.</small>
                     <h3>📌 매수 원금 가산과 매도 세금 차감의 이중 마찰, 왕복 수수료의 물리 공식</h3>
-                    <p>주식 익절 마진을 계산할 때 투자자들이 가장 많이 놓치는 수학적 뼈대는 바로 거래 비용의 <code>이중 마찰(Double Friction)</code> 연산 구조입니다. 우리가 주식을 살 때는 내가 입력한 투자 원금에 매수 수료율이 강제로 가산되어 평단가 눈금을 미세하게 밀어 올리고, 주식을 팔 때는 매도 대금 총액에서 매도 수수료와 증권거래세(0.15%)를 한 번 더 커트한 뒤 남은 알맹이 예수금만 계좌로 밀어 넣어주기 때문인데요.</p>
-                    <p>즉, 내가 50,000원에 사서 정확히 50,000원에 그대로 본전 매도를 실행하더라도 수식의 중력 때문에 내 통장 잔고는 왕복 수수료와 거래세만큼 적자가 나는 구조를 취하게 됩니다. 본 계산기 엔진은 이 촘촘한 진입 및 청산 분기 수식을 알고리즘 내부 뼈대로 연동해 두었기 때문에, 초보 단타 매매 유저들이 흔히 겪는 "분명 빨간 불에 팔았는데 예수금이 왜 줄었지?"라는 산술 오차 버그를 사전에 완벽히 방어해 줍니다.</p>
+                    <p>주식 익절 마진을 계산할 때 투자자들이 가장 많이 놓치는 수학적 뼈대는 바로 거래 비용의 <code>이중 마찰(Double Friction)</code> 연산 구조입니다.
+                        우리가 주식을 살 때는 내가 입력한 투자 원금에 매수 수료율이 강제로 가산되어 평단가 눈금을 미세하게 밀어 올리고, 주식을 팔 때는 매도 대금 총액에서 매도 수수료와
+                        증권거래세(0.15%)를 한 번 더 커트한 뒤 남은 알맹이 예수금만 계좌로 밀어 넣어주기 때문인데요.</p>
+                    <p>즉, 내가 50,000원에 사서 정확히 50,000원에 그대로 본전 매도를 실행하더라도 수식의 중력 때문에 내 통장 잔고는 왕복 수수료와 거래세만큼 적자가 나는 구조를 취하게
+                        됩니다. 본 계산기 엔진은 이 촘촘한 진입 및 청산 분기 수식을 알고리즘 내부 뼈대로 연동해 두었기 때문에, 초보 단타 매매 유저들이 흔히 겪는 "분명 빨간 불에 팔았는데
+                        예수금이 왜 줄었지?"라는 산술 오차 버그를 사전에 완벽히 방어해 줍니다.</p>
                     <h3>💵 거래세 0% 해외 주식의 함정과 최종 실수령액 사수를 위한 세테크</h3>
-                    <p>본 계산기 옵션 중 거래세 항목을 <code>0%</code>로 우회 설정하면 미국 주식(나스닥, 뉴욕증시 등)이나 해외 주식 인프라의 익절 마진 시뮬레이터로도 완벽하게 호환 가동할 수 있습니다. 해외 주식은 국내와 달리 매도 시 0.15%의 증권거래세 마찰이 전면 면제되므로 초단타 매매(스캘핑) 시 수수료율 방어선이 매우 유리하다는 스펙 지표가 도출되는데요.</p>
-                    <p>하지만 해외 직구 주식 자산 흐름을 정산할 때는 또 다른 거대한 독소 함수인 '연간 양도소득세(250만 원 공제 후 22% 부과)' 및 환전 시 발생하는 환스프레드 가중치 변수를 염두에 두어야만 최종 자산의 무결성이 유지됩니다. 본 가이드 기기가 도출해내는 정밀 세후 최종 순수익과 실질 수익률 리포트를 포트폴리오 리밸런싱의 이정표로 삼아, 자본 시장에서 손해 보지 않는 영리하고 탄탄한 투자 커리어를 완성해 보시기 바랍니다.</p>
+                    <p>본 계산기 옵션 중 거래세 항목을 <code>0%</code>로 우회 설정하면 미국 주식(나스닥, 뉴욕증시 등)이나 해외 주식 인프라의 익절 마진 시뮬레이터로도 완벽하게 호환
+                        가동할 수 있습니다. 해외 주식은 국내와 달리 매도 시 0.15%의 증권거래세 마찰이 전면 면제되므로 초단타 매매(스캘핑) 시 수수료율 방어선이 매우 유리하다는 스펙 지표가
+                        도출되는데요.</p>
+                    <p>하지만 해외 직구 주식 자산 흐름을 정산할 때는 또 다른 거대한 독소 함수인 '연간 양도소득세(250만 원 공제 후 22% 부과)' 및 환전 시 발생하는 환스프레드 가중치
+                        변수를 염두에 두어야만 최종 자산의 무결성이 유지됩니다. 본 가이드 기기가 도출해내는 정밀 세후 최종 순수익과 실질 수익률 리포트를 포트폴리오 리밸런싱의 이정표로 삼아,
+                        자본 시장에서 손해 보지 않는 영리하고 탄탄한 투자 커리어를 완성해 보시기 바랍니다.</p>
                     <h3>⚠️ 주식 수익률 및 평단가 마진 계산기 이용 시 주의사항</h3>
-                    <p>본 주식 수익률 및 평단가 마진 계산 프로그램은 한국거래소(KRX) 표준 매매 약관 요율 및 국세청 증권거래세법 고시 명세를 기반으로 정밀 수학적 시뮬레이션을 제공합니다. 다만, 본 계산은 해외 주식 거래 시 실시간으로 변동하는 환율 가중치에 따른 원화 환산 편차 변수, 증권사 앱 내부적으로 원 미만 단수를 처리하는 과정에서 발생하는 미세한 행정적 단수 정산 분기 수치, 그리고 연간 주식 배당금 수령 시 별도로 선차감되는 배당소득세(15.4%) 금융 과세 요인을 완벽히 포함하지 않은 명목 산술 결과입니다. 개별 증권사(키움증권, 삼성증권 등)의 휴일 거래 전산 정산 딜레이나 개인의 협의 수수료 특약 계약 스펙에 따라 실제 급여일 계좌에 찍히는 최종 순수익과 미세한 오차가 발생할 수 있으므로, 본 결과는 매매 타당성 검증을 위한 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
+                    <p>본 주식 수익률 및 평단가 마진 계산 프로그램은 한국거래소(KRX) 표준 매매 약관 요율 및 국세청 증권거래세법 고시 명세를 기반으로 정밀 수학적 시뮬레이션을 제공합니다.
+                        다만, 본 계산은 해외 주식 거래 시 실시간으로 변동하는 환율 가중치에 따른 원화 환산 편차 변수, 증권사 앱 내부적으로 원 미만 단수를 처리하는 과정에서 발생하는 미세한
+                        행정적 단수 정산 분기 수치, 그리고 연간 주식 배당금 수령 시 별도로 선차감되는 배당소득세(15.4%) 금융 과세 요인을 완벽히 포함하지 않은 명목 산술 결과입니다. 개별
+                        증권사(키움증권, 삼성증권 등)의 휴일 거래 전산 정산 딜레이나 개인의 협의 수수료 특약 계약 스펙에 따라 실제 급여일 계좌에 찍히는 최종 순수익과 미세한 오차가 발생할 수
+                        있으므로, 본 결과는 매매 타당성 검증을 위한 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

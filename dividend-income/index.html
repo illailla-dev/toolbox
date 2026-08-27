@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>배당주 월세 전환 은퇴 소득 계산기 - 제2의 월급 정산기 | 에브리캘크</title>
-    <meta name="description" content="목표로 하는 월 배당금 스펙을 입력하시면 국내외 대표 배당주(SCHD, 리얼티인컴, 맥쿼리인프라 등)의 실시간 배당률 프리셋을 기반으로 총 필요 투자 자금과 매수 수량을 즉시 역산해 드립니다.">
+    <meta name="description"
+        content="목표로 하는 월 배당금 스펙을 입력하시면 국내외 대표 배당주(SCHD, 리얼티인컴, 맥쿼리인프라 등)의 실시간 배당률 프리셋을 기반으로 총 필요 투자 자금과 매수 수량을 즉시 역산해 드립니다.">
     <meta name="keywords" content="배당금계산기, 배당주투자, SCHD배당, 리얼티인컴, 맥쿼리인프라, 월세배당, 은퇴소득, 재테크계산기, 배당수익률, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/dividend-income/">
+    <link rel="canonical" href="https://every-calc.co.kr/dividend-income/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="배당주 월세 전환 은퇴 소득 계산기">
-    <meta property="og:description" content="재테크 유저 필수 툴! 매달 꼬박꼬박 들어오는 배당 월세를 만들기 위해 지금 당장 준비해야 하는 리얼 투자 금액과 종목별 수량을 1초 만에 확인하세요.">
+    <meta property="og:description"
+        content="재테크 유저 필수 툴! 매달 꼬박꼬박 들어오는 배당 월세를 만들기 위해 지금 당장 준비해야 하는 리얼 투자 금액과 종목별 수량을 1초 만에 확인하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/dividend-income/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -29,14 +32,16 @@
         <main id="content">
             <div class="calculator-box">
                 <h2>💰 배당주 월세 전환 은퇴 소득 계산기</h2>
-                <p>내가 원하는 제2의 월급(목표 배당금)을 설정하시면, 종목별 배당률과 배당소득세(15.4%) 공제 지표를 정밀하게 역산하여 실제 내 통장에 꽂히는 무결점 은퇴 자산 포트폴리오 스펙을 빌드합니다.</p>
+                <p>내가 원하는 제2의 월급(목표 배당금)을 설정하시면, 종목별 배당률과 배당소득세(15.4%) 공제 지표를 정밀하게 역산하여 실제 내 통장에 꽂히는 무결점 은퇴 자산 포트폴리오 스펙을
+                    빌드합니다.</p>
                 <form id="dividend-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 목표 배당 소득 및 종목 스펙 설정</h3>
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="div-target-monthly">희망하는 월평균 배당금 (만원)</label>
-                                <input type="number" id="div-target-monthly" class="form-control" placeholder="예: 100" value="100" min="1" required>
+                                <input type="number" id="div-target-monthly" class="form-control" placeholder="예: 100"
+                                    value="100" min="1" required>
                                 <small class="text-muted mt-2 d-block">매달 월세처럼 통장에 꽂히기를 원하는 세후 금액입니다.</small>
                             </div>
                             <div class="col-md-6 input-item">
@@ -52,7 +57,8 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0" id="custom-yield-box" style="display: none;">
                                 <label for="div-custom-yield">커스텀 세전 연배당수익률 (%)</label>
-                                <input type="number" id="div-custom-yield" class="form-control" value="4.0" min="0.1" max="30.0" step="0.01">
+                                <input type="number" id="div-custom-yield" class="form-control" value="4.0" min="0.1"
+                                    max="30.0" step="0.01">
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="div-tax-exempt">배당소득세 과세 분기 선택</label>
@@ -71,23 +77,35 @@
                         <p>목표 달성을 위한 연간 필요 세후 배당금: <strong id="res-annual-net">0원</strong></p>
                         <p>역산된 연간 필요 세전 배당금: <strong id="res-annual-raw">0원</strong></p>
                         <hr>
-                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함 **최종 예상 총액**: <strong id="res-total-investment">0원</strong></p>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함
+                            **최종 예상 총액**: <strong id="res-total-investment">0원</strong></p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 배당주 포트폴리오 구축 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="div-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산기는 사용자가 선택한 금융 계좌의 과세 형태와 배당률 스펙을 기준으로 원금을 역산합니다. 주가 변동에 따른 자본 차익이나 기업의 배당성장률(정액 인상 분기) 지표는 포함되지 않았으므로 주기적인 자산 리밸런싱 지표로 활용하시기 바랍니다.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 연산기는 사용자가
+                        선택한 금융 계좌의 과세 형태와 배당률 스펙을 기준으로 원금을 역산합니다. 주가 변동에 따른 자본 차익이나 기업의 배당성장률(정액 인상 분기) 지표는 포함되지 않았으므로
+                        주기적인 자산 리밸런싱 지표로 활용하시기 바랍니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 제2의 월급을 만드는 자산 설계, 배당주 소득 역산과 금융 절세 최적화 가이드</h2>
-                    <p>매달 안정적인 임대료를 받는 건물주가 되는 것은 많은 직장인들의 꿈이지만, 현실적으로 수십억 원의 부동산 자금을 단기간에 마련하기란 불가능에 가깝습니다. 이 때문에 최근 금융 시장에서는 부동산 매매 대신 매달 혹은 매분기 안정적인 현금흐름을 만들어내는 '배당주 투자'가 현실적인 은퇴 대안으로 각광받고 있는데요. 내가 원하는 목표 월세(세후 배당금)를 얻기 위해 실제로 필요한 투자 원금이 정확히 얼마인지 금융 공식을 통해 역산하고, 체계적인 파이어족 은퇴 포트폴리오 스펙을 구축할 수 있도록 이 계산기 유틸리티를 제작하게 되었습니다.</p>
-                    <p>이 연산 도구는 사용자가 희망하는 월평균 배당금과 시장 표준 배당 종목 프리셋의 연수익률을 상속하여 세전·세후 기준 연간 필요 배당금을 산출하며, 일반 과세 및 ISA 절세 계좌의 세율 분기를 완벽하게 대입하여 필요한 최종 투자 원금 총액을 실시간으로 도출해 줍니다.</p>
+                    <p>매달 안정적인 임대료를 받는 건물주가 되는 것은 많은 직장인들의 꿈이지만, 현실적으로 수십억 원의 부동산 자금을 단기간에 마련하기란 불가능에 가깝습니다. 이 때문에 최근 금융
+                        시장에서는 부동산 매매 대신 매달 혹은 매분기 안정적인 현금흐름을 만들어내는 '배당주 투자'가 현실적인 은퇴 대안으로 각광받고 있는데요. 내가 원하는 목표 월세(세후
+                        배당금)를 얻기 위해 실제로 필요한 투자 원금이 정확히 얼마인지 금융 공식을 통해 역산하고, 체계적인 파이어족 은퇴 포트폴리오 스펙을 구축할 수 있도록 이 계산기 유틸리티를
+                        제작하게 되었습니다.</p>
+                    <p>이 연산 도구는 사용자가 희망하는 월평균 배당금과 시장 표준 배당 종목 프리셋의 연수익률을 상속하여 세전·세후 기준 연간 필요 배당금을 산출하며, 일반 과세 및 ISA 절세
+                        계좌의 세율 분기를 완벽하게 대입하여 필요한 최종 투자 원금 총액을 실시간으로 도출해 줍니다.</p>
                     <h3>📌 SCHD부터 리얼티인컴까지, 시장 표준 프리셋 종목의 특징과 배당률</h3>
-                    <p>성공적인 배당 은퇴 소득을 설계하기 위해서는 시장에서 검증된 대표적인 고배당 금융 상품들의 수익률과 성격을 명확히 이해해야 합니다. 미국 고배당 성장 ETF의 대명사인 SCHD 계열은 현재 약 3.4% 선의 안정적인 시가배당률을 형성하고 있으며, 매년 배당금 자체가 늘어나는 배당성장률이 탁월해 장기 투자자에게 가장 이상적인 골격입니다. 반면 미국의 대표적인 월배당 리츠인 리얼티인컴 계열은 약 5.2% 수준의 높은 요율과 함께 매달 꼬박꼬박 달러로 배당을 지급하여 실제 월세를 받는 듯한 직관적인 현금흐름을 제공합니다.</p>
-                    <p>여기에 국내 자산 중에서는 경기 변동에 강하고 약 6.5% 선의 고배당을 유지하는 맥쿼리인프라 계열 등이 은퇴자들의 단골 포트폴리오로 꼽히는데요. 본 계산기는 이러한 실무 표준 데이터를 기본 내장하고 있어, 본인의 투자 성향에 맞게 종목을 선택하고 필요한 원금 스펙을 직관적으로 시뮬레이션할 수 있습니다. </p>
+                    <p>성공적인 배당 은퇴 소득을 설계하기 위해서는 시장에서 검증된 대표적인 고배당 금융 상품들의 수익률과 성격을 명확히 이해해야 합니다. 미국 고배당 성장 ETF의 대명사인
+                        SCHD 계열은 현재 약 3.4% 선의 안정적인 시가배당률을 형성하고 있으며, 매년 배당금 자체가 늘어나는 배당성장률이 탁월해 장기 투자자에게 가장 이상적인 골격입니다.
+                        반면 미국의 대표적인 월배당 리츠인 리얼티인컴 계열은 약 5.2% 수준의 높은 요율과 함께 매달 꼬박꼬박 달러로 배당을 지급하여 실제 월세를 받는 듯한 직관적인 현금흐름을
+                        제공합니다.</p>
+                    <p>여기에 국내 자산 중에서는 경기 변동에 강하고 약 6.5% 선의 고배당을 유지하는 맥쿼리인프라 계열 등이 은퇴자들의 단골 포트폴리오로 꼽히는데요. 본 계산기는 이러한 실무
+                        표준 데이터를 기본 내장하고 있어, 본인의 투자 성향에 맞게 종목을 선택하고 필요한 원금 스펙을 직관적으로 시뮬레이션할 수 있습니다. </p>
                     <div class="table-responsive">
                         <table class="table table-bordered text-center">
                             <thead>
@@ -122,10 +140,17 @@
                         </table>
                     </div>
                     <h3>💵 배당소득세 15.4% 원천징수의 벽과 ISA 절세 계좌의 치트키</h3>
-                    <p>금융 소득을 정산할 때 절대 간과해서는 안 되는 가장 큰 지출 변수가 바로 세금입니다. 대한민국 세법에 따르면 주식 배당금은 고지된 금액 그대로 입금되지 않고, '배당소득세 15.4%(지방세 포함)'를 무조건 미리 떼고 지급하는 원천징수 방식을 따릅니다. 즉, 내가 세후로 깔끔하게 월 100만 원을 받으려면 실제로는 연간 약 1,418만 원에 달하는 세전 배당금을 받아야 하므로, 세금 공제 요율이 대입되는 순간 필요한 투자 원금의 덩치가 크게 불어나게 됩니다.</p>
-                    <p>이를 방어하기 위한 최고의 치트키가 바로 ISA(개인종합자산관리계좌)나 비과세 절세 계좌를 활용하는 것입니다. 절세 계좌 옵션을 선택하면 배당소득세율이 0%로 정산되므로, 일반 주식 계좌 대비 필요 원금의 문턱이 수천만 원 이상 대폭 낮아지는 자산 최적화 효과를 눈으로 확인할 수 있습니다. 본인의 금융 계좌 운영 형태에 맞춰 과세 분기를 유연하게 세팅해 보시기 바랍니다.</p>
+                    <p>금융 소득을 정산할 때 절대 간과해서는 안 되는 가장 큰 지출 변수가 바로 세금입니다. 대한민국 세법에 따르면 주식 배당금은 고지된 금액 그대로 입금되지 않고, '배당소득세
+                        15.4%(지방세 포함)'를 무조건 미리 떼고 지급하는 원천징수 방식을 따릅니다. 즉, 내가 세후로 깔끔하게 월 100만 원을 받으려면 실제로는 연간 약 1,418만 원에
+                        달하는 세전 배당금을 받아야 하므로, 세금 공제 요율이 대입되는 순간 필요한 투자 원금의 덩치가 크게 불어나게 됩니다.</p>
+                    <p>이를 방어하기 위한 최고의 치트키가 바로 ISA(개인종합자산관리계좌)나 비과세 절세 계좌를 활용하는 것입니다. 절세 계좌 옵션을 선택하면 배당소득세율이 0%로 정산되므로,
+                        일반 주식 계좌 대비 필요 원금의 문턱이 수천만 원 이상 대폭 낮아지는 자산 최적화 효과를 눈으로 확인할 수 있습니다. 본인의 금융 계좌 운영 형태에 맞춰 과세 분기를
+                        유연하게 세팅해 보시기 바랍니다.</p>
                     <h3>⚠️ 배당 은퇴 소득 시뮬레이터 이용 시 주의사항</h3>
-                    <p>본 배당주 월세 전환 은퇴 소득 계산기는 세법상 표준 원천징수 요율 및 적립식 자산 복리 공식을 기반으로 수학적 모의 결과를 도출합니다. 다만, 본 계산은 개별 기업의 실적 악화로 인한 배당 삭감(배당컷) 리스크, 연간 금융소득이 2,000만 원을 초과할 경우 누진 적용되는 '금융소득종합과세'의 개인별 세무 변수, 그리고 주가 자체의 변동에 따른 자본 차익 지표를 포함하지 않은 정적 시뮬레이션 결과입니다. 기업의 정액 인상 정책이나 시장 변동성에 따라 최종 포트폴리오 효율에 차이가 발생할 수 있으므로, 본 결과는 장기적인 은퇴 자산 배분 비전 수립용 참고 가이드라인으로만 활용하시기 바랍니다.</p>
+                    <p>본 배당주 월세 전환 은퇴 소득 계산기는 세법상 표준 원천징수 요율 및 적립식 자산 복리 공식을 기반으로 수학적 모의 결과를 도출합니다. 다만, 본 계산은 개별 기업의 실적
+                        악화로 인한 배당 삭감(배당컷) 리스크, 연간 금융소득이 2,000만 원을 초과할 경우 누진 적용되는 '금융소득종합과세'의 개인별 세무 변수, 그리고 주가 자체의 변동에
+                        따른 자본 차익 지표를 포함하지 않은 정적 시뮬레이션 결과입니다. 기업의 정액 인상 정책이나 시장 변동성에 따라 최종 포트폴리오 효율에 차이가 발생할 수 있으므로, 본
+                        결과는 장기적인 은퇴 자산 배분 비전 수립용 참고 가이드라인으로만 활용하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

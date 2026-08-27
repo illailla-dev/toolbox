@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CSS 종횡비 계산기 - aspect-ratio 및 가로세로 비율 가변 환산 | 에브리캘크</title>
-    <meta name="description" content="시안의 픽셀(px) 또는 rem 가로폭을 입력하고 원하는 비율(16:9, 4:3, 1:1 등)을 설정하시면 반응형 세로 높이 역산과 함께 최신 aspect-ratio 및 구형 브라우저 방어용 퍼센트 패딩 코드를 실시간 자동 생성합니다.">
+    <meta name="description"
+        content="시안의 픽셀(px) 또는 rem 가로폭을 입력하고 원하는 비율(16:9, 4:3, 1:1 등)을 설정하시면 반응형 세로 높이 역산과 함께 최신 aspect-ratio 및 구형 브라우저 방어용 퍼센트 패딩 코드를 실시간 자동 생성합니다.">
     <meta name="keywords" content="종횡비계산기, aspect-ratio, 가로세로비율, 반응형이미지, 유튜브임베드, 웹퍼블리싱, 비율유지, 패딩우회, 퍼블리셔유틸, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/aspect-ratio/">
+    <link rel="canonical" href="https://every-calc.co.kr/aspect-ratio/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="CSS 가변 가로세로 비율 종횡비 계산기">
-    <meta property="og:description" content="웹 퍼블리셔 필수 도구! 미디어가 터지지 않는 완벽한 종횡비! 현대 표준 aspect-ratio 속성과 하위 호환성 코드를 주석 없는 순수 텍스트로 1초 만에 복사하세요.">
+    <meta property="og:description"
+        content="웹 퍼블리셔 필수 도구! 미디어가 터지지 않는 완벽한 종횡비! 현대 표준 aspect-ratio 속성과 하위 호환성 코드를 주석 없는 순수 텍스트로 1초 만에 복사하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/aspect-ratio/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -29,7 +32,8 @@
         <main id="content">
             <div class="calculator-box">
                 <h2>🔲 CSS 가변 가로세로 비율 종횡비 계산기</h2>
-                <p>박스의 기준 가로폭과 원하는 종횡비 규격을 지정하시면 반응형 레이아웃에서 미디어나 이미지가 깨지지 않고 안전하게 홀딩되도록 정밀한 세로 높이 수식과 CSS 풀 코드를 생성합니다.</p>
+                <p>박스의 기준 가로폭과 원하는 종횡비 규격을 지정하시면 반응형 레이아웃에서 미디어나 이미지가 깨지지 않고 안전하게 홀딩되도록 정밀한 세로 높이 수식과 CSS 풀 코드를 생성합니다.
+                </p>
                 <form id="ratio-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 레이아웃 폭 및 목표 종횡비 설정</h3>
@@ -43,17 +47,20 @@
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="width-val">기준 가로폭 (<span class="target-unit-txt">rem</span>)</label>
-                                <input type="number" id="width-val" class="form-control" placeholder="예: 20" value="20" min="0.1" step="0.01" required>
+                                <input type="number" id="width-val" class="form-control" placeholder="예: 20" value="20"
+                                    min="0.1" step="0.01" required>
                             </div>
                         </div>
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="ratio-width">가로 비율 가중치 (Width)</label>
-                                <input type="number" id="ratio-width" class="form-control" placeholder="예: 16" value="16" min="1" required>
+                                <input type="number" id="ratio-width" class="form-control" placeholder="예: 16"
+                                    value="16" min="1" required>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="ratio-height">세로 비율 가중치 (Height)</label>
-                                <input type="number" id="ratio-height" class="form-control" placeholder="예: 9" value="9" min="1" required>
+                                <input type="number" id="ratio-height" class="form-control" placeholder="예: 9" value="9"
+                                    min="1" required>
                             </div>
                         </div>
                         <!-- REM 환산 보정용 루트 크기 설정 -->
@@ -71,30 +78,42 @@
                     <h3>💡 종횡비 레이아웃 연산 결과</h3>
                     <div class="result-display">
                         <p>비율 유지에 필요한 세로 높이: <strong id="res-calc-height">0</strong></p>
-                        <p>구형 브라우저 대응 패딩 비율: <strong id="res-padding-top-percent" style="color: var(--orange);">0%</strong></p>
+                        <p>구형 브라우저 대응 패딩 비율: <strong id="res-padding-top-percent"
+                                style="color: var(--orange);">0%</strong></p>
                         <hr>
                         <div class="result-code-box">
                             <div class="result-code-box__inner">
-                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                                <span id="result-css-code"
+                                    style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">//
+                                    CSS 생성 대기 중...</span>
                             </div>
-                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white"
+                                style="white-space: nowrap;">코드 복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 애드센스 단가 및 SEO 빌드업 반응형 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="ratio-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 연산기는 최신 모던 브라우저 표준인 `aspect-ratio` 명세와 함께, IE 및 구형 사파리 엔진에서 발생할 수 있는 레이아웃 무너짐을 원천 방어하는 `padding-top` 우회 기법(Padding-bottom Trick)을 복합 소스코드로 동시 추출합니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 연산기는 최신 모던 브라우저 표준인 `aspect-ratio` 명세와 함께, IE 및 구형 사파리
+                        엔진에서 발생할 수 있는 레이아웃 무너짐을 원천 방어하는 `padding-top` 우회 기법(Padding-bottom Trick)을 복합 소스코드로 동시 추출합니다.
+                    </p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 반응형 웹디자인의 핵심, CSS 종횡비 계산과 레이아웃 최적화 가이드</h2>
-                    <p>웹사이트를 가동할 때 이미지나 동영상, 혹은 구글 애드센스 광고 박스가 페이지 로딩 과정에서 뒤늦게 툭 튀어나와 화면 전체를 아래로 밀어버리는 덜컹거리는 현상을 다들 겪어보셨을 겁니다. 구글 검색 엔진은 이를 CLS(누적 레이아웃 이동)라고 부르며 웹사이트의 성능과 UI 무결성을 평가하는 치명적인 지표로 삼고 있는데요. 반응형 레이아웃에서 미디어가 깨지지 않고 부드럽게 자리를 잡아 레이아웃이 요동치는 버그를 원천 차단하기 위해 이 종횡비 계산기 유틸리티를 제작하게 되었습니다.</p>
-                    <p>이 연산기는 사용자가 지정한 기준 가로폭(PX 또는 REM 단위)과 목표로 하는 종횡비 규격(16:9, 4:3, 1:1 등)을 바탕으로, 브라우저가 화면을 그리기 전에 미리 영역을 안전하게 홀딩할 수 있는 정확한 세로 높이 수식과 실무 CSS 코드를 실시간 추출해 줍니다.</p>
+                    <p>웹사이트를 가동할 때 이미지나 동영상, 혹은 구글 애드센스 광고 박스가 페이지 로딩 과정에서 뒤늦게 툭 튀어나와 화면 전체를 아래로 밀어버리는 덜컹거리는 현상을 다들
+                        겪어보셨을 겁니다. 구글 검색 엔진은 이를 CLS(누적 레이아웃 이동)라고 부르며 웹사이트의 성능과 UI 무결성을 평가하는 치명적인 지표로 삼고 있는데요. 반응형
+                        레이아웃에서 미디어가 깨지지 않고 부드럽게 자리를 잡아 레이아웃이 요동치는 버그를 원천 차단하기 위해 이 종횡비 계산기 유틸리티를 제작하게 되었습니다.</p>
+                    <p>이 연산기는 사용자가 지정한 기준 가로폭(PX 또는 REM 단위)과 목표로 하는 종횡비 규격(16:9, 4:3, 1:1 등)을 바탕으로, 브라우저가 화면을 그리기 전에 미리
+                        영역을 안전하게 홀딩할 수 있는 정확한 세로 높이 수식과 실무 CSS 코드를 실시간 추출해 줍니다.</p>
                     <h3>📊 실무 표준 종횡비별 padding-top(bottom) 환산 요율 가이드 표</h3>
-                    <p>웹 UI 디자인에서 가장 널리 쓰이는 표준 비율과 구형 브라우저 방어용 패딩 트릭 환산 수치입니다. 아래 반응형 표를 통해 프로젝트 스펙에 맞는 최적의 고정 비율을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>웹 UI 디자인에서 가장 널리 쓰이는 표준 비율과 구형 브라우저 방어용 패딩 트릭 환산 수치입니다. 아래 반응형 표를 통해 프로젝트 스펙에 맞는 최적의 고정 비율을 시각적으로
+                        체크해 보세요.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -132,14 +151,25 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 요율은 자식 요소의 높이를 0으로 잡고 절대 위치(absolute)로 미디어를 바인딩하는 전통적인 크로스 브라우징 규격입니다. 모바일 기기에서는 표를 좌우로 밀어서 렌더링 수식을 안전하게 확인할 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 요율은 자식 요소의 높이를 0으로 잡고 절대 위치(absolute)로 미디어를 바인딩하는 전통적인
+                        크로스 브라우징 규격입니다. 모바일 기기에서는 표를 좌우로 밀어서 렌더링 수식을 안전하게 확인할 수 있습니다.</small>
                     <h3>📌 모던 브라우저 표준 aspect-ratio와 구형 브라우저 대응 트릭</h3>
-                    <p>최신 CSS 명세에는 <code>aspect-ratio: 16 / 9;</code> 와 같이 코드 한 줄로 종횡비를 고정할 수 있는 아주 편리한 속성이 생겼습니다. 하지만 실무 개발 현장에서는 여전히 구형 사파리 엔진이나 인앱 브라우저(카카오톡, 네이버 앱 내부 링크 등)에서 이 속성이 먹히지 않아 썸네일 이미지가 사정없이 찌그러지는 골치 아픈 상황이 발생하곤 하는데요. 이를 완벽하게 방어하기 위해 웹 퍼블리싱에서는 전통적으로 <code>padding-top</code> 또는 <code>padding-bottom</code>을 활용한 야매 우회 기법(Padding Trick)을 복합 사용합니다.</p>
-                    <p>부모 요소의 너비에 비례해 세로 패딩 퍼센트 가중치가 유기적으로 계산되므로, 박스의 세로 높이를 0으로 만들더라도 자식 컴포넌트가 완벽한 비율을 유지하며 고정됩니다. 이 계산기는 모던 표준 코드와 구형 호환 코드를 동시에 추출하므로 어떤 모바일 기기에서도 깨지지 않는 크로스 브라우징 레이아웃을 손쉽게 완성할 수 있습니다.</p>
+                    <p>최신 CSS 명세에는 <code>aspect-ratio: 16 / 9;</code> 와 같이 코드 한 줄로 종횡비를 고정할 수 있는 아주 편리한 속성이 생겼습니다. 하지만
+                        실무 개발 현장에서는 여전히 구형 사파리 엔진이나 인앱 브라우저(카카오톡, 네이버 앱 내부 링크 등)에서 이 속성이 먹히지 않아 썸네일 이미지가 사정없이 찌그러지는 골치
+                        아픈 상황이 발생하곤 하는데요. 이를 완벽하게 방어하기 위해 웹 퍼블리싱에서는 전통적으로 <code>padding-top</code> 또는
+                        <code>padding-bottom</code>을 활용한 야매 우회 기법(Padding Trick)을 복합 사용합니다.
+                    </p>
+                    <p>부모 요소의 너비에 비례해 세로 패딩 퍼센트 가중치가 유기적으로 계산되므로, 박스의 세로 높이를 0으로 만들더라도 자식 컴포넌트가 완벽한 비율을 유지하며 고정됩니다. 이
+                        계산기는 모던 표준 코드와 구형 호환 코드를 동시에 추출하므로 어떤 모바일 기기에서도 깨지지 않는 크로스 브라우징 레이아웃을 손쉽게 완성할 수 있습니다.</p>
                     <h3>📐 REM 단위 환산과 브라우저 루트 크기의 비밀</h3>
-                    <p>모던 반응형 표준 디자인에서는 고정 픽셀(PX)보다 사용자의 브라우저 서체 배율 설정에 감응하는 유연한 REM 단위를 적극적으로 권장합니다. REM은 화면 해상도가 바뀔 때 텍스트와 주변 레이아웃 크기가 부드럽게 연동되는 반응형 골격의 핵심 서체 단위인데요. 이 계산기는 디폴트값인 16px 기준의 HTML 루트(Root) 폰트 크기를 바탕으로 PX와 REM을 오가는 교차 연산을 정밀하게 지원합니다. 본인의 프로젝트 스타일에 맞춰 단위를 선택하고 가중치를 입력해 보시기 바랍니다.</p>
+                    <p>모던 반응형 표준 디자인에서는 고정 픽셀(PX)보다 사용자의 브라우저 서체 배율 설정에 감응하는 유연한 REM 단위를 적극적으로 권장합니다. REM은 화면 해상도가 바뀔 때
+                        텍스트와 주변 레이아웃 크기가 부드럽게 연동되는 반응형 골격의 핵심 서체 단위인데요. 이 계산기는 디폴트값인 16px 기준의 HTML 루트(Root) 폰트 크기를 바탕으로
+                        PX와 REM을 오가는 교차 연산을 정밀하게 지원합니다. 본인의 프로젝트 스타일에 맞춰 단위를 선택하고 가중치를 입력해 보시기 바랍니다.</p>
                     <h3>⚠️ 웹마스터 및 UI 디자이너를 위한 주의사항</h3>
-                    <p>본 종횡비 계산 시뮬레이터가 생성하는 CSS 소스코드는 웹 표준 규격을 준수하여 신뢰할 수 있는 레이아웃 골격을 제공합니다. 다만, 실제 웹페이지에 적용할 때는 해당 요소를 감싸고 있는 부모 컨테이너의 <code>max-width</code> 설정이나 <code>box-sizing: border-box</code> 적용 여부에 따라 내부 여백과 최종 렌더링 크기에 미세한 오차가 발생할 수 있습니다. 따라서 본 코드를 적용한 후에는 반드시 개발자 도구(F12)를 통해 모바일과 태블릿 등 다양한 해상도에서 화면이 의도대로 가변하는지 최종 크로스 체크를 진행하시기 바랍니다.</p>
+                    <p>본 종횡비 계산 시뮬레이터가 생성하는 CSS 소스코드는 웹 표준 규격을 준수하여 신뢰할 수 있는 레이아웃 골격을 제공합니다. 다만, 실제 웹페이지에 적용할 때는 해당 요소를
+                        감싸고 있는 부모 컨테이너의 <code>max-width</code> 설정이나 <code>box-sizing: border-box</code> 적용 여부에 따라 내부 여백과
+                        최종 렌더링 크기에 미세한 오차가 발생할 수 있습니다. 따라서 본 코드를 적용한 후에는 반드시 개발자 도구(F12)를 통해 모바일과 태블릿 등 다양한 해상도에서 화면이
+                        의도대로 가변하는지 최종 크로스 체크를 진행하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

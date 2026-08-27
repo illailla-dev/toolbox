@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>외주 프로젝트 마일스톤 및 마감일 D-Day 플래너 | 에브리캘크</title>
-    <meta name="description" content="사파리 날짜 인식 오류 방어 코드를 기반으로 프로젝트 시작일과 마감일 사이의 기획, 디자인 초안, 수정, 최종 검수 단계별 필수 마감 일정 로드맵과 D-Day를 실시간 역산합니다.">
+    <meta name="description"
+        content="사파리 날짜 인식 오류 방어 코드를 기반으로 프로젝트 시작일과 마감일 사이의 기획, 디자인 초안, 수정, 최종 검수 단계별 필수 마감 일정 로드맵과 D-Day를 실시간 역산합니다.">
     <meta name="keywords" content="마일스톤계산기, 프로젝트마감일, 외주일정관리, 프리랜서플래너, 디데이계산기, 사파리날짜버그, 에브리캘크">
-    <link class="canonical" href="https://every-calc.co.kr/project-milestone/">
+    <link rel="canonical" href="https://every-calc.co.kr/project-milestone/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="외주 프로젝트 마일스톤 및 마감일 D-Day 플래너 - 에브리캘크">
     <meta property="og:description" content="외주 작업 펑크 방지 필수 템플릿! 프로젝트 일정 범위에 맞춰 실무 표준 마일스톤 날짜 로드맵을 자동으로 설계해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
@@ -30,7 +32,8 @@
         <main id="content">
             <div class="calculator-box">
                 <h2>📅 외주 프로젝트 마일스톤 D-Day 플래너</h2>
-                <p>계약금만 받고 일정 조율에 실패해 마감 임박 독촉에 시달리는 프리랜서들을 위한 툴입니다. 일정 범위에 맞춰 실무 표준 작업 속도 분배율을 역산하여 단계별 권장 마감일을 달력 날짜로 지정해 줍니다.</p>
+                <p>계약금만 받고 일정 조율에 실패해 마감 임박 독촉에 시달리는 프리랜서들을 위한 툴입니다. 일정 범위에 맞춰 실무 표준 작업 속도 분배율을 역산하여 단계별 권장 마감일을 달력 날짜로
+                    지정해 줍니다.</p>
                 <form id="milestone-form" class="form" onsubmit="return false;">
                     <div class="input-group-box mb-4">
                         <h3>1. 프로젝트 계약 일정 입력</h3>
@@ -51,32 +54,47 @@
                     <h3>💡 프로젝트 마일스톤 스케줄 역산 결과</h3>
                     <div class="result-display">
                         <p>프로젝트 총 소요 기간: <strong id="res-proj-total-days">0</strong> 일</p>
-                        <p>1단계 [기획/자료수집 완료]: <span id="res-stage-1" style="font-weight:bold; color: var(--orange);">-</span></p>
-                        <p>2단계 [초안/시안 클라이언트 공유]: <span id="res-stage-2" style="font-weight:bold; color: var(--green);">-</span></p>
-                        <p>3단계 [1차 수정본 피드백 반영]: <span id="res-stage-3" style="font-weight:bold; color: var(--purple);">-</span></p>
+                        <p>1단계 [기획/자료수집 완료]: <span id="res-stage-1"
+                                style="font-weight:bold; color: var(--orange);">-</span></p>
+                        <p>2단계 [초안/시안 클라이언트 공유]: <span id="res-stage-2"
+                                style="font-weight:bold; color: var(--green);">-</span></p>
+                        <p>3단계 [1차 수정본 피드백 반영]: <span id="res-stage-3"
+                                style="font-weight:bold; color: var(--purple);">-</span></p>
                         <hr>
                         <div class="result-code-box">
                             <div class="result-code-box__inner">
-                                최종 마감까지 남은 시간: <span id="result-project-milestone-salary" style="color: var(--red); font-weight: bold;">D-0</span>
+                                최종 마감까지 남은 시간: <span id="result-project-milestone-salary"
+                                    style="color: var(--red); font-weight: bold;">D-0</span>
                             </div>
-                            <button type="button" class="btn btn-success copy-btn" data-target="result-project-milestone-salary" style="white-space: nowrap;">코드 복사하기</button>
+                            <button type="button" class="btn btn-success copy-btn"
+                                data-target="result-project-milestone-salary" style="white-space: nowrap;">코드
+                                복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 클라이언트 관계 사수용 외주 방어 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="milestone-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 일정 시뮬레이터는 수많은 프리랜서 에이전시의 평균적 마감 비중 분배율(기획 20%, 시안 30%, 피드백 수정 30%, 최종 검수/패키징 20%) 공식을 내장하고 있습니다. 시작일과 마감일을 수동 조정하더라도 상호 간에 일정 펑크 없는 이상적인 크리에이티브 마일스톤 조율 데이터를 제공합니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 일정 시뮬레이터는 수많은 프리랜서 에이전시의 평균적 마감 비중 분배율(기획 20%, 시안 30%, 피드백
+                        수정 30%, 최종 검수/패키징 20%) 공식을 내장하고 있습니다. 시작일과 마감일을 수동 조정하더라도 상호 간에 일정 펑크 없는 이상적인 크리에이티브 마일스톤 조율
+                        데이터를 제공합니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 프리랜서 생존의 핵심 일정 관리, 외주 마일스톤 분배와 마감 독촉 차단 가이드</h2>
-                    <p>회사라는 울타리를 벗어나 본인의 실력으로 외주 시장에 뛰어든 프리랜서나 1인 창업가들이 가장 흔하게 겪는 비극이 있습니다. 바로 계약금만 입금받으면 기분 좋게 시작했다가, 체계적인 일정 조율에 실패하여 마감 직전 며칠 밤을 꼬박 새우며 퀄리티가 무너지거나 클라이언트의 무자비한 수정 독촉에 시달리는 상황인데요. 프리랜서 세계에서 '마감 펑크'는 단순한 실수가 아니라 내 평판과 다음 계약줄을 완전히 끊어버리는 치명적인 정산 사고입니다. 내 실무 작업 속도와 계약 기간 스펙을 수학적으로 분할하여, 일정의 노예가 되지 않고 주도권을 쥘 수 있는 무결점 마일스톤 타임라인을 도출할 수 있도록 이 플래너 계산기를 제작하게 되었습니다.</p>
-                    <p>이 연산 도구는 사용자가 입력한 프로젝트의 작업 시작일과 최종 계약 납품일 사이의 소요 기간을 실시간 상속하며, 실무 표준 마감 비중 분배율 알고리즘을 대입하여 단계별 권장 마감 날짜와 실시간 D-Day 리포트를 무결점으로 빌드해 줍니다.</p>
+                    <p>회사라는 울타리를 벗어나 본인의 실력으로 외주 시장에 뛰어든 프리랜서나 1인 창업가들이 가장 흔하게 겪는 비극이 있습니다. 바로 계약금만 입금받으면 기분 좋게 시작했다가,
+                        체계적인 일정 조율에 실패하여 마감 직전 며칠 밤을 꼬박 새우며 퀄리티가 무너지거나 클라이언트의 무자비한 수정 독촉에 시달리는 상황인데요. 프리랜서 세계에서 '마감 펑크'는
+                        단순한 실수가 아니라 내 평판과 다음 계약줄을 완전히 끊어버리는 치명적인 정산 사고입니다. 내 실무 작업 속도와 계약 기간 스펙을 수학적으로 분할하여, 일정의 노예가 되지
+                        않고 주도권을 쥘 수 있는 무결점 마일스톤 타임라인을 도출할 수 있도록 이 플래너 계산기를 제작하게 되었습니다.</p>
+                    <p>이 연산 도구는 사용자가 입력한 프로젝트의 작업 시작일과 최종 계약 납품일 사이의 소요 기간을 실시간 상속하며, 실무 표준 마감 비중 분배율 알고리즘을 대입하여 단계별 권장
+                        마감 날짜와 실시간 D-Day 리포트를 무결점으로 빌드해 줍니다.</p>
                     <h3>📊 에어전시 실무 표준 외주 프로젝트 마일스톤 배분 요율표</h3>
-                    <p>수많은 외주 에이전시와 탑티어 프리랜서들이 리스크를 방어하기 위해 사용하는 표준 일정 분할 스펙입니다. 아래 반응형 표를 통해 내 계약 기간에 맞는 단계별 방어선을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>수많은 외주 에이전시와 탑티어 프리랜서들이 리스크를 방어하기 위해 사용하는 표준 일정 분할 스펙입니다. 아래 반응형 표를 통해 내 계약 기간에 맞는 단계별 방어선을 시각적으로
+                        체크해 보세요.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -97,7 +115,8 @@
                                     <td>2단계: 초안 / 시안 공유</td>
                                     <td>전체 기간의 30% 배분</td>
                                     <td>실물 디자인 뷰포트 가공 또는 기능 명세 1차 개발본 완성</td>
-                                    <td style="color: var(--orange); font-weight: bold;">최고 중요! 약속된 날짜에 중간 가이드라인을 먼저 들이밀어 피드백 유도</td>
+                                    <td style="color: var(--orange); font-weight: bold;">최고 중요! 약속된 날짜에 중간 가이드라인을 먼저
+                                        들이밀어 피드백 유도</td>
                                 </tr>
                                 <tr>
                                     <td>3단계: 1차 피드백 반영</td>
@@ -114,15 +133,27 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 일정 분배 비율은 한국디자인진흥원 및 정보통신산업진흥원의 외주 표준 계약 지침을 철저하게 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 정보를 확인할 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 일정 분배 비율은 한국디자인진흥원 및 정보통신산업진흥원의 외주 표준 계약 지침을 철저하게 상속합니다.
+                        모바일 기기에서는 표를 좌우로 슬라이드하여 상세 정보를 확인할 수 있습니다.</small>
                     <h3>📌 기획 20%, 시안 30% 법칙이 유발하는 크리에이티브 마일스톤의 물리 공식</h3>
-                    <p>외주 프로젝트를 성공으로 이끄는 일정 관리의 핵심 함수는 전체 기간을 <code>[2:3:3:2]</code> 라는 정밀 비례식으로 쪼개어 달력 날짜에 기계적으로 대입하는 것입니다. 대다수의 초보 프리랜서들은 마감일 직전 일주일 전까지 아이디어가 안 떠오른다며 뭉개다가 타임라인의 파산 상태를 맞이하곤 하는데요. 본 플래너는 시작일과 마감일을 잡는 순간, 내부 알고리즘이 소수점 일수까지 정밀 연산하여 각 단계별 데드라인 날짜를 달력 수치로 명확히 짚어줍니다.</p>
-                    <p>특히 2단계인 '초안 공유일'을 시스템 뼈대로 강제 확보해 두는 것이 엄청난 치트키가 됩니다. 완성도가 60~70% 수준이더라도 이 날짜에 클라이언트에게 중간 결과물을 툭 던져두어야, 상대방은 일 잘하고 있다는 시각적 신뢰감을 얻게 되며 남은 기간 동안 수정할 수 있는 여유 마진이 안전하게 확보되기 때문입니다. 본 가이드 기기는 이러한 실무 흐름을 완벽하게 역산해 줍니다.</p>
+                    <p>외주 프로젝트를 성공으로 이끄는 일정 관리의 핵심 함수는 전체 기간을 <code>[2:3:3:2]</code> 라는 정밀 비례식으로 쪼개어 달력 날짜에 기계적으로 대입하는
+                        것입니다. 대다수의 초보 프리랜서들은 마감일 직전 일주일 전까지 아이디어가 안 떠오른다며 뭉개다가 타임라인의 파산 상태를 맞이하곤 하는데요. 본 플래너는 시작일과 마감일을
+                        잡는 순간, 내부 알고리즘이 소수점 일수까지 정밀 연산하여 각 단계별 데드라인 날짜를 달력 수치로 명확히 짚어줍니다.</p>
+                    <p>특히 2단계인 '초안 공유일'을 시스템 뼈대로 강제 확보해 두는 것이 엄청난 치트키가 됩니다. 완성도가 60~70% 수준이더라도 이 날짜에 클라이언트에게 중간 결과물을 툭
+                        던져두어야, 상대방은 일 잘하고 있다는 시각적 신뢰감을 얻게 되며 남은 기간 동안 수정할 수 있는 여유 마진이 안전하게 확보되기 때문입니다. 본 가이드 기기는 이러한 실무
+                        흐름을 완벽하게 역산해 줍니다.</p>
                     <h3>💵 무한 수정 지옥 방어와 최종 잔금 정산을 위한 프리랜서 생존 전략</h3>
-                    <p>프로젝트 후반부에 접어들수록 프리랜서들의 발목을 잡는 독소 변수는 바로 끝없는 '클라이언트의 말바꾸기식 추가 요구'입니다. "여기에 기능 하나만 더 넣어주세요", "색깔 조금만 바꿔주세요"라는 멘트에 기계적으로 응해주다 보면 마일스톤이 완전히 파괴되는데요. 이를 방어하려면 본 계산기가 도출한 3단계 '피드백 반영일' 날짜 리포트를 클라이언트 공유 이메일에 박아두는 것이 좋습니다. "수정 사항은 이 날짜까지만 취합하여 1회 조치됩니다"라고 데드라인의 문턱을 명확히 선언해 두어야 합니다.</p>
-                    <p>또한 마감 당일 최종 원본 소스코드를 인계하기 전, 반드시 계약서에 명시된 <b>세후 잔금 정산</b>이 안전하게 통장에 입금되었는지 확인하고 파일을 넘기는 서순의 방어전이 필수적입니다. 본 가이드 리포트가 내놓는 디바이스 해상도별 가이드와 잔여 디데이 지표를 무기로, 당당하고 영리하게 크리에이티브 비즈니스를 마스터해 보시기 바랍니다.</p>
+                    <p>프로젝트 후반부에 접어들수록 프리랜서들의 발목을 잡는 독소 변수는 바로 끝없는 '클라이언트의 말바꾸기식 추가 요구'입니다. "여기에 기능 하나만 더 넣어주세요", "색깔
+                        조금만 바꿔주세요"라는 멘트에 기계적으로 응해주다 보면 마일스톤이 완전히 파괴되는데요. 이를 방어하려면 본 계산기가 도출한 3단계 '피드백 반영일' 날짜 리포트를 클라이언트
+                        공유 이메일에 박아두는 것이 좋습니다. "수정 사항은 이 날짜까지만 취합하여 1회 조치됩니다"라고 데드라인의 문턱을 명확히 선언해 두어야 합니다.</p>
+                    <p>또한 마감 당일 최종 원본 소스코드를 인계하기 전, 반드시 계약서에 명시된 <b>세후 잔금 정산</b>이 안전하게 통장에 입금되었는지 확인하고 파일을 넘기는 서순의 방어전이
+                        필수적입니다. 본 가이드 리포트가 내놓는 디바이스 해상도별 가이드와 잔여 디데이 지표를 무기로, 당당하고 영리하게 크리에이티브 비즈니스를 마스터해 보시기 바랍니다.</p>
                     <h3>⚠️ 외주 프로젝트 마일스톤 D-Day 플래너 이용 시 주의사항</h3>
-                    <p>본 외주 프로젝트 마일스톤 계산 프로그램은 표준 재무 관리 공식 및 소프트웨어 공학의 폭포수(Waterfall) 개발 방법론 일수 정산 명세를 기반으로 정밀 수학적 시뮬레이션을 제공합니다. 다만, 본 계산은 클라이언트 측의 내부 결재 지연으로 인해 피드백이 불규칙하게 밀리는 '행정적 지연 딜레이 변수', 외주 도중 기획 자체가 완전히 뒤엎어지는 특수 천재지변 분기 수치, 그리고 주말 및 공휴일(빨간 날)에 일을 쉴 때 발생하는 실질 비가동 가중치 변수를 완벽히 포함하지 않은 명목 산술 결과입니다. 실제 프로젝트 성격(간단한 로고 디자인 vs 대형 반응형 웹 퍼블리싱 빌드)에 따라 최종 조율 날짜와 미세한 행정적 오차가 발생할 수 있으므로, 본 결과는 클라이언트와의 일정 네고용 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
+                    <p>본 외주 프로젝트 마일스톤 계산 프로그램은 표준 재무 관리 공식 및 소프트웨어 공학의 폭포수(Waterfall) 개발 방법론 일수 정산 명세를 기반으로 정밀 수학적
+                        시뮬레이션을 제공합니다. 다만, 본 계산은 클라이언트 측의 내부 결재 지연으로 인해 피드백이 불규칙하게 밀리는 '행정적 지연 딜레이 변수', 외주 도중 기획 자체가 완전히
+                        뒤엎어지는 특수 천재지변 분기 수치, 그리고 주말 및 공휴일(빨간 날)에 일을 쉴 때 발생하는 실질 비가동 가중치 변수를 완벽히 포함하지 않은 명목 산술 결과입니다. 실제
+                        프로젝트 성격(간단한 로고 디자인 vs 대형 반응형 웹 퍼블리싱 빌드)에 따라 최종 조율 날짜와 미세한 행정적 오차가 발생할 수 있으므로, 본 결과는 클라이언트와의 일정
+                        네고용 가이드라인 참고용으로만 활용하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

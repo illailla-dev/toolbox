@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>하루 커피값 모아 목돈 만들기 계산기 - 소액 절약 복리 시뮬레이터 | 에브리캘크</title>
-    <meta name="description" content="매일 무심코 지출하는 하루 커피값이나 담뱃값 등 소액 소비를 아껴 꾸준히 저축하거나 미국 주식에 투자했을 때, 5년 후와 10년 후 내 미래 자산이 얼마의 복리로 불어나는지 실시간으로 시뮬레이션합니다.">
+    <meta name="description"
+        content="매일 무심코 지출하는 하루 커피값이나 담뱃값 등 소액 소비를 아껴 꾸준히 저축하거나 미국 주식에 투자했을 때, 5년 후와 10년 후 내 미래 자산이 얼마의 복리로 불어나는지 실시간으로 시뮬레이션합니다.">
     <meta name="keywords" content="커피값계산기, 소액저축계산기, 강제저축, 푼돈목돈, 복리계산기, 주식투자시뮬레이션, 절약자극, 퍼블리셔유틸, 재테크기초, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/coffee-calc/">
+    <link rel="canonical" href="https://every-calc.co.kr/coffee-calc/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="하루 커피값 모아 목돈 만들기 계산기">
-    <meta property="og:description" content="커뮤니티 절약 자극 치트키 툴! 매일 아낀 작은 돈이 만드는 놀라운 미래 자산 스펙과 복리 마법의 최종 총액을 1초 만에 직접 확인하세요.">
+    <meta property="og:description"
+        content="커뮤니티 절약 자극 치트키 툴! 매일 아낀 작은 돈이 만드는 놀라운 미래 자산 스펙과 복리 마법의 최종 총액을 1초 만에 직접 확인하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/coffee-calc/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -30,27 +33,43 @@
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 푼돈이 만드는 놀라운 기적, 하루 커피값 절약과 월 복리 투자 가이드</h2>
-                    <p>우리가 일상에서 매일 습관적으로 지출하는 커피 한 잔 값, 혹은 담배 한 갑 비용은 그 당시에는 아주 작은 소액처럼 느껴집니다. 하지만 금융 전문가들은 이를 '라떼 효과(Latte Factor)'라고 부르며, 이 사소한 지출만 통제해도 인생을 바꿀 수 있는 거대한 목돈을 만들 수 있다고 입을 모아 강조하는데요. 당장 눈앞의 소비 만족을 조금만 미루고 이 돈을 생산적인 자산에 투자했을 때, 시간이 흐르면서 내 통장이 얼마나 거대하게 불어나는지 눈으로 직접 확인하고 재테크 의지를 다질 수 있도록 이 계산기를 제작하게 되었습니다.</p>
-                    <p>이 시뮬레이터는 사용자가 지정한 하루 치 절약 금액을 월 단위 평균(약 30.41일)으로 자동 환산한 뒤, 목표 기간과 예상 투자 연수익률을 정밀 매칭하여 매월 말 복리로 굴러가는 최종 자산 가치를 완벽하게 계산해 줍니다.</p>
+                    <p>우리가 일상에서 매일 습관적으로 지출하는 커피 한 잔 값, 혹은 담배 한 갑 비용은 그 당시에는 아주 작은 소액처럼 느껴집니다. 하지만 금융 전문가들은 이를 '라떼
+                        효과(Latte Factor)'라고 부르며, 이 사소한 지출만 통제해도 인생을 바꿀 수 있는 거대한 목돈을 만들 수 있다고 입을 모아 강조하는데요. 당장 눈앞의 소비 만족을
+                        조금만 미루고 이 돈을 생산적인 자산에 투자했을 때, 시간이 흐르면서 내 통장이 얼마나 거대하게 불어나는지 눈으로 직접 확인하고 재테크 의지를 다질 수 있도록 이 계산기를
+                        제작하게 되었습니다.</p>
+                    <p>이 시뮬레이터는 사용자가 지정한 하루 치 절약 금액을 월 단위 평균(약 30.41일)으로 자동 환산한 뒤, 목표 기간과 예상 투자 연수익률을 정밀 매칭하여 매월 말 복리로
+                        굴러가는 최종 자산 가치를 완벽하게 계산해 줍니다.</p>
                     <h3>📌 일반 은행 적금과 미국 S&P500 ETF, 수익률에 따른 복리의 마법</h3>
-                    <p>아낀 돈을 단순히 돼지저금통에 모으거나 연 2%대 수준의 일반 은행 적금에만 넣어두면, 원금은 안전하게 지킬 수 있을지 몰라도 물가 상승률을 방어하기 어렵습니다. 재테크의 진정한 마법은 '수익률의 차이'와 '시간의 힘'이 결합할 때 비로소 발휘되는데요. 워런 버핏이 강조한 전 세계 최고의 자산 배분 수단인 미국 S&P500 지수 추종 ETF의 역사적 평균 연수익률은 약 8% 선에 달합니다.</p>
-                    <p>단순 적금과 비교했을 때 연 8% 혹은 고배당 재투자 포트폴리오를 통한 연 12%의 기대 수익률은 3년, 5년, 10년이라는 시간이 누적될수록 기하급수적인 격차를 만들어냅니다. 내가 아낀 푼돈이 스스로 새끼를 치며 눈덩이처럼 불어나는 복리 이자의 원리를 이 계산기를 통해 직관적으로 분석하고 본인만의 장기 투자 포트폴리오 비전을 수립해 보시기 바랍니다.</p>
+                    <p>아낀 돈을 단순히 돼지저금통에 모으거나 연 2%대 수준의 일반 은행 적금에만 넣어두면, 원금은 안전하게 지킬 수 있을지 몰라도 물가 상승률을 방어하기 어렵습니다. 재테크의
+                        진정한 마법은 '수익률의 차이'와 '시간의 힘'이 결합할 때 비로소 발휘되는데요. 워런 버핏이 강조한 전 세계 최고의 자산 배분 수단인 미국 S&P500 지수 추종 ETF의
+                        역사적 평균 연수익률은 약 8% 선에 달합니다.</p>
+                    <p>단순 적금과 비교했을 때 연 8% 혹은 고배당 재투자 포트폴리오를 통한 연 12%의 기대 수익률은 3년, 5년, 10년이라는 시간이 누적될수록 기하급수적인 격차를
+                        만들어냅니다. 내가 아낀 푼돈이 스스로 새끼를 치며 눈덩이처럼 불어나는 복리 이자의 원리를 이 계산기를 통해 직관적으로 분석하고 본인만의 장기 투자 포트폴리오 비전을 수립해
+                        보시기 바랍니다.</p>
                     <h3>⏳ 단기 레이스부터 장기 복리까지, 기간별 자산 축적 전략</h3>
-                    <p>소액 재테크를 성공으로 이끄는 가장 중요한 열쇠는 흔들리지 않는 '꾸준함'입니다. 생후 36개월간 진행되는 단기 레이스 구간에서는 지출을 통제하는 습관을 형성하는 데 집중해야 하며, 추천드리는 5년(60개월) 중기 재테크 구간부터는 원금보다 불어나는 이자와 투자 수익의 비중이 눈에 띄게 커지기 시작합니다. 만약 이 습관을 10년(120개월) 동안 유지하며 복리의 마법을 극한으로 끌어올린다면, 처음에는 하찮게 보였던 하루 커피값이 웬만한 자동차 한 대 값이나 아파트 주택담보대출을 상환할 수 있는 거대한 자본 체력으로 돌아오게 됩니다.</p>
+                    <p>소액 재테크를 성공으로 이끄는 가장 중요한 열쇠는 흔들리지 않는 '꾸준함'입니다. 생후 36개월간 진행되는 단기 레이스 구간에서는 지출을 통제하는 습관을 형성하는 데 집중해야
+                        하며, 추천드리는 5년(60개월) 중기 재테크 구간부터는 원금보다 불어나는 이자와 투자 수익의 비중이 눈에 띄게 커지기 시작합니다. 만약 이 습관을 10년(120개월) 동안
+                        유지하며 복리의 마법을 극한으로 끌어올린다면, 처음에는 하찮게 보였던 하루 커피값이 웬만한 자동차 한 대 값이나 아파트 주택담보대출을 상환할 수 있는 거대한 자본 체력으로
+                        돌아오게 됩니다.</p>
                     <h3>⚠️ 소액 절약 자산 축적 시뮬레이터 이용 시 주의사항</h3>
-                    <p>본 하루 커피값 모아 목돈 만들기 계산기는 월 복리 적립식 표준 공식 명세를 고수하여 정밀 연산된 모의 결과를 도출합니다. 다만, 본 계산은 주식 시장이나 배당주 포트폴리오가 가진 단기적인 가격 변동성 리스크, 자산 매도 시 발생하는 증권사 수수료 및 양도소득세 등 세금 공제 요율, 그리고 미래의 거시 경제 인플레이션 수치를 포함하지 않은 정적 시뮬레이션 결과입니다. 실제 투자 시점의 시장 상황에 따라 최종 자산 평가액에는 변동이 생길 수 있으므로, 본 결과는 장기적인 자산 형성 동기부여 및 재테크 가이드라인 참고용으로만 활용하시고 실제 투자는 본인의 책임하에 신중하게 진행하시기 바랍니다.</p>
+                    <p>본 하루 커피값 모아 목돈 만들기 계산기는 월 복리 적립식 표준 공식 명세를 고수하여 정밀 연산된 모의 결과를 도출합니다. 다만, 본 계산은 주식 시장이나 배당주 포트폴리오가
+                        가진 단기적인 가격 변동성 리스크, 자산 매도 시 발생하는 증권사 수수료 및 양도소득세 등 세금 공제 요율, 그리고 미래의 거시 경제 인플레이션 수치를 포함하지 않은 정적
+                        시뮬레이션 결과입니다. 실제 투자 시점의 시장 상황에 따라 최종 자산 평가액에는 변동이 생길 수 있으므로, 본 결과는 장기적인 자산 형성 동기부여 및 재테크 가이드라인
+                        참고용으로만 활용하시고 실제 투자는 본인의 책임하에 신중하게 진행하시기 바랍니다.</p>
                 </div>
             </section>
             <div class="calculator-box">
                 <h2>☕ 하루 커피값 모아 목돈 만들기 계산기</h2>
-                <p>내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 예상 투자 수익률을 매칭하시면, 시간이 지나 내 통장에 쌓이는 실질 미래 자산 가치를 무결점으로 빌드합니다.</p>
+                <p>내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 예상 투자 수익률을 매칭하시면, 시간이 지나 내 통장에 쌓이는 실질 미래 자산 가치를 무결점으로
+                    빌드합니다.</p>
                 <form id="coffee-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 절약 품목 및 재테크 수익률 설정</h3>
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="coffee-daily-cost">하루에 아낄 소액 지출 (원)</label>
-                                <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500" value="4500" min="500" step="100" required>
+                                <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500"
+                                    value="4500" min="500" step="100" required>
                                 <small class="text-muted mt-2 d-block">프랜차이즈 카페 아메리카노 혹은 담뱃값 기준 평균 4,500원입니다.</small>
                             </div>
                             <div class="col-md-6 input-item">
@@ -79,15 +98,20 @@
                     <h3>💡 소액 절약 자산 축적 시뮬레이션 결과</h3>
                     <div class="result-display">
                         <p>지정 기간 동안 절약한 순수 원금 총액: <strong id="res-coffee-pure-principal">0원</strong></p>
-                        <p>복리 마법으로 불어난 순수 이자/수익: <strong id="res-coffee-compound-interest" style="color: var(--orange);">0원</strong></p>
+                        <p>복리 마법으로 불어난 순수 이자/수익: <strong id="res-coffee-compound-interest"
+                                style="color: var(--orange);">0원</strong></p>
                         <hr>
-                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함 **최종 예상 총액**: <strong id="res-coffee-final-total">0원</strong></p>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함
+                            **최종 예상 총액**: <strong id="res-coffee-final-total">0원</strong></p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 푼돈 목돈 전환 절약 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="coffee-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 하루치의 절약 금액을 월 단위(하루 금액 * 30.41일)로 환산하여 매월 말 복리로 예치 연산하는 월 복리 적립식 공식 스펙을 고수합니다. 자산 가격의 단기 변동성 지표는 배제되었으므로 장기 자산 배분 비전 수립용 지표로 활용하시기 바랍니다.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는
+                        하루치의 절약 금액을 월 단위(하루 금액 * 30.41일)로 환산하여 매월 말 복리로 예치 연산하는 월 복리 적립식 공식 스펙을 고수합니다. 자산 가격의 단기 변동성 지표는
+                        배제되었으므로 장기 자산 배분 비전 수립용 지표로 활용하시기 바랍니다.</p>
                 </div>
             </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

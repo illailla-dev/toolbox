@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CSS 라인 클램프 계산기 - 여러줄 말줄임 max-height 계산 | 에브리캘크</title>
-    <meta name="description" content="원하는 노출 텍스트 줄 수(Line)와 폰트 크기(PX/REM 선택), 행간(Line-height)을 입력하시면 크로스 브라우징이 보장되는 복합 -webkit-line-clamp 스타일 속성과 정확한 max-height 수치를 실시간 자동 생성해 드립니다.">
+    <meta name="description"
+        content="원하는 노출 텍스트 줄 수(Line)와 폰트 크기(PX/REM 선택), 행간(Line-height)을 입력하시면 크로스 브라우징이 보장되는 복합 -webkit-line-clamp 스타일 속성과 정확한 max-height 수치를 실시간 자동 생성해 드립니다.">
     <meta name="keywords" content="라인클램프, CSS말줄임, 여러줄말줄임, line-clamp, max-height계산, 웹퍼블리싱, 크로스브라우징, 생략기호, 퍼블리셔유틸, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/line-clamp/">
+    <link rel="canonical" href="https://every-calc.co.kr/line-clamp/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="CSS 세밀화 가변 라인 클램프 계산기">
-    <meta property="og:description" content="웹 퍼블리셔 필수 생산성 툴! PX와 REM 입력 단위를 완벽 지원하여 여러 줄 말줄임표 구현을 위한 세밀한 높이(max-height) 마진과 완벽한 CSS 소스코드를 1초 만에 획득하세요.">
+    <meta property="og:description"
+        content="웹 퍼블리셔 필수 생산성 툴! PX와 REM 입력 단위를 완벽 지원하여 여러 줄 말줄임표 구현을 위한 세밀한 높이(max-height) 마진과 완벽한 CSS 소스코드를 1초 만에 획득하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/line-clamp/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -36,7 +39,8 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="clamp-lines">제한할 텍스트 노출 줄 수 (Line)</label>
-                                <input type="number" id="clamp-lines" class="form-control" placeholder="예: 3" value="3" min="1" max="10" required>
+                                <input type="number" id="clamp-lines" class="form-control" placeholder="예: 3" value="3"
+                                    min="1" max="10" required>
                                 <small class="text-muted mt-2 d-block">말줄임표(...)가 표시될 기준 행수입니다.</small>
                             </div>
                             <div class="col-md-6 input-item">
@@ -50,11 +54,13 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="font-size-val">기준 폰트 크기 (<span class="target-unit-txt">rem</span>)</label>
-                                <input type="number" id="font-size-val" class="form-control" placeholder="예: 1.5" value="1.5" min="0.1" step="0.01" required>
+                                <input type="number" id="font-size-val" class="form-control" placeholder="예: 1.5"
+                                    value="1.5" min="0.1" step="0.01" required>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="line-height-ratio">줄 간격 비율 - line-height (배수)</label>
-                                <input type="number" id="line-height-ratio" class="form-control" placeholder="예: 1.5" value="1.5" min="1.0" max="3.0" step="0.1" required>
+                                <input type="number" id="line-height-ratio" class="form-control" placeholder="예: 1.5"
+                                    value="1.5" min="1.0" max="3.0" step="0.1" required>
                             </div>
                         </div>
                         <!-- REM 입력 시 연산 보정용 루트 크기 설정 (hidden으로 숨기거나 퍼블리셔 제어용 노출) -->
@@ -72,30 +78,43 @@
                     <h3>💡 라인 클램프 스타일 연산 결과</h3>
                     <div class="result-display">
                         <p>1행당 실질 높이: <strong id="res-single-line-height">0</strong></p>
-                        <p>레이아웃 차단 한도 고정 높이: <strong id="res-max-height-val" style="color: var(--orange);">0</strong></p>
+                        <p>레이아웃 차단 한도 고정 높이: <strong id="res-max-height-val" style="color: var(--orange);">0</strong>
+                        </p>
                         <hr>
                         <div class="result-code-box">
                             <div class="result-code-box__inner">
-                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                                <span id="result-css-code"
+                                    style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">//
+                                    CSS 생성 대기 중...</span>
                             </div>
-                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white"
+                                style="white-space: nowrap;">코드 복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="clamp-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 연산기는 크로스 브라우징이 검증된 Webkit 계열 엔진의 단독 분기 속성을 표준 믹스인 형태로 제공합니다. 인라인 블록 엘리먼트(`display: inline`)나 표 구조(`display: table-cell`) 내부에서는 렌더링 상의 박스 모델 오류가 발생할 수 있으므로, 해당 스타일을 부여하기 전에 부모 컴포넌트의 블록 무결성을 반드시 확인하시기 바랍니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 연산기는 크로스 브라우징이 검증된 Webkit 계열 엔진의 단독 분기 속성을 표준 믹스인 형태로
+                        제공합니다. 인라인 블록 엘리먼트(`display: inline`)나 표 구조(`display: table-cell`) 내부에서는 렌더링 상의 박스 모델 오류가 발생할 수
+                        있으므로, 해당 스타일을 부여하기 전에 부모 컴포넌트의 블록 무결성을 반드시 확인하시기 바랍니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 모던 웹 타이포그래피의 필수 기술, 텍스트 말줄임표 처리와 박스 레이아웃 최적화 가이드</h2>
-                    <p>웹사이트의 메인 페이지에 최신 포스팅 카드를 배치하거나 쇼핑몰의 상품 목록 뷰를 설계할 때, 텍스트 본문이나 제목의 길이가 일정하지 않아 컴포넌트의 가로세로 정렬 라인이 삐뚤빼뚤하게 무너지는 현상을 자주 마주하게 됩니다. 어떤 글은 한 줄로 끝나고 어떤 글은 다섯 줄을 넘어가며 사방의 여백 밸런스를 사정없이 망가뜨리곤 하는데요. 글자 수가 아무리 많아지더라도 내가 지정한 특정 행수(Line) 안에서 깔끔하게 차단되고, 끝부분에 안개처럼 부드럽게 말줄임표(...)가 자동으로 안착하도록 제어하는 속성이 바로 모던 웹 표준의 필수 스펙인 라인 클램프 기법입니다. 렌더링 영역의 이탈 없는 무결점 타이포그래피 소스코드를 즉시 빌드할 수 있도록 이 계산기를 제작하게 되었습니다.</p>
-                    <p>이 연산 도구는 사용자가 설정한 제한 줄 수와 기준 폰트 크기, 줄 간격 비율(line-height) 파라미터를 상속하여 1행당 실질 높이와 레이아웃 차단 한도 고정 높이를 역산하며, 크로스 브라우징이 검증된 Webkit 계열 엔진 표준 CSS 구문을 실시간으로 도출해 줍니다.</p>
+                    <p>웹사이트의 메인 페이지에 최신 포스팅 카드를 배치하거나 쇼핑몰의 상품 목록 뷰를 설계할 때, 텍스트 본문이나 제목의 길이가 일정하지 않아 컴포넌트의 가로세로 정렬 라인이
+                        삐뚤빼뚤하게 무너지는 현상을 자주 마주하게 됩니다. 어떤 글은 한 줄로 끝나고 어떤 글은 다섯 줄을 넘어가며 사방의 여백 밸런스를 사정없이 망가뜨리곤 하는데요. 글자 수가
+                        아무리 많아지더라도 내가 지정한 특정 행수(Line) 안에서 깔끔하게 차단되고, 끝부분에 안개처럼 부드럽게 말줄임표(...)가 자동으로 안착하도록 제어하는 속성이 바로 모던
+                        웹 표준의 필수 스펙인 라인 클램프 기법입니다. 렌더링 영역의 이탈 없는 무결점 타이포그래피 소스코드를 즉시 빌드할 수 있도록 이 계산기를 제작하게 되었습니다.</p>
+                    <p>이 연산 도구는 사용자가 설정한 제한 줄 수와 기준 폰트 크기, 줄 간격 비율(line-height) 파라미터를 상속하여 1행당 실질 높이와 레이아웃 차단 한도 고정 높이를
+                        역산하며, 크로스 브라우징이 검증된 Webkit 계열 엔진 표준 CSS 구문을 실시간으로 도출해 줍니다.</p>
                     <h3>📊 라인 클램프(Line Clamp) 구현을 위한 코어 CSS 속성 명세표</h3>
-                    <p>여러 줄 말줄임표를 브라우저에 렉 없이 안정적으로 재현하기 위해 반드시 세트로 선언해야 하는 4대 핵심 속성 요율표입니다. 하나라도 누락되면 텍스트가 영역 밖으로 터져 나오게 됩니다.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>여러 줄 말줄임표를 브라우저에 렉 없이 안정적으로 재현하기 위해 반드시 세트로 선언해야 하는 4대 핵심 속성 요율표입니다. 하나라도 누락되면 텍스트가 영역 밖으로 터져 나오게
+                        됩니다.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -133,15 +152,31 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 속성 명세는 W3C 표준 렌더링 엔진 호환성을 준수합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 스펙을 유연하게 검수하실 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 속성 명세는 W3C 표준 렌더링 엔진 호환성을 준수합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여
+                        상세 스펙을 유연하게 검수하실 수 있습니다.</small>
                     <h3>📌 폰트 크기와 line-height 배수의 함수, 그리고 고정 높이 수식의 비밀</h3>
-                    <p>라인 클램프 코드를 짤 때 수많은 프론트엔드 퍼블리셔들이 가장 많이 범하는 치명적인 실수가 바로 넘치는 영역을 가려주는 <code>max-height</code>(또는 height)를 대충 눈대중으로 대입하는 것입니다. 높이 값을 텍스트 밀도와 맞추지 않고 고정해 버리면, 브라우저 서체 렌더링 환경이나 시스템 폰트 크기 변동에 따라 글자의 아랫부분이 칼로 자른 듯 잘려 나가거나 말줄임표 아래로 다음 줄 글자의 머리통이 빼꼼 노출되는 흉측한 렌더링 오류가 발생하곤 하는데요.</p>
-                    <p>이 문제를 원천 방어하는 완벽한 재무 수학 공식은 <code>[기준 폰트 크기 × 줄 간격 비율(line-height) × 제한할 행수]</code> 복합 연산을 통해 레이아웃 차단 한도 고정 높이를 소수점 세 자리까지 정밀하게 구하는 것입니다. 본 계산기는 이 단위 환산 알고리즘을 시스템 뼈대로 강제 연동해 두었기 때문에, 픽셀(PX) 단위뿐만 아니라 반응형 서체 표준인 REM 스펙까지 상호 교차 계산하여 브라우저가 숨을 쉴 수 있는 완벽한 박스 모델 공간을 무결점으로 빌드해 줍니다.</p>
+                    <p>라인 클램프 코드를 짤 때 수많은 프론트엔드 퍼블리셔들이 가장 많이 범하는 치명적인 실수가 바로 넘치는 영역을 가려주는 <code>max-height</code>(또는
+                        height)를 대충 눈대중으로 대입하는 것입니다. 높이 값을 텍스트 밀도와 맞추지 않고 고정해 버리면, 브라우저 서체 렌더링 환경이나 시스템 폰트 크기 변동에 따라 글자의
+                        아랫부분이 칼로 자른 듯 잘려 나가거나 말줄임표 아래로 다음 줄 글자의 머리통이 빼꼼 노출되는 흉측한 렌더링 오류가 발생하곤 하는데요.</p>
+                    <p>이 문제를 원천 방어하는 완벽한 재무 수학 공식은 <code>[기준 폰트 크기 × 줄 간격 비율(line-height) × 제한할 행수]</code> 복합 연산을 통해
+                        레이아웃 차단 한도 고정 높이를 소수점 세 자리까지 정밀하게 구하는 것입니다. 본 계산기는 이 단위 환산 알고리즘을 시스템 뼈대로 강제 연동해 두었기 때문에, 픽셀(PX)
+                        단위뿐만 아니라 반응형 서체 표준인 REM 스펙까지 상호 교차 계산하여 브라우저가 숨을 쉴 수 있는 완벽한 박스 모델 공간을 무결점으로 빌드해 줍니다.</p>
                     <h3>⚙️ 파이어폭스, 구형 인터넷 익스플로러 크로스 브라우징 방어 전략</h3>
-                    <p>우리가 사용하는 <code>-webkit-line-clamp</code> 속성은 태생적으로 크롬이나 사파리의 기반이 되는 웹킷(Webkit) 엔진의 독단적인 확장 속성이었습니다. 다행히 모던 웹 표준 환경으로 넘어오면서 대다수의 브라우저가 이 명세를 정식 상속하여 플러그인 없이도 부드러운 하드웨어 가속 구동을 보장하지만, 실무에서는 간혹 특정 구형 사파리 버전이나 컴포넌트 내부 배치 구조(<code>display: table-cell</code> 등)에 갇혀 있을 때 말줄임 수식이 먹히지 않는 예외적인 상황이 발생하곤 합니다.</p>
-                    <p>이를 방어하기 위한 최적의 실무 레이아웃 조합은, 본 가이드 기기가 추출해 주는 정밀 고정 높이(max-height)와 <code>line-height</code> 속성을 상호 결합하여 믹스인 형태로 스타일시트에 박아두는 것입니다. 설령 웹킷 속성이 먹히지 않는 레거시 환경을 만나더라도 계산된 높이 밖으로 넘치는 글자가 <code>overflow: hidden</code>에 의해 깔끔하게 커트 되므로, UI의 격자 줄 맞춤 라인이 무너지지 않는 이중 방어선 역할을 톡톡히 해냅니다. 본 결과 코드를 활용하여 미디어쿼리 깜빡임 없는 완벽한 반응형 카드 레이아웃을 마스터해 보시기 바랍니다.</p>
+                    <p>우리가 사용하는 <code>-webkit-line-clamp</code> 속성은 태생적으로 크롬이나 사파리의 기반이 되는 웹킷(Webkit) 엔진의 독단적인 확장
+                        속성이었습니다. 다행히 모던 웹 표준 환경으로 넘어오면서 대다수의 브라우저가 이 명세를 정식 상속하여 플러그인 없이도 부드러운 하드웨어 가속 구동을 보장하지만, 실무에서는
+                        간혹 특정 구형 사파리 버전이나 컴포넌트 내부 배치 구조(<code>display: table-cell</code> 등)에 갇혀 있을 때 말줄임 수식이 먹히지 않는 예외적인
+                        상황이 발생하곤 합니다.</p>
+                    <p>이를 방어하기 위한 최적의 실무 레이아웃 조합은, 본 가이드 기기가 추출해 주는 정밀 고정 높이(max-height)와 <code>line-height</code> 속성을
+                        상호 결합하여 믹스인 형태로 스타일시트에 박아두는 것입니다. 설령 웹킷 속성이 먹히지 않는 레거시 환경을 만나더라도 계산된 높이 밖으로 넘치는 글자가
+                        <code>overflow: hidden</code>에 의해 깔끔하게 커트 되므로, UI의 격자 줄 맞춤 라인이 무너지지 않는 이중 방어선 역할을 톡톡히 해냅니다. 본 결과
+                        코드를 활용하여 미디어쿼리 깜빡임 없는 완벽한 반응형 카드 레이아웃을 마스터해 보시기 바랍니다.
+                    </p>
                     <h3>⚠️ CSS 세밀화 가변 라인 클램프 계산기 이용 시 주의사항</h3>
-                    <p>본 가변 라인 클램프 생성 프로그램이 빌드하는 스타일 코드는 글로벌 웹 표준 아키텍처 명세를 준수하여 높은 정확도를 자랑합니다. 다만, 본 계산은 텍스트 컴포넌트 내부에 적용되는 영문 대소문자의 고유 자간 오차, 문단 첫머리에 들어가는 들여쓰기(text-indent) 여백 수치, 혹은 사용자의 텍스트 정렬 방식(<code>text-align: justify</code> 등)에 따른 줄 바꿈 요율 변수를 완벽히 포함하지 않은 모의 결과입니다. 폰트의 글꼴 종류(나눔고딕, 프리텐다드 등) 자체의 내부 여백(Padding) 튜닝 값에 따라 실제 화면에 렌더링 되는 박스 높이와 단 몇 픽셀 내외의 미세한 행정적 오차가 발생할 수 있으므로, 본 결과를 공통 CSS 파일에 바인딩 하신 후에는 반드시 크롬 개발자 도구(F12)를 통해 멀티 디바이스 환경에서 말줄임표의 가시성을 최종 크로스 체크하시기 바랍니다.</p>
+                    <p>본 가변 라인 클램프 생성 프로그램이 빌드하는 스타일 코드는 글로벌 웹 표준 아키텍처 명세를 준수하여 높은 정확도를 자랑합니다. 다만, 본 계산은 텍스트 컴포넌트 내부에
+                        적용되는 영문 대소문자의 고유 자간 오차, 문단 첫머리에 들어가는 들여쓰기(text-indent) 여백 수치, 혹은 사용자의 텍스트 정렬
+                        방식(<code>text-align: justify</code> 등)에 따른 줄 바꿈 요율 변수를 완벽히 포함하지 않은 모의 결과입니다. 폰트의 글꼴 종류(나눔고딕,
+                        프리텐다드 등) 자체의 내부 여백(Padding) 튜닝 값에 따라 실제 화면에 렌더링 되는 박스 높이와 단 몇 픽셀 내외의 미세한 행정적 오차가 발생할 수 있으므로, 본
+                        결과를 공통 CSS 파일에 바인딩 하신 후에는 반드시 크롬 개발자 도구(F12)를 통해 멀티 디바이스 환경에서 말줄임표의 가시성을 최종 크로스 체크하시기 바랍니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CSS 키프레임 이징 마스터 생성기 - 퍼블리셔용 애니메이션 가속도 계산 | 에브리캘크</title>
-    <meta name="description" content="현업 퍼블리셔들이 가장 자주 사용하는 부드러운 바운스, 부유, 페이드, 3D 회전 등의 모션 프리셋과 베지에 가속도(cubic-bezier), 지속 시간을 조합하여 순수 CSS @keyframes 소스코드를 실시간 자동 생성해 드립니다.">
+    <meta name="description"
+        content="현업 퍼블리셔들이 가장 자주 사용하는 부드러운 바운스, 부유, 페이드, 3D 회전 등의 모션 프리셋과 베지에 가속도(cubic-bezier), 지속 시간을 조합하여 순수 CSS @keyframes 소스코드를 실시간 자동 생성해 드립니다.">
     <meta name="keywords" content="CSS애니메이션, 키프레임, @keyframes, 큐빅베지에, cubic-bezier, 퍼블리셔유틸, 웹퍼블리싱, 이징계산기, 인터랙션, ㅇㅂ">
-    <link class="canonical" href="https://every-calc.co.kr/css-animation/">
+    <link rel="canonical" href="https://every-calc.co.kr/css-animation/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/css-animation.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="CSS 키프레임 이징 마스터 생성기">
-    <meta property="og:description" content="웹 퍼블리셔 필수 인터랙션 툴! 실무형 모션 프리셋과 가속도 조절을 지원하여 자연스럽고 트렌디한 CSS 애니메이션 풀 코드를 1초 만에 복사하세요.">
+    <meta property="og:description"
+        content="웹 퍼블리셔 필수 인터랙션 툴! 실무형 모션 프리셋과 가속도 조절을 지원하여 자연스럽고 트렌디한 CSS 애니메이션 풀 코드를 1초 만에 복사하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/css-animation/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -46,8 +49,10 @@
                             <div class="col-md-6 input-item">
                                 <label for="ani-easing-select">가속도 템플릿 (Easing)</label>
                                 <select id="ani-easing-select" class="form-control">
-                                    <option value="cubic-bezier(0.25, 1, 0.5, 1)" selected>Ease Out Quint (자연스럽게 감속 - 추천)</option>
-                                    <option value="cubic-bezier(0.68, -0.6, 0.32, 1.6)">Ease In Out Back (탄성 있는 반동 효과)</option>
+                                    <option value="cubic-bezier(0.25, 1, 0.5, 1)" selected>Ease Out Quint (자연스럽게 감속 -
+                                        추천)</option>
+                                    <option value="cubic-bezier(0.68, -0.6, 0.32, 1.6)">Ease In Out Back (탄성 있는 반동 효과)
+                                    </option>
                                     <option value="cubic-bezier(0.4, 0, 0.2, 1)">Material Standard (부드러운 표준 이징)</option>
                                     <option value="linear">Linear (일정한 등속도 운동)</option>
                                 </select>
@@ -56,7 +61,8 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="ani-duration">동작 지속 시간 (Duration - 초)</label>
-                                <input type="number" id="ani-duration" class="form-control" placeholder="예: 2.0" value="2.0" min="0.1" max="10.0" step="0.1" required>
+                                <input type="number" id="ani-duration" class="form-control" placeholder="예: 2.0"
+                                    value="2.0" min="0.1" max="10.0" step="0.1" required>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="ani-iteration">반복 횟수 (Iteration Count)</label>
@@ -81,26 +87,40 @@
                         <div class="result-code-box">
                             <div class="result-code-box__inner">
                                 <style id="live-dynamic-style"></style>
-                                <span id="result-css-code" style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">// CSS 생성 대기 중...</span>
+                                <span id="result-css-code"
+                                    style="color: var(--blue); font-weight: bold; display: block; white-space: pre-wrap;">//
+                                    CSS 생성 대기 중...</span>
                             </div>
-                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white" style="white-space: nowrap;">코드 복사하기</button>
+                            <button type="button" id="btn-copy-result" class="btn btn-success copy-btn text-white"
+                                style="white-space: nowrap;">코드 복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 렌더링 무결성을 위한 퍼블리싱 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="ani-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray);">* 본 연산 코드는 애니메이션 무한 반복 시 뚝 끊기는 현상을 방지하기 위해 왕복 역재생(`alternate`) 분기가 계산식에 유연하게 반영되어 자동 매칭됩니다. 가속도가 비정상적으로 튀는 것을 막으려면 단독 블록 요소에 바인딩 하십시오.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray);">* 본 연산 코드는 애니메이션 무한 반복 시 뚝 끊기는 현상을
+                        방지하기 위해 왕복 역재생(`alternate`) 분기가 계산식에 유연하게 반영되어 자동 매칭됩니다. 가속도가 비정상적으로 튀는 것을 막으려면 단독 블록 요소에 바인딩
+                        하십시오.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 모던 웹 인터랙션의 정점, CSS 키프레임 애니메이션과 가속도 최적화 가이드</h2>
-                    <p>웹 프로그래밍이나 UI 퍼블리싱을 진행할 때 사이트에 생동감을 불어넣는 가장 강력한 도구가 바로 CSS 애니메이션입니다. 하지만 브라우저가 기본으로 제공하는 <code>ease-in</code>이나 <code>ease-out</code> 같은 단순 속성만 사용하면 모션이 기계적이고 둔탁하게 끊겨 전체적인 서비스 퀄리티가 떨어지기 쉬운데요. 글로벌 브랜드들의 고사양 마이크로 인터랙션 웹사이트들처럼 안개처럼 부드럽게 부유하거나 쫀득한 탄성을 가진 고급 모션을 구현하려면 수학적 곡선 좌표인 큐빅 베지에(Cubic-bezier) 값을 정밀하게 제어해야 합니다. 이 복잡한 타임라인 수식을 직관적으로 보정하고 실무 소스코드를 바로 추출할 수 있도록 이 생성기를 제작하게 되었습니다.</p>
-                    <p>이 연산 도구는 현업 트렌드에 맞춘 모션 프리셋(Floating, Bounce, Fade Up 등)과 자연스러운 감속 템플릿을 조합하여, 사용자가 설정한 동작 시간 및 반복 횟수에 맞는 크로스 브라우징 표준 코드를 실시간 빌드하며 물리 모션이 적용된 미리보기를 실시간으로 제공합니다.</p>
+                    <p>웹 프로그래밍이나 UI 퍼블리싱을 진행할 때 사이트에 생동감을 불어넣는 가장 강력한 도구가 바로 CSS 애니메이션입니다. 하지만 브라우저가 기본으로 제공하는
+                        <code>ease-in</code>이나 <code>ease-out</code> 같은 단순 속성만 사용하면 모션이 기계적이고 둔탁하게 끊겨 전체적인 서비스 퀄리티가 떨어지기
+                        쉬운데요. 글로벌 브랜드들의 고사양 마이크로 인터랙션 웹사이트들처럼 안개처럼 부드럽게 부유하거나 쫀득한 탄성을 가진 고급 모션을 구현하려면 수학적 곡선 좌표인 큐빅
+                        베지에(Cubic-bezier) 값을 정밀하게 제어해야 합니다. 이 복잡한 타임라인 수식을 직관적으로 보정하고 실무 소스코드를 바로 추출할 수 있도록 이 생성기를 제작하게
+                        되었습니다.
+                    </p>
+                    <p>이 연산 도구는 현업 트렌드에 맞춘 모션 프리셋(Floating, Bounce, Fade Up 등)과 자연스러운 감속 템플릿을 조합하여, 사용자가 설정한 동작 시간 및 반복
+                        횟수에 맞는 크로스 브라우징 표준 코드를 실시간 빌드하며 물리 모션이 적용된 미리보기를 실시간으로 제공합니다.</p>
                     <h3>📊 실무 다소비 모션 프리셋별 핵심 이징 수식 및 활용 가이드 표</h3>
-                    <p>내가 기획한 컴포넌트 무드에 따라 어떤 물리 수식을 조합해야 하는지 아래 반응형 표를 통해 시각적으로 체크해 보세요. 뼈대 코드를 올바르게 선언해야 브라우저 최적화 점수를 지켜낼 수 있습니다.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <p>내가 기획한 컴포넌트 무드에 따라 어떤 물리 수식을 조합해야 하는지 아래 반응형 표를 통해 시각적으로 체크해 보세요. 뼈대 코드를 올바르게 선언해야 브라우저 최적화 점수를
+                        지켜낼 수 있습니다.</p>
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -132,15 +152,31 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 가속도 요율은 웹 표준 애니메이션 명세를 준수합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세 스펙을 안전하게 확인할 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 가속도 요율은 웹 표준 애니메이션 명세를 준수합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 상세
+                        스펙을 안전하게 확인할 수 있습니다.</small>
                     <h3>📌 자연스러운 모션의 비밀, 큐빅 베지에(Cubic-bezier) 이징과 왕복 재생 기법</h3>
-                    <p>인간의 눈은 자연계에 존재하는 물리 법칙에 익숙합니다. 물체가 움직이기 시작할 때 서서히 가속도가 붙고 멈출 때 자연스럽게 속도가 줄어드는 현상을 웹 브라우저 안에 재현하려면 4개의 제어점 좌표를 이용한 이징(Easing) 수식이 필수적입니다. 본 생성기에서 추천하는 <code>Ease Out Quint</code> 수식은 첫 스타트는 빠르게 끊어 시선전환을 유도하고 끝맺음은 부드럽게 감속하는 구조를 지니고 있어 실무 UI 디자인에서 가장 선호하는 골격입니다.</p>
-                    <p>여기에 더해 애니메이션이 무한 반복될 때 끝 지점에서 첫 지점으로 순간 이동하며 뚝뚝 끊기는 부자연스러운 현상을 원천 방어하기 위해 내부 계산식에 <code>alternate</code>(왕복 역재생) 분기를 기본 탑재했습니다. 물체가 올라갔다가 다시 자연스럽게 내려오는 완벽한 무한 루프 궤적을 자바스크립트 없이 순수 CSS만으로 구현할 수 있는 핵심 원리입니다.</p>
+                    <p>인간의 눈은 자연계에 존재하는 물리 법칙에 익숙합니다. 물체가 움직이기 시작할 때 서서히 가속도가 붙고 멈출 때 자연스럽게 속도가 줄어드는 현상을 웹 브라우저 안에 재현하려면
+                        4개의 제어점 좌표를 이용한 이징(Easing) 수식이 필수적입니다. 본 생성기에서 추천하는 <code>Ease Out Quint</code> 수식은 첫 스타트는 빠르게
+                        끊어 시선전환을 유도하고 끝맺음은 부드럽게 감속하는 구조를 지니고 있어 실무 UI 디자인에서 가장 선호하는 골격입니다.</p>
+                    <p>여기에 더해 애니메이션이 무한 반복될 때 끝 지점에서 첫 지점으로 순간 이동하며 뚝뚝 끊기는 부자연스러운 현상을 원천 방어하기 위해 내부 계산식에
+                        <code>alternate</code>(왕복 역재생) 분기를 기본 탑재했습니다. 물체가 올라갔다가 다시 자연스럽게 내려오는 완벽한 무한 루프 궤적을 자바스크립트 없이 순수
+                        CSS만으로 구현할 수 있는 핵심 원리입니다.
+                    </p>
                     <h3>🚀 브라우저 렉(Lag)을 방지하는 GPU 하드웨어 가속 최적화 팁</h3>
-                    <p>애니메이션 코드를 짤 때 초보 개발자들이 가장 많이 하는 실수가 바로 박스의 <code>top</code>, <code>left</code> 나 <code>margin</code> 같은 수치를 키프레임으로 제어하는 것입니다. 이 속성들은 위치가 바뀔 때마다 브라우저가 화면의 레이아웃을 통째로 다시 그리는 리플로우(Reflow) 현상을 유발하여 저사양 스마트폰이나 화면이 큰 모니터에서 엄청난 화면 버벅임과 프레임 드랍을 일으킵니다.</p>
-                    <p>부드러운 60fps 인터랙션을 유지하려면 반드시 브라우저 레이아웃 계층에 영향을 주지 않고 GPU(하드웨어 가속)를 직접 활용하는 <code>transform</code>(translate, rotate, scale) 속성과 투명도를 제어하는 <code>opacity</code> 속성 위주로 키프레임을 설계해야 합니다. 본 가이드 기기는 이러한 렌더링 무결성 원칙을 철저히 준수하여 소스코드를 빌드하므로 웹 최적화 점수(LCP) 유지에도 압도적으로 유리합니다.</p>
+                    <p>애니메이션 코드를 짤 때 초보 개발자들이 가장 많이 하는 실수가 바로 박스의 <code>top</code>, <code>left</code> 나
+                        <code>margin</code> 같은 수치를 키프레임으로 제어하는 것입니다. 이 속성들은 위치가 바뀔 때마다 브라우저가 화면의 레이아웃을 통째로 다시 그리는
+                        리플로우(Reflow) 현상을 유발하여 저사양 스마트폰이나 화면이 큰 모니터에서 엄청난 화면 버벅임과 프레임 드랍을 일으킵니다.
+                    </p>
+                    <p>부드러운 60fps 인터랙션을 유지하려면 반드시 브라우저 레이아웃 계층에 영향을 주지 않고 GPU(하드웨어 가속)를 직접 활용하는
+                        <code>transform</code>(translate, rotate, scale) 속성과 투명도를 제어하는 <code>opacity</code> 속성 위주로 키프레임을
+                        설계해야 합니다. 본 가이드 기기는 이러한 렌더링 무결성 원칙을 철저히 준수하여 소스코드를 빌드하므로 웹 최적화 점수(LCP) 유지에도 압도적으로 유리합니다.
+                    </p>
                     <h3>⚠️ CSS 키프레임 마스터 생성기 이용 시 주의사항</h3>
-                    <p>본 CSS 키프레임 이징 마스터 생성기가 추출하는 모션 코드는 웹 표준 명세를 준수하여 모든 모던 브라우저 환경에서 안정적으로 구동됩니다. 다만, 애니메이션이 바인딩 되는 대상 요소가 인라인(Inline) 구조이거나 주변의 마진, 패딩 겹침 현상이 발생하는 레이아웃 구조 내에 갇혀 있을 경우 가속도가 물리적으로 비정상적이게 튀거나 크기가 찌그러지는 현상이 발생할 수 있습니다. 따라서 애니메이션을 부여할 컴포넌트는 반드시 독립적인 블록 요소(<code>display: block</code> 또는 <code>inline-block</code>)로 선언하거나 별도의 컨테이너 div로 한 번 감싸서 사용하시는 것을 권장합니다.</p>
+                    <p>본 CSS 키프레임 이징 마스터 생성기가 추출하는 모션 코드는 웹 표준 명세를 준수하여 모든 모던 브라우저 환경에서 안정적으로 구동됩니다. 다만, 애니메이션이 바인딩 되는
+                        대상 요소가 인라인(Inline) 구조이거나 주변의 마진, 패딩 겹침 현상이 발생하는 레이아웃 구조 내에 갇혀 있을 경우 가속도가 물리적으로 비정상적이게 튀거나 크기가
+                        찌그러지는 현상이 발생할 수 있습니다. 따라서 애니메이션을 부여할 컴포넌트는 반드시 독립적인 블록 요소(<code>display: block</code> 또는
+                        <code>inline-block</code>)로 선언하거나 별도의 컨테이너 div로 한 번 감싸서 사용하시는 것을 권장합니다.
+                    </p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>

@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>네이버 블로그 글자수 및 원고지 환산 가이드 계산기 | 에브리캘크</title>
-    <meta name="description" content="네이버 스마트에디터 기준 공백 제외 글자 수를 정밀 판정하고, 200자 원고지 매수 환산 및 본문 이미지 장수 대비 최적의 노출 밸런스 가이드를 실시간 제공합니다.">
+    <meta name="description"
+        content="네이버 스마트에디터 기준 공백 제외 글자 수를 정밀 판정하고, 200자 원고지 매수 환산 및 본문 이미지 장수 대비 최적의 노출 밸런스 가이드를 실시간 제공합니다.">
     <meta name="keywords" content="블로그글자수, 공백제외글자수, 네이버글자수, 원고지환산, 블로그상위노출, 체험단원고, 에브리캘크">
-    <link class="canonical" href="https://every-calc.co.kr/blog-wordcount/">
+    <link rel="canonical" href="https://every-calc.co.kr/blog-wordcount/">
     <meta name="robots" content="index, follow">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/layout.css">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
     <meta property="og:title" content="네이버 블로그 글자수 및 원고지 환산 가이드 계산기 - 에브리캘크">
     <meta property="og:description" content="네이버 스마트에디터와 100% 일치하는 공백 제외 글자 수와 원고대행 부업 필수 지표인 이미지 밸런스를 실시간 확인하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
@@ -30,18 +32,22 @@
         <main id="content">
             <div class="calculator-box">
                 <h2>✍️ 네이버 블로그 글자수 & 원고지 환산기</h2>
-                <p>원고 대행 부업 및 블로그 상위 노출에 가장 치명적인 '공백 제외 순수 글자수'를 정밀 연산합니다. 첨부한 사진 장수와의 가중치를 비교하여 저품질 우회 가이드라인을 제안합니다.</p>
+                <p>원고 대행 부업 및 블로그 상위 노출에 가장 치명적인 '공백 제외 순수 글자수'를 정밀 연산합니다. 첨부한 사진 장수와의 가중치를 비교하여 저품질 우회 가이드라인을 제안합니다.
+                </p>
                 <form id="wordcount-form" class="form" onsubmit="return false;">
                     <div class="input-group-box mb-4">
                         <h3>1. 작성 원고 텍스트 및 사진 정보 입력</h3>
                         <div class="input-item mb-3">
                             <label for="word-text-area">원고 본문 내용 붙여넣기</label>
-                            <textarea id="word-text-area" class="form-control" rows="8" placeholder="분석할 블로그 원고 내용을 여기에 입력하거나 붙여넣으세요..."></textarea>
+                            <textarea id="word-text-area" class="form-control" rows="8"
+                                placeholder="분석할 블로그 원고 내용을 여기에 입력하거나 붙여넣으세요..."></textarea>
                         </div>
                         <div class="input-item mb-3">
                             <label for="word-images">본문에 첨부한(할) 총 사진 장수 (장)</label>
-                            <input type="number" id="word-images" class="form-control" placeholder="예: 15" min="0" value="5">
-                            <small class="text-muted mt-2 d-block">* 이미지 장수 대비 글자 수가 너무 적으면 상위 노출 패널티 대상이 될 수 있습니다.</small>
+                            <input type="number" id="word-images" class="form-control" placeholder="예: 15" min="0"
+                                value="5">
+                            <small class="text-muted mt-2 d-block">* 이미지 장수 대비 글자 수가 너무 적으면 상위 노출 패널티 대상이 될 수
+                                있습니다.</small>
                         </div>
                     </div>
                 </form>
@@ -51,30 +57,40 @@
                     <div class="result-display">
                         <p>공백 포함 총 글자수: <strong id="res-word-with-space">0</strong> 자</p>
                         <p>공백 제외 순수 글자수: <strong id="res-word-no-space" style="color: var(--orange);">0</strong> 자</p>
-                        <p>200자 원고지 환산 수치: <strong id="res-word-manuscript" style="color: var(--green);">0</strong> 매</p>
+                        <p>200자 원고지 환산 수치: <strong id="res-word-manuscript" style="color: var(--green);">0</strong> 매
+                        </p>
                         <hr>
                         <div class="result-code-box">
                             <div class="result-code-box__inner">
-                                <span id="result-word-count-salary" style="color: var(--red); font-weight: bold;">0</span>자 (공백제외)
+                                <span id="result-word-count-salary"
+                                    style="color: var(--red); font-weight: bold;">0</span>자 (공백제외)
                             </div>
-                            <button type="button" class="btn btn-success copy-btn" data-target="result-word-count-salary" style="white-space: nowrap;">코드 복사하기</button>
+                            <button type="button" class="btn btn-success copy-btn"
+                                data-target="result-word-count-salary" style="white-space: nowrap;">코드 복사하기</button>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 네이버 스마트블록 최적화 밸런스 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="word-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3">* 본 계산기는 엔터(줄바꿈), 연속 공백, 특수문자의 가중치를 정밀 필터링하여 네이버 스마트에디터 3.0 카운팅 로직과 완벽 동기화되도록 설계되었습니다. 리뷰 보상 대행 원고 검수 시 기준 미달 사고를 사전에 완전 차단할 수 있습니다.</p>
+                    <p class="result-tip guide-text mt-3">* 본 계산기는 엔터(줄바꿈), 연속 공백, 특수문자의 가중치를 정밀 필터링하여 네이버 스마트에디터 3.0
+                        카운팅 로직과 완벽 동기화되도록 설계되었습니다. 리뷰 보상 대행 원고 검수 시 기준 미달 사고를 사전에 완전 차단할 수 있습니다.</p>
                 </div>
             </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 블로그 마케팅의 기본, 네이버 글자수 카운팅과 사진 밸런스 최적화 가이드</h2>
-                    <p>네이버 블로그를 운영하거나 원고 작성 대행 부업을 해보신 분들이라면 글자수 맞추기가 얼마나 스트레스인지 잘 아실 겁니다. 특히 광고 대행사나 광고주가 요구하는 정산 기준은 대부분 '공백을 제외한 순수 글자수'이기 때문에, 일반 메모장이나 범용 글자수 세기 프로그램으로 검수했다가 엔터나 띄어쓰기가 대거 포함되어 기준 미달로 원고가 통째로 반려되는 불상사가 종종 발생하곤 하는데요. 이러한 정산 사고를 사전에 완벽히 차단하고 네이버 검색 로직에 최적화된 포스팅을 누구나 쉽게 검수할 수 있도록 이 계산기를 제작했습니다.</p>
-                    <p>이 연산기는 줄바꿈, 연속된 공백, 특수문자 등이 유발하는 글자수 뻥튀기 거품을 완벽하게 필터링하여 네이버 스마트에디터 원고창의 실제 카운팅 로직과 100% 동일한 결괏값을 도출합니다. 더불어 원고 대행 정산의 전통적 기준인 200자 원고지 매수 환산까지 실시간으로 처리해 줍니다.</p>
+                    <p>네이버 블로그를 운영하거나 원고 작성 대행 부업을 해보신 분들이라면 글자수 맞추기가 얼마나 스트레스인지 잘 아실 겁니다. 특히 광고 대행사나 광고주가 요구하는 정산 기준은
+                        대부분 '공백을 제외한 순수 글자수'이기 때문에, 일반 메모장이나 범용 글자수 세기 프로그램으로 검수했다가 엔터나 띄어쓰기가 대거 포함되어 기준 미달로 원고가 통째로
+                        반려되는 불상사가 종종 발생하곤 하는데요. 이러한 정산 사고를 사전에 완벽히 차단하고 네이버 검색 로직에 최적화된 포스팅을 누구나 쉽게 검수할 수 있도록 이 계산기를
+                        제작했습니다.</p>
+                    <p>이 연산기는 줄바꿈, 연속된 공백, 특수문자 등이 유발하는 글자수 뻥튀기 거품을 완벽하게 필터링하여 네이버 스마트에디터 원고창의 실제 카운팅 로직과 100% 동일한 결괏값을
+                        도출합니다. 더불어 원고 대행 정산의 전통적 기준인 200자 원고지 매수 환산까지 실시간으로 처리해 줍니다.</p>
                     <h3>📊 네이버 스마트블록 로직 최적화 원고 밸런스 기준표</h3>
                     <p>내 원고의 성격에 따라 사진 장수와 글자 수를 어떻게 배분해야 노출 패널티를 피할 수 있는지 아래 최적화 요율표를 통해 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive"
+                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>
@@ -106,14 +122,24 @@
                             </tbody>
                         </table>
                     </div>
-                    <small class="text-muted d-block mb-4">* 본 밸런스 가이드는 네이버 스마트에디터 ONE 엔진의 알고리즘 성향을 분석한 역산 지표입니다. 모바일 기기에서는 표를 좌우로 밀어서 상세 가이드를 검수하실 수 있습니다.</small>
+                    <small class="text-muted d-block mb-4">* 본 밸런스 가이드는 네이버 스마트에디터 ONE 엔진의 알고리즘 성향을 분석한 역산 지표입니다. 모바일
+                        기기에서는 표를 좌우로 밀어서 상세 가이드를 검수하실 수 있습니다.</small>
                     <h3>📌 네이버 스마트블록 로직이 좋아하는 글자수와 이미지의 황금 비율</h3>
-                    <p>현재 네이버 검색 엔진의 핵심 알고리즘인 스마트블록(에코, 디아 등)은 단순히 글자 수가 무조건 많다고 해서 상위 노출 스펙에 가산점을 주지 않습니다. 본문 텍스트의 양과 첨부된 사진 장수 사이의 '시각적 밸런스'를 굉장히 까다롭게 분석하는데요. 예를 들어 사진은 30장이나 들어갔는데 글자 수는 고작 500자뿐이라거나, 반대로 글자 수는 5,000자인데 이미지 파일이 단 한 장도 없다면 로직 시스템은 이를 비정상적인 문서로 분류하여 저품질 점수를 매깁니다.</p>
-                    <p>이 계산기는 내가 복사해 넣은 원고 본문과 사진 장수를 종합적으로 비교 분석하여, 현재 작성된 원고가 네이버 봇에게 가치 있는 문서로 인정받기 적합한 구조인지 실시간 우회 가이드라인을 제시해 줍니다.</p>
+                    <p>현재 네이버 검색 엔진의 핵심 알고리즘인 스마트블록(에코, 디아 등)은 단순히 글자 수가 무조건 많다고 해서 상위 노출 스펙에 가산점을 주지 않습니다. 본문 텍스트의 양과
+                        첨부된 사진 장수 사이의 '시각적 밸런스'를 굉장히 까다롭게 분석하는데요. 예를 들어 사진은 30장이나 들어갔는데 글자 수는 고작 500자뿐이라거나, 반대로 글자 수는
+                        5,000자인데 이미지 파일이 단 한 장도 없다면 로직 시스템은 이를 비정상적인 문서로 분류하여 저품질 점수를 매깁니다.</p>
+                    <p>이 계산기는 내가 복사해 넣은 원고 본문과 사진 장수를 종합적으로 비교 분석하여, 현재 작성된 원고가 네이버 봇에게 가치 있는 문서로 인정받기 적합한 구조인지 실시간 우회
+                        가이드라인을 제시해 줍니다.</p>
                     <h3>✍️ 원고 대행 부업 검수 시 저품질과 누락을 피하는 실전 꿀팁</h3>
-                    <p>원고 대행 알바를 하거나 블로그 마케팅을 할 때 대행사로부터 공급받은 원본 텍스트를 그대로 복사해서 붙여넣다 보면, 나도 모르게 이미 인터넷에 깔려있는 타 블로그의 유사 문서 패턴을 그대로 밟아 블로그 자체가 검색에서 완전히 사라지는 '안드로메다 저품질' 상태에 빠질 수 있습니다. 검수 단계에서 기계적으로 글자수 수치만 채우는 것에 급급해하지 말고, 문맥 흐름이 어색하지 않은지 검토하며 나만의 주관적인 문장 어투나 실제 경험 뉘앙스로 3분만 투자해 수정하는 과정이 필수적입니다. 본 가이드 정산기를 통해 글자 수 요건을 충족함과 동시에 텍스트 밸런스 점수를 확인해 보시기 바랍니다.</p>
+                    <p>원고 대행 알바를 하거나 블로그 마케팅을 할 때 대행사로부터 공급받은 원본 텍스트를 그대로 복사해서 붙여넣다 보면, 나도 모르게 이미 인터넷에 깔려있는 타 블로그의 유사 문서
+                        패턴을 그대로 밟아 블로그 자체가 검색에서 완전히 사라지는 '안드로메다 저품질' 상태에 빠질 수 있습니다. 검수 단계에서 기계적으로 글자수 수치만 채우는 것에 급급해하지
+                        말고, 문맥 흐름이 어색하지 않은지 검토하며 나만의 주관적인 문장 어투나 실제 경험 뉘앙스로 3분만 투자해 수정하는 과정이 필수적입니다. 본 가이드 정산기를 통해 글자 수
+                        요건을 충족함과 동시에 텍스트 밸런스 점수를 확인해 보시기 바랍니다.</p>
                     <h3>⚠️ 블로그 원고 카운팅 시뮬레이터 이용 시 주의사항</h3>
-                    <p>본 네이버 블로그 글자수 정산 프로그램은 스마트에디터 3.0 및 ONE 명세의 폰트 바이트 규칙에 맞춰 설계되어 높은 정확도를 자랑합니다. 다만, 네이버 시스템이 내부적으로 본문 문장을 파싱하여 필터링하는 과정에서 자음과 모음의 분리 현상, 특수 이모티콘(이모지)의 개별 바이트 계산 방식의 함수 차이, 혹은 HTML 소스코드 태그 포함 여부에 따라 실제 네이버 블로그 통계 창에 최종 집계되는 수치와 단 몇 자 내외의 미세한 오차가 발생할 수 있습니다. 따라서 본 결과는 원고 검수 및 부업 정산의 가이드라인 가산 참고용으로만 활용하시고, 발행 직전 네이버 에디터 글쓰기 창 내부에서 최종 교차 체크를 거치시는 것을 권장합니다.</p>
+                    <p>본 네이버 블로그 글자수 정산 프로그램은 스마트에디터 3.0 및 ONE 명세의 폰트 바이트 규칙에 맞춰 설계되어 높은 정확도를 자랑합니다. 다만, 네이버 시스템이 내부적으로
+                        본문 문장을 파싱하여 필터링하는 과정에서 자음과 모음의 분리 현상, 특수 이모티콘(이모지)의 개별 바이트 계산 방식의 함수 차이, 혹은 HTML 소스코드 태그 포함 여부에
+                        따라 실제 네이버 블로그 통계 창에 최종 집계되는 수치와 단 몇 자 내외의 미세한 오차가 발생할 수 있습니다. 따라서 본 결과는 원고 검수 및 부업 정산의 가이드라인 가산
+                        참고용으로만 활용하시고, 발행 직전 네이버 에디터 글쓰기 창 내부에서 최종 교차 체크를 거치시는 것을 권장합니다.</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
