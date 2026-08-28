@@ -1,16 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 🚀 [애드센스 자동광고 스크립트 동적 주입 엔진]
-    const adsenseScript = document.createElement('script');
-    adsenseScript.async = true;
-    adsenseScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4325928042936631";
-    adsenseScript.crossOrigin = "anonymous";
-    document.head.appendChild(adsenseScript);
-
-    // 🚀 [애드센스 계정 메타 태그 동적 주입]
-    const adsenseMeta = document.createElement('meta');
-    adsenseMeta.name = "google-adsense-account";
-    adsenseMeta.content = "ca-pub-4325928042936631";
-    document.head.appendChild(adsenseMeta);
 
     // 🚀 [구글 애널리틱스 GA4 동적 주입]
     const gaScript = document.createElement('script');
