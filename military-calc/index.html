@@ -31,6 +31,63 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
+            <div class="calculator-box">
+                <h2>📅 군대 전역일 및 계급 진급일 계산기</h2>
+                <p>입대일과 복무 군별을 선택하시면 전역일까지 남은 시간과 군 생활의 단비가 될 계급별 진급일을 실시간 계산합니다.</p>
+                <form id="military-form" class="form" onsubmit="return false;">
+                    <!-- 1. 군별 및 입대일 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 군 복무 정보 입력</h3>
+                        <div class="form-row">
+                            <div class="col-md-7 input-item mb-3 mb-md-0">
+                                <label for="military-type">복무 군별 선택</label>
+                                <select id="military-type" class="form-control">
+                                    <option value="army" selected>육군 / 해병대 / 의경 (18개월)</option>
+                                    <option value="navy">해군 / 해양경찰 / 소방원 (20개월)</option>
+                                    <option value="airforce">공군 (21개월)</option>
+                                    <option value="social">사회복무요원 (21개월)</option>
+                                </select>
+                            </div>
+                            <div class="col-md input-item">
+                                <label for="enlist-date">입대일 (군 복무 시작일)</label>
+                                <input type="date" id="enlist-date" class="form-control" value="2026-01-01" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 영역 -->
+                <div class="result-box">
+                    <h3>💡 군 복무 타임라인 계산 결과</h3>
+                    <div class="result-display">
+                        <p>🎖️ 현재 추정 계급: <strong id="res-current-rank" style="color: var(--blue);">계산 중</strong></p>
+                        <p>⏳ 총 복무율: <strong id="res-percent" style="color: var(--orange);">0.00</strong> %</p>
+                        <!-- 복무율 시각적 게이지바 바인딩 부석 -->
+                        <div class="progress mt-2 mb-3"
+                            style="height: 12px; background-color: #e9ecef; border-radius: 6px; overflow: hidden;">
+                            <div id="res-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" style="width: 0%; background-color: #28a745; height: 100%;"></div>
+                        </div>
+                        <hr>
+                        <p>🎉 <strong>전역일 (소집해제)</strong>: <span id="res-discharge-date"
+                                style="font-weight:bold; color: var(--blue);">0000-00-00</span></p>
+                        <p>📆 <strong>총 남은 복무 기간</strong>: <span id="res-remain-days" style="font-weight:bold;">0</span>
+                            일</p>
+                        <hr>
+                        <h4>📅 주요 계급 진급일 안내</h4>
+                        <div>
+                            <p>◽ <strong>일병 진급일</strong>: <span id="rank-private">-</span></p>
+                            <p>◽ <strong>상병 진급일</strong>: <span id="rank-corporal">-</span></p>
+                            <p>◽ <strong>병장 진급일</strong>: <span id="rank-sergeant">-</span></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">결과:
+                        <strong id="result-military-status">D-Day</strong>
+                    </p>
+                    <p class="result-tip guide-text mt-3">* 현행 법정 군 복무 단축 기준을 반영한 계산이며, 조기전역이나 징계, 청원 휴가 등으로 인한 전역일 변동은
+                        반영되지 않습니다.</p>
+                </div>
+            </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 거꾸로 매달아도 가는 국방부 시계, 군별 전역일 정산과 계급별 진급 타이라인 가이드</h2>
@@ -106,63 +163,6 @@
                     </p>
                 </div>
             </section>
-            <div class="calculator-box">
-                <h2>📅 군대 전역일 및 계급 진급일 계산기</h2>
-                <p>입대일과 복무 군별을 선택하시면 전역일까지 남은 시간과 군 생활의 단비가 될 계급별 진급일을 실시간 계산합니다.</p>
-                <form id="military-form" class="form" onsubmit="return false;">
-                    <!-- 1. 군별 및 입대일 입력단 -->
-                    <div class="input-group-box">
-                        <h3>1. 군 복무 정보 입력</h3>
-                        <div class="form-row">
-                            <div class="col-md-7 input-item mb-3 mb-md-0">
-                                <label for="military-type">복무 군별 선택</label>
-                                <select id="military-type" class="form-control">
-                                    <option value="army" selected>육군 / 해병대 / 의경 (18개월)</option>
-                                    <option value="navy">해군 / 해양경찰 / 소방원 (20개월)</option>
-                                    <option value="airforce">공군 (21개월)</option>
-                                    <option value="social">사회복무요원 (21개월)</option>
-                                </select>
-                            </div>
-                            <div class="col-md input-item">
-                                <label for="enlist-date">입대일 (군 복무 시작일)</label>
-                                <input type="date" id="enlist-date" class="form-control" value="2026-01-01" required>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- 2. 실시간 결과 출력 영역 -->
-                <div class="result-box">
-                    <h3>💡 군 복무 타임라인 계산 결과</h3>
-                    <div class="result-display">
-                        <p>🎖️ 현재 추정 계급: <strong id="res-current-rank" style="color: var(--blue);">계산 중</strong></p>
-                        <p>⏳ 총 복무율: <strong id="res-percent" style="color: var(--orange);">0.00</strong> %</p>
-                        <!-- 복무율 시각적 게이지바 바인딩 부석 -->
-                        <div class="progress mt-2 mb-3"
-                            style="height: 12px; background-color: #e9ecef; border-radius: 6px; overflow: hidden;">
-                            <div id="res-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
-                                role="progressbar" style="width: 0%; background-color: #28a745; height: 100%;"></div>
-                        </div>
-                        <hr>
-                        <p>🎉 <strong>전역일 (소집해제)</strong>: <span id="res-discharge-date"
-                                style="font-weight:bold; color: var(--blue);">0000-00-00</span></p>
-                        <p>📆 <strong>총 남은 복무 기간</strong>: <span id="res-remain-days" style="font-weight:bold;">0</span>
-                            일</p>
-                        <hr>
-                        <h4>📅 주요 계급 진급일 안내</h4>
-                        <div>
-                            <p>◽ <strong>일병 진급일</strong>: <span id="rank-private">-</span></p>
-                            <p>◽ <strong>상병 진급일</strong>: <span id="rank-corporal">-</span></p>
-                            <p>◽ <strong>병장 진급일</strong>: <span id="rank-sergeant">-</span></p>
-                        </div>
-                    </div>
-                    <hr>
-                    <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">결과:
-                        <strong id="result-military-status">D-Day</strong>
-                    </p>
-                    <p class="result-tip guide-text mt-3">* 현행 법정 군 복무 단축 기준을 반영한 계산이며, 조기전역이나 징계, 청원 휴가 등으로 인한 전역일 변동은
-                        반영되지 않습니다.</p>
-                </div>
-            </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
         </main>
         <div id="sidebar" data-include="sidebar.html"></div>

@@ -30,6 +30,70 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
+            <div class="calculator-box">
+                <h2>🏦 청년도약계좌 만기 & 해지 계산기</h2>
+                <p>매월 납입하는 금액과 본인의 가입 당시 소득 구간을 선택하여 5년 만기 시 전액 비과세되는 최종 수령액(정부 기여금+은행 이자) 또는 부득이하게 중도해지할 때의 예상 정산금을
+                    시뮬레이션합니다.</p>
+                <form id="youth-leap-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 가입 및 납입 조건 설정</h3>
+                        <div class="input-item mb-3">
+                            <label for="leap-monthly">월 납입 금액 (원)</label>
+                            <input type="number" id="leap-monthly" class="form-control" placeholder="예: 700000"
+                                min="10000" max="700000" step="10000" value="700000">
+                            <small class="text-muted mt-2 d-block">* 최대 납입 한도는 월 70만 원입니다.</small>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="leap-income">가입 당시 개인소득 구간 (정부 기여금 매칭 비율 결정)</label>
+                            <select id="leap-income" class="form-control">
+                                <option value="24000000" selected>총급여 2,400만 원 이하 (기여금 매칭 6.0%)</option>
+                                <option value="36000000">총급여 2,400만 초과 ~ 3,600만 이하 (기여금 매칭 4.6%)</option>
+                                <option value="48000000">총급여 3,600만 초과 ~ 4,800만 이하 (기여금 매칭 3.7%)</option>
+                                <option value="60000000">총급여 4,800만 초과 ~ 6,000만 이하 (기여금 매칭 3.0%)</option>
+                                <option value="75000000">총급여 6,000만 초과 ~ 7,500만 이하 (기여금 매칭 없음, 비과세만 적용)</option>
+                            </select>
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="leap-rate">은행 약정 금리 (기본 + 우대금리 합산, 연 %)</label>
+                            <input type="number" id="leap-rate" class="form-control" placeholder="예: 6.0" min="1.0"
+                                max="10.0" step="0.1" value="6.0">
+                        </div>
+                        <div class="input-item mb-3">
+                            <label for="leap-period">유지 및 정산 기준 기간 (개월)</label>
+                            <select id="leap-period" class="form-control">
+                                <option value="60" selected>5년 만기 정산 (60개월 - 기여금+비과세 100%)</option>
+                                <option value="48">4년 유지 후 중도해지 (48개월)</option>
+                                <option value="36">3년 유지 후 중도해지 (36개월 - 일반 중도해지)</option>
+                                <option value="24">2년 유지 후 중도해지 (24개월)</option>
+                                <option value="12">1년 유지 후 중도해지 (12개월)</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 실시간 결과 출력 패턴 -->
+                <div class="result-box mt-4">
+                    <h3>💡 청년도약계좌 예상 정산 결과</h3>
+                    <div class="result-display">
+                        <p>내가 납입한 총 원금: <strong id="res-leap-principal" style="color: var(--green);">0</strong> 원</p>
+                        <p>지급되는 총 정부 기여금: <strong id="res-leap-matching" style="color: var(--purple);">0</strong> 원</p>
+                        <p>세전 이자 수익 (만기 시 비과세): <strong id="res-leap-interest" style="color: var(--orange);">0</strong>
+                            원</p>
+                        <hr>
+                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
+                            수령 가능한 최종 금액: <strong id="result-youth-leap-salary">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📢 해지 유형별 이자율 및 비과세 안내</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="leap-status-text">• 60개월 만기 달성 시 정부 기여금과 이자
+                            소득세(15.4%) 면제 혜택이 100% 적용됩니다.</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 중도해지 시 특별해지사유(생애최초 주택구입, 퇴직, 폐업, 결혼·출산 등)에 해당할 경우 만기 전
+                        해지하더라도 정부 기여금과 비과세 혜택을 온전히 받을 수 있습니다. 일반 중도해지 시에는 은행별 중도해지이율(약 1~3%)이 적용되고 기여금 및 비과세가 제외되므로
+                        시뮬레이션 결과와 차이가 있을 수 있습니다.</p>
+                </div>
+            </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 청년 목돈 마련의 핵심 키, 청년도약계좌 5년 만기 실수령액과 중도해지 절세 전략 가이드</h2>
@@ -111,70 +175,6 @@
                         고지서 금액과 미세한 오차가 발생할 수 있으므로, 본 결과는 미래 자산 흐름 수립을 위한 가이드라인 가산 참고용으로만 활용하시기 바랍니다.</p>
                 </div>
             </section>
-            <div class="calculator-box">
-                <h2>🏦 청년도약계좌 만기 & 해지 계산기</h2>
-                <p>매월 납입하는 금액과 본인의 가입 당시 소득 구간을 선택하여 5년 만기 시 전액 비과세되는 최종 수령액(정부 기여금+은행 이자) 또는 부득이하게 중도해지할 때의 예상 정산금을
-                    시뮬레이션합니다.</p>
-                <form id="youth-leap-form" class="form" onsubmit="return false;">
-                    <div class="input-group-box">
-                        <h3>1. 가입 및 납입 조건 설정</h3>
-                        <div class="input-item mb-3">
-                            <label for="leap-monthly">월 납입 금액 (원)</label>
-                            <input type="number" id="leap-monthly" class="form-control" placeholder="예: 700000"
-                                min="10000" max="700000" step="10000" value="700000">
-                            <small class="text-muted mt-2 d-block">* 최대 납입 한도는 월 70만 원입니다.</small>
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="leap-income">가입 당시 개인소득 구간 (정부 기여금 매칭 비율 결정)</label>
-                            <select id="leap-income" class="form-control">
-                                <option value="24000000" selected>총급여 2,400만 원 이하 (기여금 매칭 6.0%)</option>
-                                <option value="36000000">총급여 2,400만 초과 ~ 3,600만 이하 (기여금 매칭 4.6%)</option>
-                                <option value="48000000">총급여 3,600만 초과 ~ 4,800만 이하 (기여금 매칭 3.7%)</option>
-                                <option value="60000000">총급여 4,800만 초과 ~ 6,000만 이하 (기여금 매칭 3.0%)</option>
-                                <option value="75000000">총급여 6,000만 초과 ~ 7,500만 이하 (기여금 매칭 없음, 비과세만 적용)</option>
-                            </select>
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="leap-rate">은행 약정 금리 (기본 + 우대금리 합산, 연 %)</label>
-                            <input type="number" id="leap-rate" class="form-control" placeholder="예: 6.0" min="1.0"
-                                max="10.0" step="0.1" value="6.0">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="leap-period">유지 및 정산 기준 기간 (개월)</label>
-                            <select id="leap-period" class="form-control">
-                                <option value="60" selected>5년 만기 정산 (60개월 - 기여금+비과세 100%)</option>
-                                <option value="48">4년 유지 후 중도해지 (48개월)</option>
-                                <option value="36">3년 유지 후 중도해지 (36개월 - 일반 중도해지)</option>
-                                <option value="24">2년 유지 후 중도해지 (24개월)</option>
-                                <option value="12">1년 유지 후 중도해지 (12개월)</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-                <!-- 2. 실시간 결과 출력 패턴 -->
-                <div class="result-box mt-4">
-                    <h3>💡 청년도약계좌 예상 정산 결과</h3>
-                    <div class="result-display">
-                        <p>내가 납입한 총 원금: <strong id="res-leap-principal" style="color: var(--green);">0</strong> 원</p>
-                        <p>지급되는 총 정부 기여금: <strong id="res-leap-matching" style="color: var(--purple);">0</strong> 원</p>
-                        <p>세전 이자 수익 (만기 시 비과세): <strong id="res-leap-interest" style="color: var(--orange);">0</strong>
-                            원</p>
-                        <hr>
-                        <p id="result-total-money" style="font-size: 110%; color: var(--blue); font-weight: bold;">
-                            수령 가능한 최종 금액: <strong id="result-youth-leap-salary">0</strong> 원
-                        </p>
-                    </div>
-                    <div class="target-guide-box mt-4 p-3"
-                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
-                        <h4>📢 해지 유형별 이자율 및 비과세 안내</h4>
-                        <p style="font-size: 1rem; margin-bottom: 0;" id="leap-status-text">• 60개월 만기 달성 시 정부 기여금과 이자
-                            소득세(15.4%) 면제 혜택이 100% 적용됩니다.</p>
-                    </div>
-                    <p class="result-tip guide-text mt-3">* 중도해지 시 특별해지사유(생애최초 주택구입, 퇴직, 폐업, 결혼·출산 등)에 해당할 경우 만기 전
-                        해지하더라도 정부 기여금과 비과세 혜택을 온전히 받을 수 있습니다. 일반 중도해지 시에는 은행별 중도해지이율(약 1~3%)이 적용되고 기여금 및 비과세가 제외되므로
-                        시뮬레이션 결과와 차이가 있을 수 있습니다.</p>
-                </div>
-            </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
         </main>
         <div id="sidebar" data-include="sidebar.html"></div>

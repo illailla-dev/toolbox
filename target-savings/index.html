@@ -30,6 +30,67 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
+            <div class="calculator-box">
+                <h2>💰 목표 자금 달성 저축 스케줄러</h2>
+                <p>내가 미래에 모으고 싶은 목표 목돈과 원하는 달성 기간을 설정하시면, 목표 완성을 위해 매월 저축해야 하는 순수 원금과 예상 이자 보정치를 실시간 분석합니다.</p>
+                <form id="savings-form" class="form" onsubmit="return false;">
+                    <!-- 목표 금액 및 기간 입력단 -->
+                    <div class="input-group-box">
+                        <h3>1. 나의 재테크 목표 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-xl input-item">
+                                <label for="target-money">모으고 싶은 목표 금액 (원)</label>
+                                <input type="number" id="target-money" class="form-control"
+                                    placeholder="예: 50000000 (5천만 원)" value="50000000" required>
+                                <small class="text-muted mt-2 d-block">이룰 수 있는 종잣돈 수치나 내 집 마련, 결혼 자금 등의 목표액을
+                                    입력하세요.</small>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="target-years">원하는 달성 기간 (년 수)</label>
+                                <input type="number" id="target-years" class="form-control" placeholder="예: 3" value="3"
+                                    min="1" max="50" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="interest-rate">예상 저축 이자율 / 수익률 (%)</label>
+                                <input type="number" id="interest-rate" class="form-control" placeholder="예: 4.0"
+                                    value="4.0" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-xl input-item">
+                                <label for="interest-type">이자 계산 방식 표준</label>
+                                <select id="interest-type" class="form-control">
+                                    <option value="simple" selected>일반 적금 단리 (시중은행 적금 상품 표준)</option>
+                                    <option value="compound">월 복리 계산 (재테크 및 펀드/채권 투자 보정)</option>
+                                    <option value="zero">무이자 (순수 현금/금고 저축)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- 2. 결과 출력 영역 -->
+                <div class="result-box mt-4">
+                    <h3>💡 목표 자금 완성 저축액 분석 결과</h3>
+                    <div class="result-display">
+                        <p>목표 달성까지 필요한 총 개월 수: <strong id="res-total-months">0</strong> 개월</p>
+                        <p>만기 시 예상 누적 이자 감면액: <strong id="res-estimated-interest"
+                                style="color: var(--orange);">0</strong> 원</p>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold;">목표 달성을 위한 **필요 월 저축액**:
+                            <strong id="result-monthly-savings">0원</strong>
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3"
+                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 종잣돈 돌파를 위한 금융 생존 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="savings-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3">* 본 스케줄러는 일반 과세(15.4%) 청구 요율을 만기 이자 소득세에 실시간 대입하여 역산한 정밀 세후 보정
+                        수치입니다. 금융 기관의 우대 금리 조건 및 일단위 일수 계산 방식에 따라 월 청구 단위별 100원 미만의 미세 오차가 발생할 수 있습니다.</p>
+                </div>
+            </div>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 인생의 전환점을 만드는 시드머니 설계, 목표 자금 달성 저축액 역산과 금융 생존 가이드</h2>
@@ -114,67 +175,6 @@
                     </ul>
                 </div>
             </section>
-            <div class="calculator-box">
-                <h2>💰 목표 자금 달성 저축 스케줄러</h2>
-                <p>내가 미래에 모으고 싶은 목표 목돈과 원하는 달성 기간을 설정하시면, 목표 완성을 위해 매월 저축해야 하는 순수 원금과 예상 이자 보정치를 실시간 분석합니다.</p>
-                <form id="savings-form" class="form" onsubmit="return false;">
-                    <!-- 목표 금액 및 기간 입력단 -->
-                    <div class="input-group-box">
-                        <h3>1. 나의 재테크 목표 설정</h3>
-                        <div class="form-row mb-3">
-                            <div class="col-xl input-item">
-                                <label for="target-money">모으고 싶은 목표 금액 (원)</label>
-                                <input type="number" id="target-money" class="form-control"
-                                    placeholder="예: 50000000 (5천만 원)" value="50000000" required>
-                                <small class="text-muted mt-2 d-block">이룰 수 있는 종잣돈 수치나 내 집 마련, 결혼 자금 등의 목표액을
-                                    입력하세요.</small>
-                            </div>
-                        </div>
-                        <div class="form-row row mb-3">
-                            <div class="col-md-6 input-item mb-3 mb-md-0">
-                                <label for="target-years">원하는 달성 기간 (년 수)</label>
-                                <input type="number" id="target-years" class="form-control" placeholder="예: 3" value="3"
-                                    min="1" max="50" required>
-                            </div>
-                            <div class="col-md-6 input-item">
-                                <label for="interest-rate">예상 저축 이자율 / 수익률 (%)</label>
-                                <input type="number" id="interest-rate" class="form-control" placeholder="예: 4.0"
-                                    value="4.0" step="0.1">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-xl input-item">
-                                <label for="interest-type">이자 계산 방식 표준</label>
-                                <select id="interest-type" class="form-control">
-                                    <option value="simple" selected>일반 적금 단리 (시중은행 적금 상품 표준)</option>
-                                    <option value="compound">월 복리 계산 (재테크 및 펀드/채권 투자 보정)</option>
-                                    <option value="zero">무이자 (순수 현금/금고 저축)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- 2. 결과 출력 영역 -->
-                <div class="result-box mt-4">
-                    <h3>💡 목표 자금 완성 저축액 분석 결과</h3>
-                    <div class="result-display">
-                        <p>목표 달성까지 필요한 총 개월 수: <strong id="res-total-months">0</strong> 개월</p>
-                        <p>만기 시 예상 누적 이자 감면액: <strong id="res-estimated-interest"
-                                style="color: var(--orange);">0</strong> 원</p>
-                        <hr>
-                        <p style="font-size: 110%; color: var(--blue); font-weight: bold;">목표 달성을 위한 **필요 월 저축액**:
-                            <strong id="result-monthly-savings">0원</strong>
-                        </p>
-                    </div>
-                    <div class="target-guide-box mt-4 p-3"
-                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
-                        <h4>📊 종잣돈 돌파를 위한 금융 생존 가이드</h4>
-                        <p style="font-size: 1rem; margin-bottom: 0;" id="savings-guide-text"></p>
-                    </div>
-                    <p class="result-tip guide-text mt-3">* 본 스케줄러는 일반 과세(15.4%) 청구 요율을 만기 이자 소득세에 실시간 대입하여 역산한 정밀 세후 보정
-                        수치입니다. 금융 기관의 우대 금리 조건 및 일단위 일수 계산 방식에 따라 월 청구 단위별 100원 미만의 미세 오차가 발생할 수 있습니다.</p>
-                </div>
-            </div>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
         </main>
         <div id="sidebar" data-include="sidebar.html"></div>
