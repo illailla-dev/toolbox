@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DSR(총부채원리금상환비율) 규제 한도 계산기 | 에브리캘크</title>
+    <meta name="description" content="현실적인 부채 리스크 진단 시뮬레이터입니다. 현재 나의 연간 총소득(연봉) 대비 매년 빠져나가는 모든 대출의 원리금 상환 비율을 역산하여, 정부의 법정 대출 규제선 안에서  내가 안전하게 빌릴 수 있는 진짜 대출 한도 여유액을 정밀 정산합니다.">
+    <meta name="keywords" content="1금융권DSR, DSR40, DSR계산기, everycalc, 금융시뮬레이터, 대출원리금계산, 대출한도조회, 부채다이어트, 스트레스DSR, 신용대출DSR, 영끌대출한도, 재테크자산관리, 주택담보대출한도, 짠테크, 총부채원리금상환비율">
+    <link rel="canonical" href="https://every-calc.co.kr/dsr-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="DSR(총부채원리금상환비율) 규제 한도 계산기 - 에브리캘크">
+    <meta property="og:description" content="현실적인 부채 리스크 진단 시뮬레이터입니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/dsr-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <h2>🏦 DSR(총부채원리금상환비율) 규제 한도 계산기</h2>
+            <section class="calculator-box">
+                <p>현실적인 부채 리스크 진단 시뮬레이터입니다. 현재 나의 연간 총소득(연봉) 대비 매년 빠져나가는 모든 대출의 원리금 상환 비율을 역산하여, 정부의 법정 대출 규제선 안에서 <strong>내가 안전하게 빌릴 수 있는 진짜 대출 한도 여유액</strong>을 정밀 정산합니다.</p>
+                <form id="dsrForm" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <div class="form-group">
+                            <label for="annualIncome">본인 연간 총소득
+                                (연봉)</label>
+                            <div class="input-group">
+                                <input type="number" id="annualIncome" class="form-control" placeholder="예: 50000000" value="50000000" style="border-radius: 8px 0 0 8px;">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-light text-muted font-weight-bold"
+                                        style="border-radius: 0 8px 8px 0;">원</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="mortgageRepay">주택담보대출 연
+                                    상환액</label>
+                                <div class="input-group">
+                                    <input type="number" id="mortgageRepay" class="form-control" placeholder="예: 12000000" value="12000000" style="border-radius: 8px 0 0 8px;">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-light text-muted font-weight-bold"
+                                            style="border-radius: 0 8px 8px 0;">원</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="otherRepay">기타 대출 연
+                                    상환액</label>
+                                <div class="input-group">
+                                    <input type="number" id="otherRepay" class="form-control" placeholder="예: 3000000" value="3000000" style="border-radius: 8px 0 0 8px;">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-light text-muted font-weight-bold"
+                                            style="border-radius: 0 8px 8px 0;">원</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dsrLimit">적용 DSR 규제선 선택</label>
+                            <select id="dsrLimit" class="form-control form-control-lg" style="border-radius: 8px;">
+                                <option value="40" selected>시중은행 제1금융권 규제선 (40%)</option>
+                                <option value="50">비은행 제2금융권 규제선 (50%)</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg btn-block font-weight-bold shadow-sm py-3 mt-2" onclick="calculateDSR()" style="border-radius: 8px; background-color: var(--blue, #2563eb); border-color: var(--blue, #2563eb);">
+                            내 DSR 및 대출 한도 진단하기
+                        </button>
+                    </div>
+                </form>
+                <!-- 결과 출력 -->
+                <div class="result-box mt-4">
+                    <h3>💡 DSR 진단 예상 결과</h3>
+                    <div class="result-display">
+                        <p>연간 총 대출 상환액 합계: <strong id="res-total-repay">0</strong> 원</p>
+                        <p>나의 현재 DSR 비율: <strong id="res-current-dsr">0</strong> %</p>
+                        <p>규제선 기준 최대 허용 상환액: <strong id="res-max-allowed">0</strong> 원</p>
+                        <hr>
+                        <p style="color: var(--blue, #2563eb);font-weight: bold;font-size:110%">추가 대출 가능 연 상환 여유액:
+                            <strong id="res-dsr-margin">0</strong> 원
+                        </p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #2563eb);">
+                        <h4>📊 환급 구조 분석 및 절세 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="tax-guide-text">-</p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="font-size: 0.8rem; color: #888888;">
+                        * 본 계산기는 입력된 정적 데이터를 기반으로 금융위원회 표준 DSR 가이드라인 기본 산식을 대입한 모의 지표입니다.
+                        실제 대출 실행 시에는 차주의 직군별 우대 조건, 신용점수 및 스트레스 DSR 가중치 필터에 따라 최종 한도에 오차가 발생할 수 있습니다.
+                        본 도구는 부채 규모를 직관적으로 확인하고 재무 계획을 세우는 참고용 시뮬레이터로만 활용하시기 바랍니다.
+                    </p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 DSR 규제 한도 계산기 활용 가이드: 내 집 마련 대출 방어선 체크하기</h2>
+                    <p>부동산 가치를 평가하고 매매를 계획할 때, 과거처럼 단순히 주택 가격의 일정 비율만 빌려주는 LTV(주택담보대출비율)만 믿고 계약서에 도장을 찍었다가는 낭패를 보기
+                        십상입니다. 현대 금융 시장에서 대출 한도를 결정짓는 가장 강력하고 냉정한 척도는 바로 <strong>DSR(총부채원리금상환비율)</strong>이기 때문입니다. DSR은
+                        "당신이 버는 돈에 비해 매년 갚아야 하는 빚의 원금과 이자가 너무 많지 않은가?"를 평가하는 지표로, 철저하게 개인의 소득 스펙에 비례하여 대출 문턱을 제한합니다.</p>
+                    <p>본 DSR 규제 한도 계산기는 사용자가 입력한 연간 총소득(연봉 계약 기준)과 현재 보유 중인 주택담보대출 및 기타 부채(신용대출, 마이너스통장, 자동차 할부 등)의 연간
+                        원리금 상환액 파라미터를 실시간 상속하여 <strong>현재 나의 DSR 비율을 역산하고, 제1금융권 및 제2금융권 규제 마지노선에 따른 추가 대출 여유액을
+                            도출</strong>해 주는 모의 금융 시뮬레이터입니다. 이를 통해 자산 형성 과정에서 발생할 수 있는 대출 미승인 리스크를 사전에 완벽히 차단할 수 있습니다.
+                    </p>
+                    <h3>📊 금융권별 DSR 규제 가이드라인 및 한도 배정 기준표</h3>
+                    <p>내가 이용하려는 금융기관의 종류에 따라 적용되는 법정 DSR 규제 비율선과 부채 종류별 원리금 산정 방식이 상이하게 움직입니다. 아래 기준표를 통해 내 부채 체력의 방어선을
+                        직관적으로 검수해 보세요.</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>금융권 분류</th>
+                                    <th>법정 DSR 규제선</th>
+                                    <th>주요 적용 금융기관 및 특징</th>
+                                    <th>한도 초과 리스크 방어를 위한 세테크 팁</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold">제1금융권</td>
+                                    <td>40% 제한</td>
+                                    <td>시중은행(국민, 신한, 우리, 하나 등) 및 인터넷은행(카카오, 토스 등)</td>
+                                    <td>가장 저렴한 금리를 적용받는 대신 심사 문턱이 가장 엄격하므로 최우선 매칭 필요</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">제2금융권</td>
+                                    <td>50% 제한</td>
+                                    <td>보험사, 상호금융(신협, 새마을금고), 카드사 및 저축은행 채널</td>
+                                    <td>규제 한도가 10% 더 여유롭지만 금리가 상대적으로 높아 총 매몰 이자 지출 증가 유의</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">규제 예외 상품</td>
+                                    <td>DSR 산정 제외</td>
+                                    <td>디딤돌대출, 버팀목대출, 보금자리론, 햇살론 등 정부 정책 지원 상품</td>
+                                    <td>서민 금융 스펙을 만족하는 경우 DSR 한도가 꽉 차있어도 추가 실행이 가능한 치트키 통로</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><small class="text-muted d-block mt-1">* 본 DSR 비율은 가계대출 총액이 1억 원을 초과하는 차주에게 적용되는 대한민국 금융감독원 표준 감독
+                            규정을 철저히 상속합니다. 모바일 기기에서는 표를 좌우로 슬라이드하여 확인하실 수 있습니다.</small></p>
+                    <h3>📌 신용대출 만기 산정 방식의 함정과 스트레스 DSR이라는 진짜 복병</h3>
+                    <p>DSR 계산 공식에서 직장인들이 가장 많이 하는 실수는 "내가 매년 실제로 내는 돈만 넣으면 된다"고 착각하는 점입니다. 특히 <strong>신용대출이나 마이너스통장의 경우,
+                            실제로는 만기를 연장하며 이자만 내고 있더라도 DSR 시스템 상으로는 원금을 5년(60개월) 만기로 강제 분할 상환하는 것으로 가정</strong>하여 연 상환액을
+                        계산합니다. 이 때문에 연봉 5,000만 원인 직장인이 마이너스 통장 3,000만 원 하나만 열어두어도 주택담보대출 한도가 수천만 원 이상 급격히 깎여나가는 가혹한 패널티를
+                        마주하게 됩니다.</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        function calculateDSR() {
+            const income = parseFloat(document.getElementById('annualIncome').value) || 0;
+            const mortgage = parseFloat(document.getElementById('mortgageRepay').value) || 0;
+            const other = parseFloat(document.getElementById('otherRepay').value) || 0;
+            const limitPercent = parseFloat(document.getElementById('dsrLimit').value) || 40;
+
+            if (income <= 0) {
+                return alert('연간 총소득을 정확히 입력해 주세요.');
+            }
+
+            // 1. 연간 총 상환액 및 현재 DSR 비율 연산
+            const totalRepay = mortgage + other;
+            const currentDSR = (totalRepay / income) * 100;
+
+            // 2. 규제선 기준 최대 허용 연 상환액
+            const maxAllowed = income * (limitPercent / 100);
+
+            // 3. 추가 여유 한도 계산
+            const margin = maxAllowed - totalRepay;
+
+            // 결과값 UI 스크립트 맵핑 (요청 포맷의 ID 가독성 유지 및 매칭)
+            document.getElementById('res-total-repay').innerText = Math.floor(totalRepay).toLocaleString();
+            document.getElementById('res-current-dsr').innerText = currentDSR.toFixed(2);
+            document.getElementById('res-max-allowed').innerText = Math.floor(maxAllowed).toLocaleString();
+
+            const marginEl = document.getElementById('res-dsr-margin');
+            const guideEl = document.getElementById('tax-guide-text'); // 매칭 타겟 가이드 텍스트
+
+            if (margin >= 0) {
+                marginEl.innerText = Math.floor(margin).toLocaleString();
+                marginEl.parentElement.style.color = "var(--blue, #2563eb)";
+                guideEl.innerHTML = "🎉 대출 여력이 안전 범위 내에 있습니다! 선택하신 규제선 기준 매년 약 <strong>" + Math.floor(margin).toLocaleString() + "원</strong>을 추가로 상환할 수 있는 한도가 남아있습니다. 무리한 영끌을 지양하고 포트폴리오를 안정적으로 유지하세요.";
+            } else {
+                marginEl.innerText = Math.floor(Math.abs(margin)).toLocaleString() + " 원 초과 (한도 초과)";
+                marginEl.parentElement.style.color = "var(--red, #dc3545)";
+                guideEl.innerHTML = "⚠️ 위험! 현재 DSR 규제 임계선을 넘어 <strong>" + Math.floor(Math.abs(margin)).toLocaleString() + "원</strong>만큼 초과한 상태입니다. 추가 담보 대출 및 신용 대출 진행이 불가능하므로, 기존 소소한 신용대출이나 카드론을 선제적으로 상환하여 부채 다이어트를 단행하셔야 합니다.";
+            }
+        }
+
+        // 문서 로드 시 최초 1회 작동
+        document.addEventListener("DOMContentLoaded", function () {
+            calculateDSR();
+        });
+    </script>
+</body>
+</html>

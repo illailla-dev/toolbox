@@ -31,7 +31,7 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <div class="calculator-box">
+            <section class="calculator-box">
                 <h2>💻 내 직업 AI 대체 위험 진단기</h2>
                 <p>오픈AI, 오틀리에(OpenResearch) 등 주요 인공지능 연구소의 '직업별 AI 노출도 지수' 데이터 알고리즘을 기반으로 합니다. 내 일상 업무 중 어떤 성격의 비중이 높은지
                     파악하여 생존 점수를 진단합니다.</p>
@@ -39,22 +39,24 @@
                     <!-- 1. 업무 성향 가중치 선택 -->
                     <div class="input-group-box mb-4">
                         <h3>1. 나의 하루 업무 유형별 비중 설정 (총합 100% 자율 조절)</h3>
-                        <div class="input-item mb-3">
-                            <label for="ai-task-repeat">단순 반복, 텍스트 요약, 데이터 입력 업무 비중 (%)</label>
-                            <input type="number" id="ai-task-repeat" class="form-control" placeholder="예: 40" min="0"
-                                max="100" value="40">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="ai-task-creative">기획서 작성, 번역, 코드 개발, 디자인 등 창작 업무 비중 (%)</label>
-                            <input type="number" id="ai-task-creative" class="form-control" placeholder="예: 40" min="0"
-                                max="100" value="40">
-                        </div>
-                        <div class="input-item mb-3">
-                            <label for="ai-task-human">대면 영업, 육체 노동, 현장 관리, 감정 소통 업무 비중 (%)</label>
-                            <input type="number" id="ai-task-human" class="form-control" placeholder="예: 20" min="0"
-                                max="100" value="20">
-                            <small class="text-muted mt-2 d-block">* 세 가지 항목의 합산 수치가 100%에서 벗어날 경우 자동으로 비율 보정 처리가
-                                이루어집니다.</small>
+                        <div class="form-row">
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="ai-task-repeat">단순 반복, 텍스트 요약, 데이터 입력 업무 비중 (%)</label>
+                                <input type="number" id="ai-task-repeat" class="form-control" placeholder="예: 40"
+                                    min="0" max="100" value="40">
+                            </div>
+                            <div class="col-xl-6 input-item mb-3">
+                                <label for="ai-task-creative">기획서 작성, 번역, 코드 개발, 디자인 등 창작 업무 비중 (%)</label>
+                                <input type="number" id="ai-task-creative" class="form-control" placeholder="예: 40"
+                                    min="0" max="100" value="40">
+                            </div>
+                            <div class="col input-item mb-3">
+                                <label for="ai-task-human">대면 영업, 육체 노동, 현장 관리, 감정 소통 업무 비중 (%)</label>
+                                <input type="number" id="ai-task-human" class="form-control" placeholder="예: 20" min="0"
+                                    max="100" value="20">
+                                <small class="text-muted mt-2 d-block">* 세 가지 항목의 합산 수치가 100%에서 벗어날 경우 자동으로 비율 보정 처리가
+                                    이루어집니다.</small>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -83,7 +85,7 @@
                         시뮬레이터입니다. 완벽한 직업의 멸종보다는 '업무 방식의 변화'를 뜻하므로, 인공지능에게 대체되는 사람이 아닌 'AI를 도구로 써서 매출을 극대화하는 파이프라인 개척자'가
                         되는 동기부여를 제공합니다.</p>
                 </div>
-            </div>
+            </section>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 미래 일자리의 변화, AI 대체 위험도 진단과 커리어 생존 전략 가이드</h2>
