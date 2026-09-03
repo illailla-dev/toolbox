@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>대환대출 갈아타기 및 이자 절감 계산기 | 에브리캘크</title>
-    <meta name="description"
-        content="현재 대출 조건과 갈아탈 대출 조건을 비교하여 금리 인하에 따른 월 상환액 변화, 총 이자 절감액, 중도상환수수료를 감안한 실제 이득 비용을 실시간으로 계산합니다.">
+    <meta name="description" content="현재 대출 조건과 갈아탈 대출 조건을 비교하여 금리 인하에 따른 월 상환액 변화, 총 이자 절감액, 중도상환수수료를 감안한 실제 이득 비용을 실시간으로 계산합니다.">
     <meta name="keywords" content="대환대출계산기, 대출갈아타기, 대출이자계산기, 이자절감계산기, 중도상환수수료, 금리인하, 에브리캘크">
     <link rel="canonical" href="https://every-calc.co.kr/loan-refinancing/">
     <meta name="robots" content="index, follow">
@@ -30,7 +29,7 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <div class="calculator-box">
+            <section class="calculator-box">
                 <h2>🏦 대환대출 갈아타기 이자 계산기</h2>
                 <p>기존 대출에서 더 낮은 금리의 대출로 갈아탈 때, 중도상환수수료 페널티를 제외하고도 실제로 아낄 수 있는 총 이자 비용과 매월 줄어드는 상환 금액을 비교 정산합니다.</p>
                 <form id="loan-refinancing-form" class="form" onsubmit="return false;">
@@ -39,24 +38,20 @@
                         <h3>1. 기존 보유 대출 정보 입력</h3>
                         <div class="input-item mb-3">
                             <label for="loan-principal">대출 잔액 또는 갈아탈 금액 (원)</label>
-                            <input type="number" id="loan-principal" class="form-control" placeholder="예: 50000000"
-                                min="0" value="50000000">
+                            <input type="number" id="loan-principal" class="form-control" placeholder="예: 50000000" min="0" value="50000000">
                         </div>
                         <div class="form-row">
                             <div class="col-xl input-item mb-3">
                                 <label for="loan-old-rate">기존 대출 금리 (연 %)</label>
-                                <input type="number" id="loan-old-rate" class="form-control" placeholder="예: 5.5"
-                                    min="0" max="30" step="0.1" value="5.5">
+                                <input type="number" id="loan-old-rate" class="form-control" placeholder="예: 5.5" min="0" max="30" step="0.1" value="5.5">
                             </div>
                             <div class="col-xl input-item mb-3">
                                 <label for="loan-period">남은 대출 만기 기간 (개월)</label>
-                                <input type="number" id="loan-period" class="form-control" placeholder="예: 24" min="1"
-                                    max="420" value="24">
+                                <input type="number" id="loan-period" class="form-control" placeholder="예: 24" min="1" max="420" value="24">
                             </div>
                             <div class="col-xl input-item">
                                 <label for="loan-penalty-rate">기존 대출 중도상환수수료율 (%)</label>
-                                <input type="number" id="loan-penalty-rate" class="form-control" placeholder="예: 1.2"
-                                    min="0" max="5" step="0.1" value="0.5">
+                                <input type="number" id="loan-penalty-rate" class="form-control" placeholder="예: 1.2" min="0" max="5" step="0.1" value="0.5">
                                 <small class="text-muted mt-2 d-block" style="font-size: 0.8rem; display:block;;">* 대출
                                     실행 후 3년이 지났다면 0%를 입력하세요.</small>
                             </div>
@@ -67,8 +62,7 @@
                         <h3>2. 갈아탈 신규 대출 조건 입력</h3>
                         <div class="input-item mb-3">
                             <label for="loan-new-rate">새로운 대출 금리 (연 %)</label>
-                            <input type="number" id="loan-new-rate" class="form-control" placeholder="예: 3.8" min="0"
-                                max="30" step="0.1" value="3.8">
+                            <input type="number" id="loan-new-rate" class="form-control" placeholder="예: 3.8" min="0" max="30" step="0.1" value="3.8">
                         </div>
                     </div>
                 </form>
@@ -87,15 +81,14 @@
                             대환 시 최종 순 절감 비용: <strong id="result-loan-refinancing-salary">0</strong> 원
                         </p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3"
-                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 대환대출 실행 타당성 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="loan-decision-text"></p>
                     </div>
                     <p class="result-tip guide-text mt-3">* 본 계산기는 가장 범용적인 '원리금균등상환' 방식을 기준으로 실시간 연산됩니다. 중도상환수수료는 남은 기간에
                         따라 일할 계산되어 감소할 수 있으며, 신규 대출 시 발생하는 부대비용(인지세 등)에 따라 실정산 금액은 소폭 다를 수 있습니다.</p>
                 </div>
-            </div>
+            </section>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 고금리 시대의 영리한 가계부 방어전, 대환대출 이자 절감과 중도상환수수료 실익 가이드</h2>
@@ -107,8 +100,7 @@
                         정밀 분석한 최종 순 절감 비용 리포트를 실시간으로 도출해 줍니다.</p>
                     <h3>📊 대환대출 갈아타기 실행 전 금융 검수 핵심 체크리스트 표</h3>
                     <p>대출 계약을 새로 쓰기 전 반드시 짚고 넘어가야 할 법정 규정 및 리스크 방어선입니다. 아래의 조건과 내 대출 상태를 비교 표를 통해 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>파이어족 조기 은퇴 자산 시뮬레이터 - 4% 법칙 경제적 자유 계산기 | 에브리캘크</title>
-    <meta name="description"
-        content="나의 현재 자산, 월 저축액, 은퇴 후 희망 생활비를 기반으로 미국 4% 법칙과 물가상승률을 반영하여 실질적인 경제적 자유 달성 가능 시점과 자산 고갈 연도를 역산해 드립니다.">
+    <meta name="description" content="나의 현재 자산, 월 저축액, 은퇴 후 희망 생활비를 기반으로 미국 4% 법칙과 물가상승률을 반영하여 실질적인 경제적 자유 달성 가능 시점과 자산 고갈 연도를 역산해 드립니다.">
     <meta name="keywords" content="파이어족계산기, 조기은퇴시뮬레이션, 경제적자유, 4%법칙, 은퇴자금계산, 파이어족, 노후준비, 재테크계산기, 물가상승률반영, ㅇㅂ">
     <link rel="canonical" href="https://every-calc.co.kr/fire-movement/">
     <meta name="robots" content="index, follow">
@@ -15,8 +14,7 @@
     <meta property="og:site_name" content="에브리캘크">
     <meta property="og:type" content="article">
     <meta property="og:title" content="파이어족 조기 은퇴 자산 시뮬레이터">
-    <meta property="og:description"
-        content="재테크 유저 필수 툴! 단순 복리가 아닌 인플레이션과 안전 인출률을 반영하여 진짜 조기 은퇴가 가능한 나이와 필요 자금을 1초 만에 확인하세요.">
+    <meta property="og:description" content="재테크 유저 필수 툴! 단순 복리가 아닌 인플레이션과 안전 인출률을 반영하여 진짜 조기 은퇴가 가능한 나이와 필요 자금을 1초 만에 확인하세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/fire-movement/">
     <link class="icon" href="/favicon.ico" sizes="any">
@@ -30,7 +28,7 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <div class="calculator-box">
+            <section class="calculator-box">
                 <h2>🎡 파이어족 조기 은퇴 자산 시뮬레이터</h2>
                 <p>단순히 원금을 불리는 계산기가 아닙니다. 은퇴 후 자산이 물가상승률을 이기고 영구적으로 보존되는 분기점을 계산하여, 실질적인 조기 은퇴 가능 연도와 필요 은퇴 자금을 무결점으로
                     도출합니다.</p>
@@ -40,38 +38,32 @@
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="fire-current-age">현재 나이 (세)</label>
-                                <input type="number" id="fire-current-age" class="form-control" placeholder="예: 30"
-                                    value="30" min="1" max="100" required>
+                                <input type="number" id="fire-current-age" class="form-control" placeholder="예: 30" value="30" min="1" max="100" required>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="fire-current-asset">현재 보유 투자 자산 (만원)</label>
-                                <input type="number" id="fire-current-asset" class="form-control" placeholder="예: 5000"
-                                    value="5000" min="0" required>
+                                <input type="number" id="fire-current-asset" class="form-control" placeholder="예: 5000" value="5000" min="0" required>
                             </div>
                         </div>
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="fire-monthly-save">은퇴 전 월 평균 저축/투자액 (만원)</label>
-                                <input type="number" id="fire-monthly-save" class="form-control" placeholder="예: 200"
-                                    value="200" min="0" required>
+                                <input type="number" id="fire-monthly-save" class="form-control" placeholder="예: 200" value="200" min="0" required>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="fire-monthly-spend">은퇴 후 희망 월 생활비 (현재 가치/만원)</label>
-                                <input type="number" id="fire-monthly-spend" class="form-control" placeholder="예: 300"
-                                    value="300" min="1" required>
+                                <input type="number" id="fire-monthly-spend" class="form-control" placeholder="예: 300" value="300" min="1" required>
                             </div>
                         </div>
                         <div class="form-row row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="fire-return-rate">투자 자산 예상 연수익률 (%)</label>
-                                <input type="number" id="fire-return-rate" class="form-control" placeholder="예: 8"
-                                    value="8" min="0" max="50" step="0.1" required>
+                                <input type="number" id="fire-return-rate" class="form-control" placeholder="예: 8" value="8" min="0" max="50" step="0.1" required>
                                 <small class="text-muted mt-2 d-block">미국 S&P500 장기 연평균 수익률은 약 8~10% 수준입니다.</small>
                             </div>
                             <div class="col-md-6 input-item">
                                 <label for="fire-inflation-rate">예상 연평균 물가상승률 (%)</label>
-                                <input type="number" id="fire-inflation-rate" class="form-control" placeholder="예: 2.5"
-                                    value="2.5" min="0" max="20" step="0.1" required>
+                                <input type="number" id="fire-inflation-rate" class="form-control" placeholder="예: 2.5" value="2.5" min="0" max="20" step="0.1" required>
                                 <small class="text-muted mt-2 d-block">중장기 화폐가치 하락을 방어하기 위한 기준 지표입니다.</small>
                             </div>
                         </div>
@@ -88,8 +80,7 @@
                         <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">기존 요금 포함
                             **최종 예상 총액**: <strong id="res-fire-age">0세</strong></p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3"
-                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📊 파이어족 경제적 자유 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="fire-guide-text"></p>
                     </div>
@@ -97,7 +88,7 @@
                         투자 수익률에서 물가상승률을 차감한 '실질 수익률'을 자산에 누적 연산합니다. 은퇴 시점 이후에는 4% 안전 인출률 매커니즘에 따라 매달 생활비를 인출하더라도 원금이
                         영구적으로 고갈되지 않는 복리 역산 모델을 고수합니다.</p>
                 </div>
-            </div>
+            </section>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 경제적 자유와 조기 은퇴의 과학, 파이어족 4% 법칙과 자산 고갈 방지 가이드</h2>
@@ -110,8 +101,7 @@
                     <h3>📊 희망 월 생활비 규모별 목표 은퇴 자금 (4% 법칙 및 25배 공식 기준)</h3>
                     <p>은퇴 후 내가 누리고 싶은 생활 수준에 따라 시스템이 역산해 내는 최소한의 자본 방어선을 아래 정산 표를 통해 시각적으로 체크해 보세요. 물가 상승률을 이기는 실질 자산의
                         크기를 파악하는 것이 경제적 자유의 첫걸음입니다.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

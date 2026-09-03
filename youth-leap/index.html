@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>청년도약계좌 만기 수령액 및 중도해지 계산기 | 에브리캘크</title>
-    <meta name="description"
-        content="청년도약계좌 납입액에 따른 정부 기여금 매칭, 은행 우대금리, 비과세 혜택을 반영한 5년 만기 실수령액과 중도해지 시 받을 수 있는 예상 금액을 실시간으로 계산합니다.">
+    <meta name="description" content="청년도약계좌 납입액에 따른 정부 기여금 매칭, 은행 우대금리, 비과세 혜택을 반영한 5년 만기 실수령액과 중도해지 시 받을 수 있는 예상 금액을 실시간으로 계산합니다.">
     <meta name="keywords" content="청년도약계좌, 청년도약계좌만기, 청년도약계좌중도해지, 청년도약계좌수령액, 정부기여금, 적금계산기, 에브리캘크">
     <link rel="canonical" href="https://every-calc.co.kr/youth-leap/">
     <meta name="robots" content="index, follow">
@@ -30,7 +29,7 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <div class="calculator-box">
+            <section class="calculator-box">
                 <h2>🏦 청년도약계좌 만기 & 해지 계산기</h2>
                 <p>매월 납입하는 금액과 본인의 가입 당시 소득 구간을 선택하여 5년 만기 시 전액 비과세되는 최종 수령액(정부 기여금+은행 이자) 또는 부득이하게 중도해지할 때의 예상 정산금을
                     시뮬레이션합니다.</p>
@@ -39,8 +38,7 @@
                         <h3>1. 가입 및 납입 조건 설정</h3>
                         <div class="input-item mb-3">
                             <label for="leap-monthly">월 납입 금액 (원)</label>
-                            <input type="number" id="leap-monthly" class="form-control" placeholder="예: 700000"
-                                min="10000" max="700000" step="10000" value="700000">
+                            <input type="number" id="leap-monthly" class="form-control" placeholder="예: 700000" min="10000" max="700000" step="10000" value="700000">
                             <small class="text-muted mt-2 d-block">* 최대 납입 한도는 월 70만 원입니다.</small>
                         </div>
                         <div class="input-item mb-3">
@@ -55,8 +53,7 @@
                         </div>
                         <div class="input-item mb-3">
                             <label for="leap-rate">은행 약정 금리 (기본 + 우대금리 합산, 연 %)</label>
-                            <input type="number" id="leap-rate" class="form-control" placeholder="예: 6.0" min="1.0"
-                                max="10.0" step="0.1" value="6.0">
+                            <input type="number" id="leap-rate" class="form-control" placeholder="예: 6.0" min="1.0" max="10.0" step="0.1" value="6.0">
                         </div>
                         <div class="input-item mb-3">
                             <label for="leap-period">유지 및 정산 기준 기간 (개월)</label>
@@ -83,8 +80,7 @@
                             수령 가능한 최종 금액: <strong id="result-youth-leap-salary">0</strong> 원
                         </p>
                     </div>
-                    <div class="target-guide-box mt-4 p-3"
-                        style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
                         <h4>📢 해지 유형별 이자율 및 비과세 안내</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="leap-status-text">• 60개월 만기 달성 시 정부 기여금과 이자
                             소득세(15.4%) 면제 혜택이 100% 적용됩니다.</p>
@@ -93,7 +89,7 @@
                         해지하더라도 정부 기여금과 비과세 혜택을 온전히 받을 수 있습니다. 일반 중도해지 시에는 은행별 중도해지이율(약 1~3%)이 적용되고 기여금 및 비과세가 제외되므로
                         시뮬레이션 결과와 차이가 있을 수 있습니다.</p>
                 </div>
-            </div>
+            </section>
             <section class="calculator-description">
                 <div class="description-content">
                     <h2>💡 청년 목돈 마련의 핵심 키, 청년도약계좌 5년 만기 실수령액과 중도해지 절세 전략 가이드</h2>
@@ -107,8 +103,7 @@
                     <h3>📊 청년도약계좌 소득 구간별 기여금 매칭율 및 해지 유형별 정산 기준표</h3>
                     <p>서민금융진흥원 및 소득세법 규정에 근거한 청년도약계좌의 코어 요율표입니다. 아래 반응형 표를 통해 내 소득 대비 정부 지원금의 크기와 해지 사유별 방어선을 시각적으로 체크해
                         보세요.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

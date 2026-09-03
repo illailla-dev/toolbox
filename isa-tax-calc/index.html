@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ISA vs 일반 주식계좌 세금 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="내 피 같은 주식 수익, 일반 계좌와 ISA에서 굴렸을 때 뜯기는 세금 차이를 실시간으로 정산합니다.">
+    <meta name="keywords" content="ISA 계좌 혜택, ISA 일반계좌 비교, 주식 세금 계산기, 미국 ETF 세금, ISA 비과세 한도">
+    <link rel="canonical" href="https://every-calc.co.kr/isa-tax-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ISA vs 일반 주식계좌 세금 비교 계산기 - 에브리캘크">
+    <meta property="og:description" content="내 피 같은 주식 수익, 일반 계좌와 ISA에서 굴렸을 때 뜯기는 세금 차이를 실시간으로 정산합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/isa-tax-calc/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>💰 ISA vs 일반 주식계좌 세금 비교 계산기</h2>
+                <p>내가 미국 S&P500이나 고배당 ETF를 모아갈 때, 국가에 바치는 15.4%의 주식 세금을 일반 계좌와 절세 ISA 계좌 기준으로 정밀 대조합니다. 투자 기간과 예상 수익률 파라미터를 실시간 상속하여 내 피 같은 순수익 보존액을 무결점으로 도출합니다.</p>
+                <form id="isa-tax-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 투자 규모 및 기대 수익률 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="isa-monthly-cost">매월 적립식 투자 금액 (원)</label>
+                                <input type="number" id="isa-monthly-cost" class="form-control" placeholder="예: 150000" value="150000" min="10000" step="10000" required>
+                                <small class="text-muted mt-2 d-block">하루 5,000원씩 한 달간 꾸준히 모으는 자금 규모는 약 150,000원입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="isa-period-select">자산 운용 및 유지 기간</label>
+                                <select id="isa-period-select" class="form-control">
+                                    <option value="3">3년 유지 (ISA 비과세 의무 가입 기간)</option>
+                                    <option value="5" selected>5년 유지 (중기 목돈 완성 플랜 - 추천)</option>
+                                    <option value="10">10년 유지 (장기 복리의 마법 극대화)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="isa-yield-rate">투자 자산 예상 연수익률 (%)</label>
+                                <input type="number" id="isa-yield-rate" class="form-control" value="8.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">미국 S&P500 지수 추종 ETF의 역사적 장기 평균 수익률은 연 8.0% 선입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="isa-type-select">본인의 ISA 계좌 가입 유형</label>
+                                <select id="isa-type-select" class="form-control">
+                                    <option value="2000000" selected>일반형 (비과세 한도 200만 원 / 직장인·일반)</option>
+                                    <option value="4000000">서민형 (비과세 한도 400만 원 / 총급여 5천 이하·종소 3.8천 이하)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box">
+                    <h3>💡 계좌별 세금 및 실질 이익 비교 결과</h3>
+                    <div class="result-display">
+                        <p>지정 기간 동안 적립한 순수 원금 총액: <strong id="res-isa-pure-principal">0원</strong></p>
+                        <p>세금 공제 전 순수 복리 투자 수익: <strong id="res-isa-gross-profit">0원</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>계좌 분류</th>
+                                        <th>수익에 매겨지는 세율</th>
+                                        <th>최종 차감 세금</th>
+                                        <th>내가 쥐는 세후 실전 수익</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-secondary">일반 주식계좌</td>
+                                        <td>무조건 15.4% (배당소득세)</td>
+                                        <td class="text-danger">-<span id="tbl-regular-tax">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-regular-net-profit">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">절세 ISA계좌</td>
+                                        <td>비과세 한도 후 9.9% 분리과세</td>
+                                        <td class="text-danger">-<span id="tbl-isa-tax">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-isa-net-profit">0원</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">ISA 계좌 활용 시 **순수 세금 방어 금액**: <strong id="res-isa-saved-tax" style="color: var(--orange);">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 주식 투자 세금 방어선 체크 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="isa-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 매월 말 복리로 예치 연산하는 월 복리 적립식 공식 스펙을 고수합니다. 일반 계좌는 수익 전액에 대해 15.4% 원천징수를 적용하며, ISA 계좌는 가입 유형별 비과세 한도(200만/400만 원)를 우선 차감한 뒤, 초과 수익분에 대해서만 9.9% 분리과세(지방소득세 포함)를 상속 연산한 무결점 금융 지표입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 주식 투자 세금 방어선 체크하기: 내가 아낄 수 있는 비과세 한도의 핵심</h2>
+                    <p>미국 S&P500이나 고배당 ETF를 모아갈 때, 과거처럼 단순히 종목의 우상향 수익률만 믿고 일반 주식 계좌에서 덜컥 매수를 시작했다가는 나중에 만기 시점에 낭패를 보기 십상입니다. 현대 재테크 시장에서 실질 수익률을 결정짓는 가장 강력하고 냉정한 방어선은 바로 <strong>주식 세금(소득세)</strong>이기 때문입니다. 일반 계좌는 "당신이 주식으로 돈을 벌었으니, 그 수익의 15.4%를 무조건 세금으로 회수하겠다"며 내 피 같은 자산을 뜯어갑니다.</p>
+                    <p>본 주식 투자 세금 비교 계산기는 사용자가 입력한 월 납입액과 운용 기간, 예상 수익률 파라미터를 실시간 상속하여 <strong>일반 계좌의 15.4% 과세 총액과 ISA 계좌의 비과세 패널티 정산액을 대조하고, 절세 계좌를 활용했을 때 내 지갑에 온전히 보존되는 세금 방어 여유액을 도출</strong>해 주는 모의 금융 시뮬레이터입니다. 이를 통해 자산 형성 과정에서 발생할 수 있는 불필요한 세금 유출 리스크를 사전에 완벽히 차단할 수 있습니다.</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 타겟 정의
+            const monthlyCostInput = document.getElementById("isa-monthly-cost");
+            const periodSelect = document.getElementById("isa-period-select");
+            const yieldRateInput = document.getElementById("isa-yield-rate");
+            const isaTypeSelect = document.getElementById("isa-type-select");
+
+            // 출력 엘리먼트 타겟 정의
+            const resPurePrincipal = document.getElementById("res-isa-pure-principal");
+            const resGrossProfit = document.getElementById("res-isa-gross-profit");
+            const resSavedTax = document.getElementById("res-isa-saved-tax");
+            const isaGuideText = document.getElementById("isa-guide-text");
+
+            // 표 데이터 테이블 타겟 정의
+            const tblRegularTax = document.getElementById("tbl-regular-tax");
+            const tblRegularNetProfit = document.getElementById("tbl-regular-net-profit");
+            const tblIsaTax = document.getElementById("tbl-isa-tax");
+            const tblIsaNetProfit = document.getElementById("tbl-isa-net-profit");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩
+            monthlyCostInput.addEventListener("input", calculateIsaTaxComparison);
+            periodSelect.addEventListener("change", calculateIsaTaxComparison);
+            yieldRateInput.addEventListener("input", calculateIsaTaxComparison);
+            isaTypeSelect.addEventListener("change", calculateIsaTaxComparison);
+
+            function calculateIsaTaxComparison() {
+                const monthlyCost = parseFloat(monthlyCostInput.value) || 0;
+                const years = parseInt(periodSelect.value);
+                const totalMonths = years * 12;
+                const annualYieldRate = (parseFloat(yieldRateInput.value) || 0) / 100;
+                const isaTaxFreeLimit = parseFloat(isaTypeSelect.value);
+
+                // 1. 순수 납입 원금 총액 연산
+                const purePrincipal = monthlyCost * totalMonths;
+
+                // 2. 세전 복리 투자 수익 연산 (정통 월 복리 적립식 수식 공식을 엔진에 상속)
+                let grossFinalAmount = 0;
+                const monthlyYieldRate = annualYieldRate / 12;
+
+                if (monthlyYieldRate > 0) {
+                    grossFinalAmount = monthlyCost * ((Math.pow(1 + monthlyYieldRate, totalMonths) - 1) / monthlyYieldRate) * (1 + monthlyYieldRate);
+                } else {
+                    grossFinalAmount = purePrincipal;
+                }
+
+                grossFinalAmount = Math.round(grossFinalAmount);
+                const grossProfit = Math.max(0, grossFinalAmount - purePrincipal); // 세전 순수익
+
+                // 3. [루트 A] 일반 주식 계좌 정산 (수익 전액에 무조건 15.4% 과세)
+                const regularTax = Math.round(grossProfit * 0.154);
+                const regularNetProfit = grossProfit - regularTax;
+
+                // 4. [루트 B] ISA 절세 계좌 정산 (비과세 한도 차감 후 초과분 9.9% 분리과세)
+                let isaTax = 0;
+                if (grossProfit > isaTaxFreeLimit) {
+                    const taxableProfit = grossProfit - isaTaxFreeLimit;
+                    isaTax = Math.round(taxableProfit * 0.099); // 초과분에 대새 9.9% 과세
+                } else {
+                    isaTax = 0; // 한도 안쪽이면 세금 면제 (0원)
+                }
+                const isaNetProfit = grossProfit - isaTax;
+
+                // 5. ISA 계좌 활용으로 아낀 순수 세금 방어 여유액 도출
+                const savedTax = Math.max(0, regularTax - isaTax);
+
+                // 6. 메인 요약 디스플레이 실시간 데이터 렌더링
+                resPurePrincipal.innerText = purePrincipal.toLocaleString() + "원";
+                resGrossProfit.innerText = grossProfit.toLocaleString() + "원";
+                resSavedTax.innerText = savedTax.toLocaleString() + "원";
+
+                // 7. 내역 분석 테이블 실시간 데이터 렌더링
+                tblRegularTax.innerText = regularTax.toLocaleString() + "원";
+                tblRegularNetProfit.innerText = regularNetProfit.toLocaleString() + "원";
+                tblIsaTax.innerText = isaTax.toLocaleString() + "원";
+                tblIsaNetProfit.innerText = isaNetProfit.toLocaleString() + "원";
+
+                // 8. 동적 매칭 절약 및 세금 방어 가이드 텍스트 자동 큐레이션
+                const selectedTypeName = isaTypeSelect.options[isaTypeSelect.selectedIndex].text.split(" (")[0];
+                isaGuideText.innerHTML = `매월 <strong>${monthlyCost.toLocaleString()}원</strong>씩 <strong>${years}년</strong> 동안 연 <strong>${(annualYieldRate * 100).toFixed(1)}%</strong> 수익률로 운용 시,
+        일반 계좌에서는 무려 <strong>${regularTax.toLocaleString()}원</strong>의 세금을 떼어가지만, <strong>${selectedTypeName}</strong> ISA 계좌를 활용하면 세금을
+        <strong>${isaTax.toLocaleString()}원</strong>으로 극적으로 낮춰 총 <strong>${savedTax.toLocaleString()}원</strong>의 내 피 같은 수익금을 추가로 방어해 낼 수 있습니다.`;
+            }
+
+            // 초기 웹 브라우저 로딩 시 자동 엔진 1회 작동 매칭
+            calculateIsaTaxComparison();
+        });
+
+    </script>
+</body>
+</html>

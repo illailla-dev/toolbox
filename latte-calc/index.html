@@ -29,13 +29,13 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <h2>☕ 하루 커피값 모아 분산 투자 계산기</h2>
             <section class="calculator-box">
+                <h2>☕ 하루 커피값 모아 분산 투자 계산기</h2>
                 <p>내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 안전한 적금과 성장하는 미국 ETF의 투자 비율을 직접 매칭해보세요. 복리와 세금을 정밀 연산하여 미래 자산 가치를 무결점으로 빌드합니다.</p>
                 <form id="coffee-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 절약 금액 및 재테크 기간 설정</h3>
-                        <div class="form-row row mb-3">
+                        <div class="form-row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="coffee-daily-cost">하루에 아낄 소액 지출 (원)</label>
                                 <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500" value="4500" min="500" step="100" required>
@@ -52,7 +52,7 @@
                         </div>
                         <hr class="my-4" style="border-top: 1px dashed #ddd;">
                         <h3>2. 분산 투자 비율 조정 (반반 전략)</h3>
-                        <div class="form-row row mb-3">
+                        <div class="form-row mb-3">
                             <div class="col-md-12 input-item">
                                 <div class="d-flex justify-content-between font-weight-bold mb-2 small">
                                     <span style="color: var(--gray, #6c757d);">🏦 안전 적금 비중: <span id="res-saving-percent">50</span>%</span>
@@ -64,7 +64,7 @@
                         </div>
                         <hr class="my-4" style="border-top: 1px dashed #ddd;">
                         <h3>3. 개별 자산 연수익률 설정</h3>
-                        <div class="form-row row mb-3">
+                        <div class="form-row mb-3">
                             <div class="col-md-6 input-item mb-3 mb-md-0">
                                 <label for="coffee-saving-rate">🏦 은행 적금 금리 (연, %)</label>
                                 <input type="number" id="coffee-saving-rate" class="form-control" value="3.5" step="0.1">

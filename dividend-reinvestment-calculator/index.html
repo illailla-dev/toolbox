@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>주식 배당금 재투자 vs 방치 | 에브리캘크</title>
+    <meta name="description" content="TIGER 미국배당다우존스나 고배당 ETF 투자를 진행할 때, 매달 통장에 꽂히는 분배금을 어떻게 관리하느냐에 따라 미래 자산의 크기가 완전히 달라집니다. 배당금을 즉시 주식 수량으로 재상속하여 굴리는 복리 엔진과, 귀찮아서 현금으로 방치해 둔 단리 경로의 실질 자산 격차를 무결점으로 빌드합니다.">
+    <meta name="keywords" content="배당금 재투자 계산기, 주식 분배금 재투자, 배당주 복리 효과, TIGER 미국배당다우존스 분배금, ETF 배당금 계산기">
+    <link rel="canonical" href="https://every-calc.co.kr/dividend-reinvestment-calculator/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="주식 배당금 재투자 vs 방치">
+    <meta property="og:description" content="TIGER 미국배당다우존스나 고배당 ETF 투자를 진행할 때, 매달 통장에 꽂히는 분배금을 어떻게 관리하느냐에 따라 미래 자산의 크기가 완전히 달라집니다. 배당금을 즉시 주식 수량으로 재상속하여 굴리는 복리 엔진과, 귀찮아서 현금으로 방치해 둔 단리 경로의 실질 자산 격차를 무결점으로 빌드합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/dividend-reinvestment-calculator/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>📈 주식 배당금 재투자 vs 방치 이익 비교 계산기</h2>
+                <p>TIGER 미국배당다우존스나 고배당 ETF 투자를 진행할 때, 매달 통장에 꽂히는 분배금을 어떻게 관리하느냐에 따라 미래 자산의 크기가 완전히 달라집니다. 배당금을 즉시 주식 수량으로 재상속하여 굴리는 복리 엔진과, 귀찮아서 현금으로 방치해 둔 단리 경로의 실질 자산 격차를 무결점으로 빌드합니다.</p>
+                <form id="dividend-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 투자 예산 및 자산 스펙 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="div-monthly-cost">매월 정기 적립 금액 (원)</label>
+                                <input type="number" id="div-monthly-cost" class="form-control" placeholder="예: 150000" value="150000" min="10000" step="10000" required>
+                                <small class="text-muted mt-2 d-block">하루 커피값 5,000원 기준으로 한 달간 모으는 저축 방어선은 약 150,000원입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="div-period-select">자산 축적 목표 기간</label>
+                                <select id="div-period-select" class="form-control">
+                                    <option value="3">3년 운용 시 (36개월 단기 레이스)</option>
+                                    <option value="5" selected>5년 운용 시 (60개월 중기 안착 플랜 - 추천)</option>
+                                    <option value="10">10년 운용 시 (120개월 장기 복리의 마법)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="div-stock-rate">📈 주가 자체의 예상 연상승률 (%)</label>
+                                <input type="number" id="div-stock-rate" class="form-control" value="5.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">배당주/가치주 포트폴리오의 보수적인 연간 주가 성장 눈금은 5.0% 선입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="div-dividend-rate">💰 자산의 연간 배당(분배) 수익률 (%)</label>
+                                <input type="number" id="div-dividend-rate" class="form-control" value="3.5" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">TIGER 미국배당다우존스 등 대표적인 배당 성장 ETF의 연 배당률은 약 3.5%입니다.</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box">
+                    <h3>💡 배당 운용 전략별 자산 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>지정 기간 동안 절약한 순수 적립 원금: <strong id="res-div-pure-principal">0원</strong></p>
+                        <p>전체 포트폴리오 총 기대 수익 (세전): <strong id="res-div-gross-profit" style="color: var(--orange);">0원</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>배당금 운용 전략</th>
+                                        <th>누적 주식 원금</th>
+                                        <th>쌓인 배당금 현금</th>
+                                        <th>최종 자산 평가액</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-secondary">A. 배당금 그냥 방치 (현금 보유)</td>
+                                        <td><span id="tbl-hold-stock-val">0원</span></td>
+                                        <td><span id="tbl-hold-cash-val">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-hold-total">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">B. 배당금 즉시 재투자 (주식 재매수)</td>
+                                        <td><span id="tbl-reinvest-stock-val">0원</span></td>
+                                        <td><span id="tbl-reinvest-cash-val">0원 (전액 재투자)</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-reinvest-total">0원</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue); font-weight: bold; margin-bottom: 0;">배당금 재투자 시 **추가 세후 수익 마진**: <strong id="res-div-saved-margin">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                        <h4>📊 배당 마진 극대화 자산 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="div-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 매월 정기 납입 자산과 별개로, 계좌 내 보유 주식 총액에 비례하여 발생하는 월별 분배금(연 배당률/12) 파라미터를 실시간 추적 연산합니다. 일반 방치 경로는 배당금이 무이자로 가두어지며, 재투자 경로는 배당금이 즉시 주식 원본에 상속되어 다음 달 주가 상승률과 배당률의 복리 스노우볼 촉매제로 작동하는 무결점 적립식 공식 스펙을 고수합니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 주식 배당금 재투자 방어선 체크하기: 낙오되는 현금 없이 복리 엔진 가동하기</h2>
+                    <p>TIGER 미국배당다우존스나 분기별로 분배금을 지급하는 미국 S&P500 ETF를 모아갈 때, 많은 금융 소비자들이 매달 계좌로 입금되는 소액의 배당금 파라미터를 그냥 예수금 상태로 방치하곤 합니다. "단돈 몇 천 원 다시 주식 사봐야 무슨 티가 나겠냐"며 귀찮게 여겨 무심코 넘기지만, 이 낙오된 현금들이 자산 증식 엔진에서 이탈하는 순간 장기 레이스에서 누려야 할 복리의 마법은 심각하게 훼손됩니다.</p>
+                    <p>본 배당금 재투자 비교 계산기는 사용자가 설정한 월 적립액과 주가 상승률, 예상 배당 요율 스펙을 실시간 상속하여, <strong>배당금을 기계적으로 재매수하여 주식 수량을 늘려나가는 '지속형 복리 경로'와 현금으로 묶어두는 '단리형 경로'의 평가 가치를 정밀 대조하고, 내 지갑에 온전히 보존되는 실질 마진 차액을 도출</strong>해 주는 모의 금융 시뮬레이터입니다. 이를 통해 자산 형성 과정에서 발생할 수 있는 현금 가치 잠식 리스크를 사전에 완벽히 차단하고 흔들림 없는 저축 스케줄을 완성할 수 있습니다.</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 변수 선언
+            const divMonthlyCostInput = document.getElementById("div-monthly-cost");
+            const divPeriodSelect = document.getElementById("div-period-select");
+            const divStockRateInput = document.getElementById("div-stock-rate");
+            const divDividendRateInput = document.getElementById("div-dividend-rate");
+
+            // 요약 디스플레이 출력 엘리먼트 선언
+            const resDivPurePrincipal = document.getElementById("res-div-pure-principal");
+            const resDivGrossProfit = document.getElementById("res-div-gross-profit");
+            const resDivSavedMargin = document.getElementById("res-div-saved-margin");
+            const divGuideText = document.getElementById("div-guide-text");
+
+            // 결과 디테일 테이블 표 엘리먼트 선언
+            const tblHoldStockVal = document.getElementById("tbl-hold-stock-val");
+            const tblHoldCashVal = document.getElementById("tbl-hold-cash-val");
+            const tblHoldTotal = document.getElementById("tbl-hold-total");
+
+            const tblReinvestStockVal = document.getElementById("tbl-reinvest-stock-val");
+            const tblReinvestCashVal = document.getElementById("tbl-reinvest-cash-val");
+            const tblReinvestTotal = document.getElementById("tbl-reinvest-total");
+
+            // 실시간 인풋 파라미터 체인지 바인딩 인터페이스
+            divMonthlyCostInput.addEventListener("input", calculateDividendStrategy);
+            divPeriodSelect.addEventListener("change", calculateDividendStrategy);
+            divStockRateInput.addEventListener("input", calculateDividendStrategy);
+            divDividendRateInput.addEventListener("input", calculateDividendStrategy);
+
+            function calculateDividendStrategy() {
+                const monthlyCost = parseFloat(divMonthlyCostInput.value) || 0;
+                const years = parseInt(divPeriodSelect.value);
+                const totalMonths = years * 12;
+
+                const annualStockRate = (parseFloat(divStockRateInput.value) || 0) / 100;
+                const annualDivRate = (parseFloat(divDividendRateInput.value) || 0) / 100;
+
+                const monthlyStockRate = annualStockRate / 12;
+                const monthlyDivRate = annualDivRate / 12;
+
+                const purePrincipal = monthlyCost * totalMonths;
+
+                // --- 📊 [전략 A] 배당금 방치 (배당은 현금으로 쌓이고, 주식은 월 저축액으로만 상승) ---
+                let holdStockValue = 0;
+                let holdAccumulatedCash = 0;
+
+                for (let m = 1; m <= totalMonths; m++) {
+                    // 1) 기존 주식 자산에 이번 달 주가 상승률 반영
+                    holdStockValue = holdStockValue * (1 + monthlyStockRate);
+                    // 2) 이번 달 신규 정기 적립액 투입
+                    holdStockValue += monthlyCost;
+                    // 3) 이번 달 말 보유 주식 가치 기준으로 분배금(배당금) 발생하여 현금 금고에 누적 상속
+                    const monthlyDivIncome = holdStockValue * monthlyDivRate;
+                    holdAccumulatedCash += monthlyDivIncome;
+                }
+
+                holdStockValue = Math.round(holdStockValue);
+                holdAccumulatedCash = Math.round(holdAccumulatedCash);
+                const holdFinalTotal = holdStockValue + holdAccumulatedCash;
+
+                // --- 📊 [전략 B] 배당금 즉시 재투자 (배당 현금이 발생하는 즉시 다음 회차 주식 원본에 합산 상속) ---
+                let reinvestStockValue = 0;
+
+                for (let m = 1; m <= totalMonths; m++) {
+                    // 1) 기존 주식 자산에 이번 달 주가 상승률 반영
+                    reinvestStockValue = reinvestStockValue * (1 + monthlyStockRate);
+                    // 2) 이번 달 신규 정기 적립액 투입
+                    reinvestStockValue += monthlyCost;
+                    // 3) 발생한 분배금을 외부 현금 금고로 빼지 않고 즉시 주식 본체에 합산 (재투자 엔진)
+                    const monthlyDivIncome = reinvestStockValue * monthlyDivRate;
+                    reinvestStockValue += monthlyDivIncome;
+                }
+
+                reinvestStockValue = Math.round(reinvestStockValue);
+                const reinvestFinalTotal = reinvestStockValue; // 배당금이 전액 주식화됨
+
+                // --- 📊 결과 종합 정산 및 마진 도출 ---
+                const finalSavedMargin = Math.max(0, reinvestFinalTotal - holdFinalTotal);
+                const totalGrossProfit = Math.max(0, reinvestFinalTotal - purePrincipal);
+
+                // 인터페이스 렌더링 맵핑
+                resDivPurePrincipal.innerText = purePrincipal.toLocaleString() + "원";
+                resDivGrossProfit.innerText = totalGrossProfit.toLocaleString() + "원";
+                resDivSavedMargin.innerText = finalSavedMargin.toLocaleString() + "원";
+
+                // 테이블 표 데이터 동적 파싱
+                tblHoldStockVal.innerText = holdStockValue.toLocaleString() + "원";
+                tblHoldCashVal.innerText = holdAccumulatedCash.toLocaleString() + "원";
+                tblHoldTotal.innerText = holdFinalTotal.toLocaleString() + "원";
+
+                tblReinvestStockVal.innerText = reinvestStockValue.toLocaleString() + "원";
+                tblReinvestCashVal.innerText = "0원 (전액 주식 매수)";
+                tblReinvestTotal.innerText = reinvestFinalTotal.toLocaleString() + "원";
+
+                // 동적 큐레이션 가이드 문구 빌드
+                divGuideText.innerHTML = `매월 <strong>${monthlyCost.toLocaleString()}원</strong>씩 <strong>${years}년</strong>간 배당주 ETF를 모을 때,
+        매달 나오는 분배금을 그냥 통장에 묵혀두면 5년 뒤 총자산은 <strong>${holdFinalTotal.toLocaleString()}원</strong>에 그치지만,
+        귀찮음을 이겨내고 즉시 주식을 재매수하면 복리 스노우볼이 가동되어 <strong>${reinvestFinalTotal.toLocaleString()}원</strong>으로 자산이 뿜어져 올라갑니다.
+        재투자 전략 하나만으로 <strong>${finalSavedMargin.toLocaleString()}원</strong>의 순수 자산 마진을 추가 방어해 낼 수 있습니다.`;
+            }
+
+            // 초기 가동 런타임 콜
+            calculateDividendStrategy();
+        });
+    </script>
+</body>
+</html>
