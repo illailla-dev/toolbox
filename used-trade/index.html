@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>중고거래 네고 계산기 - 당근 번개장터 택배비 포함 마진 산출 | 에브리캘크</title>
-    <meta name="description"
-        content="중고거래 시 판매 희망가와 상대방의 가격 제안(네고 비율), 배송비 부담 여부를 종합하여 판매 후 내 손에 쥐어지는 진짜 세후 실수령액과 손실액을 실시간 계산합니다.">
+    <meta name="description" content="중고거래 시 판매 희망가와 상대방의 가격 제안(네고 비율), 배송비 부담 여부를 종합하여 판매 후 내 손에 쥐어지는 진짜 세후 실수령액과 손실액을 실시간 계산합니다.">
     <meta name="keywords" content="중고거래 계산기, 당근마켓 네고, 번개장터 수수료, 중고나라 택배비, 가격 제안 계산, 네고 마진율, 중고 판매 순수익">
     <link rel="canonical" href="https://every-calc.co.kr/used-trade/">
     <meta name="robots" content="index, follow">
@@ -15,8 +14,7 @@
     <meta property="og:site_name" content="에브리캘크">
     <meta property="og:type" content="article">
     <meta property="og:title" content="중고거래 네고 및 택배비 마진 계산기">
-    <meta property="og:description"
-        content="가격 깎아주고 배송비까지 내면 진짜 얼마 남을까? 당근, 번개장터 거래 전 내 손에 꽂히는 진짜 중고 정산금을 실시간 모의 계산해 보세요.">
+    <meta property="og:description" content="가격 깎아주고 배송비까지 내면 진짜 얼마 남을까? 당근, 번개장터 거래 전 내 손에 꽂히는 진짜 중고 정산금을 실시간 모의 계산해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/used-trade/">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -40,8 +38,7 @@
                         <h3>1. 최초 판매 희망 가격 입력</h3>
                         <div class="input-item">
                             <label for="desired-price">최초 등록/희망 판매가 (원)</label>
-                            <input type="number" id="desired-price" class="form-control" placeholder="예: 50000" min="0"
-                                step="1">
+                            <input type="number" id="desired-price" class="form-control" placeholder="예: 50000" min="0" step="1">
                         </div>
                     </div>
                     <!-- 2. 네고율 및 배송비 설정 -->
@@ -56,21 +53,18 @@
                                 <option value="20">20% 네고 (과감한 급처가 판매)</option>
                                 <option value="custom">직접 할인율 입력 (%)</option>
                             </select>
-                            <input type="number" id="custom-nego" class="form-control mb-2"
-                                placeholder="할인율 직접 입력(%) 예: 15" min="0" max="100" step="0.1" style="display:none;">
+                            <input type="number" id="custom-nego" class="form-control mb-2" placeholder="할인율 직접 입력(%) 예: 15" min="0" max="100" step="0.1" style="display:none;">
                             <label for="shipping-bearer" class="mt-2">배송비(택배비) 부담 조건</label>
                             <select id="shipping-bearer" class="form-control" style="margin-bottom:10px;">
                                 <option value="buyer" selected>구매자 부담 (착불 또는 배송비 별도)</option>
                                 <option value="seller">판매자 본인 부담 (무료 배송 서비스)</option>
                             </select>
-                            <input type="number" id="shipping-cost" class="form-control"
-                                placeholder="예상 배송 비용 입력 (원) 예: 4000" value="4000" min="0" step="1"
-                                style="display:none;">
+                            <input type="number" id="shipping-cost" class="form-control" placeholder="예상 배송 비용 입력 (원) 예: 4000" value="4000" min="0" step="1" style="display:none;">
                         </div>
                     </div>
                 </form>
                 <!-- 3. 실시간 결과 출력 영역 -->
-                <div class="result-box">
+                <div class="result-box mt-4">
                     <h3>💡 최종 중고 판매 정산 결과</h3>
                     <div class="result-display">
                         <p>네고 적용 후 최종 판매가: <strong id="res-nego-price" style="color: var(--orange);">0</strong> 원</p>
@@ -96,8 +90,7 @@
                         할인액을 제외하고 내 통장에 최종적으로 꽂힐 진짜 실수령 밸런스 리포트를 실시간으로 도출해 줍니다.</p>
                     <h3>📊 중고거래 가격 제안 비율별 마진 감쇄 효율 및 리스크 방어선 대조표</h3>
                     <p>상대방의 네고 수치와 배송비 독박 여부에 따라 내 판매 마진의 뼈대가 어떻게 흔들리는지 아래 반응형 가이드 표를 통해 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

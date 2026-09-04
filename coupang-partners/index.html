@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>쿠팡 파트너스 정산 계산기 - 제휴 마케팅 세후 실수령액 계산 | 에브리캘크</title>
-    <meta name="description"
-        content="쿠팡 파트너스 및 제휴 마케팅 누적 매출액에 따른 수익금, 플랫폼 수수료, 원천세(3.3% / 8.8%) 공제 후 최종 세후 실수령액을 실시간으로 정확하게 계산합니다.">
+    <meta name="description" content="쿠팡 파트너스 및 제휴 마케팅 누적 매출액에 따른 수익금, 플랫폼 수수료, 원천세(3.3% / 8.8%) 공제 후 최종 세후 실수령액을 실시간으로 정확하게 계산합니다.">
     <meta name="keywords" content="쿠팡파트너스 계산기, 정산 계산기, 제휴마케팅 수익 계산, 쿠파스 실수령액, 3.3% 계산기, 사업소득 정산, 마케팅 수익금">
     <link rel="canonical" href="https://every-calc.co.kr/coupang-partners/">
     <meta name="robots" content="index, follow">
@@ -57,8 +56,7 @@
                         <div id="field-sales">
                             <div class="input-item mb-3">
                                 <label for="total-sales">총 발생 매출액 (원)</label>
-                                <input type="number" id="total-sales" placeholder="예: 10000000" min="0" step="1"
-                                    class="form-control">
+                                <input type="number" id="total-sales" placeholder="예: 10000000" min="0" step="1" class="form-control">
                             </div>
                             <div class="input-item mb-3">
                                 <label for="commission-rate">수익 요율 (%)</label>
@@ -68,16 +66,14 @@
                                     <option value="1">1.0% (쿠팡 파트너스 추가 보너스)</option>
                                     <option value="custom">직접 입력</option>
                                 </select>
-                                <input type="number" id="custom-rate" placeholder="직접 입력(%) 예: 5" min="0" step="0.1"
-                                    class="form-control mt-2" style="display:none;">
+                                <input type="number" id="custom-rate" placeholder="직접 입력(%) 예: 5" min="0" step="0.1" class="form-control mt-2" style="display:none;">
                             </div>
                         </div>
                         <!-- 세전 수익금 직접 입력 필드 (기본 숨김) -->
                         <div id="field-revenue" style="display:none;">
                             <div class="input-item mb-3">
                                 <label for="pre-tax-revenue">세전 수익금 (원)</label>
-                                <input type="number" id="pre-tax-revenue" placeholder="예: 300000" min="0" step="1"
-                                    class="form-control">
+                                <input type="number" id="pre-tax-revenue" placeholder="예: 300000" min="0" step="1" class="form-control">
                             </div>
                         </div>
                         <!-- 세금 유형 선택 -->
@@ -92,7 +88,7 @@
                     </div>
                 </form>
                 <!-- 3. 실시간 결과 출력 영역 -->
-                <div class="result-box">
+                <div class="result-box mt-4">
                     <h3>💡 최종 정산 예측</h3>
                     <div class="result-display">
                         <p>예상 세전 수익금: <strong id="result-pre-tax" style="color: var(--orange);">0</strong> 원</p>
@@ -116,8 +112,7 @@
                     <h3>📊 제휴 마케팅 수익 요율 및 원천징수 세금 기준표</h3>
                     <p>수익이 정산될 때 내 통장에서 어떤 명목으로 돈이 빠져나가는지 아래 반응형 표를 통해 시각적으로 체크해 보세요. 수수료율과 세금 구간을 명확히 알아야 실질적인 부업 마진을
                         방어할 수 있습니다.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

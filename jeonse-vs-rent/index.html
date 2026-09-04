@@ -29,124 +29,88 @@
         <header id="header" data-include="header.html"></header>
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
-            <h2>🏠 전세 vs 월세 비교 계산기</h2>
             <section class="calculator-box">
-                <p>보증금, 월세, 이자율을 입력하면 전세와 월세의 실질 비용을 비교합니다.</p>
+                <h2>🏠 전세 vs 월세 가성비 끝판왕 비교 계산기</h2>
+                <p>매달 꼬박꼬박 생돈으로 날리는 월세가 아까울까요, 아니면 매달 은행에 바치는 전세대출 이자가 더 아까울까요? 보증금과 월세, 대출 금리를 대입하여 내 주머니에서 실제로 나가는 주거 비용의 판도를 실시간으로 비교해 드립니다.</p>
                 <form id="rent-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
-                        <div class="form-row">
-                            <div class="col-md-6 col-12 input-item">
+                        <h3>1. 주거 형태별 기준 조건 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
                                 <label for="deposit">전세 보증금 (원)</label>
-                                <input type="number" id="deposit" class="form-control" placeholder="예: 100000000" min="0">
+                                <input type="number" id="deposit" class="form-control" placeholder="예: 100000000" value="150000000" min="0" required>
+                                <small class="text-muted mt-2 d-block">비교하고 싶은 전세방의 보증금 총액입니다. (1억 5천만 원)</small>
                             </div>
                             <div class="col-md-6 col-12 input-item">
-                                <label for="monthly-rent">월세 (원)</label>
-                                <input type="number" id="monthly-rent" class="form-control" placeholder="예: 600000" min="0">
+                                <label for="monthly-rent">대안 월세 (원)</label>
+                                <input type="number" id="monthly-rent" class="form-control" placeholder="예: 600000" value="650000" min="0" required>
+                                <small class="text-muted mt-2 d-block">전세 대신 월세로 들어갈 경우 매달 내는 쌩돈입니다. (65만 원)</small>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-6 col-12 input-item">
-                                <label for="loan-rate">전세 대출 이자율 (%)</label>
-                                <input type="number" id="loan-rate" class="form-control" placeholder="예: 4" step="0.01" min="0">
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
+                                <label for="loan-rate">전세 대출 이자율 (연, %)</label>
+                                <input type="number" id="loan-rate" class="form-control" placeholder="예: 4" value="4.2" step="0.01" min="0" required>
+                                <small class="text-muted mt-2 d-block">전세자금대출을 받을 때 은행에 내는 예상 금리입니다.</small>
                             </div>
                             <div class="col-md-6 col-12 input-item">
-                                <label for="years">기간 (년)</label>
-                                <input type="number" id="years" class="form-control" placeholder="예: 2" min="1">
+                                <label for="years">계약 유지 기간 (년)</label>
+                                <input type="number" id="years" class="form-control" placeholder="예: 2" value="2" min="1" required>
+                                <small class="text-muted mt-2 d-block">일반적인 임대차 계약 기준인 2년(24개월) 세팅입니다.</small>
                             </div>
                         </div>
                     </div>
                 </form>
                 <div class="result-box mt-4">
-                    <h3>💡 비교 결과</h3>
+                    <h3>💡 내 지갑을 지키는 주거 비용 시뮬레이션 결과</h3>
                     <div class="result-display">
-                        <p>전세 총 이자 비용: <strong id="res-jeonse-interest">0</strong> 원</p>
-                        <p>월세 총 납부액: <strong id="res-wolse-total">0</strong> 원</p>
+                        <p>전세 선택 시 총 은행 이자 비용: <strong id="res-jeonse-interest">0</strong>원</p>
+                        <p>월세 선택 시 총 기회비용 납부액: <strong id="res-wolse-total">0</strong>원</p>
                         <hr>
-                        <p style="color: var(--blue); font-weight: bold;">비용 차이: <span id="res-diff">0</span> 원</p>
+                        <p style="font-size: 115%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">
+                            어떤 선택이 얼마나 유리할까?:
+                            <span id="res-diff" style="color: var(--blue, #007bff);">0원</span>
+                        </p>
                     </div>
-                    <!-- 월별 누적 비용 테이블 -->
                     <div class="mt-4">
-                        <h4>📅 월별 누적 비용 비교</h4>
+                        <h4>📅 월별 누적 주거 비용 눈덩이 비교</h4>
                         <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
-                            <table class="table table-bordered text-center table-sm" style="min-width: 600px; width: 100%;">
+                            <table class="table table-bordered text-center table-sm bg-white" style="min-width: 600px; width: 100%;">
                                 <thead>
-                                    <tr>
-                                        <th>월</th>
-                                        <th>전세 이자 누적액</th>
-                                        <th>월세 누적액</th>
-                                        <th>비용 차이</th>
+                                    <tr class="table-secondary text-dark font-weight-bold">
+                                        <th>경과 월</th>
+                                        <th>🏦 전세 이자 누적 지출</th>
+                                        <th>💸 월세 순수 누적 지출</th>
+                                        <th>🛡️ 매달 벌어지는 자산 격차</th>
                                     </tr>
                                 </thead>
                                 <tbody id="monthly-table"></tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue);">
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
                         <h4>📊 주거 비용 분석 및 선택 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="rent-guide-text"></p>
                     </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 전세 보증금을 100% 대출로 조달한다고 가정하여 은행 이자 지출액을 역산한 보수적 비교 수치입니다. 월세 선택 시 보증금에 대한 예금 이자 기회비용이나 전세의 확정일자/보증보험 가입 비용 등 개인별 디테일에 따라 미세한 실전 오차가 있을 수 있습니다.</p>
                 </div>
             </section>
-            <section class="calculator-description">
+            <section class="calculator-description mt-5">
                 <div class="description-content">
-                    <h2>💡 전세 vs 월세 비교 계산기 활용 가이드</h2>
-                    <p>주거를 선택할 때 가장 큰 고민은 “전세가 유리할까, 월세가 더 나을까?”라는 문제입니다.
-                        이 계산기는 전세 보증금과 월세 금액, 대출 이자율, 거주 기간을 입력하면
-                        두 방식의 총 비용을 단순화된 기준으로 비교해줍니다.</p>
-                    <p>실제 계약 조건에는 관리비, 세금, 대출 한도, 보증금 반환 조건 등이 포함되지만,
-                        본 계산기를 통해 대략적인 비용 구조를 직관적으로 확인하고
-                        미리 재무 계획을 세우는 데 도움을 받을 수 있습니다.</p>
-                    <h3>📊 계산 방식</h3>
-                    <ul class="bullet">
-                        <li>전세 보증금 × 이자율 → 전세 대출 이자 비용 산출</li>
-                        <li>월세 × 거주 개월 수 → 월세 총 납부액 계산</li>
-                        <li>두 결과를 비교 → 상대적 비용 차이 확인</li>
+                    <h2>🏡 전세와 월세, 무엇이 내 독립 자금을 더 빠르게 불려줄까?</h2>
+                    <p>자취방을 구하거나 이사를 준비할 때 사회초년생들이 마주하는 첫 번째 거대한 갈림길이 있습니다. 바로 **전세냐 월세냐**의 문제입니다. 많은 사람들이 "월세는 매달 돈이 공중으로 증발하니까 무조건 전세가 이득이야"라고 말하곤 합니다. 과연 그럴까요? 금리가 낮을 때는 전세대출 이자가 월세보다 훨씬 저렴해서 전세가 압도적 승리였지만, 고금리 시대에 접어들면 은행에 내는 이자가 월세방 집주인에게 내는 월세보다 커지는 기현상이 발생하기도 합니다. 결국 정답은 매달 내는 실질 비용의 저울질에 있습니다.</p>
+                    <div class="p-4 my-4 asset-fact-highlight" style="background: #eef3ff; color: #1c52d8; border-radius: 12px; border-left: 5px solid var(--blue, #007bff); font-size: 1.05rem; box-shadow: 0 2px 4px rgba(0,123,255,0.05);">
+                        💡 <strong>주거 가성비를 판단하는 핵심 기준: 월세 전환율과 내 대출 금리</strong><br>
+                        전세와 월세를 가르는 저울의 중심축은 은행 금리입니다. 예를 들어 보증금 1억 5천만 원짜리 전세방의 대출 금리가 연 4.2%라면 매달 은행에 약 52만 원을 이자로 냅니다. 만약 똑같은 컨디션의 집이 보증금 없이 월세 65만 원이라면? 한 달에 무려 13만 원, 2년이면 300만 원이 넘는 돈을 전세라는 선택 하나로 지켜낼 수 있는 셈입니다.
+                    </div>
+                    <h3>눈에 보이지 않는 전세 vs 월세의 장단점 체크리스트</h3>
+                    <p>단순히 매달 나가는 고정비 계산 외에도 내 자산 상황과 멘탈에 맞는 주거 형태를 골라야 장기 레이스에서 승리할 수 있습니다.</p>
+                    <ul>
+                        <li><strong>전세가 유리한 경우:</strong> 시중 대출 금리가 낮게 안정되어 있을 때, 신혼부부 버팀목이나 청년 전세자금대출 등 정부 지원 초저금리 치트키 상품을 끌어다 쓸 수 있을 때 주거비 다이어트에 최적입니다.</li>
+                        <li><strong>월세가 유리한 경우:</strong> 목돈이 완전히 묶여서 주식이나 다른 재테크에 굴릴 기회를 잃고 싶지 않을 때, 전세 사기나 보증금 미반환 리스크로부터 완벽하게 멘탈을 디펜스하고 싶을 때 최고의 피난처가 됩니다.</li>
                     </ul>
-                    <h3>🔎 전세와 월세, 선택 시 반드시 고려해야 할 핵심 체크리스트</h2>
-                        <p>실제 부동산 계약 환경에서는 단순히 '대출 이자 vs 월세'라는 수치 외에도 다양한 변수가 작용합니다. 계산기 결과와 함께 아래의 세 가지 요소를 반드시 함께
-                            검토하셔야
-                            재무적 손실을 막을 수 있습니다.</p>
-                        <h4>1. 전월세 전환율과 시장 금리의 변화</h4>
-                        <p>
-                            전월세 전환율이란 전세 보증금을 월세로 전환할 때 적용하는 비율을 뜻합니다. 만약 시장의 전세자금대출 금리가 전월세 전환율보다 낮다면 전세로 들어가 대출 이자를 내는
-                            것이
-                            이득입니다. 반대로 금리가 너무 높아서 대출 이자가 월세보다 크다면 매달 월세를 내는 것이 유리할 수 있습니다. 본 계산기에 현재 금융권의 실시간 대출 금리를 정확히
-                            입력해야 하는
-                            이유가 바로 여기에 있습니다.
-                        </p>
-                        <h4>2. 숨은 주거 비용 (관리비 및 세금)</h4>
-                        <p>
-                            많은 분이 간과하는 부분이 바로 관리비입니다. 전세 아파트의 경우 상대적으로 월세 원룸이나 오피스텔보다 주거 면적 대비 관리비가 저렴한 편이지만, 월세 계약 시에는
-                            '월세
-                            50만
-                            원 + 관리비 15만 원' 형태로 관리비에 실질적인 월세 성격의 금액을 포함하는 경우가 많습니다. 따라서 계산기를 돌릴 때 월세 항목에 고정 관리비까지 포함하여
-                            입력하시면
-                            훨씬
-                            정확한 비교가 가능합니다.
-                        </p>
-                        <h4>3. 보증금 반환 안전성 (전세 사기 예방)</h4>
-                        <p>
-                            아무리 전세가 월세보다 매달 나가는 비용이 적어 유리하다는 계산 결과가 나오더라도, 계약하려는 주택의 매매가 대비 전세가 비율(전세가율)이 너무 높다면 '깡통전세'나
-                            보증금
-                            미반환
-                            리스크를 고려해야 합니다. 안전성을 최우선으로 둔다면 HUG 전세보증보험 가입이 가능한지 확인해야 하며, 보험료라는 추가 비용도 염두에 두어야 합니다. 반면 월세는
-                            보증금
-                            규모가
-                            작아 상대적으로 리스크가 낮다는 장점이 있습니다.
-                        </p>
-                        <h4>💡 사회초년생 및 신혼부부를 위한 주거비용 절약 팁</h4>
-                        <ul class="bullet">
-                            <li>**정부 지원 정책 상품 적극 활용**: 청년 버팀목 전세자금대출, 신혼부부 전용 주택모기지 등 시중 은행보다 금리가 훨씬 낮은 정책 금융 상품을 이용할 수
-                                있다면
-                                전세의 메리트가 압도적으로 커집니다.</li>
-                            <li>**월세 세액공제 체크**: 연소득 7,000만 원 이하의 무주택 세대주라면 매달 내는 월세의 최대 15~17%까지 연말정산 시 세액공제를 받을 수 있습니다.
-                                월세가
-                                다소 비싸더라도 세액공제 혜택을 환산하면 전세 이자와 큰 차이가 없을 수 있으므로 이 점도 재무 계획에 반영해 보세요.</li>
-                        </ul>
-                        <small class="text-muted d-block mt-3">
-                            * 본 계산기는 단순화된 예시용 도구이며, 실제 계약 조건에 따라 결과는 달라질 수 있습니다.
-                            반드시 계약 전에는 금융기관 및 부동산 전문가와 상담하시기 바랍니다.
-                        </small>
+                    <h3>월별 누적 비용 테이블을 꼭 봐야 하는 이유</h3>
+                    <p>우리가 제공하는 스케줄표의 누적 지출액을 보면 계약 기간인 24개월 동안 내 통장에서 빠져나가는 '돈의 누적 무게'가 시각적으로 체감됩니다. 시간이 지날수록 전세 이자와 월세의 누적 격차는 스노우볼처럼 벌어집니다. 이 계산기를 통해 주거 고정비를 단 10만 원이라도 아끼고, 그 아낀 마진을 미국 우량 지수나 적금 주머니에 태워 종잣돈 점프 속도를 2배로 가속해 보세요!</p>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
@@ -156,77 +120,101 @@
     </div>
     <script src="/js/common.js"></script>
     <script>
-        function calcRent() {
-            const deposit = Number(document.getElementById("deposit").value) || 0;
-            const monthlyRent = Number(document.getElementById("monthly-rent").value) || 0;
-            const rate = Number(document.getElementById("loan-rate").value) || 0;
-            const years = Number(document.getElementById("years").value) || 0;
+        document.addEventListener("DOMContentLoaded", function () {
+            const depositInput = document.getElementById("deposit");
+            const monthlyRentInput = document.getElementById("monthly-rent");
+            const loanRateInput = document.getElementById("loan-rate");
+            const yearsInput = document.getElementById("years");
 
-            const months = years * 12;
-            const monthlyRate = rate / 100 / 12;
+            const resJeonseInterest = document.getElementById("res-jeonse-interest");
+            const resWolseTotal = document.getElementById("res-wolse-total");
+            const resDiff = document.getElementById("res-diff");
+            const monthlyTable = document.getElementById("monthly-table");
+            const rentGuideText = document.getElementById("rent-guide-text");
 
-            // 전세 대출 이자 비용
-            const jeonseInterest = deposit * monthlyRate * months;
-
-            // 월세 총 납부액
-            const wolseTotal = monthlyRent * months;
-
-            // 차이
-            let diff = wolseTotal - jeonseInterest;
-            if (Object.is(diff, -0)) diff = 0;
-
-            // 결과 표시
-            document.getElementById("res-jeonse-interest").innerText = jeonseInterest.toLocaleString('ko-KR');
-            document.getElementById("res-wolse-total").innerText = wolseTotal.toLocaleString('ko-KR');
-            document.getElementById("res-diff").innerText = diff.toLocaleString('ko-KR');
-
-            // 월별 누적 테이블 생성
-            const tableBody = document.getElementById("monthly-table");
-            tableBody.innerHTML = ""; // 초기화
-
-            let jeonseAccum = 0;
-            let wolseAccum = 0;
-
-            for (let m = 1; m <= months; m++) {
-                jeonseAccum += deposit * monthlyRate;
-                wolseAccum += monthlyRent;
-                let monthlyDiff = wolseAccum - jeonseAccum;
-                if (Object.is(monthlyDiff, -0)) monthlyDiff = 0;
-
-                const row = `<tr>
-            <td>${m}개월</td>
-            <td>${jeonseAccum.toLocaleString('ko-KR')} 원</td>
-            <td>${wolseAccum.toLocaleString('ko-KR')} 원</td>
-            <td>${monthlyDiff.toLocaleString('ko-KR')} 원</td>
-        </tr>`;
-                tableBody.innerHTML += row;
+            function formatNumber(num) {
+                return Math.round(num).toLocaleString('ko-KR');
             }
 
-            // 가이드 문구
-            let guideText = "";
-            if (diff > 0) {
-                guideText = `월세가 전세보다 약
-        <span style="color: red; font-weight:bold;">${diff.toLocaleString('ko-KR')}원</span>
-        더 부담됩니다.<br>
-        전세 대출 이자율이 낮을수록 <span style="color: var(--blue); font-weight:bold;">전세</span>가 유리합니다.`;
-            } else if (diff < 0) {
-                guideText = `전세가 월세보다 약
-        <span style="color: red; font-weight:bold;">${Math.abs(diff).toLocaleString('ko-KR')}원</span>
-        더 부담됩니다.<br>
-        <span style="color: var(--green); font-weight:bold;">월세</span>가 상대적으로 유리하지만,
-        보증금 마련 여부를 고려해야 합니다.`;
-            } else {
-                guideText = `전세와 월세 비용 차이가
-        <span style="color: var(--blue); font-weight:bold;">0원</span>으로 동일하게 계산되었습니다.<br>
-        생활 패턴과 자금 유동성을 기준으로 선택하세요.`;
+            function performRentCalculation() {
+                const deposit = parseFloat(depositInput.value) || 0;
+                const monthlyRent = parseFloat(monthlyRentInput.value) || 0;
+                const loanRate = parseFloat(loanRateInput.value) || 0;
+                const years = parseInt(yearsInput.value) || 0;
+
+                const totalMonths = years * 12;
+
+                const monthlyJeonseInterest = (deposit * (loanRate / 100)) / 12;
+                const totalJeonseInterest = monthlyJeonseInterest * totalMonths;
+
+                const totalWolse = monthlyRent * totalMonths;
+
+                resJeonseInterest.innerText = formatNumber(totalJeonseInterest);
+                resWolseTotal.innerText = formatNumber(totalWolse);
+
+                const diff = totalWolse - totalJeonseInterest;
+
+                if (diff > 0) {
+                    resDiff.innerText = "전세가 총 " + formatNumber(diff) + "원 유리";
+                    resDiff.style.color = "var(--blue, #007bff)";
+                } else if (diff < 0) {
+                    resDiff.innerText = "월세가 총 " + formatNumber(Math.abs(diff)) + "원 유리";
+                    resDiff.style.color = "var(--orange, #fd7e14)";
+                } else {
+                    resDiff.innerText = "두 조건의 비용이 동일함";
+                    resDiff.style.color = "var(--dark, #212529)";
+                }
+
+                let tableRows = "";
+                for (let i = 1; i <= totalMonths; i++) {
+                    const cumJeonse = monthlyJeonseInterest * i;
+                    const cumWolse = monthlyRent * i;
+                    const cumDiff = cumWolse - cumJeonse;
+
+                    let diffText = "";
+                    let diffClass = "";
+
+                    if (cumDiff > 0) {
+                        diffText = "전세가 " + formatNumber(cumDiff) + "원 절약중";
+                        diffClass = "text-primary small";
+                    } else if (cumDiff < 0) {
+                        diffText = "월세가 " + formatNumber(Math.abs(cumDiff)) + "원 절약중";
+                        diffClass = "text-danger small";
+                    } else {
+                        diffText = "동일";
+                        diffClass = "text-muted small";
+                    }
+
+                    tableRows += `
+                <tr>
+                    <td class="font-weight-bold">${i}개월 차</td>
+                    <td class="text-right pr-2">${formatNumber(cumJeonse)}원</td>
+                    <td class="text-right pr-2">${formatNumber(cumWolse)}원</td>
+                    <td class="text-center font-weight-bold ${diffClass}">${diffText}</td>
+                </tr>
+            `;
+                }
+                monthlyTable.innerHTML = tableRows;
+
+                if (diff > 0) {
+                    rentGuideText.innerHTML = `현재 조건에서는 월세를 내는 것보다 전세대출을 받아 이자를 내는 것이 한 달에 <strong>${formatNumber(monthlyRent - monthlyJeonseInterest)}원</strong>씩 이득입니다. 계약 기간인 ${years}년 동안 무려 <strong>${formatNumber(diff)}원</strong>의 쌩돈을 아껴 내 저축 주머니로 밀어 넣을 수 있는 최적의 선택지입니다.`;
+                } else if (diff < 0) {
+                    rentGuideText.innerHTML = `⚠️ 반전 결과입니다! 고금리 영향으로 전세대출 이자가 월세 지출보다 한 달에 <strong>${formatNumber(monthlyJeonseInterest - monthlyRent)}원</strong>씩 더 나갑니다. 이 경우에는 굳이 무리해서 전세 위험을 지기보다 월세 계약을 맺고 남은 보증금 종잣돈을 고이 모아 재테크에 굴리는 것이 지갑 방어에 유리합니다.`;
+                } else {
+                    rentGuideText.innerHTML = `전세 대출 이자와 매달 나가는 월세의 실질 비용 저울추가 완벽하게 일치합니다. 비용이 똑같다면 보증금 떼일 리스크가 적고 주거 이동이 자유로운 월세나, 혹은 전세보증보험 가입 요건을 따져보신 뒤 성향에 맞는 선택을 하시기 바랍니다.`;
+                }
             }
 
-            document.getElementById("rent-guide-text").innerHTML = guideText;
-        }
-        document.querySelectorAll("#rent-form input").forEach(input => {
-            input.addEventListener("input", calcRent);
+            const inputs = [depositInput, monthlyRentInput, loanRateInput, yearsInput];
+            inputs.forEach(input => {
+                input.addEventListener("focus", function () {
+                    this.select();
+                });
+                input.addEventListener("input", performRentCalculation);
+            });
+
+            performRentCalculation();
         });
-
 
     </script>
 </body>

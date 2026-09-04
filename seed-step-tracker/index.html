@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>소액 스타트 단계별 시드 빌드업 스케줄러 | 에브리캘크</title>
+    <meta name="description" content="지금 당장 시작 가능한 월 소액 1년 적금을 기반으로, 만기 시 원금은 안전 예금에 철벽 고정하고 오직 은행이 준 '세후 공짜 이자'만 연 8% 미국 S&P500 소수점 주식에 태워 무한 루프를 돌리는 원금 보장형 징검다리 5년 플랜을 정밀 계산합니다.">
+    <meta name="keywords" content="소액적금투자, 원금보장주식, 이자만투자하기, 소수점해외주식, 1년적금무한루프, 징검다리스케줄러, 사회초년생시드머니, 안전한재테크, 멘탈케어투자, 에브리캘크">
+    <link rel="canonical" href="https://every-calc.co.kr/seed-step-tracker/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="소액 스타트 단계별 시드 빌드업 스케줄러 - 에브리캘크">
+    <meta property="og:description" content="지금 당장 시작 가능한 월 소액 1년 적금을 기반으로, 만기 시 원금은 안전 예금에 철벽 고정하고 오직 은행이 준 '세후 공짜 이자'만 연 8% 미국 S&P500 소수점 주식에 태워 무한 루프를 돌리는 원금 보장형 징검다리 5년 플랜을 정밀 계산합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/seed-step-tracker/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>💰 진짜 돈 없는데 목돈 모으고 싶을 때 쓰는 10만원 시작 플랜</h2>
+                <p>먼 미래의 거창한 복리 소설은 이제 그만! 지금 내 주머니 사정에 맞는 소액 10만 원으로 시작하여, 내 원금은 단 1원도 다치지 않게 철벽 방어하면서 은행이 준 '공짜 이자'만 미국 우량 주식에 태워 스노우볼을 굴리는 가장 현실적인 탈출구를 제안합니다.</p>
+                <form id="step-tracker-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 지금 내 주머니 사정에 맞춘 현실적인 시드 스타트</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
+                                <label for="st-monthly-budget">매달 넣을 현실적인 1년 적금액 (월, 원)</label>
+                                <input type="number" id="st-monthly-budget" class="form-control" placeholder="예: 100000" value="100000" min="50000" step="50000" required>
+                                <small class="text-muted mt-2 d-block">이번 달 당장 은행 앱에서 개설할 내 적금 액수입니다. (10만 원)</small>
+                            </div>
+                            <div class="col-md-6 col-12 input-item">
+                                <label for="st-total-years">이 무한 루프 플랜을 유지할 최종 기간</label>
+                                <select id="st-total-years" class="form-control">
+                                    <option value="3">딱 3년만 징검다리 굴리기 (36개월 코스)</option>
+                                    <option value="5" selected>약속의 5년 완주하기 (60개월 정석 코스 - 강력 추천)</option>
+                                    <option value="10">10년 뒤 내 주머니 독립하기 (120개월 대장정)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 실전 매칭 금융 엔진 요율 조정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="st-rate-saving">🏦 1년 정기적금 금리 (연, %)</label>
+                                <input type="number" id="st-rate-saving" class="form-control" value="3.5" step="0.1" required>
+                            </div>
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="st-rate-deposit">🔒 원금 거치 정기예금 금리 (연, %)</label>
+                                <input type="number" id="st-rate-deposit" class="form-control" value="3.2" step="0.1" required>
+                            </div>
+                            <div class="col-md-4 input-item">
+                                <label for="st-rate-invest">📈 이자 탑승 미국 주식 수익률 (연, %)</label>
+                                <input type="number" id="st-rate-invest" class="form-control" value="8.0" step="0.1" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box mt-4">
+                    <h3>💡 내 원금 100% 보장형 소액 투자 스케줄표</h3>
+                    <div class="result-display">
+                        <p>내가 뼈 빠지게 모은 순수 총 원금: <strong id="res-st-pure-principal">0원</strong></p>
+                        <p>공짜 이자로 불려 나간 미국 주식 평가액: <strong id="res-st-stock-total" style="color: var(--blue, #007bff);">0원</strong></p>
+                        <hr>
+                        <p style="font-size: 115%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">
+                            <span id="res-display-years">5</span>년 만기 시 [안전 예금 + 미국 주식] 최종 자산 총액:
+                            <strong id="res-st-final-total" style="color: var(--orange, #fd7e14);">0원</strong>
+                        </p>
+                    </div>
+                    <div class="table-responsive my-3">
+                        <table class="table table-bordered text-center align-middle bg-white" style="border-radius: 8px; overflow: hidden; min-width: 600px;">
+                            <thead class="thead-light">
+                                <tr class="table-secondary text-dark font-weight-bold">
+                                    <th style="width: 12%;">경과년</th>
+                                    <th style="width: 48%;">내가 지금 당장 행동해야 할 미션 가이드라인</th>
+                                    <th style="width: 20%;">🔒 내 안전 보초 원금 (예금)</th>
+                                    <th style="width: 20%;">📈 공짜 돈 스노우볼 (주식)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="step-timeline-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 2030 주머니 생존 매칭 분석 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="st-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 매년 정기적금 만기 환급금 중 세후 원금만 일반 예금으로 재치하여 락업(Lock-up) 시키고, 발생한 세후 이자(15.4% 국세청 공제)만 연 8%의 미국 S&P500 소수점 주식 계좌로 즉시 이체하여 월 복리로 불려 나가는 극단적 원금 방어형 특수 금융 모델입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description mt-5">
+                <div class="description-content">
+                    <h2>🛡️ 원금 손실 리스크 0%! 재테크 천재들이 소액으로 주식 시작하는 법</h2>
+                    <p>주변에서 주식으로 돈을 벌었다는 소리를 들으면 나도 당장 뛰어들고 싶지만, 내 피 같은 돈이 단 10만 원이라도 깎여서 마이너스가 찍히는 것을 보면 가슴이 찢어지고 멘탈이 흔들려 결국 주식 시장을 욕하며 떠나기 일쑤입니다. 투자 경험이 없는 사회초년생이나 2030 유저에게 가장 필요한 무기는 거창한 투자 기법이 아니라, **"내 원금은 단 1원도 다치지 않는 구조를 만들어놓고 편안한 마음으로 미국 우량주의 복리 눈덩이에 올라타는 징검다리 시스템"**입니다.</p>
+                    <div class="highlight-point-box my-4 p-3" style="background-color: #eef3ff; border: 1px solid var(--blue, #007bff); border-radius: 8px;">
+                        <p style="margin: 0; color: #333; line-height: 1.6;">
+                            💡 <strong>공짜로 받은 이자만 주식을 사면 밤에 잠이 잘 옵니다!</strong><br>
+                            내가 매달 10만 원씩 1년 동안 적금을 부어 만기 이자로 세후 2만 원을 받았다고 해봅시다. 이 2만 원은 은행이 나에게 그냥 준 '공짜 돈'입니다. 이 2만 원으로 미국 S&P500 ETF 주식을 사두면, 주가가 반토막이 나든 꼬꾸라지든 내 본전 120만 원은 예금 속에 철저히 방어되고 있기 때문에 내 일상과 멘탈에 타격이 전혀 없습니다. 리스크가 제로가 되는 순간, 주식 투자는 비로소 즐거운 스노우볼 놀이가 됩니다.
+                        </p>
+                    </div>
+                    <h3>왜 매년 1년짜리 적금을 새 주머니로 무한 루프 돌려야 할까요?</h3>
+                    <p>처음부터 3년, 5년짜리 장기 적금을 들거나 큰돈을 묶어버리면 중간에 급전이 필요할 때 적금을 깨버려 이자 혜택을 다 날리게 됩니다. 하지만 에브리캘크가 세팅해 드린 이 징검다리 플랜은 **1년 단위로 계속 만기 환급을 받아 성취감을 뇌에 공급**해 줍니다. 1년 차에 나온 본전은 묶어두고, 2년 차에는 새로운 1년 적금과 기존 예금에서 나오는 이자가 합쳐져 주식 주머니로 들어가는 대포알(투자금)의 크기가 매년 스스로 진화하며 부풀어 오르는 환상적인 선순환이 구축됩니다.</p>
+                    <h3>현실 재테크를 무결점으로 가동하는 액션 플랜</h3>
+                    <ul>
+                        <li><strong>지갑의 방어선 세우기:</strong> 매달 내 능력이 허락하는 선(월 10만 원 등)으로 부담 없이 1년 적금을 켜세요. This가 든든한 내 자산 계급도의 1등 보초병이 됩니다.</li>
+                        <li><strong>미국 주식 소수점 이체 연동:</strong> 1년 뒤 만기가 되면 원금은 다시 예금으로 묶고 이자는 증권사 앱을 켜서 미국 S&P500이나 나스닥 지수 ETF 소수점 정기 매수로 토스하세요. 5년 뒤 스케줄표가 증명하듯 내 통장에는 리스크 제로의 딴딴한 예금 목돈과, 공짜로 자라난 미국 주식 보너스 주머니가 양날의 검처럼 동시에 아름답게 꽂히게 됩니다!</li>
+                    </ul>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const budgetInput = document.getElementById("st-monthly-budget");
+            const yearsSelect = document.getElementById("st-total-years");
+            const rateSavingInput = document.getElementById("st-rate-saving");
+            const rateDepositInput = document.getElementById("st-rate-deposit");
+            const rateStockInput = document.getElementById("st-rate-invest");
+
+            const resPurePrincipal = document.getElementById("res-st-pure-principal");
+            const resStockTotal = document.getElementById("res-st-stock-total");
+            const resFinalTotal = document.getElementById("res-st-final-total");
+            const resDisplayYears = document.getElementById("res-display-years");
+            const stepTimelineBody = document.getElementById("step-timeline-body");
+            const stGuideText = document.getElementById("st-guide-text");
+
+            const TAX_RATE = 0.154;
+
+            function formatNumber(num) {
+                return Math.round(num).toLocaleString('ko-KR');
+            }
+
+            function performJingamdariCalculation() {
+                const monthlyBudget = parseFloat(budgetInput.value) || 0;
+                const totalYears = parseInt(yearsSelect.value) || 5;
+                const rateSaving = parseFloat(rateSavingInput.value) || 0;
+                const rateDeposit = parseFloat(rateDepositInput.value) || 0;
+                const rateStock = parseFloat(rateStockInput.value) || 0;
+
+                resDisplayYears.innerText = totalYears;
+
+                if (monthlyBudget <= 0 || totalYears <= 0) {
+                    stepTimelineBody.innerHTML = `<tr><td colspan="4" class="text-muted p-3">월 저축액을 입력하시면 징검다리 스케줄표가 실시간 렌더링 됩니다.</td></tr>`;
+                    resPurePrincipal.innerText = "0원";
+                    resStockTotal.innerText = "0원";
+                    resFinalTotal.innerText = "0원";
+                    stGuideText.innerText = "데이터를 입력해 주세요.";
+                    return;
+                }
+
+                const overallPurePrincipal = monthlyBudget * 12 * totalYears;
+                resPurePrincipal.innerText = formatNumber(overallPurePrincipal) + "원";
+
+                const oneYearPrincipal = monthlyBudget * 12;
+                const oneYearRawInterest = monthlyBudget * (12 * 13 / 2) * (rateSaving / 100 / 12);
+                const oneYearNetInterest = oneYearRawInterest * (1 - TAX_RATE);
+
+                let accumulatedDeposit = 0;
+                let accumulatedStock = 0;
+                const rStockMonthly = (rateStock / 100) / 12;
+
+                let htmlRows = "";
+
+                for (let y = 1; y <= totalYears; y++) {
+                    accumulatedDeposit += oneYearPrincipal;
+
+                    if (y === 1) {
+                        accumulatedStock = oneYearNetInterest;
+                    } else {
+                        const prevDepositInterest = (accumulatedDeposit - oneYearPrincipal) * (rateDeposit / 100) * (1 - TAX_RATE);
+                        const currentInjectStock = oneYearNetInterest + prevDepositInterest;
+
+                        if (rStockMonthly > 0) {
+                            accumulatedStock = (accumulatedStock + currentInjectStock) * Math.pow(1 + rStockMonthly, 12);
+                        } else {
+                            accumulatedStock += currentInjectStock;
+                        }
+                    }
+
+                    let stepName = y + "년 차 루프";
+                    let rowClass = "";
+                    let missionText = `새로운 1년 적금 만기로 원금 <strong>${formatNumber(oneYearPrincipal)}원</strong>이 철벽 예금 보초병 주머니로 안전하게 이동했습니다. 그리고 방금 나온 적금 이자와 기존 예금 이자를 싹 긁어모은 공짜 돈을 미국 주식 소수점 계좌로 긴급 수송하여 복리를 굴립니다.`;
+
+                    if (y === 1) {
+                        stepName = "🚀 첫 스타트";
+                        missionText = `매달 <strong>${formatNumber(monthlyBudget)}원</strong>씩 부은 1년 적금이 만기되었습니다! 원금 <strong>${formatNumber(oneYearPrincipal)}원</strong>은 고이 정기예금 주머니에 잠금(Lock)하고, 국세청 세금 떼고 나온 순수 공짜 이자 <strong>${formatNumber(oneYearNetInterest)}원</strong>만 미국 주식 소수점 투자로 첫 시딩을 실행합니다.`;
+                    } else if (y === totalYears) {
+                        stepName = "🏆 최종 완주";
+                        rowClass = "table-primary font-weight-bold text-primary";
+                        missionText = `대망의 ${totalYears}년 약속의 징검다리 루프가 끝났습니다! 내 본진 원금은 은행 속에서 철통 방어되어 안전하게 살아있고, 보너스로 나온 이자들만 미국 국력에 탑승해 스스로 새끼를 치며 주식 눈덩이를 완성해 냈습니다.`;
+                    }
+
+                    htmlRows += `
+                <tr class="${rowClass}">
+                    <td class="font-weight-bold"><span>${stepName}</span></td>
+                    <td class="text-left pl-3 small">${missionText}</td>
+                    <td class="text-right pr-3">${formatNumber(accumulatedDeposit)}원</td>
+                    <td class="text-right pr-3">${formatNumber(accumulatedStock)}원</td>
+                </tr>
+            `;
+                }
+
+                stepTimelineBody.innerHTML = htmlRows;
+
+                const totalAssetSum = accumulatedDeposit + accumulatedStock;
+                resStockTotal.innerText = formatNumber(accumulatedStock) + "원";
+                resFinalTotal.innerText = formatNumber(totalAssetSum) + "원";
+
+                let salaryUpGuide = "";
+                if (totalYears >= 3) {
+                    salaryUpGuide = `<br><br>💡 <strong>직장인 연봉 인상 대비 시크릿 가이드:</strong> 만약 2~3년 차 중간에 연봉이 오르거나 보너스가 생겨 매달 10만~20만 원의 추가 여유 자금이 확보된다면 어떻게 해야 할까요? 기존에 굴리던 징검다리 루프(원금 예금, 이자 주식)는 절대로 건드리지 마세요. 늘어난 추가 여유 자금만큼만 <strong>'두 번째 1년짜리 적금 주머니'를 병렬로 하나 더 개설</strong>하여 똑같은 방식으로 1년 만기 후 이자만 주식 계좌로 쏴주는 '이중 스노우볼 파이프라인'을 장착하는 것이 가장 완벽한 자산 가속 치트키입니다.`;
+                } else {
+                    salaryUpGuide = `<br><br>💡 <strong>직장인 연봉 인상 대비 시크릿 가이드:</strong> 단기 레이스 중 연봉이 올라 여유 자금이 생긴다면, 기존 계좌를 깨서 합치지 마세요. 새로 생긴 여유 자금만큼만 토스나 카카오뱅크의 26주 적금 같은 소액 단기 주머니로 따로 모은 뒤, 만기 시점에 미국 S&P500 소수점 계좌로 다이렉트 병합시키는 것이 저축 리듬을 깨지 않는 최고의 방법입니다.`;
+                }
+
+                stGuideText.innerHTML = `내가 가입한 월 <strong>${formatNumber(monthlyBudget)}원</strong>짜리 1년 적금은 현재 상황에서 도출할 수 있는 최고의 리얼리티 치트키입니다! 1년 뒤 만기가 오면 본전은 철저히 정기예금방으로 피신시키고 이자만 미국 주식으로 쏘아 올리세요. ${totalYears}년 뒤 내 통장에는 내 피 같은 원금 <strong>${formatNumber(accumulatedDeposit)}원</strong>이 100% 무결점으로 보존된 상태에서, 공짜 이자가 스스로 굴러가 커진 <strong>${formatNumber(accumulatedStock)}원짜리 보너스 미국 주식 주머니</strong>가 덤으로 장착됩니다!${salaryUpGuide}`;
+            }
+
+            const inputs = [budgetInput, rateSavingInput, rateDepositInput, rateStockInput];
+            inputs.forEach(input => {
+                input.addEventListener("focus", function () {
+                    this.select();
+                });
+                input.addEventListener("input", performJingamdariCalculation);
+            });
+
+            yearsSelect.addEventListener("change", performJingamdariCalculation);
+
+            performJingamdariCalculation();
+        });
+
+    </script>
+</body>
+</html>

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>연차 계산기 - 법정 연차 개수 및 미사용 연차수당 계산 | 에브리캘크</title>
-    <meta name="description"
-        content="대한민국 근로기준법 제60조를 완벽 반영하여 입사일 기준 현재까지 발생한 총 법정 연차 휴가 개수와 미사용 연차에 따른 수당 실수령액을 실시간 정확하게 계산합니다.">
+    <meta name="description" content="대한민국 근로기준법 제60조를 완벽 반영하여 입사일 기준 현재까지 발생한 총 법정 연차 휴가 개수와 미사용 연차에 따른 수당 실수령액을 실시간 정확하게 계산합니다.">
     <meta name="keywords" content="연차 계산기, 연차수당 계산기, 근로기준법 연차, 1년미만 연차, 연차 발생기준, 미사용 연차수당, 입사일기준 연차, 통상임금 계산">
     <link rel="canonical" href="https://every-calc.co.kr/annual-leave/">
     <meta name="robots" content="index, follow">
@@ -15,8 +14,7 @@
     <meta property="og:site_name" content="에브리캘크">
     <meta property="og:type" content="article">
     <meta property="og:title" content="법정 연차 개수 및 미사용 연차수당 계산기">
-    <meta property="og:description"
-        content="내 연차는 올해 몇 개나 생겼을까? 입사일만 입력하면 근로기준법 맞춤 연차 개수와 돈으로 돌려받을 미사용 연차 수당을 1초 만에 확인해 보세요.">
+    <meta property="og:description" content="내 연차는 올해 몇 개나 생겼을까? 입사일만 입력하면 근로기준법 맞춤 연차 개수와 돈으로 돌려받을 미사용 연차 수당을 1초 만에 확인해 보세요.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/annual-leave/">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -58,19 +56,17 @@
                         <div class="form-row">
                             <div class="col-xl input-item mb-3 mb-xl-0">
                                 <label for="monthly-pay">기본 월 기본급 (원)</label>
-                                <input type="number" id="monthly-pay" class="form-control"
-                                    placeholder="세전 기본급 예: 2500000" min="0" step="1">
+                                <input type="number" id="monthly-pay" class="form-control" placeholder="세전 기본급 예: 2500000" min="0" step="1">
                             </div>
                             <div class="col-xl input-item">
                                 <label for="unused-count">돈으로 정산받을 미사용 연차 개수 (일)</label>
-                                <input type="number" id="unused-count" class="form-control"
-                                    placeholder="남은 연차 일수 입력 예: 10" value="0" min="0" step="0.5">
+                                <input type="number" id="unused-count" class="form-control" placeholder="남은 연차 일수 입력 예: 10" value="0" min="0" step="0.5">
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- 3. 실시간 결과 출력 영역 -->
-                <div class="result-box">
+                <div class="result-box mt-4">
                     <h3>💡 근로기준법 연차 정산 결과</h3>
                     <div class="result-display">
                         <p>개인 근속 기간: <strong id="res-working-period" style="color: var(--orange);">계산 중</strong></p>
@@ -97,8 +93,7 @@
                         양식을 먼저 확인해 보셔야 합니다.</p>
                     <h3>📊 근속 연수별 법정 연차 발생 개수 및 누적 가산 기준 표</h3>
                     <p>내가 올해 쓸 수 있는 총 연차 개수와 장기 근속 시 늘어나는 가산 일수 규정입니다. 아래 반응형 표를 통해 내 근속 연차에 맞는 방어선을 시각적으로 체크해 보세요.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 600px; width: 100%;">
                             <thead>
                                 <tr>

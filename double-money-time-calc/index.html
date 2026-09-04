@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>복리의 마법 검증! 내 원금 2배 자산 점프 시간 계산기 | 에브리캘크</title>
+    <meta name="description" content="내 종잣돈이 진짜 2배로 복제되는 마법의 시간 측정! 초기 자산 파라미터를 실시간 상속하여 은행 정기예금과 미국 S&P500 ETF의 월 복리 원금 점프 도달 세월을 무결점 대조 연산해 보세요.">
+    <meta name="keywords" content="72의 법칙 계산기, 복리의 마법 기간, 원금 2배 걸리는 시간, S&P500 장기투자 복리, 종잣돈 불리기 시뮬레이션">
+    <link rel="canonical" href="https://every-calc.co.kr/double-money-time-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="복리의 마법 검증! 내 원금 2배 자산 점프 시간 계산기">
+    <meta property="og:description" content="내 종잣돈이 진짜 2배로 복제되는 마법의 시간 측정! 초기 자산 파라미터를 실시간 상속하여 은행 정기예금과 미국 S&P500 ETF의 월 복리 원금 점프 도달 세월을 무결점 대조 연산해 보세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/double-money-time-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>✨ 복리의 마법 검증! 내 원금 2배 자산 점프 시간 계산기</h2>
+                <p>내가 현재 보유 중인 거치식 종잣돈 파라미터를 기반으로 원금이 2배, 3배, 4배로 불어나는 데 걸리는 실질적인 시간을 역산합니다. 은행 정기예금 금리와 미국 S&P500의 복리 스노우볼 엔진을 실시간 상속 연산하여 자산 증식의 시간적 마진을 무결점으로 빌드합니다.</p>
+                <form id="double-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 현재 굴릴 준비가 된 내 종잣돈 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-12 input-item">
+                                <label for="db-principal">투자 및 거치할 내 종잣돈 (원)</label>
+                                <input type="number" id="db-principal" class="form-control" placeholder="예: 10000000" value="10000000" min="1000000" step="1000000" required>
+                                <small class="text-muted mt-2 d-block">시간에 따른 자산 규모 변화를 관찰할 기준 투자 원금입니다.</small>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 비교할 자산별 연 수익률(금리) 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="db-saving-rate">🏦 안전한 은행 정기예금 금리 (연, %)</label>
+                                <input type="number" id="db-saving-rate" class="form-control" value="3.5" step="0.1" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="db-stock-rate">📈 미국 S&P500 ETF 예상 수익률 (연, %)</label>
+                                <input type="number" id="db-stock-rate" class="form-control" value="8.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">미국 1등 우량 기업들의 장기 평균 복리 성장 요율은 연 8.0%입니다.</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box mt-4">
+                    <h3>💡 자산이 스스로 복제되는 시간 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>내 소중한 초기 진입 종잣돈 원금: <strong id="res-db-pure-principal">0원</strong></p>
+                        <p>미국 S&P500 선택 시 원금이 2배(100% 성장) 되는 시간: <strong id="res-db-stock-time" style="color: var(--blue, #007bff);">0년</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>자산 복제 목표 규모</th>
+                                        <th>도달할 목표 금액</th>
+                                        <th>🏦 은행 예금 걸리는 시간</th>
+                                        <th>📈 미국 S&P500 걸리는 시간</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-dark">💰 원금의 2배 점프</td>
+                                        <td><span id="tbl-db-target-2x">0원</span></td>
+                                        <td><span id="tbl-db-saving-2x">0년</span></td>
+                                        <td class="font-weight-bold text-primary"><span id="tbl-db-stock-2x">0년</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-dark">💎 원금의 3배 점프</td>
+                                        <td><span id="tbl-db-target-3x">0원</span></td>
+                                        <td><span id="tbl-db-saving-3x">0년</span></td>
+                                        <td class="font-weight-bold text-primary"><span id="tbl-db-stock-3x">0년</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-dark">👑 원금의 4배 점프</td>
+                                        <td><span id="tbl-db-target-4x">0원</span></td>
+                                        <td><span id="tbl-db-saving-4x">0년</span></td>
+                                        <td class="font-weight-bold text-primary"><span id="tbl-db-stock-4x">0년</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">원금 2배 복제 시 미국 ETF가 아껴주는 **시간 방어선 마진**: <strong id="res-db-saved-time" style="color: var(--orange, #fd7e14);">0년</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 복리 엔진 가동 시간 최적화 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="db-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 금융 공학에서 널리 활용되는 '72의 법칙(자산이 2배가 되는 기간 = 72 / 연수익률)'의 정밀 로그 공식을 기반으로 계산되었습니다. 은행 예금은 이자소득세 15.4%를 공제한 세후 실질 복리 금리를 역산 상속했으며, 미국 ETF는 세금 손실이 없는 ISA 절세 혜택 계좌를 전제로 연산된 무결점 자산 시간 축적 지표입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 원금 2배 자산 점프 시간 가이드: 내 돈이 스스로 새끼를 쳐서 복제되는 시간</h2>
+                    <p>재테크나 주식 투자를 시작한 초보분들이 유튜브나 책을 보면 약속이나 한 듯이 "복리의 마법을 믿고 하루라도 빨리 투자를 시작해라"라는 조언을 듣게 됩니다. 돈이 알아서 돈을 벌어다 주는 눈덩이 효과가 대단하다는 건 머리로는 알겠는데, 도대체 내 소중한 종잣돈 1,000만 원이 언제 2,000만 원이 되고 언제 4,000만 원으로 복제되는지 그 '진짜 시간'을 체감하기란 결코 쉽지 않습니다. 감이 오지 않으니 결국 지루함을 참지 못하고 중간에 계좌를 깨버리는 안타까운 일이 반복되죠.</p>
+                    <div class="p-4 my-4 asset-fact-highlight" style="background: #eef3ff; color: #1c52d8; border-radius: 12px; border-left: 5px solid var(--blue, #007bff); font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 4px rgba(0,123,255,0.05);">
+                        🎯 내 원금이 스스로 복제되어 '정확히 2배'가 되는 시간은 금융학의 치트키인 [72의 법칙]으로 계산됩니다! <br class="d-none d-md-block">
+                        연 3.5%짜리 은행 예금에 넣어두면 국세청 세금까지 떼여 원금이 2배 되는 데 무려 24년이라는 긴 세월이 걸립니다. <br class="d-none d-md-block">
+                        하지만 연 8%의 복리 엔진을 장착한 미국 S&P500 ETF(ISA 계좌)에 돈을 묻어두면 단 9년 만에 원금이 2배가 됩니다. <br class="d-none d-md-block">
+                        복리의 진짜 마법은 내 자산의 크기를 불려주는 것을 넘어, 내가 은퇴할 수 있는 '시간적 마진'을 수십 년 앞당겨 주는 것입니다.
+                    </div>
+                    <p>이 계산기는 자산이 복리 시스템 안에서 배수로 늘어나는 원리를 명쾌하게 증명해 줍니다. 재미있는 사실은 원금이 2배에서 3배가 될 때보다, 3배에서 4배가 될 때 걸리는 시간이 훨씬 더 짧아진다는 것입니다. 돈이 일하는 눈덩이(원본)의 크기가 커질수록 굴러가는 가속도가 무섭게 붙기 때문입니다. 결국 재테크의 승패는 **"누가 더 일찍 은행이라는 안전한 감옥을 탈출해, 미국 우량 지수의 강력한 월 복리 엔진에 내 종잣돈을 태우고 오랜 시간 신경 끄고 버텨내느냐"**에 달려 있습니다.</p>
+                    <p>본 원금 2배 자산 점프 시간 계산기는 사용자가 설정한 초기 종잣돈 파라미터를 실시간 상속하여, **세후 은행 예금 금리와 미국 S&P500 복리 요율 스펙에 따라 내 돈이 2배, 3배, 4배로 복제되는 데 필요한 세월을 연 단위까지 정밀 정산**해 드립니다. 막연한 환상이나 두려움을 내려놓고, 진짜 내 자산이 우상향하는 시간적 방어선을 무결점으로 확인한 뒤 나만의 단단한 장기 투자 레이스를 시작해 보세요!</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 변수 선언
+            const dbPrincipalInput = document.getElementById("db-principal");
+            const dbSavingRateInput = document.getElementById("db-saving-rate");
+            const dbStockRateInput = document.getElementById("db-stock-rate");
+
+            // 요약 디스플레이 출력 엘리먼트 선언
+            const resDbPurePrincipal = document.getElementById("res-db-pure-principal");
+            const resDbStockTime = document.getElementById("res-db-stock-time");
+            const resDbSavedTime = document.getElementById("res-db-saved-time");
+            const dbGuideText = document.getElementById("db-guide-text");
+
+            // 표 데이터 테이블 엘리먼트 선언
+            const tblDbTarget2x = document.getElementById("tbl-db-target-2x");
+            const tblDbSaving2x = document.getElementById("tbl-db-saving-2x");
+            const tblDbStock2x = document.getElementById("tbl-db-stock-2x");
+
+            const tblDbTarget3x = document.getElementById("tbl-db-target-3x");
+            const tblDbSaving3x = document.getElementById("tbl-db-saving-3x");
+            const tblDbStock3x = document.getElementById("tbl-db-stock-3x");
+
+            const tblDbTarget4x = document.getElementById("tbl-db-target-4x");
+            const tblDbSaving4x = document.getElementById("tbl-db-saving-4x");
+            const tblDbStock4x = document.getElementById("tbl-db-stock-4x");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩 상속
+            dbPrincipalInput.addEventListener("input", calculateCompoundTime);
+            dbSavingRateInput.addEventListener("input", calculateCompoundTime);
+            dbStockRateInput.addEventListener("input", calculateCompoundTime);
+
+            function calculateCompoundTime() {
+                const principal = parseFloat(dbPrincipalInput.value) || 0;
+                const savingRate = (parseFloat(dbSavingRateInput.value) || 0) / 100;
+                const stockRate = (parseFloat(dbStockRateInput.value) || 0) / 100;
+
+                if (principal <= 0) return;
+
+                const taxRate = 0.154; // 이자소득세 15.4%
+
+                // 1. 은행 예금은 세후 실질 복리 수익률로 정산 상속 (단리 예치 후 매년 굴리는 구조 환산)
+                const netSavingRate = savingRate * (1 - taxRate);
+                const monthlySavingRate = netSavingRate / 12;
+
+                // 2. 미국 ETF는 ISA 비과세 전제 월 복리 수익률 상속
+                const monthlyStockRate = stockRate / 12;
+
+                // 3. 각 배수별 정밀 거치식 복리 기간 도출 함수: n = log(배수) / log(1 + r)
+                function getTimeForMultiplier(rate, multiplier) {
+                    if (rate <= 0) return Infinity;
+                    const months = Math.log(multiplier) / Math.log(1 + rate);
+                    return months / 12; // 개월 수를 년 수로 변환
+                }
+
+                const savingTime2x = getTimeForMultiplier(monthlySavingRate, 2);
+                const stockTime2x = getTimeForMultiplier(monthlyStockRate, 2);
+
+                const savingTime3x = getTimeForMultiplier(monthlySavingRate, 3);
+                const stockTime3x = getTimeForMultiplier(monthlyStockRate, 3);
+
+                const savingTime4x = getTimeForMultiplier(monthlySavingRate, 4);
+                const stockTime4x = getTimeForMultiplier(monthlyStockRate, 4);
+
+                const savedTime2x = Math.max(0, savingTime2x - stockTime2x);
+
+                // =========================================================================
+                // 📊 메인 디스플레이 인터페이스 동적 렌더링
+                // =========================================================================
+                resDbPurePrincipal.innerText = principal.toLocaleString() + "원";
+                resDbStockTime.innerText = isFinite(stockTime2x) ? stockTime2x.toFixed(1) + "년" : "연산불가";
+                resDbSavedTime.innerText = isFinite(savedTime2x) ? savedTime2x.toFixed(1) + "년" : "0년";
+
+                // 테이블 표 데이터 셀 실시간 교체
+                tblDbTarget2x.innerText = (principal * 2).toLocaleString() + "원";
+                tblDbSaving2x.innerText = isFinite(savingTime2x) ? savingTime2x.toFixed(1) + "년" : "무한대";
+                tblDbStock2x.innerText = isFinite(stockTime2x) ? stockTime2x.toFixed(1) + "년" : "무한대";
+
+                tblDbTarget3x.innerText = (principal * 3).toLocaleString() + "원";
+                tblDbSaving3x.innerText = isFinite(savingTime3x) ? savingTime3x.toFixed(1) + "년" : "무한대";
+                tblDbStock3x.innerText = isFinite(stockTime3x) ? stockTime3x.toFixed(1) + "년" : "무한대";
+
+                tblDbTarget4x.innerText = (principal * 4).toLocaleString() + "원";
+                tblDbSaving4x.innerText = isFinite(savingTime4x) ? savingTime4x.toFixed(1) + "년" : "무한대";
+                tblDbStock4x.innerText = isFinite(stockTime4x) ? stockTime4x.toFixed(1) + "년" : "무한대";
+
+                // =========================================================================
+                // 📊 친근하고 말랑말랑한 톤의 가이드 리포트 자동 빌드
+                // =========================================================================
+                dbGuideText.innerHTML = `내 소중한 종잣돈 <strong>${principal.toLocaleString()}원</strong>이 스스로 자가 복제되어 <strong>${(principal * 2).toLocaleString()}원(2배)</strong>이 되는 데 은행 예금은 무려 <strong>${savingTime2x.toFixed(1)}년</strong>이 걸리지만, 미국 S&P500 복리 엔진을 켜두면 단 <strong>${stockTime2x.toFixed(1)}년</strong> 만에 목표선에 도달합니다. 투자 전략 하나만으로 인생의 소중한 시간 <strong>${savedTime2x.toFixed(1)}년</strong>을 내 편으로 확보해 지켜내는 위대한 마진 방어입니다!`;
+            }
+
+            // 초기 가동 런타임 콜
+            calculateCompoundTime();
+        });
+    </script>
+</body>
+</html>

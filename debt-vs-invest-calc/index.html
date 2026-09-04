@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>빚 청산 vs 재테크? 대출 상환 vs 저축 이익 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="대출 빚 먼저 갚기 vs 주식 투자 재테크? 월 여유 자금 파라미터를 실시간 상속하여 빚 상환으로 아끼는 이자와 주식/ETF 복리 수익 마진을 정밀 대조하고 가계 지출의 최적 우선순위를 도출하세요.">
+    <meta name="keywords" content="대출 상환 저축 비교, 빚 먼저 갚기 재테크, 대출 중도상환 이자, S&P500 복리 계산기, 연말정산 빚 갚기 저축">
+    <link rel="canonical" href="https://every-calc.co.kr/debt-vs-invest-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="빚 청산 vs 재테크? 대출 상환 vs 저축 이익 비교 계산기">
+    <meta property="og:description" content="대출 빚 먼저 갚기 vs 주식 투자 재테크? 월 여유 자금 파라미터를 실시간 상속하여 빚 상환으로 아끼는 이자와 주식/ETF 복리 수익 마진을 정밀 대조하고 가계 지출의 최적 우선순위를 도출하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/debt-vs-invest-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>🏦 빚 청산 vs 재테크? 대출 상환 vs 저축 이익 비교 계산기</h2>
+                <p>내 지갑 사정에 따른 월 여유 자금 파라미터를 기반으로 대출 원금을 먼저 갚아 나갈 때와 재테크 상품에 투자할 때의 자산 형성 격차를 정밀 대조합니다. 빚을 갚아 아끼는 이자의 확정 수익 효과와 주식/적금의 복리 마진 요율을 실시간 상속 연산하여 가장 무결한 지출 우선순위 방어선을 빌드합니다.</p>
+                <form id="debt-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 현재 보유 중인 대출 빚 스펙 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="debt-rate">🏦 탈탈 털리는 대출 금리 (연, %)</label>
+                                <input type="number" id="debt-rate" class="form-control" value="4.5" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">신용대출이나 주택담보대출 등 현재 내가 내고 있는 이자율입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="debt-invest-rate">📈 갈아탈 재테크 상품 예상 수익률 (연, %)</label>
+                                <input type="number" id="debt-invest-rate" class="form-control" value="8.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">미국 S&P500 지수 추종 ETF 등의 장기 평균 성장 눈금은 연 8.0%입니다.</small>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 월 여유 자금 및 재테크 기간 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="debt-monthly-budget">매월 투입 가능한 여유 자금 (원)</label>
+                                <input type="number" id="debt-monthly-budget" class="form-control" placeholder="예: 500000" value="500000" min="50000" step="50000" required>
+                                <small class="text-muted mt-2 d-block">매달 빚을 추가로 갚거나 투자에 쓸 수 있는 순수 여윳돈입니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="debt-period-years">돈을 모으거나 빚을 갚을 기간</label>
+                                <select id="debt-period-years" class="form-control">
+                                    <option value="3">3년 레이스 (36개월 단기 정산)</option>
+                                    <option value="5" selected>5년 레이스 (60개월 중기 대조선 - 추천)</option>
+                                    <option value="10">10년 레이스 (120개월 장기 복리 마법)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box mt-4">
+                    <h3>💡 빚 먼저 갚기 vs 주식 먼저 모으기 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>지정 기간 동안 투입할 총 여유 자금 원금: <strong id="res-debt-pure-principal">0원</strong></p>
+                        <p>재테크 투자 시 최종 자산 평가액: <strong id="res-debt-invest-total" style="color: var(--blue, #007bff);">0원</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>가계 현금흐름 선택지</th>
+                                        <th>빚 상환으로 아끼는 총 이자</th>
+                                        <th>재테크 투자로 버는 총 수익</th>
+                                        <th>실질적으로 내 손에 남는 금융 마진</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-secondary">A. 대출 빚 먼저 중도상환 (빚 청산)</td>
+                                        <td class="text-success">+<span id="tbl-debt-saved-interest">0원</span></td>
+                                        <td>0원 (투자 안 함)</td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-debt-saved-total">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">B. 주식/ETF 재테크 투자 (자산 형성)</td>
+                                        <td>0원 (기존 빚 유지)</td>
+                                        <td class="text-success">+<span id="tbl-debt-invest-profit">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-debt-invest-total">0원</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">최적의 선택 시 내 통장에 박힐 **추가 자산 격차 마진**: <strong id="res-debt-final-margin" style="color: var(--orange, #fd7e14);">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 대출 상환 vs 투자 우선순위 전략 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="debt-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray, #6c757d); font-size: 0.85rem;">* 본 시뮬레이터는 중도상환 수수료 패널티 요율은 배제하고 오직 금리와 수익률의 마진 폭만을 연산합니다. 대출 상환으로 아끼는 이자는 확정 단리 감쇄 공식을 따르며, 재테크 투자는 절세 계좌(ISA)를 가인 전제로 하여 매월 말 복리로 누적 정산되는 월 복리 적립식 공식 스펙을 고수하는 무결점 비교 지표입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content" style="line-height: 1.8; color: #4e5968;">
+                    <h2>💡 대출 상환 vs 재테크 가이드: 빚 먼저 갚을까 재테크 먼저 할까? 1초 만에 답 내리기</h2>
+                    <p>사회생활을 시작하고 매달 월급을 받으며 재테크에 눈을 뜨기 시작할 때, 학자금 대출이나 마이너스 통장, 혹은 주택담보대출 같은 '빚'이 있는 직장인이라면 예외 없이 심각한 딜레마에 빠지게 됩니다. "매달 남는 돈으로 대출 원금을 빨리 갚아서 이자를 줄이는 게 이득일까? 아니면 그 돈으로 미국 S&P500 주식이나 고금리 적금을 모아 자산을 불리는 게 이득일까?" 하는 의문입니다. 머릿속으로 계산기를 굴려봐도 빚 갚는 안도감과 투자 수익의 달콤함 사이에서 쉽게 결론을 내리지 못하고 발만 동동 구르기 일쑤죠.</p>
+                    <div class="p-4 my-4 asset-fact-highlight" style="background: #eef3ff; color: #1c52d8; border-radius: 12px; border-left: 5px solid var(--blue, #007bff); font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 4px rgba(0,123,255,0.05);">
+                        🎯 빚을 먼저 상환하는 것은 내 대출 금리만큼의 '100% 원금 보장형 확정 수익'을 내는 것과 똑같습니다! <br class="d-none d-md-block">
+                        따라서 내 대출 금리가 주식 투자수익률보다 높다면 뒤도 돌아보지 말고 빚부터 청산하는 게 정답입니다. <br class="d-none d-md-block">
+                        하지만 장기적으로 미국 S&P500 복리 엔진(연 8%)이 내 대출 금리(연 4%)를 시원하게 추월할 수 있다면? <br class="d-none d-md-block">
+                        기계적으로 주식을 사 모으는 것이 내 피 같은 원금을 가장 빠르게 대형 목돈으로 점프시키는 똑똑한 방어선입니다.
+                    </div>
+                    <p>대출을 먼저 상환할 때 아끼는 이자는 첫 달 갚은 돈의 효과가 가장 크고 만기 직전 갚은 돈의 효과는 미비한 단리 구조를 띱니다. 반면, 미국 S&P500 ETF 투자 경로는 매달 쌓인 원금과 수익금 전체에 다시 새끼를 치는 복리의 롤러코스터를 타게 되죠. 결국 이 싸움의 승패는 **"빚을 갚아서 새어나가는 이자를 막는 방어선의 크기와, 투자로 불어나는 스노우볼 엔진의 마진 중 어느 쪽이 최종적으로 내 통장을 더 뚱뚱하게 만들어 줄 것인가"**에 달려 있습니다.</p>
+                    <p>본 대출 상환 vs 저축 수익 비교 계산기는 사용자가 입력한 월 여유 자금과 대출 이율, 투자 수익률 파라미터를 실시간 상속하여, **뚝심 있게 빚을 먼저 청산할 때 아끼는 세후 총 이자와 재테크에 투자할 때 버는 세후 복리 수익을 1원 단위까지 완벽하게 대조**해 드립니다. 막연한 공포나 직감에 의존하지 말고, 진짜 내 지갑에 들어올 실질 금융 마진을 무결점으로 확인한 뒤 나만의 똑똑한 현금흐름 스케줄러를 가동해 보세요!</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 변수 선언
+            const debtRateInput = document.getElementById("debt-rate");
+            const debtInvestRateInput = document.getElementById("debt-invest-rate");
+            const debtMonthlyBudgetInput = document.getElementById("debt-monthly-budget");
+            const debtPeriodSelect = document.getElementById("debt-period-years");
+
+            // 요약 디스플레이 출력 엘리먼트 선언
+            const resDebtPurePrincipal = document.getElementById("res-debt-pure-principal");
+            const resDebtInvestTotal = document.getElementById("res-debt-invest-total");
+            const resDebtFinalMargin = document.getElementById("res-debt-final-margin");
+            const debtGuideText = document.getElementById("debt-guide-text");
+
+            // 표 데이터 테이블 엘리먼트 선언
+            const tblDebtSavedInterest = document.getElementById("tbl-debt-saved-interest");
+            const tblDebtSavedTotal = document.getElementById("tbl-debt-saved-total");
+            const tblDebtInvestProfit = document.getElementById("tbl-debt-invest-profit");
+            const tblDebtInvestTotal = document.getElementById("tbl-debt-invest-total");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩 상속
+            debtRateInput.addEventListener("input", calculateDebtVsInvest);
+            debtInvestRateInput.addEventListener("input", calculateDebtVsInvest);
+            debtMonthlyBudgetInput.addEventListener("input", calculateDebtVsInvest);
+            debtPeriodSelect.addEventListener("change", calculateDebtVsInvest);
+
+            function calculateDebtVsInvest() {
+                const debtRate = (parseFloat(debtRateInput.value) || 0) / 100;
+                const investRate = (parseFloat(debtInvestRateInput.value) || 0) / 100;
+                const monthlyBudget = parseFloat(debtMonthlyBudgetInput.value) || 0;
+                const years = parseInt(debtPeriodSelect.value) || 0;
+                const totalMonths = years * 12;
+
+                if (monthlyBudget <= 0 || totalMonths <= 0) return;
+
+                const purePrincipal = monthlyBudget * totalMonths;
+
+                // =========================================================================
+                // 🏦 [루트 A. 대출 빚 먼저 상환 - 원리금균등 대출 중도상환 가정 이자 절감 연산]
+                // 매달 중도 상환함으로써 털어내는 잔액 기준 단리 감쇄 정산
+                // =========================================================================
+                let totalSavedInterest = 0;
+                const monthlyDebtRate = debtRate / 12;
+
+                for (let i = 1; i <= totalMonths; i++) {
+                    // 매달 납입액이 은행에 머물면서 아끼게 되는 잔여 달수 만큼의 이자 절감액
+                    totalSavedInterest += monthlyBudget * monthlyDebtRate * (totalMonths - i + 1);
+                }
+                totalSavedInterest = Math.round(totalSavedInterest);
+                const debtSavedTotal = totalSavedInterest; // 빚 상환의 실질 가치는 아낀 이자 그 자체
+
+                // =========================================================================
+                // 📈 [루트 B. 주식/ETF 재테크 투자 - 정통 월 복리 적립식 공식]
+                // =========================================================================
+                const monthlyInvestRate = investRate / 12;
+                let investFinalTotal = 0;
+
+                if (monthlyInvestRate > 0) {
+                    investFinalTotal = monthlyBudget * ((Math.pow(1 + monthlyInvestRate, totalMonths) - 1) / monthlyInvestRate) * (1 + monthlyInvestRate);
+                } else {
+                    investFinalTotal = purePrincipal;
+                }
+
+                investFinalTotal = Math.round(investFinalTotal);
+                const investNetProfit = Math.max(0, investFinalTotal - purePrincipal);
+
+                // =========================================================================
+                // 📊 최종 격차 마진 도출 및 결과 인터페이스 동적 렌더링
+                // =========================================================================
+                // 실질 혜택 총량 비교 (B의 투자 평가액 vs A의 아낀이자+원금 가치)
+                const totalValueA = purePrincipal + totalSavedInterest;
+                const totalValueB = investFinalTotal;
+                const finalMargin = Math.abs(totalValueB - totalValueA);
+
+                resDebtPurePrincipal.innerText = purePrincipal.toLocaleString() + "원";
+                resDebtInvestTotal.innerText = investFinalTotal.toLocaleString() + "원";
+
+                if (totalValueB > totalValueA) {
+                    resDebtFinalMargin.innerText = finalMargin.toLocaleString() + "원 (투자 유리)";
+                    resDebtFinalMargin.style.color = "var(--orange, #fd7e14)";
+                } else if (totalValueB < totalValueA) {
+                    resDebtFinalMargin.innerText = finalMargin.toLocaleString() + "원 (빚상환 유리)";
+                    resDebtFinalMargin.style.color = "var(--blue, #007bff)";
+                } else {
+                    resDebtFinalMargin.innerText = "0원 (손익 구조 동일)";
+                    resDebtFinalMargin.style.color = "var(--gray, #6c757d)";
+                }
+
+                // 테이블 표 데이터 동적 파싱 상속
+                tblDebtSavedInterest.innerText = totalSavedInterest.toLocaleString() + "원";
+                tblDebtSavedTotal.innerText = totalValueA.toLocaleString() + "원 (원금 포함)";
+
+                tblDebtInvestProfit.innerText = investNetProfit.toLocaleString() + "원";
+                tblDebtInvestTotal.innerText = totalValueB.toLocaleString() + "원";
+
+                if (totalValueB > totalValueA) {
+                    // 대출 이자보다 투자 복리 마진이 큰 경우
+                    debtGuideText.innerHTML = `대출 빚을 갚는 것보다 <strong>재테크 투자</strong>에 집중하시는 게 현명합니다! 빚을 갚아 아끼는 총 이자(<strong>${totalSavedInterest.toLocaleString()}원</strong>)보다 미국 S&P500 등 복리 엔진으로 벌어들일 투자 수익(<strong>${investNetProfit.toLocaleString()}원</strong>)의 크기가 훨씬 압도적입니다. 매달 여윳돈을 투자에 굴리시면 빚을 먼저 갚았을 때보다 내 총자산을 <strong>${finalMargin.toLocaleString()}원</strong>이나 더 불려 방어할 수 있습니다.`;
+                } else if (totalValueB < totalValueA) {
+                    // 대출 이자가 너무 높아서 빚을 먼저 조져야 하는 경우
+                    debtGuideText.innerHTML = `뒤도 돌아보지 말고 <strong>대출 원금 중도상환(빚 청산)</strong>부터 하셔야 합니다! 매달 내는 대출 금리가 너무 높아서 주식 투자로 어설프게 수익을 내봐야 빚 이자로 다 털립니다. 매달 <strong>${monthlyBudget.toLocaleString()}원</strong>씩 빚을 적극적으로 갚아나가시면 <strong>${totalSavedInterest.toLocaleString()}원</strong>의 생돈이 은행 이자로 유출되는 것을 완벽히 차단하여, 투자했을 때보다 결과적으로 <strong>${finalMargin.toLocaleString()}원</strong>의 가계 마진을 더 지켜내게 됩니다.`;
+                } else {
+                    debtGuideText.innerHTML = `현재 빚 상환으로 아끼는 이자와 재테크 투자로 불어나는 이익의 세후 가치가 완벽하게 일치합니다. 매달 지출 패턴에 맞춰 마이너스 부채를 줄이는 심리적 안도감을 선택하시거나, 주식을 모아가는 재미 중 성향에 맞게 자유롭게 선택하시면 됩니다.`;
+                }
+            }
+
+            // 초기 웹 페이지 로딩 런타임 가동 매칭
+            calculateDebtVsInvest();
+        });
+    </script>
+</body>
+</html>

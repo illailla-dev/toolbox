@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>전세 vs 월세 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="보증금, 월세, 이자율을 입력하면 전세와 월세의 실질 비용을 비교합니다.">
+    <meta name="keywords" content="부동산, 부동산투자, 생활비, 월세, 월세부담, 전세, 전세대출, 전세월세비교, 주거가이드, 주거분석, 주거비교, 주거비용, 주거선택, 주택금융">
+    <link rel="canonical" href="https://every-calc.co.kr/spending-to-invest/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="전세 vs 월세 비교 계산기 - 에브리캘크">
+    <meta property="og:description" content="보증금, 월세, 이자율을 입력하면 전세와 월세의 실질 비용을 비교합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/spending-to-invest/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>💳 내 소비 주머니의 역습! 소비 습관 투자 전환 스케줄러</h2>
+                <p>매달 배달 앱, 택시, 무지성 쇼핑으로 나도 모르게 기계적으로 지출하던 숨은 고정비들이 계십니다. 이 지출 중 딱 15%만 다이어트해서 미국 S&P500 복리 엔진에 태운다면, 내 나쁜 소비 습관이 미래에 몇 억짜리 연금 자산으로 변신하는지 실시간 스캔해 드립니다.</p>
+                <form id="spending-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 매달 나도 모르게 기계적으로 쓰고 있는 소비 내역</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
+                                <label for="spend-delivery">🛵 배달 음식 및 외식비 (월, 원)</label>
+                                <input type="number" id="spend-delivery" class="form-control" value="400000" min="0" required>
+                                <small class="text-muted mt-2 d-block">야식, 배달 앱, 주말 외식 등으로 지출하는 비용입니다.</small>
+                            </div>
+                            <div class="col-md-6 col-12 input-item">
+                                <label for="spend-taxi">🚕 택시비 및 무지성 교통비 (월, 원)</label>
+                                <input type="number" id="spend-taxi" class="form-control" value="100000" min="0" required>
+                                <small class="text-muted mt-2 d-block">늦잠 자서 탄 택시, 충동적 이동 비용입니다.</small>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
+                                <label for="spend-coffee">☕ 카페인 및 습관성 간식비 (월, 원)</label>
+                                <input type="number" id="spend-coffee" class="form-control" value="150000" min="0" required>
+                                <small class="text-muted mt-2 d-block">매일 마시는 테이크아웃 커피, 편의점 주전부리 비용입니다.</small>
+                            </div>
+                            <div class="col-md-6 col-12 input-item">
+                                <label for="spend-shopping">🛍️ 충동적 쇼핑 및 웹툰/구독료 (월, 원)</label>
+                                <input type="number" id="spend-shopping" class="form-control" value="200000" min="0" required>
+                                <small class="text-muted mt-2 d-block">인스타 광고 보고 산 옷, 안 보는데 결제되는 OTT 등입니다.</small>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 자산 스노우볼 전환 시뮬레이션 조건</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
+                                <label for="invest-rate">📈 전환 투자 상품 예상 수익률 (연, %)</label>
+                                <input type="number" id="invest-rate" class="form-control" value="8.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">미국 S&P500 등 지수 추종 복리 투자 상품의 장기 역사적 평균치입니다.</small>
+                            </div>
+                            <div class="col-md-6 col-12 input-item">
+                                <label for="invest-years">습관 개조 유지 기간 (년)</label>
+                                <input type="number" id="invest-years" class="form-control" value="10" min="1" max="50" required>
+                                <small class="text-muted mt-2 d-block">나쁜 습관을 끊고 꾸준히 스노우볼을 굴려볼 장기 세월입니다.</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box mt-4">
+                    <h3>💡 내 나쁜 습관이 만들어낸 자산 변신 결과</h3>
+                    <div class="result-display">
+                        <p>현재 입력하신 나의 한 달 무지성 소비 총액: <strong id="res-total-spend">0</strong>원</p>
+                        <p>스트레스 없는 황금 비율! <span style="color: var(--blue, #007bff);">딱 15% 다이어트 월 투자금</span>: <strong id="res-diet-invest" style="color: var(--blue, #007bff);">0</strong>원</p>
+                        <hr>
+                        <p style="font-size: 115%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">
+                            <span id="res-display-years">10</span>년 뒤 내 통장에 꽂히는 <span style="color: var(--orange, #fd7e14);">최종 복리 자산 규모</span>:
+                            <strong id="res-final-snowball" style="color: var(--orange, #fd7e14);">0원</strong>
+                        </p>
+                    </div>
+                    <div class="mt-4">
+                        <h4>📅 지출 다이어트금의 연도별 복리 축적 시뮬레이션</h4>
+                        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                            <table class="table table-bordered text-center table-sm bg-white" style="min-width: 500px; width: 100%;">
+                                <thead>
+                                    <tr class="table-secondary text-dark font-weight-bold">
+                                        <th>경과 년수</th>
+                                        <th>💰 내가 아낀 누적 원금</th>
+                                        <th>✨ 불어난 복리 세후 수익</th>
+                                        <th>👑 최종 자산 합계액</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="snowball-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 미래 자산 방어선 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="spend-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 매달 고정적으로 발생하는 소비 항목의 15%를 절감하여 즉시 월 복리 적립식 투자를 집행했다고 가정한 정밀 수학적 보정 수치입니다. 매매 수수료 및 절세 계좌(ISA 등) 활용 여부에 따른 미세한 실전 오차가 있을 수 있습니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description mt-5">
+                <div class="description-content">
+                    <h2>💵 무작정 굶는 저축은 실패한다! 쓰던 돈에서 찾아내는 15%의 마법</h2>
+                    <p>재테크 책이나 금융 유튜브에서 "돈을 모으려면 무조건 안 쓰고 아껴야 한다"라며 지독한 자린고비 생활을 강요할 때마다 숨이 턱 막히지 않으셨나요? 인간의 의지력은 한계가 있기 때문에 주말마다 배달 음식을 끊고, 커피를 일절 마시지 않는 극단적인 짠테크는 결국 요요현상처럼 폭발적인 보상 소비로 이어져 실패하기 마련입니다. 가장 영리하고 지속 가능한 지출 통제 전략은 **이미 내가 쓰고 있는 고정 소비 패턴 안에서 일상에 전혀 타격이 없는 수준인 '딱 15%의 영역'만 미세하게 도려내어 투자로 자동 유도하는 시스템**을 구축하는 것입니다.</p>
+                    <div class="p-4 my-4 asset-fact-highlight" style="background: #eef3ff; color: #1c52d8; border-radius: 12px; border-left: 5px solid var(--blue, #007bff); font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 4px rgba(0,123,255,0.05);">
+                        💡 일상의 타격이 전혀 없는 15% 미세 조정 치트키 예시 <br>
+                        일주일에 배달 앱을 4번 시켜 먹던 것을 단 3번으로 줄이고 한 번은 집밥을 먹는 것, 일주일에 3번 타던 카카오 택시를 2번으로 줄이고 버스나 지하철을 타는 것, 매일 마시는 프랜차이즈 커피를 이틀에 한 번 가성비 메가커피나 텀블러로 대체하는 것. 이 아주 사소한 습관의 각도를 15%만 틀어주면 내 인생의 자산 궤적은 완전히 다른 차원으로 점프합니다.
+                    </div>
+                    <h3>나쁜 소비 습관이 미국 국력에 올라탈 때 벌어지는 일</h3>
+                    <p>매달 나도 모르게 새 나가던 돈 85만 원 중 15%인 약 13만 원을 아끼는 것은 당장 내 삶의 퀄리티를 전혀 떨어뜨리지 않습니다. 하지만 이 13만 원이라는 돈이 매달 차곡차곡 모여 장기 평균 연 수익률 8%의 복리 날개를 달고 미국 S&P500 우량 기업들의 성장 엔진에 올라타는 순간, 얘기가 완전히 달라집니다. 단돈 10만 원대 소액이라도 10년, 20년의 세월이라는 강력한 복리 스노우볼과 결합하면 대기업 성과급이나 아파트 분양 계약금에 맞먹는 거대한 종잣돈 덩어리로 스스로를 자가 복제해 내기 때문입니다.</p>
+                    <h3>이 계산기 데이터를 실전 재테크에 100% 동기화하는 법</h3>
+                    <ul>
+                        <li><strong>지출 통제의 가시화:</strong> 내가 습관적으로 긁던 카드 내역들이 미래의 거대한 자산 뭉치로 변신하는 모습을 연도별 테이블로 확인하며 영리한 지출 통제의 쾌감을 뇌에 각인시키세요.</li>
+                        <li><strong>강제 자동이체 시스템 구축:</strong> 계산기가 제안한 '15% 다이어트 투자금'을 확인하셨다면, 매달 월급날 다음 날 소수점 투자 계좌나 미국 주식 적립식 계좌로 돈이 알아서 빠져나가도록 자동이체를 묶어버리세요. 돈을 쓰고 남은 돈을 저축하는 것이 아니라, 나쁜 습관을 도려낸 투자금을 선점한 뒤 남은 돈으로 소비하는 것이 부의 추월차선에 올라타는 유일한 공식입니다.</li>
+                    </ul>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const spendDelivery = document.getElementById("spend-delivery");
+            const spendTaxi = document.getElementById("spend-taxi");
+            const spendCoffee = document.getElementById("spend-coffee");
+            const spendShopping = document.getElementById("spend-shopping");
+            const investRate = document.getElementById("invest-rate");
+            const investYears = document.getElementById("invest-years");
+
+            const resTotalSpend = document.getElementById("res-total-spend");
+            const resDietInvest = document.getElementById("res-diet-invest");
+            const resDisplayYears = document.getElementById("res-display-years");
+            const resFinalSnowball = document.getElementById("res-final-snowball");
+            const snowballTableBody = document.getElementById("snowball-table-body");
+            const spendGuideText = document.getElementById("spend-guide-text");
+
+            function formatNumber(num) {
+                return Math.round(num).toLocaleString('ko-KR');
+            }
+
+            function performSnowballCalculation() {
+                const delivery = parseFloat(spendDelivery.value) || 0;
+                const taxi = parseFloat(spendTaxi.value) || 0;
+                const coffee = parseFloat(spendCoffee.value) || 0;
+                const shopping = parseFloat(spendShopping.value) || 0;
+                const rate = parseFloat(investRate.value) || 0;
+                const years = parseInt(investYears.value) || 0;
+
+                const totalSpend = delivery + taxi + coffee + shopping;
+                resTotalSpend.innerText = formatNumber(totalSpend) + "원";
+
+                const dietInvest = totalSpend * 0.15;
+                resDietInvest.innerText = formatNumber(dietInvest) + "원";
+
+                resDisplayYears.innerText = years;
+
+                const r = (rate / 100) / 12;
+
+                if (dietInvest <= 0 || years <= 0) {
+                    snowballTableBody.innerHTML = `<tr><td colspan="4" class="text-muted p-3">소비 항목을 입력하시면 스노우볼 시뮬레이션이 가동됩니다.</td></tr>`;
+                    resFinalSnowball.innerText = "0원";
+                    spendGuideText.innerText = "데이터를 입력해 주세요.";
+                    return;
+                }
+
+                let tableRows = "";
+                let finalTotal = 0;
+
+                for (let y = 1; y <= years; y++) {
+                    const months = y * 12;
+                    let currentSnowball = 0;
+
+                    if (r > 0) {
+                        currentSnowball = dietInvest * (1 + r) * ((Math.pow(1 + r, months) - 1) / r);
+                    } else {
+                        currentSnowball = dietInvest * months;
+                    }
+
+                    const accumulatedPrincipal = dietInvest * months;
+                    const accumulatedInterest = currentSnowball - accumulatedPrincipal;
+
+                    if (y === years) {
+                        finalTotal = currentSnowball;
+                    }
+
+                    tableRows += `
+                <tr>
+                    <td class="font-weight-bold">${y}년 차</td>
+                    <td class="text-right pr-2">${formatNumber(accumulatedPrincipal)}원</td>
+                    <td class="text-right text-success pr-2">+${formatNumber(accumulatedInterest)}원</td>
+                    <td class="text-right font-weight-bold pr-2" style="background: #fafafa;">${formatNumber(currentSnowball)}원</td>
+                </tr>
+            `;
+                }
+                snowballTableBody.innerHTML = tableRows;
+                resFinalSnowball.innerText = formatNumber(finalTotal) + "원";
+
+                const totalMonths = years * 12;
+                const totalSavedPrincipal = dietInvest * totalMonths;
+                const totalSavedInterest = finalTotal - totalSavedPrincipal;
+
+                spendGuideText.innerHTML = `일상에 지장이 없는 한 달 <strong>${formatNumber(dietInvest)}원</strong>의 미세 지출 다이어트가 ${years}년 동안 쌓여, 순수 원금 <strong>${formatNumber(totalSavedPrincipal)}원</strong>에 복리 마법 수익 <strong>${formatNumber(totalSavedInterest)}원</strong>이 보너스로 결합되었습니다. 이 돈을 무지성 소비로 흘려보냈다면 0원이었겠지만, 복리 스노우볼 엔진을 켜는 순간 내 인생의 든든한 <strong>${formatNumber(finalTotal)}원짜리 핵심 시드머니 방어선</strong>으로 부활했습니다!`;
+            }
+
+            const inputs = [spendDelivery, spendTaxi, spendCoffee, spendShopping, investRate, investYears];
+            inputs.forEach(input => {
+                input.addEventListener("focus", function () {
+                    this.select();
+                });
+                input.addEventListener("input", performSnowballCalculation);
+            });
+
+            performSnowballCalculation();
+        });
+
+    </script>
+</body>
+</html>

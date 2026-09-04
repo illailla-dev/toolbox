@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>지역건강보험료 모의계산기 | 에브리캘크</title>
-    <meta name="description"
-        content="소득, 재산 세표, 보유 자동차 정보를 입력하여 2026년 기준 지역건강보험료와 장기요양보험료를 정확하게 모의 계산하고 세후 지출을 예측해 보세요.">
+    <meta name="description" content="소득, 재산 세표, 보유 자동차 정보를 입력하여 2026년 기준 지역건강보험료와 장기요양보험료를 정확하게 모의 계산하고 세후 지출을 예측해 보세요.">
     <meta name="keywords" content="지역건강보험료계산, 건보료모의계산, 지역가입자건강보험료, 재산세건보료, 자동차건보료, 건보료점수, 에브리캘크">
     <link rel="canonical" href="https://every-calc.co.kr/hi-local-calc/">
     <meta name="robots" content="index, follow">
@@ -40,8 +39,7 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="income-business">사업/근로/기타 소득 (연간)</label>
-                                <input type="number" id="income-business" placeholder="예: 30000000"
-                                    class="form-control">
+                                <input type="number" id="income-business" placeholder="예: 30000000" class="form-control">
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="income-finance">금융 소득 (이자·배당 연 1천만원 초과분)</label>
@@ -59,8 +57,7 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="property-tax-base">토지/건물/주택 재산세 과세표준 금액</label>
-                                <input type="number" id="property-tax-base" placeholder="🔒 공시지가 아님, 재산세 고지서 기준"
-                                    class="form-control">
+                                <input type="number" id="property-tax-base" placeholder="🔒 공시지가 아님, 재산세 고지서 기준" class="form-control">
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="property-rent">전세보증금 또는 월세 보증금</label>
@@ -74,14 +71,13 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="car-value">현재 차량 가액 (시가 기준)</label>
-                                <input type="number" id="car-value" placeholder="예: 45000000 (4천만원 미만은 면제)"
-                                    class="form-control">
+                                <input type="number" id="car-value" placeholder="예: 45000000 (4천만원 미만은 면제)" class="form-control">
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- 3. 실시간 결과 출력 영역 -->
-                <div class="result-box">
+                <div class="result-box mt-4">
                     <h3>💡 나의 월 예상 건강보험료 가이드</h3>
                     <div class="result-display">
                         <p>소득 부과 점수: <strong id="res-income-score">0</strong> 점</p>
@@ -96,8 +92,7 @@
                         <p style="color: var(--blue);font-weight: bold;font-size:110%">🎯 최종 월 납부 예상액: <span
                                 id="res-total-premium">0</span> 원</p>
                     </div>
-                    <p class="result-tip mt-3"
-                        style="font-size: 1rem; background:#e7f5ff; padding:10px; border-radius:5px; border-left:4px solid #007bff;">
+                    <p class="result-tip mt-3" style="font-size: 1rem; background:#e7f5ff; padding:10px; border-radius:5px; border-left:4px solid #007bff;">
                         * 프리랜서 해촉증명서 제출, 재산 매각, 자동차 처분 등으로 부과 요소 변동 시 국민건강보험공단 지사에 즉시 신고하셔야 보험료 폭탄을 피할 수 있습니다.
                     </p>
                 </div>
@@ -111,8 +106,7 @@
                     <h4>1. 지역건강보험료 항목별 점수 산정 방식</h4>
                     <p>최신 국민건강보험법 기준에 따른 점수 산정 방식은 크게 세 가지 축으로 나뉩니다. 과거와 달리 제도 개편을 통해 재산에 대한 기본 공제가 대폭 확대되어 서민층의 부담이 다소
                         줄었으나, 여전히 고가 자산 보유자나 종합소득 발생자에게는 정밀한 모니터링이 요구됩니다.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 300px; width: 100%;">
                             <thead>
                                 <tr>

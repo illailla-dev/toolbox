@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>퇴직금 중간정산 및 정산금 계산기 | 에브리캘크</title>
-    <meta name="description"
-        content="근로기준법 기준 직전 3개월 급여, 연간 상여금, 연차 수당을 반영하여 평균임금을 산출하고 이직 또는 퇴사 시 받을 진짜 퇴직금을 실시간 시뮬레이션합니다.">
+    <meta name="description" content="근로기준법 기준 직전 3개월 급여, 연간 상여금, 연차 수당을 반영하여 평균임금을 산출하고 이직 또는 퇴사 시 받을 진짜 퇴직금을 실시간 시뮬레이션합니다.">
     <meta name="keywords" content="퇴직금계산기, 퇴직금중간정산, 평균임금산출, 근로기준법퇴직금, 퇴사정산금, 이직퇴직금, 에브리캘크">
     <link rel="canonical" href="https://every-calc.co.kr/retirement-pay/">
     <meta name="robots" content="index, follow">
@@ -56,8 +55,7 @@
                         <div class="form-row">
                             <div class="col-xl mb-3">
                                 <label for="salary-base">3개월간 기본급 총액</label>
-                                <input type="number" id="salary-base" placeholder="예: 9000000" class="form-control"
-                                    required>
+                                <input type="number" id="salary-base" placeholder="예: 9000000" class="form-control" required>
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="salary-allowance">3개월간 기타 수당 총액</label>
@@ -75,14 +73,13 @@
                             </div>
                             <div class="col-xl mb-3">
                                 <label for="annual-leave-allowance">직전 1년간 지급받은 연차 수당 총액</label>
-                                <input type="number" id="annual-leave-allowance" placeholder="예: 500000"
-                                    class="form-control">
+                                <input type="number" id="annual-leave-allowance" placeholder="예: 500000" class="form-control">
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- 3. 실시간 결과 출력 영역 -->
-                <div class="result-box">
+                <div class="result-box mt-4">
                     <h3>💡 나의 예상 퇴직금 정산서</h3>
                     <div class="result-display">
                         <p>총 재직 일수: <strong id="res-working-days">0</strong> 일</p>
@@ -92,8 +89,7 @@
                         <p style="color: var(--blue);font-weight: bold;font-size:115%">🎯 예상 세전 퇴직금 총액: <span
                                 id="res-total-retirement">0</span> 원</p>
                     </div>
-                    <p class="result-tip mt-3"
-                        style="font-size: 1rem; background:#fff3cd; padding:10px; border-radius:5px; border-left:4px solid #ffc107;">
+                    <p class="result-tip mt-3" style="font-size: 1rem; background:#fff3cd; padding:10px; border-radius:5px; border-left:4px solid #ffc107;">
                         * 본 계산기는 세전 금액 기준입니다. 실제 수령액은 근속연수에 따른 '퇴직소득세'가 공제된 후 등록하신 IRP(개인형퇴직연금) 계좌로 입금됩니다.
                     </p>
                 </div>
@@ -107,8 +103,7 @@
                         퇴직금 정산기를 제작하게 되었습니다.</p>
                     <h4>1. 퇴직금 산정의 핵심, '평균임금' 계산법</h4>
                     <p>정확한 정산금 산출을 위해서는 퇴직 전 마지막 3개월간 지급된 기본급 외에, 정기 상여금과 연차수당의 일부가 반드시 평균임금 1일 분에 합산되어야 합니다.</p>
-                    <div class="table-responsive"
-                        style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
                         <table class="table table-bordered text-center" style="min-width: 300px; width: 100%;">
                             <thead>
                                 <tr>

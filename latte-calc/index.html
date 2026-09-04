@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>하루 커피값 모아 분산 투자 계산기 | 에브리캘크</title>
+    <title>☕ 하루 커피값의 기적! 라떼 효과 분산 투자 계산기 | 에브리캘크</title>
     <meta name="description" content="내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 안전한 적금과 성장하는 미국 ETF의 투자 비율을 직접 매칭해보세요. 복리와 세금을 정밀 연산하여 미래 자산 가치를 무결점으로 빌드합니다.">
     <meta name="keywords" content="ISA 계좌, S&P500, 라떼 효과, 분산 투자, 정기적금">
     <link rel="canonical" href="https://every-calc.co.kr/latte-calc/">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/layout.css">
     <meta property="og:site_name" content="에브리캘크">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="하루 커피값 모아 분산 투자 계산기 - 에브리캘크">
+    <meta property="og:title" content="☕ 하루 커피값의 기적! 라떼 효과 분산 투자 계산기 - 에브리캘크">
     <meta property="og:description" content="내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 안전한 적금과 성장하는 미국 ETF의 투자 비율을 직접 매칭해보세요. 복리와 세금을 정밀 연산하여 미래 자산 가치를 무결점으로 빌드합니다.">
     <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
     <meta property="og:url" content="https://every-calc.co.kr/latte-calc/">
@@ -30,18 +30,18 @@
         <div id="gnb" data-include="gnb.html"></div>
         <main id="content">
             <section class="calculator-box">
-                <h2>☕ 하루 커피값 모아 분산 투자 계산기</h2>
-                <p>내가 매일 습관적으로 지출하는 하루 한 잔의 커피값이나 기호식품 비용을 설정하고 안전한 적금과 성장하는 미국 ETF의 투자 비율을 직접 매칭해보세요. 복리와 세금을 정밀 연산하여 미래 자산 가치를 무결점으로 빌드합니다.</p>
+                <h2>☕ 하루 커피값의 기적! 라떼 효과 분산 투자 계산기</h2>
+                <p>매일 습관적으로 무심코 지출하던 하루 한 잔의 커피값이나 담뱃값 같은 푼돈들, 이 작은 지출을 멈추고 내 지갑 사정에 맞게 안전한 은행 적금과 성장하는 미국 ETF에 쪼개어 태운다면 과연 미래에 얼마나 거대한 눈덩이 자산으로 부활할까요? 실시간 복리 포트폴리오 결합 엔진으로 확인해 드립니다.</p>
                 <form id="coffee-form" class="form" onsubmit="return false;">
                     <div class="input-group-box">
                         <h3>1. 절약 금액 및 재테크 기간 설정</h3>
-                        <div class="form-row mb-3">
-                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
                                 <label for="coffee-daily-cost">하루에 아낄 소액 지출 (원)</label>
-                                <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500" value="4500" min="500" step="100" required>
-                                <small class="text-muted mt-2 d-block">프랜차이즈 카페 아메리카노 혹은 담뱃값 기준 평균 4,500원입니다.</small>
+                                <input type="number" id="coffee-daily-cost" class="form-control" placeholder="예: 4500" value="5000" min="500" step="100" required>
+                                <small class="text-muted mt-2 d-block">내가 끊거나 줄여볼 하루치 소액 소비 기준입니다. (예: 5,000원)</small>
                             </div>
-                            <div class="col-md-6 input-item">
+                            <div class="col-md-6 col-12 input-item">
                                 <label for="coffee-period-select">자산 축적 목표 기간</label>
                                 <select id="coffee-period-select" class="form-control">
                                     <option value="3">3년 저축 시 (36개월 단기 레이스)</option>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <hr class="my-4" style="border-top: 1px dashed #ddd;">
-                        <h3>2. 분산 투자 비율 조정 (반반 전략)</h3>
+                        <h3>2. 내 투자 성향별 분산 투자 비율 조정</h3>
                         <div class="form-row mb-3">
                             <div class="col-md-12 input-item">
                                 <div class="d-flex justify-content-between font-weight-bold mb-2 small">
@@ -59,37 +59,36 @@
                                     <span style="color: var(--blue, #007bff);">📈 미국 ETF 비중: <span id="res-stock-percent">50</span>%</span>
                                 </div>
                                 <input type="range" id="coffee-ratio-slider" class="form-control-range" min="0" max="100" value="50" step="10">
-                                <small class="text-muted mt-2 d-block text-center">슬라이더를 움직여 안전 자산과 투자 자산의 균형을 맞출 수 있습니다.</small>
+                                <small class="text-muted mt-2 d-block text-center">슬라이더를 좌우로 움직여 내 멘탈에 맞는 최적의 밸런스를 맞춰보세요.</small>
                             </div>
                         </div>
                         <hr class="my-4" style="border-top: 1px dashed #ddd;">
-                        <h3>3. 개별 자산 연수익률 설정</h3>
-                        <div class="form-row mb-3">
-                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                        <h3>3. 자산별 개별 연수익률 커스텀 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 col-12 input-item mb-3 mb-md-0">
                                 <label for="coffee-saving-rate">🏦 은행 적금 금리 (연, %)</label>
-                                <input type="number" id="coffee-saving-rate" class="form-control" value="3.5" step="0.1">
+                                <input type="number" id="coffee-saving-rate" class="form-control" value="3.5" step="0.1" required>
                             </div>
-                            <div class="col-md-6 input-item">
+                            <div class="col-md-6 col-12 input-item">
                                 <label for="coffee-stock-rate">📈 미국 ETF 수익률 (연, %)</label>
-                                <input type="number" id="coffee-stock-rate" class="form-control" value="8.0" step="0.1">
+                                <input type="number" id="coffee-stock-rate" class="form-control" value="8.0" step="0.1" required>
                             </div>
                         </div>
                     </div>
                 </form>
-                <!-- 2. 결과 출력 영역 (3번 고정 규칙 엄격 고수) -->
                 <div class="result-box mt-4">
                     <h3>💡 소액 절약 자산 축적 시뮬레이션 결과</h3>
                     <div class="result-display">
-                        <p>지정 기간 동안 절약한 순수 원금 총액: <strong id="res-coffee-pure-principal">0원</strong></p>
-                        <p>복리 마법으로 불어난 순수 이자/수익: <strong id="res-coffee-compound-interest" style="color: var(--orange, #fd7e14);">0원</strong></p>
+                        <p>지정 기간 동안 순수하게 아낀 원금 총액: <strong id="res-coffee-pure-principal">0원</strong></p>
+                        <p>복리 및 이자로 늘어난 순수 보너스 수익: <strong id="res-coffee-compound-interest" style="color: var(--orange, #fd7e14);">0원</strong></p>
                         <div class="table-responsive my-3">
                             <table class="table table-sm table-bordered text-center small text-muted bg-white">
                                 <thead class="thead-light">
-                                    <tr>
+                                    <tr class="table-secondary text-dark font-weight-bold">
                                         <th>자산 분류</th>
-                                        <th>월 납입액</th>
+                                        <th>월 적립액</th>
                                         <th>누적 원금</th>
-                                        <th>수익금</th>
+                                        <th>예상 수익금</th>
                                         <th>최종 평가액</th>
                                     </tr>
                                 </thead>
@@ -112,62 +111,30 @@
                             </table>
                         </div>
                         <hr>
-                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">포트폴리오 결합 **최종 예상 총액**: <strong id="res-coffee-final-total">0원</strong></p>
+                        <p style="font-size: 115%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">포트폴리오 결합 최종 예상 총액: <strong id="res-coffee-final-total">0원</strong></p>
                     </div>
                     <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
                         <h4>📊 푼돈 목돈 전환 절약 가이드</h4>
                         <p style="font-size: 1rem; margin-bottom: 0;" id="coffee-guide-text"></p>
                     </div>
-                    <p class="result-tip guide-text mt-3" style="color: var(--gray, #6c757d); font-size: 0.85rem;">* 본 시뮬레이터는 하루치의 절약 금액을 월 단위(하루 금액 * 30.41일)로 환산하여 비율에 맞게 쪼개어 적립 연산합니다. 은행 정기적금은 일반과세(15.4% 세후) 공식을 따르며, 미국 ETF 투자 상품은 절세 계좌(ISA)를 가인 전제로 하여 월 복리 적립식 공식 스펙을 고수합니다.</p>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray); font-size: 0.85rem;">* 본 시뮬레이터는 하루 절약 금액을 금융 공학 표준 월 기준(하루 금액 * 30.41일)으로 상속 환산하여 매월 말 복리로 예치 연산하는 시스템입니다. 시중은행 적금은 이자소득세 15.4%를 자동 차감 연산하며, 미국 ETF 자산은 절세 계좌(ISA)를 경유해 세금 유출이 제로인 상태를 전제로 계산된 무결점 지표입니다.</p>
                 </div>
             </section>
-            <section class="calculator-description">
+            <section class="calculator-description mt-5">
                 <div class="description-content">
-                    <h2>💡 하루 커피값 분산 투자 가이드: 푼돈으로 내 자산의 미래 방어선 구축하기</h2>
-                    <p>재테크 전문가들이 입을 모아 강조하는 금융 용어 중에 <strong>'라떼 효과(Latte Factor)'</strong>가 있습니다. 이는 식후에 습관적으로 지출하는 프랜차이즈 커피 한 잔 값이나 담배 한 갑, 혹은 무심코 방치해 둔 스마트폰 스트리밍 구독료처럼 일상에서 감정 없이 지출하는 소액을 뜻합니다. "단돈 몇 천 원 아껴서 언제 목돈 만드냐"며 무시하기 쉽지만, 이 소소한 잔돈이 전 세계 경제를 이끄는 초일류 우량 자산들과 결합하여 '시간의 무기'를 장착하는 순간, 5년 뒤 상상 이상으로 묵직한 대형 금고가 되어 내 통장에 돌아옵니다.</p>
-                    <p>본 분산 투자 계산기는 사용자가 입력한 하루치의 절약 금액을 표준 월 평균 일수(30.41일) 파라미터로 실시간 상속하여 월간 총예산을 환산하고, 안전한 정기적금과 성장하는 미국 ETF의 투자 비율을 자유롭게 쪼개어 <strong>5년 뒤 내 손에 쥐어질 세후 만기 금액을 무결점으로 도출</strong>해 주는 모의 금융 시뮬레이터입니다. 이를 통해 일상적인 지출 통제가 어떻게 거대한 목돈으로 전환되는지 그 위대한 자산 형성의 경로를 사전에 정밀하게 시뮬레이션할 수 있습니다.</p>
-                    <h3>🏦 왜 하필 적금과 미국 ETF를 반반씩 섞는 '반반 전략'일까요?</h3>
-                    <p>매일 주가 움직임에 가슴 졸이며 모니터링할 자신이 없는 투자자에게 가장 안정적인 포트폴리오는 <strong>은행의 '안전판'</strong>과 <strong>미국 우량 기업의 '성장판'</strong>을 황금 비율로 혼합하는 것입니다. 주식에만 100% 몰빵하면 시장이 흔들릴 때 무서워서 중간에 손절하게 되고, 은행 적금에만 100% 묻어두면 살인적인 물가상승률을 따라잡지 못해 돈의 가치가 녹아내리기 때문입니다.</p>
-                    <div class="row my-4">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="p-4 h-100" style="background: #f8f9fa; border-radius: 12px; border-top: 4px solid #6c757d;">
-                                <h4 class="font-weight-bold mb-3" style="font-size: 1.05rem; color: #4e5968;">1. 은행 정기적금: 자산의 단단한 뼈대</h4>
-                                <p class="small mb-0" style="color: #6b7684; font-size: 0.92rem; line-height: 1.7;">
-                                    전체 저축 예산 중 적금 계좌로 들어가는 돈은 글로벌 경제 위기나 전쟁, 전염병 사태가 터져 금융 시장이 일시적으로 마비되더라도 대한민국 예금자보호법 안에서 <strong>원금과 약정 이자가 100% 안전하게 보장</strong>됩니다. 5년 뒤 내가 계획한 만기 시점에 단 1원의 오차도 없이 무조건 내 손에 쥐어지는 가장 든든한 심리적 버팀목이자 자산의 콘크리트 지지대 역할을 수행합니다.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="p-4 h-100" style="background: #f4f7fe; border-radius: 12px; border-top: 4px solid var(--blue, #007bff);">
-                                <h4 class="font-weight-bold text-primary mb-3" style="font-size: 1.05rem;">2. 미국 우량 지수 ETF: 자산의 상승 엔진</h4>
-                                <p class="small mb-0" style="color: #6b7684; font-size: 0.92rem; line-height: 1.7;">
-                                    미국 S&P500이나 미국배당다우존스 같은 상품들은 전 세계 자본을 무섭게 빨아들이는 초일류 우량 기업(애플, 마이크로소프트, 구글 등)들을 한 바구니에 묶어놓은 상품입니다. 지난 100년간 무수한 폭락장을 극복하며 우상향해 온 이들의 <strong>역사적 평균 수익률은 연 8% 선</strong>에 달합니다. 매달 원금이 쌓이고, 그 늘어난 원금 전체에 다시 새끼를 치는 '복리의 마법'이 작동하여 전체 목돈의 규모를 점프시켜 줍니다.
-                                </p>
-                            </div>
-                        </div>
+                    <h2>☕ 금융학의 고전 치트키 '라떼 효과(Latte Factor)'가 내 통장을 바꾸는 원리</h2>
+                    <p>재테크 시장에는 행동 경제학에서 아주 유명한 **'라떼 효과'**라는 단어가 있습니다. 매일 습관적으로 사 마시는 한 잔의 커피값이나 무심코 긁는 편의점 주전부리, 담뱃값처럼 눈에 띄지 않는 아주 작은 소액 지출들을 모으면 나중에 무시무시한 거액의 목돈으로 스노우볼이 굴러간다는 핵심 법칙입니다. 대다수의 직장인들이 "월급이 적어서 재테크할 돈이 없다"라고 하소연하지만, 실제로는 내 통장에서 매달 정기적으로 흐릿하게 증발하고 있는 푼돈의 구멍만 막아도 든든한 우량 자산의 주주가 될 수 있는 발판이 이미 장착되어 있는 셈입니다.</p>
+                    <div class="p-4 my-4 asset-fact-highlight" style="background: #eef3ff; color: #1c52d8; border-radius: 12px; border-left: 5px solid var(--blue, #007bff); font-weight: bold; font-size: 1.05rem; box-shadow: 0 2px 4px rgba(0,123,255,0.05);">
+                        🎯 하루 5,000원의 소액 절약이 10년 뒤에 가져오는 자산 혁명<br>
+                        매일 스타벅스 커피 한 잔 값인 5,000원을 아끼면 한 달에 약 15만 원이라는 저축 마진이 생깁니다. 이 돈을 그냥 침대 밑 금고에 넣어두면 10년 뒤에 고작 1,800만 원짜리 깡통 원금에 불과하지만, 연 수익률 8%의 미국 S&P500 인덱스 복리 엔진에 기계적으로 이체해 두면 무려 <strong>약 2,800만 원</strong>이 넘는 거금으로 몸집을 불려 냅니다. 불어난 이자와 수익률 파이만 자그마치 1,000만 원에 달하는 마법이 일어납니다.
                     </div>
-                    <h3>⚠️ 시중은행 '연 8% 한달적금'의 숨겨진 이자 함정</h3>
-                    <p>요즘 많은 시중은행들이 눈길을 사로잡기 위해 '연 8% 고금리 특판 한달적금'을 출시하곤 합니다. 주식 리스크 없이 연 8%를 준다니 최고처럼 보이지만, 여기에는 금융 공학적인 계산의 함정이 숨어 있습니다. 은행이 말하는 8%는 '1년(12개월) 동안 돈을 온전히 묶어두었을 때' 적용되는 연리입니다. 이를 고작 한 달 만에 해지하면 이자를 12분의 1로 쪼개서 지급합니다. 게다가 적금은 첫날 넣은 5,000원에만 온전한 이자가 붙고, 만기 직전에 넣은 5,000원은 은행에 머문 기간이 단 하루뿐이라 이자가 거의 제로에 수렴합니다. 결국 한 달 뒤 내 손에 쥐어지는 실제 이자는 단돈 몇백 원에 불과하며, 이를 5년간 매달 반복해 봐야 복리 효과가 전혀 없어 총자산은 늘어나지 않습니다. 진짜 연 8%의 복리 성장을 누리기 위해서는 미국 우량 지수 ETF에 장기 적립식으로 예치해야만 표에 나오는 진정한 자산 우상향을 경험할 수 있습니다.</p>
-                    <h3>⏳ 5년 뒤 아무것도 안 따지고 목돈을 거머쥐는 3대 행동 원칙</h3>
-                    <p>주식 투자로 돈을 잃는 대부분의 사람은 매일 주가 창을 열어보며 공포에 질려 사고팔기를 반복하기 때문입니다. 신경을 완전히 끄고 기계처럼 모아 5년 뒤 만기 졸업을 달성하기 위해 처음 세팅할 때 반드시 지켜야 할 약속이 있습니다.</p>
-                    <ul class="pl-3 mb-4" style="line-height: 1.8; color: #4e5968;">
-                        <li class="mb-3">
-                            <strong>'자동 주식 모으기'로 내 손과 감정을 떠나게 하세요:</strong>
-                            매달 혹은 매주 직접 앱을 켜서 매수하려고 하면 인간의 심리상 "지금 너무 고점인가? 내일 폭락하면 어쩌지?"라는 고민에 빠져 결국 포기하게 됩니다. 증권사나 은행 앱의 자동 모으기 기능을 켜두면, 주가가 높은 날은 비싸니까 주식을 적게 사고, 주가가 폭락한 날은 세일 기간이라 주식을 알아서 많이 사들이게 됩니다. 5년 뒤에 보면 완벽하게 예쁜 평균 단가로 자산이 세팅되어 있습니다.
-                        </li>
-                        <li class="mb-3">
-                            <strong>마이너스 파란불이 뜨는 폭락장일수록 계좌를 삭제하듯 잊으세요:</strong>
-                            5년이라는 긴 여정 동안 미국 경제도 분명 한두 번은 혹독한 겨울(경기 침체)을 맞이할 것입니다. 계좌에 -10%, -20% 손실이 찍히는 순간 무서워서 해지하면 손실이 확정됩니다. 역사적으로 미국 S&P500은 1년 단기 투자 시 손실 확률이 30%에 육박하지만, 투자 기간을 5년 이상으로 늘리면 손실을 볼 확률이 10% 미만으로 뚝 떨어집니다. 위기를 먹고 자란 500개 1등 기업들의 펀더멘탈을 믿고 묵혀두는 것이 핵심입니다.
-                        </li>
-                        <li class="mb-3">
-                            <strong>국가가 공인한 세금 프리패스, 'ISA 계좌'에서 무조건 시작하세요:</strong>
-                            재테크의 완성은 절세입니다. 일반 주식 계좌에서 미국 ETF를 굴려 돈을 벌면 만기 때 국가가 수익의 15.4%를 이자소득세로 원천징수해 갑니다. 수십, 수백만 원의 아까운 세금을 내지 않으려면 정부가 장기 자산 형성을 지원하기 위해 만든 <strong>ISA(개인종합자산관리계좌)</strong>를 개설하여 그 안에서 ETF를 모으셔야 합니다. 의무 가입 기간이 최소 3년이라 5년 만기 플랜에 자물쇠를 채우기에도 완벽하며, 해지 시 비과세 혜택을 받아 내 피 같은 투자 수익금을 단 1원의 낙오도 없이 100% 온전히 내 지갑으로 회수할 수 있습니다.
-                        </li>
+                    <h3>왜 적금 단독 투자보다 미국 ETF 분산 전략이 유리할까요?</h3>
+                    <p>은행 적금은 원금이 완벽하게 보장되는 최고의 안전 피난처이지만, 물가상승률을 이기지 못하고 만기 때 이자의 15.4%를 세금으로 빼앗아 가기 때문에 자산 증식 속도가 현저히 느립니다. 반면 미국 S&P500 같은 우량 지수 추종 ETF는 장기적으로 우상향하며 월 복리로 자산을 굴려주기 때문에 돈이 돈을 버는 가속도가 무섭게 붙습니다. 하지만 주식 시장은 언제나 등락이 있으므로, 유리멘탈을 가진 초보 유저라면 슬라이더 조절을 통해 안전 자산(적금)과 공격 자산(ETF)의 비율을 반반씩 믹스하는 밸런스 전략이 장기 투자를 완주하게 만드는 가장 강력한 무기가 됩니다.</p>
+                    <h3>라떼 효과 시뮬레이터 200% 활용 꿀팁</h3>
+                    <ul>
+                        <li>**소액 자동 저축 시스템 연동:** 내 한 달 고정비 내역 중 줄일 수 있는 소비 금액을 확정하셨다면, 증권사나 은행의 '소수점 주식 자동 매수' 혹은 '주간 적금' 기능을 활용해 내 의지가 개입하기 전에 돈이 알아서 복리 엔진으로 강제 유입되도록 자동 락업 장치를 걸어버리세요.</li>
+                        <li>**멘탈 방어선 조율:** 주가가 떨어질 때 밤에 잠이 안 올 것 같다면 슬라이더를 적금 70 : 미국 ETF 30 비율로 맞춰 마음의 평화를 얻고, 나는 장기전으로 무조건 복리 끝판왕을 보겠다면 미국 ETF 비중을 100%로 올려 미래 자산의 앞날을 가장 뜨겁게 가열해 보시기 바랍니다.</li>
                     </ul>
-                    <div class="p-4 mt-5 alert-warning-box" style="background: #fff3cd; color: #664d03; border-radius: 12px; font-size: 0.93rem; border: 1px solid #ffeeba; line-height: 1.7;">
-                        <span class="font-weight-bold d-block mb-1" style="font-size: 1rem;">🚨 단기 자금 운영자를 위한 엄격한 리스크 경고</span>
-                        본 시뮬레이터가 제시하는 복리의 마법은 '최소 3년에서 5년 이상' 계좌를 절대 건드리지 않고 묻어둘 수 있는 여유 자금을 전제로 작동합니다. 만약 1년 뒤에 무조건 꺼내서 전세 자금이나 자동차 구입비로 써야 하는 긴박한 돈이라면, 아무리 미국 우량주라도 단기 변동성 폭탄을 맞아 원금 손실 상태로 피눈물을 흘리며 매도해야 할 위험이 절반(50%)에 달합니다. 1년짜리 단기 플랜을 원하신다면 주식을 완전히 배제하고 100% 제1금융권의 확정 금리 정기적금에만 예치하시는 것이 안전하며, 인생을 바꿀 복리의 단단한 힘은 '일상에 지장을 주지 않는 확실한 푼돈'의 영역에서만 발휘되도록 통제하십시오.
-                    </div>
                 </div>
             </section>
             <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
@@ -178,24 +145,18 @@
     <script src="/js/common.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // 인풋 엘리먼트 타겟
             const dailyCostInput = document.getElementById("coffee-daily-cost");
             const periodSelect = document.getElementById("coffee-period-select");
             const ratioSlider = document.getElementById("coffee-ratio-slider");
             const savingRateInput = document.getElementById("coffee-saving-rate");
             const stockRateInput = document.getElementById("coffee-stock-rate");
 
-            // 실시간 비중 텍스트 타겟
-            const savingPercentText = document.getElementById("res-saving-percent");
-            const stockPercentText = document.getElementById("res-stock-percent");
+            const resSavingPercent = document.getElementById("res-saving-percent");
+            const resStockPercent = document.getElementById("res-stock-percent");
+            const resCoffeePurePrincipal = document.getElementById("res-coffee-pure-principal");
+            const resCoffeeCompoundInterest = document.getElementById("res-coffee-compound-interest");
+            const resCoffeeFinalTotal = document.getElementById("res-coffee-final-total");
 
-            // 최종 결과 출력 타겟
-            const resPurePrincipal = document.getElementById("res-coffee-pure-principal");
-            const resCompoundInterest = document.getElementById("res-coffee-compound-interest");
-            const resFinalTotal = document.getElementById("res-coffee-final-total");
-            const guideText = document.getElementById("coffee-guide-text");
-
-            // 세부 표 출력 타겟
             const tblSavingMonthly = document.getElementById("tbl-saving-monthly");
             const tblSavingPrincipal = document.getElementById("tbl-saving-principal");
             const tblSavingInterest = document.getElementById("tbl-saving-interest");
@@ -206,93 +167,112 @@
             const tblStockInterest = document.getElementById("tbl-stock-interest");
             const tblStockTotal = document.getElementById("tbl-stock-total");
 
-            // 슬라이더 조절 시 텍스트 즉각 변경 및 연산 리로드
-            ratioSlider.addEventListener("input", function () {
-                const savingPercent = parseInt(ratioSlider.value);
-                const stockPercent = 100 - savingPercent;
+            const coffeeGuideText = document.getElementById("coffee-guide-text");
 
-                savingPercentText.innerText = savingPercent;
-                stockPercentText.innerText = stockPercent;
+            const DAYS_IN_MONTH = 30.41;
 
-                calculateDiversification();
-            });
-
-            // 모든 요소에 실시간 변경 연동 인터페이스 장착
-            dailyCostInput.addEventListener("input", calculateDiversification);
-            periodSelect.addEventListener("change", calculateDiversification);
-            savingRateInput.addEventListener("input", calculateDiversification);
-            stockRateInput.addEventListener("input", calculateDiversification);
-
-            function calculateDiversification() {
-                const dailyCost = parseFloat(dailyCostInput.value) || 0;
-                const years = parseInt(periodSelect.value);
-                const totalMonths = years * 12; // 년수를 개월 수로 변환
-
-                const savingPercent = parseInt(ratioSlider.value);
-                const stockPercent = 100 - savingPercent;
-
-                const annualSavingRate = (parseFloat(savingRateInput.value) || 0) / 100;
-                const annualStockRate = (parseFloat(stockRateInput.value) || 0) / 100;
-
-                // 1. 월 예산 환산 (하루 비용 * 표준 월 평균 일수 30.41일)
-                const totalMonthlyBudget = Math.round(dailyCost * 30.41);
-
-                // 2. 비중별 월 납입 금액 배분
-                const monthlySaving = Math.round(totalMonthlyBudget * (savingPercent / 100));
-                const monthlyStock = Math.round(totalMonthlyBudget * (stockPercent / 100));
-
-                // 3. 은행 적금 연산 (단리 적립 후 세후 이자 정산)
-                let savingPrincipal = monthlySaving * totalMonths;
-                let savingAccumulatedInterest = 0;
-                for (let i = 1; i <= totalMonths; i++) {
-                    savingAccumulatedInterest += monthlySaving * (annualSavingRate / 12) * i;
-                }
-                const tax = savingAccumulatedInterest * 0.154; // 이자소득세 15.4%
-                const savingNetInterest = Math.max(0, Math.round(savingAccumulatedInterest - tax));
-                const savingFinalAmount = savingPrincipal + savingNetInterest;
-
-                // 4. 미국 ETF 투자 연산 (정통 월 복리 적립 공식)
-                let stockPrincipal = monthlyStock * totalMonths;
-                let stockFinalAmount = 0;
-                const monthlyStockRate = annualStockRate / 12;
-
-                if (monthlyStockRate > 0) {
-                    stockFinalAmount = monthlyStock * ((Math.pow(1 + monthlyStockRate, totalMonths) - 1) / monthlyStockRate) * (1 + monthlyStockRate);
-                } else {
-                    stockFinalAmount = stockPrincipal;
-                }
-                stockFinalAmount = Math.round(stockFinalAmount);
-                const stockNetInterest = Math.max(0, stockFinalAmount - stockPrincipal);
-
-                // 5. 총합 결합
-                const finalPrincipal = savingPrincipal + stockPrincipal;
-                const finalInterest = savingNetInterest + stockNetInterest;
-                const finalTotal = savingFinalAmount + stockFinalAmount;
-
-                // 6. 메인 요약 영역 출력 데이터 맵핑
-                resPurePrincipal.innerText = finalPrincipal.toLocaleString() + "원";
-                resCompoundInterest.innerText = finalInterest.toLocaleString() + "원";
-                resFinalTotal.innerText = finalTotal.toLocaleString() + "원";
-
-                // 7. 세부 내역 표(Table) 데이터 출력 맵핑
-                tblSavingMonthly.innerText = monthlySaving.toLocaleString() + "원";
-                tblSavingPrincipal.innerText = savingPrincipal.toLocaleString() + "원";
-                tblSavingInterest.innerText = savingNetInterest.toLocaleString() + "원";
-                tblSavingTotal.innerText = savingFinalAmount.toLocaleString() + "원";
-
-                tblStockMonthly.innerText = monthlyStock.toLocaleString() + "원";
-                tblStockPrincipal.innerText = stockPrincipal.toLocaleString() + "원";
-                tblStockInterest.innerText = stockNetInterest.toLocaleString() + "원";
-                tblStockTotal.innerText = stockFinalAmount.toLocaleString() + "원";
-
-                // 8. 동적 동기화 절약 가이드 텍스트 자동 큐레이션
-                guideText.innerHTML = `하루 <strong>${dailyCost.toLocaleString()}원</strong>씩 소비를 통제하여 <strong>${years}년</strong>간
-        안전적금 ${savingPercent}%, 미국 ETF ${stockPercent}% 비율로 운용하시면, 원금 <strong>${finalPrincipal.toLocaleString()}원</strong>이
-        스스로 일하여 총 <strong>${finalInterest.toLocaleString()}원</strong>의 순수 재테크 수익을 만들어냅니다.`;
+            function formatNumber(num) {
+                return Math.round(num).toLocaleString('ko-KR');
             }
 
-            // 시스템 로딩 시 최초 실행
-            calculateDiversification();
+            function calculateSimpleInterest(monthlyDeposit, totalMonths, annualRate) {
+                const r = annualRate / 100;
+                const taxRate = 0.154;
+                const principal = monthlyDeposit * totalMonths;
+
+                if (r <= 0) return { principal: principal, interest: 0, total: principal };
+
+                const rawInterest = monthlyDeposit * (totalMonths * (totalMonths + 1) / 2) * (r / 12);
+                const netInterest = rawInterest * (1 - taxRate);
+
+                return {
+                    principal: principal,
+                    interest: netInterest,
+                    total: principal + netInterest
+                };
+            }
+
+            function calculateCompoundInterest(monthlyDeposit, totalMonths, annualRate) {
+                const r = (annualRate / 100) / 12;
+                const principal = monthlyDeposit * totalMonths;
+
+                if (r <= 0) return { principal: principal, interest: 0, total: principal };
+
+                const total = monthlyDeposit * (1 + r) * ((Math.pow(1 + r, totalMonths) - 1) / r);
+                const interest = total - principal;
+
+                return {
+                    principal: principal,
+                    interest: interest,
+                    total: total
+                };
+            }
+
+            function performLatteCalculation() {
+                const dailyCost = parseFloat(dailyCostInput.value) || 0;
+                const years = parseInt(periodSelect.value) || 0;
+                const stockRatio = parseInt(ratioSlider.value) || 0;
+                const savingRatio = 100 - stockRatio;
+
+                const savingRate = parseFloat(savingRateInput.value) || 0;
+                const stockRate = parseFloat(stockRateInput.value) || 0;
+
+                resSavingPercent.innerText = savingRatio;
+                resStockPercent.innerText = stockRatio;
+
+                const totalMonths = years * 12;
+                const totalMonthlyBudget = dailyCost * DAYS_IN_MONTH;
+
+                const monthlySaving = totalMonthlyBudget * (savingRatio / 100);
+                const monthlyStock = totalMonthlyBudget * (stockRatio / 100);
+
+                const resSaving = calculateSimpleInterest(monthlySaving, totalMonths, savingRate);
+                const resStock = calculateCompoundInterest(monthlyStock, totalMonths, stockRate);
+
+                const totalPurePrincipal = resSaving.principal + resStock.principal;
+                const totalInterest = resSaving.interest + resStock.interest;
+                const finalTotal = resSaving.total + resStock.total;
+
+                resCoffeePurePrincipal.innerText = formatNumber(totalPurePrincipal) + "원";
+                resCoffeeCompoundInterest.innerText = formatNumber(totalInterest) + "원";
+                resCoffeeFinalTotal.innerText = formatNumber(finalTotal) + "원";
+
+                tblSavingMonthly.innerText = formatNumber(monthlySaving) + "원";
+                tblSavingPrincipal.innerText = formatNumber(resSaving.principal) + "원";
+                tblSavingInterest.innerText = formatNumber(resSaving.interest) + "원";
+                tblSavingTotal.innerText = formatNumber(resSaving.total) + "원";
+
+                tblStockMonthly.innerText = formatNumber(monthlyStock) + "원";
+                tblStockPrincipal.innerText = formatNumber(resStock.principal) + "원";
+                tblStockInterest.innerText = formatNumber(resStock.interest) + "원";
+                tblStockTotal.innerText = formatNumber(resStock.total) + "원";
+
+                if (finalTotal <= 0) {
+                    coffeeGuideText.innerText = "금액을 입력하시면 포트폴리오 가이드라인이 활성화됩니다.";
+                    return;
+                }
+
+                if (stockRatio >= 70) {
+                    coffeeGuideText.innerHTML = `현재 하루 <strong>${formatNumber(dailyCost)}원</strong>씩 아낀 돈의 대부분을 주식 복리 엔진에 집중 투입하는 적극적 우상향 코스를 고르셨습니다. 만기 시 무려 <strong>${formatNumber(totalInterest)}원</strong>이라는 두둑한 보너스 복리 수익이 붙어 지갑을 두껍게 채워줍니다. 장기 목돈 형성에 최고의 효율입니다!`;
+                } else if (stockRatio <= 30) {
+                    coffeeGuideText.innerHTML = `현재 안전 자산인 은행 적금 위주로 철벽 방어막을 친 리스크 제로형 코스입니다. 주가 변동성 스트레스 없이 원금을 무결점으로 모을 수 있지만, 미국 복리 자산에 비해 이자가 자라나는 스노우볼 속도는 다소 무뎌질 수 있으니 여유 자금이 있다면 슬라이더 비중을 우측으로 조금 더 올려보세요.`;
+                } else {
+                    coffeeGuideText.innerHTML = `안전 자산의 담보력과 미국 우량 기업의 복리 성장성을 완벽한 균형으로 매칭한 <strong>황금 반반 밸런스 포트폴리오</strong>입니다. 예적금이 하방을 든든하게 받치고 ETF가 상방을 열어주어, 사회초년생이 멘탈을 유지하며 ${years}년 목표 기간을 지치지 않고 완주하기에 가장 완벽한 세팅입니다!`;
+                }
+            }
+
+            const inputs = [dailyCostInput, savingRateInput, stockRateInput];
+            inputs.forEach(input => {
+                input.addEventListener("focus", function () {
+                    this.select();
+                });
+                input.addEventListener("input", performLatteCalculation);
+            });
+
+            periodSelect.addEventListener("change", performLatteCalculation);
+            ratioSlider.addEventListener("input", performLatteCalculation);
+
+            performLatteCalculation();
         });
 
     </script>
