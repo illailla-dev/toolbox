@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>예적금 갈아타기 손해 방지 계산기 (중도해지 비교) | 에브리캘크</title>
+    <meta name="description" content="기존에 가입해 둔 예적금을 깨고 더 높은 금리의 신규 특판 상품으로 갈아타는 것이 진짜 이득인지 정밀 대조합니다. 중도해지 시 날아가는 패널티 이자 손실액과 새 상품으로 얻는 추가 이자 마진을 실시간 상속 연산하여 가장 무결한 환승 타이밍을 빌드합니다.">
+    <meta name="keywords" content="배당금 재투자 계산기, 주식 분배금 재투자, 배당주 복리 효과, TIGER 미국배당다우존스 분배금, ETF 배당금 계산기">
+    <link rel="canonical" href="https://every-calc.co.kr/deposit-switch-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="예적금 갈아타기 손해 방지 계산기 (중도해지 비교)">
+    <meta property="og:description" content="기존에 가입해 둔 예적금을 깨고 더 높은 금리의 신규 특판 상품으로 갈아타는 것이 진짜 이득인지 정밀 대조합니다. 중도해지 시 날아가는 패널티 이자 손실액과 새 상품으로 얻는 추가 이자 마진을 실시간 상속 연산하여 가장 무결한 환승 타이밍을 빌드합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/deposit-switch-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>🏦 예적금 갈아타기 손해 방지 계산기 (중도해지 비교)</h2>
+                <p>기존에 가입해 둔 예적금을 깨고 더 높은 금리의 신규 특판 상품으로 갈아타는 것이 진짜 이득인지 정밀 대조합니다. 중도해지 시 날아가는 패널티 이자 손실액과 새 상품으로 얻는 추가 이자 마진을 실시간 상속 연산하여 가장 무결한 환승 타이밍을 빌드합니다.</p>
+                <form id="switch-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 기존에 가입해 둔 예적금 스펙 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="sw-principal">기존 예적금 가입 원금 (원)</label>
+                                <input type="number" id="sw-principal" class="form-control" placeholder="예: 20000000" value="20000000" min="1000000" step="1000000" required>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="sw-old-rate">기존 약정 금리 (연, %)</label>
+                                <input type="number" id="sw-old-rate" class="form-control" value="3.5" step="0.1" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="sw-total-months">총 가입 기간 (개월)</label>
+                                <input type="number" id="sw-total-months" class="form-control" value="12" min="1" required>
+                            </div>
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="sw-passed-months">현재까지 유지한 기간 (개월)</label>
+                                <input type="number" id="sw-passed-months" class="form-control" value="6" min="0" required>
+                            </div>
+                            <div class="col-md-4 input-item">
+                                <label for="sw-penalty-rate">중도해지 패널티 금리 (연, %)</label>
+                                <input type="number" id="sw-penalty-rate" class="form-control" value="0.5" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">보통 약정 금리의 10~30% 수준인 평균 0.5% 선입니다.</small>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 새로 눈독 들이고 있는 신규 특판 상품 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-12 input-item">
+                                <label for="sw-new-rate">새로 갈아탈 특판 상품 금리 (연, %)</label>
+                                <input type="number" id="sw-new-rate" class="form-control" value="5.0" step="0.1" required>
+                                <small class="text-muted mt-2 d-block">기존 상품을 깨고 갈아타려는 새 은행의 고금리 스펙을 입력합니다.</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box mt-4">
+                    <h3>💡 예적금 유지 vs 중도환승 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>기존 상품을 만기까지 유지할 때 받는 세후 이자: <strong id="res-sw-keep-interest">0원</strong></p>
+                        <p>지금 당장 깨고 새 상품으로 갈아탈 때 받는 최종 세후 이자: <strong id="res-sw-switch-interest" style="color: var(--orange, #fd7e14);">0원</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>재테크 운영 선택지</th>
+                                        <th>기존 계좌 이자 (세후)</th>
+                                        <th>신규 계좌 이자 (세후)</th>
+                                        <th>내 손에 쥐는 실질 이자 총액</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-secondary">A. 기존 상품 뚝심 유지</td>
+                                        <td><span id="tbl-sw-keep-old">0원</span></td>
+                                        <td>0원 (가입 안 함)</td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-sw-keep-total">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">B. 지금 깨고 특판 환승</td>
+                                        <td class="text-danger"><span id="tbl-sw-switch-penalty">0원 (패널티 적용)</span></td>
+                                        <td><span id="tbl-sw-switch-new">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-sw-switch-total">0원</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">갈아타기 선택 시 **실질 이자 추가 마진**: <strong id="res-sw-final-margin">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 예적금 환승 전략 최적화 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="sw-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray, #6c757d); font-size: 0.85rem;">* 본 시뮬레이터는 거치식 정기예금 기준(단리 연산)으로 설계되었으며, 모든 이자 수익은 대한민국 표준 이자소득세율 15.4%를 세후 선공제 상속 정산합니다. 갈아타기 선택 시 신규 계좌의 예치 기간은 기존 계좌의 '남은 잔여 기간'만큼만 굴리는 것으로 자동 매칭하여 금융 공학적으로 완벽하게 동일 조건 대조선을 구축한 무결점 지표입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 예적금 갈아타기 가이드: 금리 높은 특판 떴을 때 내 이자 방어선 지키는 법</h2>
+                    <p>재테크 커뮤니티나 금융 앱을 보다가 지금 내가 가입한 예금보다 금리를 1~2%나 더 준다는 역대급 '특판 상품'이 뜨면, 누구나 가슴이 콩닥거리기 시작합니다. 당장이라도 스마트폰을 켜고 기존 예금을 확 깨버린 다음 새 통장으로 갈아타고 싶어지죠. 하지만 금리를 더 준다고 해서 무작정 기존 예적금을 해지했다가는, 그동안 모아둔 이자가 단돈 몇만 원 수준의 푼돈으로 쪼그라드는 '중도해지 패널티' 폭탄을 맞고 오히려 손해를 볼 수 있습니다.</p>
+                    <p>은행은 가입 기간을 채우지 못하고 중간에 돈을 빼는 사람에게 약속했던 이자 대신 고작 연 0.1%~0.5% 수준의 바닥 금리(중도해지 이율)만 던져줍니다. 즉, 지금까지 버틴 시간이 아까운 금융 비용(패널티)으로 증발한다는 뜻입니다. 따라서 예금 갈아타기의 핵심은 **"기존 계좌를 깨서 날아가는 이자 손실액보다, 남은 기간 동안 새 계좌로 갈아타서 얻는 이자 보너스가 확실하게 더 큰가?"**를 냉정하게 저울질해 보는 것입니다.</p>
+                    <p>본 예적금 갈아타기 손해 방지 계산기는 기존 예금의 유지 기간과 중도해지 패널티 요율 파라미터를 실시간 상속하여, **뚝심 있게 기존 상품을 유지할 때와 지금 해지하고 고금리로 갈아탈 때 내 손에 쥐어지는 세후 진짜 이자 총액을 1원 단위까지 대조**해 드립니다. 눈앞의 고금리 숫자에 현혹되지 말고, 진짜 내 지갑에 들어올 실질 이자 마진을 무결점으로 확인한 뒤 똑똑한 환승 스케줄을 가동해 보세요!</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 변수 선언
+            const principalInput = document.getElementById("sw-principal");
+            const oldRateInput = document.getElementById("sw-old-rate");
+            const totalMonthsInput = document.getElementById("sw-total-months");
+            const passedMonthsInput = document.getElementById("sw-passed-months");
+            const penaltyRateInput = document.getElementById("sw-penalty-rate");
+            const newRateInput = document.getElementById("sw-new-rate");
+
+            // 요약 디스플레이 출력 엘리먼트 선언
+            const resKeepInterest = document.getElementById("res-sw-keep-interest");
+            const resSwitchInterest = document.getElementById("res-sw-switch-interest");
+            const resFinalMargin = document.getElementById("res-sw-final-margin");
+            const swGuideText = document.getElementById("sw-guide-text");
+
+            // 표 데이터 테이블 엘리먼트 선언
+            const tblSwKeepOld = document.getElementById("tbl-sw-keep-old");
+            const tblSwKeepTotal = document.getElementById("tbl-sw-keep-total");
+            const tblSwSwitchPenalty = document.getElementById("tbl-sw-switch-penalty");
+            const tblSwSwitchNew = document.getElementById("tbl-sw-switch-new");
+            const tblSwSwitchTotal = document.getElementById("tbl-sw-switch-total");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩 상속
+            principalInput.addEventListener("input", calculateDepositSwitch);
+            oldRateInput.addEventListener("input", calculateDepositSwitch);
+            totalMonthsInput.addEventListener("input", calculateDepositSwitch);
+            passedMonthsInput.addEventListener("input", calculateDepositSwitch);
+            penaltyRateInput.addEventListener("input", calculateDepositSwitch);
+            newRateInput.addEventListener("input", calculateDepositSwitch);
+
+            function calculateDepositSwitch() {
+                const principal = parseFloat(principalInput.value) || 0;
+                const oldRate = (parseFloat(oldRateInput.value) || 0) / 100;
+                const totalMonths = parseInt(totalMonthsInput.value) || 0;
+                const passedMonths = parseInt(passedMonthsInput.value) || 0;
+                const penaltyRate = (parseFloat(penaltyRateInput.value) || 0) / 100;
+                const newRate = (parseFloat(newRateInput.value) || 0) / 100;
+
+                if (principal <= 0 || totalMonths <= 0 || passedMonths > totalMonths) return;
+
+                const remainMonths = totalMonths - passedMonths; // 남은 잔여 기간
+                const taxRate = 0.154; // 이자소득세 15.4%
+
+                // =========================================================================
+                // 🏦 [전략 A. 기존 상품 유지] 세전 이자 = 원금 * 약정금리 * (총기간/12)
+                // =========================================================================
+                const grossKeepInterest = principal * oldRate * (totalMonths / 12);
+                const netKeepInterest = Math.round(grossKeepInterest * (1 - taxRate));
+
+                // =========================================================================
+                // 🏦 [전략 B. 지금 깨고 특판 환승]
+                // 1) 기존 계좌 중도해지 이자 = 원금 * 패널티금리 * (유지기간/12)
+                // 2) 신규 계좌 환승 이자 = 원금 * 신규금리 * (남은기간/12)
+                // =========================================================================
+                const grossOldPenaltyInterest = principal * penaltyRate * (passedMonths / 12);
+                const netOldPenaltyInterest = Math.round(grossOldPenaltyInterest * (1 - taxRate));
+
+                const grossNewInterest = principal * newRate * (remainMonths / 12);
+                const netNewInterest = Math.round(grossNewInterest * (1 - taxRate));
+
+                const netSwitchTotalInterest = netOldPenaltyInterest + netNewInterest;
+
+                // =========================================================================
+                // 📊 최종 마진 정산 및 결과 인터페이스 동적 렌더링
+                // =========================================================================
+                const finalMargin = netSwitchTotalInterest - netKeepInterest;
+
+                resKeepInterest.innerText = netKeepInterest.toLocaleString() + "원";
+                resSwitchInterest.innerText = netSwitchTotalInterest.toLocaleString() + "원";
+
+                // 추가 자산 증식 마진값 파싱 및 폰트 컬러 매칭 조율
+                if (finalMargin > 0) {
+                    resFinalMargin.innerText = finalMargin.toLocaleString() + "원 이득";
+                    resFinalMargin.style.color = "var(--orange, #fd7e14)";
+                } else if (finalMargin < 0) {
+                    resFinalMargin.innerText = Math.abs(finalMargin).toLocaleString() + "원 손해";
+                    resFinalMargin.style.color = "var(--blue, #007bff)";
+                } else {
+                    resFinalMargin.innerText = "0원 (손익 똑같음)";
+                    resFinalMargin.style.color = "var(--gray, #6c757d)";
+                }
+
+                // 테이블 표 데이터 셀 실시간 교체 상속
+                tblSwKeepOld.innerText = netKeepInterest.toLocaleString() + "원";
+                tblSwKeepTotal.innerText = netKeepInterest.toLocaleString() + "원";
+
+                tblSwSwitchPenalty.innerText = netOldPenaltyInterest.toLocaleString() + "원";
+                tblSwSwitchNew.innerText = netNewInterest.toLocaleString() + "원";
+                tblSwSwitchTotal.innerText = netSwitchTotalInterest.toLocaleString() + "원";
+
+                if (finalMargin > 0) {
+                    swGuideText.innerHTML = `지금 당장 갈아타시는 게 개이득입니다! 기존 예금을 깨서 날아가는 패널티 이자보다 새 특판 계좌로 남은 <strong>${remainMonths}개월</strong> 동안 채울 이자 보너스가 훨씬 크기 때문에, 최종적으로 <strong>${finalMargin.toLocaleString()}원</strong>의 실질 이자 마진을 더 챙겨 방어할 수 있습니다. 당장 은행으로 달려가세요!`;
+                } else if (finalMargin < 0) {
+                    swGuideText.innerHTML = `절대 깨지 마시고 뚝심 있게 유지하세요! 새 특판 금리가 매력적으로 보이지만, 지금까지 유지한 <strong>${passedMonths}개월</strong>의 세월 동안 쌓인 이자가 중도해지 패널티로 인해 너무 많이 깎여나갑니다. 갈아타면 오히려 내 지갑에서 진짜 이자가 <strong>${Math.abs(finalMargin).toLocaleString()}원</strong>이나 증발하는 손해를 보게 되니, 만기까지 꾹 참으시는 것이 최고의 전략입니다.`;
+                } else {
+                    swGuideText.innerHTML = `현재 두 선택지의 세후 실질 수익이 완벽하게 일치합니다. 예금을 깨고 새로 가입하는 번거로움(행정 비용)을 감수할 필요 없이, 그냥 편안하게 기존 계좌를 유지하시는 것을 권장합니다.`;
+                }
+            }
+
+            // 초기 웹 페이지 로딩 런타임 가동
+            calculateDepositSwitch();
+        });
+
+    </script>
+</body>
+</html>

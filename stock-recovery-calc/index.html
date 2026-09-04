@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>구조대 위치 추적! 주식 반등 본전 회수 계산기 | 에브리캘크</title>
+    <meta name="description" content="내 마이너스 계좌의 평단가와 현재 주가 파라미터를 실시간 상속하여, 원금 회수까지 주가가 정확히 몇 % 폭등해야 하는지 역산합니다. 손실률 대비 필요한 진짜 반등률과 오늘 상한가(30%) 돌파 시 내 자산 복구 마진을 무결점으로 빌드합니다.">
+    <meta name="keywords" content="배당금 재투자 계산기, 주식 분배금 재투자, 배당주 복리 효과, TIGER 미국배당다우존스 분배금, ETF 배당금 계산기">
+    <link rel="canonical" href="https://every-calc.co.kr/stock-recovery-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="구조대 위치 추적! 주식 반등 본전 회수 계산기">
+    <meta property="og:description" content="내 마이너스 계좌의 평단가와 현재 주가 파라미터를 실시간 상속하여, 원금 회수까지 주가가 정확히 몇 % 폭등해야 하는지 역산합니다. 손실률 대비 필요한 진짜 반등률과 오늘 상한가(30%) 돌파 시 내 자산 복구 마진을 무결점으로 빌드합니다.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/stock-recovery-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>📉 구조대 위치 추적! 주식 반등 본전 회수 계산기</h2>
+                <p>내 마이너스 계좌의 평단가와 현재 주가 파라미터를 실시간 상속하여, 원금 회수까지 주가가 정확히 몇 % 폭등해야 하는지 역산합니다. 손실률 대비 필요한 진짜 반등률과 오늘 상한가(30%) 돌파 시 내 자산 복구 마진을 무결점으로 빌드합니다.</p>
+                <form id="recovery-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 물려있는 주식 계좌 스펙 및 현재가 설정</h3>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="rec-buy-price">내가 처음 산 주식 평단가 (원)</label>
+                                <input type="number" id="rec-buy-price" class="form-control" placeholder="예: 80000" value="80000" min="100" step="100" required>
+                                <small class="text-muted mt-2 d-block">내 계좌에 찍혀있는 매수 평균 단가를 입력합니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="rec-current-price">눈물 머금은 현재 주가 (원)</label>
+                                <input type="number" id="rec-current-price" class="form-control" placeholder="예: 40000" value="40000" min="100" step="100" required>
+                                <small class="text-muted mt-2 d-block">앱을 켜서 확인한 해당 종목의 실시간 현재가를 입력합니다.</small>
+                            </div>
+                        </div>
+                        <div class="form-row row mb-3">
+                            <div class="col-md-12 input-item">
+                                <label for="rec-stock-quantity">보유 중인 주식 수량 (주)</label>
+                                <input type="number" id="rec-stock-quantity" class="form-control" placeholder="예: 50" value="50" min="1" step="1" required>
+                                <small class="text-muted mt-2 d-block">내가 현재 쥐고 있는 총 주식 수량입니다.</small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box">
+                    <h3>💡 개미 구조대 도착 시점 및 복구 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>내 계좌에 찍힌 현재 실시간 수익률: <strong id="res-rec-current-return" style="color: var(--blue, #007bff);">0%</strong></p>
+                        <p>본전 탈출을 위해 필요한 주가 반등률: <strong id="res-rec-required-return" style="color: var(--orange, #fd7e14);">0%</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>주가 상승 시나리오 레이어</th>
+                                        <th>예상 도달 주가</th>
+                                        <th>내 계좌의 평가 가치</th>
+                                        <th>원금 대비 손실 잔액</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-dark">🚨 현재 내 마이너스 계좌 상태</td>
+                                        <td><span id="tbl-rec-curr-price">0원</span></td>
+                                        <td><span id="tbl-rec-curr-eval">0원</span></td>
+                                        <td class="text-danger"><span id="tbl-rec-curr-loss">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-success">🔥 오늘 당장 상한가(+30%) 칠 때</td>
+                                        <td><span id="tbl-rec-upper-price">0원</span></td>
+                                        <td><span id="tbl-rec-upper-eval">0원</span></td>
+                                        <td class="text-danger"><span id="tbl-rec-upper-loss">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">✨ 구조대 도착 (본전 100% 회수 시)</td>
+                                        <td><span id="tbl-rec-target-price">0원</span></td>
+                                        <td><span id="tbl-rec-target-eval">0원</span></td>
+                                        <td class="font-weight-bold text-dark"><span id="tbl-rec-target-loss">0원 (탈출 성공)</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">원금 대비 현재 내 **실시간 증발 자산 마진**: <strong id="res-rec-evaporated-money" style="color: var(--orange, #fd7e14);">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 멘탈 케어 계좌 탈출 전략 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="rec-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray, #6c757d); font-size: 0.85rem;">* 본 시뮬레이터는 거래 수수료 및 증권거래세 요율을 배제하고 오직 평단가와 현재가의 괴리율만을 추적 연산합니다. 주식 시장 특성상 하락 시 적용되는 손실률 분모와 반등 시 적용되는 수익률 분모의 수학적 불일치 레이어를 완벽하게 반영하여, 개미 투자자들이 마주해야 할 실질 필요 상승 눈금을 도출한 무결점 금융 가이드라인입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 주식 반등 본전 회수 가이드: 마이너스 계좌의 진짜 탈출 방어선 이해하기</h2>
+                    <p>내 소중한 종잣돈으로 주식 투자를 시작했다가 파란불 가득한 마이너스 계좌를 마주하면, 많은 주린이분들이 "언젠간 오르겠지"라며 무작정 주가창을 닫고 '존버' 모드에 들어가곤 합니다. 그러다 문득 뉴스를 보고 주가가 찔끔 반등하면 "이제 곧 내 본전이 오겠구나!" 하고 큰 기대를 품지만, 안타깝게도 주식 시장의 수학적 계산법은 우리 생각보다 훨씬 더 냉정하고 잔인합니다.</p>
+                    <p>가장 많은 개미들이 착각하는 주식 시장의 거대한 함정이 바로 <strong>'손실률과 필요 반등률의 무서운 불일치'</strong>입니다. 예를 들어 내 계좌가 정확히 반토막인 -50% 손실 상태라고 가정해 보겠습니다. 주가가 바닥을 찍고 다시 50% 폭등하면 원금이 복구될 것 같지만, 실제로는 여전히 원금 대비 -25%에 머물게 됩니다. 내 피 같은 원금을 완전히 회수하고 탈출하려면 현재 가격에서 주가가 무려 <strong>100% 폭등(정확히 2배)</strong>해야 비로소 내 돈을 지키고 탈출할 수 있습니다. 즉, 떨어질 때보다 올라갈 때 훨씬 더 강력한 로켓 엔진이 필요하다는 뜻입니다.</p>
+                    <p>본 주식 반등 본전 회수 계산기는 현재 내 평단가와 수량, 현재 주가 파라미터를 실시간 상속하여 <strong>내 원금 복구까지 정확히 몇 %의 반등률이 필요한지 역산하고, 오늘 당장 상한가(+30%)를 쳤을 때 내 실질 자산 보존 마진을 도출</strong>해 주는 모의 금융 시뮬레이터입니다. 내가 가진 주식의 진짜 구조대 위치를 정확히 팩트로 확인해 보고, 감정에 휘둘리지 않는 똑똑한 계좌 탈출 스케줄러를 가동해 보세요!</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 타겟 선언
+            const recBuyPriceInput = document.getElementById("rec-buy-price");
+            const recCurrentPriceInput = document.getElementById("rec-current-price");
+            const recQuantityInput = document.getElementById("rec-stock-quantity");
+
+            // 요약 디스플레이 출력 타겟 선언
+            const resRecCurrentReturn = document.getElementById("res-rec-current-return");
+            const resRecRequiredReturn = document.getElementById("res-rec-required-return");
+            const resRecEvaporatedMoney = document.getElementById("res-rec-evaporated-money");
+            const recGuideText = document.getElementById("rec-guide-text");
+
+            // 내역 테이블 데이터 표 타겟 선언
+            const tblRecCurrPrice = document.getElementById("tbl-rec-curr-price");
+            const tblRecCurrEval = document.getElementById("tbl-rec-curr-eval");
+            const tblRecCurrLoss = document.getElementById("tbl-rec-curr-loss");
+
+            const tblRecUpperPrice = document.getElementById("tbl-rec-upper-price");
+            const tblRecUpperEval = document.getElementById("tbl-rec-upper-eval");
+            const tblRecUpperLoss = document.getElementById("tbl-rec-upper-loss");
+
+            const tblRecTargetPrice = document.getElementById("tbl-rec-target-price");
+            const tblRecTargetEval = document.getElementById("tbl-rec-target-eval");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩 상속
+            recBuyPriceInput.addEventListener("input", calculateStockRecovery);
+            recCurrentPriceInput.addEventListener("input", calculateStockRecovery);
+            recQuantityInput.addEventListener("input", calculateStockRecovery);
+
+            function calculateStockRecovery() {
+                const buyPrice = parseFloat(recBuyPriceInput.value) || 0;
+                const currentPrice = parseFloat(recCurrentPriceInput.value) || 0;
+                const quantity = parseFloat(recQuantityInput.value) || 0;
+
+                if (buyPrice <= 0 || currentPrice <= 0 || quantity <= 0) return;
+
+                // 1. 원금 및 현재 평가 가치 연산
+                const totalPrincipal = buyPrice * quantity;
+                const currentEvaluation = currentPrice * quantity;
+                const evaporatedMoney = Math.max(0, totalPrincipal - currentEvaluation);
+
+                // 2. 실시간 현재 수익률 연산
+                const currentReturn = ((currentPrice - buyPrice) / buyPrice) * 100;
+
+                // 3. 본전 회수 필요 반등률 수식 엔진 상속: (평단가 - 현재가) / 현재가 * 100
+                const requiredReturn = ((buyPrice - currentPrice) / currentPrice) * 100;
+
+                // 4. 국내 증시 상한가(+30%) 시나리오 요율 상속
+                const upperPrice = Math.round(currentPrice * 1.3);
+                const upperEvaluation = upperPrice * quantity;
+                const upperLoss = Math.max(0, totalPrincipal - upperEvaluation);
+
+                // =========================================================================
+                // 📊 메인 디스플레이 인터페이스 동적 렌더링
+                // =========================================================================
+                resRecCurrentReturn.innerText = currentReturn.toFixed(2) + "%";
+                resRecRequiredReturn.innerText = (currentPrice >= buyPrice) ? "0.00% (이미 본전 돌파)" : requiredReturn.toFixed(2) + "%";
+                resRecEvaporatedMoney.innerText = evaporatedMoney.toLocaleString() + "원";
+
+                // 테이블 표 데이터 셀 실시간 교체
+                tblRecCurrPrice.innerText = currentPrice.toLocaleString() + "원";
+                tblRecCurrEval.innerText = currentEvaluation.toLocaleString() + "원";
+                tblRecCurrLoss.innerText = evaporatedMoney.toLocaleString() + "원";
+
+                tblRecUpperPrice.innerText = upperPrice.toLocaleString() + "원";
+                tblRecUpperEval.innerText = upperEvaluation.toLocaleString() + "원";
+                tblRecUpperLoss.innerText = (upperPrice >= buyPrice) ? "0원 (탈출 성공)" : upperLoss.toLocaleString() + "원";
+
+                tblRecTargetPrice.innerText = buyPrice.toLocaleString() + "원";
+                tblRecTargetEval.innerText = totalPrincipal.toLocaleString() + "원";
+                if (currentPrice >= buyPrice) {
+                    recGuideText.innerHTML = `축하합니다! 현재 주가가 평단가 이상입니다. 계좌 손실 리스크가 완전히 방어된 상태이므로 익절 타이밍을 조율하시는 구간입니다.`;
+                } else {
+                    recGuideText.innerHTML = `현재 계좌에 <strong>${currentReturn.toFixed(1)}%</strong> 손실이 찍혀 총 <strong>${evaporatedMoney.toLocaleString()}원</strong>의 자산이 잠시 눈 녹듯 증발해 있습니다. 여기서 탈출하려면 주가가 단순히 원래대로 회복하는 느낌이 아니라, 현재가 기준 무려 <strong>${requiredReturn.toFixed(1)}%</strong> 폭등해야 구조대가 도착합니다. 만약 오늘 당장 이 종목이 대호재로 상한가(+30%)를 치더라도 원금 대비 <strong>${upperLoss.toLocaleString()}원</strong>의 손실 방어선이 여전히 남아있으니, 감정적인 투매보다는 목표 탈출 가격을 명밀하게 설정해 기계적으로 대응해 보세요!`;
+                }
+            }
+
+            // 초기 웹 브라우저 가동 매칭
+            calculateStockRecovery();
+        });
+
+    </script>
+</body>
+</html>

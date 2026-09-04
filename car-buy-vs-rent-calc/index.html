@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>카푸어 방지! 자동차 할부 vs 장기렌트·리스 비교 계산기 | 에브리캘크</title>
+    <meta name="description" content="내 연봉 수준에 맞는 똑똑한 첫 차 구매 플랜! 자동차 가격 파라미터를 실시간 상속하여 할부 구매의 취등록세, 세금, 보험료 누적액과 장기렌트·리스 요금을 정밀 대조하고 유지비 마진을 도출하세요.">
+    <meta name="keywords" content="배당금 재투자 계산기, 주식 분배금 재투자, 배당주 복리 효과, TIGER 미국배당다우존스 분배금, ETF 배당금 계산기">
+    <link rel="canonical" href="https://every-calc.co.kr/car-buy-vs-rent-calc/">
+    <meta name="robots" content="index, follow">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <meta property="og:site_name" content="에브리캘크">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="카푸어 방지! 자동차 할부 vs 장기렌트·리스 비교 계산기">
+    <meta property="og:description" content="내 연봉 수준에 맞는 똑똑한 첫 차 구매 플랜! 자동차 가격 파라미터를 실시간 상속하여 할부 구매의 취등록세, 세금, 보험료 누적액과 장기렌트·리스 요금을 정밀 대조하고 유지비 마진을 도출하세요.">
+    <meta property="og:image" content="https://every-calc.co.kr/img/everycalc.png">
+    <meta property="og:url" content="https://every-calc.co.kr/car-buy-vs-rent-calc/">
+    <link class="icon" href="/favicon.ico" sizes="any">
+    <link class="icon" href="/favicon.svg" type="image/svg+xml">
+    <link class="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link class="apple-touch-icon" href="/apple-icon-180x180.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <div id="wrap">
+        <header id="header" data-include="header.html"></header>
+        <div id="gnb" data-include="gnb.html"></div>
+        <main id="content">
+            <section class="calculator-box">
+                <h2>🚗 카푸어 방지! 자동차 할부 vs 장기렌트·리스 비교 계산기</h2>
+                <p>내가 눈독 들이고 있는 차량 가격 파라미터를 기반으로 할부 구매와 장기렌트·리스의 실질 지출액을 정밀 대조합니다. 할부 원리금은 물론 취등록세, 매년 나오는 자동차세, 개인 보험료와 장기렌트의 비과세 방어선까지 실시간 상속 연산하여 진짜 내 돈이 덜 털리는 지출 방어선을 무결점으로 빌드합니다.</p>
+                <form id="car-form" class="form" onsubmit="return false;">
+                    <div class="input-group-box">
+                        <h3>1. 차량 기본 스펙 및 금융 조건 설정</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-6 input-item mb-3 mb-md-0">
+                                <label for="car-price">차량 가격 (옵션 포함, 원)</label>
+                                <input type="number" id="car-price" class="form-control" placeholder="예: 35000000" value="35000000" min="5000000" step="1000000" required>
+                                <small class="text-muted mt-2 d-block">정밀 연산을 위한 자동차 세전 출고 가격을 입력합니다.</small>
+                            </div>
+                            <div class="col-md-6 input-item">
+                                <label for="car-period">차량 이용 및 계약 기간</label>
+                                <select id="car-period" class="form-control">
+                                    <option value="3">3년 약정 (36개월 단기 운용)</option>
+                                    <option value="4">4년 약정 (48개월 표준 대조선)</option>
+                                    <option value="5" selected>5년 약정 (60개월 장기 유지 - 추천)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="my-4" style="border-top: 1px dashed #ddd;">
+                        <h3>2. 금융 방식별 세부 파라미터 입력</h3>
+                        <div class="form-row mb-3">
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="car-loan-rate">🏦 구매 할부 금리 (연, %)</label>
+                                <input type="number" id="car-loan-rate" class="form-control" value="5.5" step="0.1" required>
+                            </div>
+                            <div class="col-md-4 input-item mb-3 mb-md-0">
+                                <label for="car-insurance">🛡️ 개인 예상 자동차 보험료 (연, 원)</label>
+                                <input type="number" id="car-insurance" class="form-control" value="900000" min="0" step="50000" required>
+                            </div>
+                            <div class="col-md-4 input-item">
+                                <label for="car-rent-monthly">📱 장기렌트·리스 견적 (월, 원)</label>
+                                <input type="number" id="car-rent-monthly" class="form-control" placeholder="예: 550000" value="550000" min="0" step="10000" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="result-box">
+                    <h3>💡 차량 취득 및 유지 비용 시뮬레이션 결과</h3>
+                    <div class="result-display">
+                        <p>할부 구매 시 총 지출 비용 (세금/보험 포함): <strong id="res-car-buy-total">0원</strong></p>
+                        <p>장기렌트·리스 이용 시 총 납부 비용 (전체 기간): <strong id="res-car-rent-total" style="color: var(--orange, #fd7e14);">0원</strong></p>
+                        <div class="table-responsive my-3">
+                            <table class="table table-sm table-bordered text-center small text-muted bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>차량 운용 선택지</th>
+                                        <th>초기 비용 (취등록세 등)</th>
+                                        <th>연간 보유 비용 (세금/보험)</th>
+                                        <th>총 금융 비용 (이자/렌트료)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-weight-bold text-secondary">A. 내 명의 할부 구매</td>
+                                        <td><span id="tbl-car-buy-init">0원</span></td>
+                                        <td><span id="tbl-car-buy-annual">0원</span></td>
+                                        <td><span id="tbl-car-buy-finance">0원</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold text-primary">B. 장기렌트 · 리스 이용</td>
+                                        <td>0원 (월 요금에 녹아있음)</td>
+                                        <td>0원 (렌트사 전액 부담)</td>
+                                        <td><span id="tbl-car-rent-finance">0원</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <p style="font-size: 110%; color: var(--blue, #007bff); font-weight: bold; margin-bottom: 0;">지출 최적화 선택 시 **실질 유지비 추가 마진**: <strong id="res-car-final-margin">0원</strong></p>
+                    </div>
+                    <div class="target-guide-box mt-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--blue, #007bff);">
+                        <h4>📊 카푸어 방지 지출 포트폴리오 가이드</h4>
+                        <p style="font-size: 1rem; margin-bottom: 0;" id="car-guide-text"></p>
+                    </div>
+                    <p class="result-tip guide-text mt-3" style="color: var(--gray, #6c757d); font-size: 0.85rem;">* 본 시뮬레이터는 중고차 잔존가치 인수 비용을 제외한 '순수 계약 기간 내 소비 지출액'을 기준으로 정밀 대조합니다. 할부 구매는 원리금균등 상환 수식에 취등록세(차량가의 7%) 및 매년 10%씩 감쇄되는 법정 자동차세(배기량 2,000cc 표준 연 52만 원 기준 환산) 레이어와 개인 보험료 파라미터가 실시간 결합된 무결점 금융 지표입니다.</p>
+                </div>
+            </section>
+            <section class="calculator-description">
+                <div class="description-content">
+                    <h2>💡 자동차 할부 vs 렌트·리스 가이드: 카푸어 폭탄 피하는 실질 유지비 방어선</h2>
+                    <p>내 지갑 사정에 맞춰 연봉 실수령액을 확인하고 나면, 출퇴근이나 여가를 위해 "슬슬 멋진 차 한 대 뽑아볼까?" 하는 행복한 고민에 빠지게 됩니다. 그런데 대리점에 가거나 인터넷 견적을 내다보면, 딜러분들이나 광고에서 "할부로 사면 손해입니다! 요새는 초기 비용도 없고 매달 내는 돈도 훨씬 저렴한 장기렌트나 리스가 대세이자 무조건 이득입니다!"라며 달콤하게 유혹하곤 하죠. 겉으로 보이는 월 납입료 숫자만 보면 당장이라도 계약서에 도장을 찍고 싶어지지만, 자동차 금융 시장에 숨겨진 진짜 유지비는 생각보다 훨씬 꼼꼼하게 따져봐야 합니다.</p>
+                    <p>많은 초보 운전자분들이 간과하는 자동차 유지비의 진짜 함정은 눈에 보이지 않는 <strong>'부수적인 지출 파라미터'</strong>들입니다. 내 명의로 차를 사는 할부는 처음에 내야 하는 묵직한 취등록세(차량 가격의 7%)는 물론이고, 매년 어김없이 날아오는 자동차세와 내 나이·경력에 따라 무섭게 책정되는 개인 자동차 보험료를 내가 전부 따로 감당해야 합니다. 반면, 장기렌트는 이 모든 세금과 보험료가 월 렌트료에 100% 포함되어 있고, 내 재산이나 부채로 잡히지 않아 건강보험료나 대출 한도 방어선에 패널티를 주지 않는 강력한 장점이 있습니다.</p>
+                    <p>본 자동차 할부 vs 장기렌트·리스 비교 계산기는 차량 가격과 계약 기간, 개인의 보험 스펙 파라미터를 실시간 상속하여 <strong>내가 차를 타고 다니는 총 계약 기간 동안 내 지갑에서 진짜 증발하는 세후 누적 비용을 백원 단위까지 대조</strong>해 드립니다. 화려한 광고 속 월 납입료 숫자에 속아 카푸어로 전락하는 리스크를 사전에 완벽히 차단하고, 내 월급을 가장 확실하게 지켜낼 수 있는 무결점 자동차 구매 플랜을 가동해 보세요!</p>
+                </div>
+            </section>
+            <div id="bottom-ad" class="bottom-ad" data-include="sub_bottom_ad.html"></div>
+        </main>
+        <div id="sidebar" data-include="sidebar.html"></div>
+        <footer id="footer" data-include="footer.html"></footer>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 인풋 엘리먼트 상속 변수 선언
+            const carPriceInput = document.getElementById("car-price");
+            const carPeriodSelect = document.getElementById("car-period");
+            const carLoanRateInput = document.getElementById("car-loan-rate");
+            const carInsuranceInput = document.getElementById("car-insurance");
+            const carRentMonthlyInput = document.getElementById("car-rent-monthly");
+
+            // 요약 디스플레이 출력 엘리먼트 선언
+            const resCarBuyTotal = document.getElementById("res-car-buy-total");
+            const resCarRentTotal = document.getElementById("res-car-rent-total");
+            const resCarFinalMargin = document.getElementById("res-car-final-margin");
+            const carGuideText = document.getElementById("car-guide-text");
+
+            // 표 데이터 테이블 엘리먼트 선언
+            const tblCarBuyInit = document.getElementById("tbl-car-buy-init");
+            const tblCarBuyAnnual = document.getElementById("tbl-car-buy-annual");
+            const tblCarBuyFinance = document.getElementById("tbl-car-buy-finance");
+            const tblCarRentFinance = document.getElementById("tbl-car-rent-finance");
+
+            // 실시간 인풋 체인지 인터페이스 바인딩 상속
+            carPriceInput.addEventListener("input", calculateCarCostComparison);
+            carPeriodSelect.addEventListener("change", calculateCarCostComparison);
+            carLoanRateInput.addEventListener("input", calculateCarCostComparison);
+            carInsuranceInput.addEventListener("input", calculateCarCostComparison);
+            carRentMonthlyInput.addEventListener("input", calculateCarCostComparison);
+
+            function calculateCarCostComparison() {
+                const carPrice = parseFloat(carPriceInput.value) || 0;
+                const years = parseInt(carPeriodSelect.value) || 0;
+                const totalMonths = years * 12;
+                const loanRate = (parseFloat(carLoanRateInput.value) || 0) / 100;
+                const annualInsurance = parseFloat(carInsuranceInput.value) || 0;
+                const rentMonthly = parseFloat(carRentMonthlyInput.value) || 0;
+
+                if (carPrice <= 0 || totalMonths <= 0) return;
+
+                // =========================================================================
+                // 🚗 [선택 A. 내 명의 할부 구매 비용 연산]
+                // 1) 초기 비용: 취등록세 (표준 비영업용 승용차 7% 고정 레이어 상속)
+                // =========================================================================
+                const acquisitionTax = Math.round(carPrice * 0.07);
+
+                // 2) 총 금융 비용 (원리금균등 상환 수식 적용)
+                const monthlyLoanRate = loanRate / 12;
+                let monthlyLoanPmt = 0;
+                if (monthlyLoanRate > 0) {
+                    monthlyLoanPmt = carPrice * (monthlyLoanRate * Math.pow(1 + monthlyLoanRate, totalMonths)) / (Math.pow(1 + monthlyLoanRate, totalMonths) - 1);
+                } else {
+                    monthlyLoanPmt = carPrice / totalMonths;
+                }
+                const totalLoanPayments = Math.round(monthlyLoanPmt * totalMonths);
+                const totalLoanInterest = totalLoanPayments - carPrice; // 순수 이자 마진
+
+                // 3) 연간 보유 비용: 자동차세(매년 10% 감쇄 수식) + 개인 보험료 누적
+                let totalTaxAndInsurance = 0;
+                let baseCarTax = 520000; // 대한민국 표준 2,000cc 중형차 기준 (지방세 포함 연 약 52만 원)
+
+                for (let y = 1; y <= years; y++) {
+                    // 자동차세는 3년 차부터 매년 5%씩 최대 50%까지 감쇄되나 계산기 스펙 안정성을 위해 표준 누적 적용
+                    let currentYearTax = baseCarTax;
+                    if (y >= 3) {
+                        const discountRate = Math.min(0.5, (y - 2) * 0.05);
+                        currentYearTax = baseCarTax * (1 - discountRate);
+                    }
+                    totalTaxAndInsurance += currentYearTax + annualInsurance;
+                }
+                totalTaxAndInsurance = Math.round(totalTaxAndInsurance);
+
+                // 할부 구매 최종 총 비용 정산
+                const finalBuyTotal = acquisitionTax + totalLoanPayments + totalTaxAndInsurance;
+
+                // =========================================================================
+                // 🚗 [선택 B. 장기렌트 · 리스 비용 연산]
+                // 초기비용 0원, 세금/보험 0원 ➡️ 오직 계약 기간 내 월 렌트료 누적액
+                // =========================================================================
+                const finalRentTotal = Math.round(rentMonthly * totalMonths);
+
+                // =========================================================================
+                // 📊 최종 마진 비교 및 결과 인터페이스 동적 렌더링
+                // =========================================================================
+                const finalMargin = finalBuyTotal - finalRentTotal;
+
+                resCarBuyTotal.innerText = finalBuyTotal.toLocaleString() + "원";
+                resCarRentTotal.innerText = finalRentTotal.toLocaleString() + "원";
+
+                if (finalMargin > 0) {
+                    resCarFinalMargin.innerText = finalMargin.toLocaleString() + "원 절감 (장기렌트 유리)";
+                    resCarFinalMargin.style.color = "var(--orange, #fd7e14)";
+                } else if (finalMargin < 0) {
+                    resCarFinalMargin.innerText = Math.abs(finalMargin).toLocaleString() + "원 절감 (할부구매 유리)";
+                    resCarFinalMargin.style.color = "var(--blue, #007bff)";
+                } else {
+                    resCarFinalMargin.innerText = "0원 (손익 구조 동일)";
+                    resCarFinalMargin.style.color = "var(--gray, #6c757d)";
+                }
+
+                // 테이블 표 데이터 셀 실시간 교체
+                tblCarBuyInit.innerText = acquisitionTax.toLocaleString() + "원";
+                tblCarBuyAnnual.innerText = totalTaxAndInsurance.toLocaleString() + "원";
+                tblCarBuyFinance.innerText = totalLoanPayments.toLocaleString() + "원 (이자: " + totalLoanInterest.toLocaleString() + "원)";
+                tblCarRentFinance.innerText = finalRentTotal.toLocaleString() + "원";
+
+                if (finalMargin > 0) {
+                    cardGuideText.innerHTML = `현재 세팅하신 조건에서는 <strong>장기렌트·리스</strong>가 실질 유지비 면에서 압도적으로 유리합니다! 할부로 구매할 때 내야 하는 초기 취등록세 <strong>${acquisitionTax.toLocaleString()}원</strong>과 매년 빠져나가는 세금/보험료 <strong>${totalTaxAndInsurance.toLocaleString()}원</strong>의 누적 부담이 너무 큽니다. 장기렌트를 이용하시면 할부 구매 대비 총 <strong>${finalMargin.toLocaleString()}원</strong>의 소중한 내 월급 마진을 추가로 방어해 낼 수 있습니다.`;
+                } else if (finalMargin < 0) {
+                    cardGuideText.innerHTML = `무조건 <strong>내 명의 할부 구매</strong>로 차를 지르시는 것이 현명합니다! 매달 내는 렌트료(월 <strong>${rentMonthly.toLocaleString()}원</strong>) 총액이 할부 원리금과 세금, 보험료를 다 합친 금액보다 비싸게 셋팅되어 있습니다. 장기렌트 딜러들의 말에 속아 갈아타면 오히려 일 년 내내 열심히 모은 내 자산에서 <strong>${Math.abs(finalMargin).toLocaleString()}원</strong>이나 추가로 유출되는 손해를 보게 되니 정석대로 구매하시는 걸 추천합니다.`;
+                } else {
+                    cardGuideText.innerHTML = `현재 두 운용 방식의 세후 실질 비용 지출선이 완벽하게 일치합니다. 번거로운 렌트 계약 승계나 심사 절차 없이, 평소 원하셨던 차량 소유 취향에 맞춰 자유롭게 선택하시면 됩니다.`;
+                }
+            }
+
+            // 초기 웹 페이지 로딩 런타임 가동 매칭
+            calculateCarCostComparison();
+        });
+    </script>
+</body>
+</html>
